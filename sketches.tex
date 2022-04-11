@@ -15,3 +15,19 @@ We will generally assume that the specific selection of $Z$ is only shared with 
 We will also assume that the specific $w$ sampled from $W_Z$ is private and only known to parties who are given it explicity. 
 
 An interesting part of this work is how we share informtaion about $W_Z$. We will allow an inefficient adversary access to the entire description of $W_Z$ and ask them to produce an advice string for an efficient adversary, that is that the advice string length is bound from above by a arbitrary polynomial function of our security parameter. 
+
+\subsection{Distributions over $\zeroone{n}$}
+\begin{enumerate}
+    \item Picking $k$ points from $\zeroone{n}$ uniformly results in a distribution we will denote $U_{n,k}$. 
+    Clearly, this is efficient with respect to $\max{(n,k)}$.
+    The only condition here is that $k \leq 2^n$
+
+    \item Another distribution of interest is picking $k$ points uniformly from $\zeroone{n}$ and then removing points that are within distance $t$ of one another, we denote this $U_{n,k,t}^{-}$. 
+    This is also efficient, but may result in fewer than $k$ points being included in the final set. 
+    The trivial bounds here also include $t \leq n$. 
+
+    \item Another way of acheieving a simillar result is by picking points until you have $k$ (or a failure condition), that all have distance at least $t$ from one another.
+    This is not guaranteed to terminate without an error condition. 
+    The trivial bounds from above apply here as well. 
+\end{enumerate}
+ 

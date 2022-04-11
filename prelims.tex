@@ -31,6 +31,12 @@ In this section we will introduce existing results to help clarify our place in 
     \]
 \end{definition}
 
+\begin{definition}[Secure Sketch]
+    A \emph{secure sketch} is an abstract crytographic primative that hides information of a sample, but allows for recovery of the original sample if presented a sample that is close enough to the original sample. It is made of two algorithms: Sketch and Recover. Sketch takes the original sample and outputs some public value. Recover then takes some other sample and the value from Sketch and if the two samples are close enough, outputs the original sample. 
+
+    Formal Definition here. 
+\end{definition}
+
 \subsection{Previous Results}
 It has been shown that universal fuzzy extractors are impossible in the information theoretic setting. 
 
