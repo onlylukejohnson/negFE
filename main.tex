@@ -12,6 +12,29 @@
 \newcommand{\todo}[1]{\textcolor{red}{TODO: #1}}
 \newcommand{\here}{\todo{Stopped here! }}
 
+%Probability
+\DeclareMathOperator*{\Exp}{\ensuremath{\mathbb{E}}}
+\newcommand{\Ex}[1]{\Exp\left[#1\right]}
+\newcommand{\Exlim}[2]{\Exp\limits_{#1}\br{#2}}
+\newcommand{\Prob}[1]{\Pr\br{#1}}
+\newcommand{\Problim}[2]{\Pr\limits_{#1}\br{#2}}
+\newcommand{\p}[1]{p\prns{#1}}
+
+% Entropy
+\newcommand{\ent}[1]{H\prns{#1}}
+\newcommand{\minent}[1]{H_{\infty}\prns{#1}}
+\newcommand{\acminent}[2]{\overset{\sim}{H}\!_{\infty}\prns{#1\,|\,#2}}
+\newcommand{\hart}[1]{H_0\prns{#1}}
+
+
+% Useful Notation
+\newcommand{\defined}{:=}
+\newcommand{\sbr}[1]{ \!\left\{ #1 \right\} }
+\newcommand{\br}[1]{\!\left[#1\right]}
+\newcommand{\prns}[1]{\!\left(#1\right)}
+\renewcommand{\log}[1]{\mathsf{log}\prns{#1}}
+\newcommand{\zeroone}[1]{\sbr{0,1}^{#1}}
+
 \title{A Negative Result for Fuzzy Extractors}
 \author{Luke Demarest\\University of Connecticut\\luke.h.demarest@gmail.com \and Benjamin Fuller\\University of Connecticut\\benjamin.fuller@uconn.edu\and Alexander Russell\\University of Connecticut\\acr@uconn.edu}
 \date{\today}
