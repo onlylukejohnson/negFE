@@ -1,0 +1,42 @@
+% Proof for NegFE
+
+\section{Proof of Main Theorem}
+
+\subsection{Proof Sketch}
+Our proof follows a fairly predictable structure. 
+We begin by borrowing an existing result from \cite{fuller2020fuzzy} which gives an upperbound on the size of a set of viable points used by any good fuzzy extractor. You can find the theorem statement in Lemma \ref{lem:smallgeneralviable}.
+We then further restrict this setting by showing that in order for an adversary to succeed on average they have to be able to align these viable points with a distribution that they have only a single sample and a polynomial length advice sting. 
+We then argue that for large high entropy distributions this advice string can only reduce the entropy of a large fraction of viable points by a small amount. 
+Then, we show that this small reduction of entropy for each point in the distribution means that on average the adversary cannot align the viable points with the distribution and there exists a distiguisher that can distinguish a uniform triple from a key triple. 
+
+\subsection{Proof Setting}
+Consider $\mathcal{W}$ such that each $W \in \mathcal{W}$ is a set of $2^{\phi}$ uniformly chosen independent random points in $\zeroone{n}$. 
+Let $|\mathcal{W}| = r$ and let $Z \in \br{r}$ be an indexing variable for the selection of $W_Z$ from $\mathcal{W}$. 
+
+In this proof the goal is to show that a fuzzy extractor cannot hope to hide the input point from an outside party. 
+We will call the party that is building the Fuzzy Extractor the constructor and the party attempting to distiguish two settings the distinguisher. 
+The Fuzzy Extractor is set up with an enrolled sample from our two stage sampling proceedure before the distiguishing game begins.
+The game that the distinguisher plays is given one of two triples, real or random, do distinguish the realm to which the triple belongs. 
+The real triple is the key value corresponding to the enrolled value in the fuzzy extractor, the public value produced by Gen, and the description of the distribution $W_Z$.
+The random triple is the same except the key value corresponding to the enrolled value is substituted with a uniform value in the domain of the key values.
+
+In this setting the constructor when creating the Fuzzy Extractor is aided by another party, we call this party the advisor. 
+The advisor gets a full description of the distribution $W_Z$ and is allowed unbounded computation and time to produce an advice string $\mathsf{info}$. 
+The advisor and constructor are unbounded in their computation and time, but the length of this string is required to be polynomial in the security parameter $\lambda$. 
+The advice string is then communicated to the constructor, who also gets a sample from the distribution $w \in W_Z$. 
+The constructor then is tasked with creating a Fuzzy Extractor, specifically choosing a public value $\mathsf{pub}$ which induces a partition over the space $\zeroone{n}$ and a key labeling of the partition which determines a key value for the initial sample.
+
+\subsection{Maximum size of a Fuzzy Extractor}
+From Lemma \ref{lem:smallgeneralviable}, we have the largest size of a set of viable points is $2^{\psi}$ where $\psi = n \cdot \prns{1 - \frac{2}{\ln{2}} \cdot \tau^{2}}$.
+
+Now, it is clear from our setting that when building the Fuzzy Extractor the constructor has a single point $w$, a full description of the family of distributions $\mathcal{W}$, and the prepared advice string $\mathsf{info}$ about the specific selected distribution $W_Z$. 
+We are primarily concerned with the ability of the constructor to align the points in the selected $W_Z$, with the partition induced by $\mathsf{pub}$. 
+Clearly, if $\mathsf{info}$ is allowed to describe every point in $W_Z$ (or every point but $w$) then the constructor can include a point from $W_Z$ in each viable section of the partition induced by $\mathsf{pub}$. 
+Fortuntely for us, the distribution has exponential entropy and the advice string has polynomial length so the advice string cannot describe the entire remainder of the distribution. 
+The question remains, how much entropy remains in the distribution after seeing the advice string? 
+
+Since each point in the distribution is independent and uniform in $\zeroone{n}$ the beginning  entropy (and min-entropy) of the distribution is $|W_Z| \cdot n$. 
+Now we consider the advice string; since this string is allowed to arbitrarily depend on the distribution we can upperbound the min-entropy of the distribution conditioned on the advice string using a standard min-entropy argument found in Lemma \ref{lem:conditionalminentloss}. 
+\[
+    \acminent{W_Z}{\mathsf{info}} = |W_Z| \cdot 2^n - \log{|info|}
+\]

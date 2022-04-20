@@ -40,11 +40,42 @@ In this section we will introduce existing results to help clarify our place in 
 \subsection{Previous Results}
 It has been shown that universal fuzzy extractors are impossible in the information theoretic setting. 
 
+\subsection{Average Conditional Min-Entropy Loss}
+\begin{lemma}
+    \label{lem:conditionalminentloss}
+    Let $\vec{X} = (X_1, X_2, \ldots, X_k)$ be independent random variables. 
+    Let $Y$ be a random variable arbitrarility correlated with $\vec{X}$. 
+    Then 
+    \[
+        \acminent{\vec{X}}{Y} \geq \sum \minent{X_i} - \hart{Y}
+    \]
+\end{lemma} 
+
+\begin{proof}
+    Since each $X_i$ is independent then $\minent{\vec{X}} = \sum \minent{X_i}$.
+    Now, by definition,
+    \begin{align}
+        \acminent{\vec{X}}{Y} &= -\log{\Exlim{y \leftarrow Y}{\max\limits_{\vec{x}} \Prob{\Vec{X} = \vec{x}\ |\ Y = y}}} \\
+        &= -log{\sum\limits_{y} \max\limits_{\vec{x}} \Prob{\vec{X} = \vec{x} \ |\ Y = y} \cdot \Prob{Y = y}}\\
+        &= -log{\sum\limits_{y} \max\limits_{\vec{x}} \Prob{\vec{X} = \vec{x} \vee Y = y}}\\
+        &\geq -log{\sum\limits_{y} \max\limits_{\vec{x}, y'} \Prob{\vec{X} = \vec{x}  ^ Y = y'}}\\
+        &= -\log{2^{\hart{Y}} \cdot 2^{\minent{\vec{X},Y}}}\\
+        &= \minent{\vec{X},Y} - \hart{Y}\\
+        &\geq \minent{\vec{X}} - \hart{Y} \\   
+        &= \sum \minent{X_i} - \hart{Y}
+    \end{align}
+\end{proof}
+
 \subsubsection{Markov Bound for Predictability}
 Markov bounds are tail bounds that use Markov's Inequality to bound the probability that a random variable deviates significantly from its expected value. In Markov's inequality, we necessarily lose a multiplicative factor (here called $alpha$) in order to control the probability of the event occuring. When discussing entropy, we are dealing with a log scaled value which makes losing multiplicative factors costly. Instead, we can perform a Markov bound on the predictability scale. In this case, rather than lose a multiplicative factor in entropy, we lose a multiplicative factor in predictability which translates to a small number of bits of entropy lost for the controlled outcomes.
 
-We present the proof here:
-Let $\vec{X} = (X_1, X_2, \ldots, X_k)$ be independent random variables. Let $Y$ be a random variable arbitrarility correlated with $\vec{X}$. Then we can bound the entropy loss of $\acminent{\vec{X}}{Y}$ using a Markov bound on predictability. 
+\begin{lemma}
+    \label{lem:markovpred}
+    Let $\vec{X} = (X_1, X_2, \ldots, X_k)$ be independent random variables. Let $Y$ be a random variable arbitrarility correlated with $\vec{X}$. 
+    Let $\alpha > 0$, then for all but a $(1-1/\alpha)$ fraction of the $X_i$ the entropy loss is less than $\log{\alpha}/k$
+\end{lemma}
+
+\begin{proof} 
 
 \begin{align}
     \acminent{\vec{X}}{Y} &= \Delta\\
@@ -53,8 +84,29 @@ Let $\vec{X} = (X_1, X_2, \ldots, X_k)$ be independent random variables. Let $Y$
     \Problim{Y}{\max\limits_{\vec{x}} \Prob{\Vec{X} = \vec{x} \,|\, Y = y} \geq \alpha \cdot 2^{-\Delta}} &\leq \frac{1}{\alpha} \\
     \Problim{Y}{\log{\max\limits_{\vec{x}} \Prob{\Vec{X} = \vec{x} \,|\, Y = y}} \geq \log{\alpha} -\Delta} &\leq \frac{1}{\alpha} \\
     \Problim{Y}{-\log{\max\limits_{\vec{x}} \Prob{\Vec{X} = \vec{x} \,|\, Y = y}} < \Delta -\log{\alpha}} &\leq \frac{1}{\alpha} \\
-    \Problim{Y}{\minent{X\, |\, Y} < \Delta -\log{\alpha}} &\leq \frac{1}{\alpha}
+    \Problim{Y}{\minent{\vec{X}\, |\, Y} < \Delta -\log{\alpha}} &\leq \frac{1}{\alpha}
 \end{align}
+    
+\end{proof}
+
+\subsubsection{Upper bound for size of a Fuzzy Extractor}
+In \cite{fuller2020fuzzy}, Fuller et al. show that the size of a fuzzy extractor can be upper bound in a general case. 
+We restate their lemma here for completeness of our main proof. 
+
+\begin{lemma}[Lemma 5.2 in \cite{fuller2020fuzzy}]
+    \label{lem:smallgeneralviable}
+    Suppose $\mathcal{M}$ is $\zeroone{n}$ with the Hamming Metric, $\kappa \geq 2$, $0 \leq t \leq n/2$, and $\epsilon > 0$. 
+    Suppose $(\mathsf{Gen, Rep})$ is a $(\mathcal{M,W},\kappa, t, \epsilon)$-fuzzy extractor with error $\delta = 0$, for some distribution family $\mathcal{W}$ over $\mathcal{M}$. 
+    Let $\tau = t/n$. 
+    For any fixed $p$, there is a set $\mathsf{GoodKey}_p \subseteq \zeroone{\kappa}$ of size at least $2^{\kappa - 1}$ such that for every $\mathsf{key} \in \mathsf{GoodKey}_p$,
+    \[
+        \log{|\sbr{v \in \mathcal{M}|\prns{\mathsf{key}, p} \in \mathsf{supp}\prns{\mathsf{Gen}(v)}}|} \leq n \cdot h_2\prns{\frac{1}{2} - \tau} \leq n \cdot \prns{1 - \frac{2}{\ln{2}} \cdot \tau^{2}}, 
+    \]   
+    and, therefore, for any distribution $D_{\mathcal{M}}$ on $\mathcal{M}$, 
+    \[
+        \hart{D_{\mathcal{M}}|\mathsf{Gen}\prns{D_{\mathcal{M}}} = \prns{\mathsf{key}, p}} \leq n \cdot h_2\prns{\frac{1}{2} - \tau} \leq n \cdot \prns{1 - \frac{2}{\ln{2}} \cdot \tau^{2}}.
+    \]   
+\end{lemma}
 
 \subsection{New Definitions}
 Fuzzy extractors with quasipolynomial advice. 
