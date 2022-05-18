@@ -27,6 +27,14 @@ In this section we will introduce existing results to help clarify our place in 
     $
 \end{definition}
 
+\begin{definition}[Fuzzy min-entropy~\cite{fuller2020fuzzy}]
+
+For a distribution $W$ and a distance parameter $t$, the fuzzy min-entropy of $W$, denoted $\Hfuzz(W)$ is 
+\[
+\Hfuzz(W) \overset{def}= -\log{ \max_{w^*} \left(\sum_{w, \dis(w, w^*)\le t} \Pr[W=w] \right)}.
+\]
+\end{definition}
+
 \begin{definition}[Markov's Inequality]
     Markov's inequality is a tail bound for random variables that gives an upper bound on the probability of a random variable deviating from its mean. Let $\Pr[X>0] = 1$. Then the following inequality holds for any $\alpha > 0$: 
     \[ 
@@ -84,7 +92,7 @@ It has been shown that universal fuzzy extractors are impossible in the informat
 \subsubsection{Markov Bound for Predictability}
 Markov bounds are tail bounds that use Markov's Inequality to bound the probability that a random variable deviates significantly from its expected value. In Markov's inequality, we necessarily lose a multiplicative factor (here called $alpha$) in order to control the probability of the event occuring. When discussing entropy, we are dealing with a log scaled value which makes losing multiplicative factors costly. Instead, we can perform a Markov bound on the predictability scale. In this case, rather than lose a multiplicative factor in entropy, we lose a multiplicative factor in predictability which translates to a small number of bits of entropy lost for the controlled outcomes.
 
-\todo{Just to make sure this is Lemma 2.2a from \cite{dodis2008fuzzy} right? Shouldn't need to reprove.}
+\todo{This is \cite[Lemma 2.2a]{dodis2008fuzzy} right? Shouldn't need to reprove.}
 
 \begin{lemma}
     \label{lem:markovpred}
@@ -94,7 +102,7 @@ Markov bounds are tail bounds that use Markov's Inequality to bound the probabil
 
 \begin{proof} 
 
-\begin{align}
+\begin{align*}
     \acminent{\vec{X}}{Y} &= \Delta\\
     -\log{\Exlim{Y}{\max\limits_{\vec{x}} \Prob{\Vec{X} = \vec{x} \,|\, Y = y}}} &= \Delta\\
     \Exlim{Y}{\max\limits_{\vec{x}} \Prob{\Vec{X} = \vec{x} \,|\, Y = y}} &= 2^{-\Delta}\\
@@ -102,7 +110,7 @@ Markov bounds are tail bounds that use Markov's Inequality to bound the probabil
     \Problim{Y}{\log{\max\limits_{\vec{x}} \Prob{\Vec{X} = \vec{x} \,|\, Y = y}} \geq \log{\alpha} -\Delta} &\leq \frac{1}{\alpha} \\
     \Problim{Y}{-\log{\max\limits_{\vec{x}} \Prob{\Vec{X} = \vec{x} \,|\, Y = y}} < \Delta -\log{\alpha}} &\leq \frac{1}{\alpha} \\
     \Problim{y\leftarrow Y}{\minent{\vec{X}\, |\, Y=y} < \Delta -\log{\alpha}} &\leq \frac{1}{\alpha}
-\end{align}
+\end{align*}
     
 \end{proof}
 
