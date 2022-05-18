@@ -108,7 +108,7 @@ Markov bounds are tail bounds that use Markov's Inequality to bound the probabil
 
 \subsubsection{Upper bound for size of a Fuzzy Extractor}
 In \cite{fuller2020fuzzy}, Fuller et al. show that the size of a fuzzy extractor can be upper bound in a general case. 
-We restate their lemma here for completeness of our main proof. 
+We restate their lemma here for the completeness of our main proof. 
 
 \begin{lemma}[Lemma 5.2 in \cite{fuller2020fuzzy}]
     \label{lem:smallgeneralviable}
@@ -130,7 +130,7 @@ Fuzzy extractors with quasipolynomial advice.
 
 \begin{definition}[Fuzzy Extractor with distributional advice]
 Let $\mathcal{W}$ be a family of distributions indexed by $z$.  That is, one can denote each distribution in $\mathcal{W}$ as $W_Z$ which fully describes the probability mass function of $W$.  
-For metric space $(\mathcal{M}, \dis)$, a $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, \ell)$-\emph{fuzzy extractor} is a pair of algorithms $(\gen, \rep, \aux)$ with the following properties:
+For metric space $(\{0,1\}^n, \dis)$, a $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon, \ell)$-\emph{fuzzy extractor with distributional advice} is a triple of algorithms $(\gen, \rep, \aux)$ with the following properties:
 \begin{enumerate} 
 \itemsep0em
 \item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, let $r, p \leftarrow \gen(w)$ then $\rep(w', p) = r$ with probability $1$. 
@@ -139,6 +139,16 @@ For metric space $(\mathcal{M}, \dis)$, a $(\mathcal{M}, \mathcal{W}, \kappa, t,
 \end{definition}
 
 \begin{definition}[Efficient Fuzzy Extractor in Known Distribution Setting]
-Fix some distribution $W_Z$ Let $(\gen, \rep)$ be a $(\{0,1\}^n, \{W_Z\}, \kappa, t, \epsilon, \ell)$-fuzzy extractor with the additional property that $\gen$ can be implemented by an PPT algorithm (polynomial in the dimension $n$ of the metric space).
+Fix some distribution $W_Z$ Let $(\gen, \rep)$ be a $(\{0,1\}^n, \{W_Z\}, \kappa, t, \epsilon, \ell)$-fuzzy extractor.  The pair is \emph{efficient} if $\gen, \rep$ have the  additional property that they can be implemented by an algorithm that can be described in polynomial space (polynomial in the dimension $n$ of the metric space).
 \end{definition}
+
+\begin{lemma}
+Let $\mathcal{W}$ be a distribution family indexed by the random family $Z$ and suppose that no $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, \ell)$-\emph{fuzzy extractor with distributional advice} exists for all $\ell = \poly(n)$.  Then there must be some distribution $W_Z \in \mathcal{W}$ for which no  $(\{0,1\}^n, \{W_Z\}, \kappa, t, \epsilon, \ell)$ efficient fuzzy extractor exists.
+\label{lem:distributional advise suffices}
+\end{lemma}
+\begin{proof}[Proof of Lemma~\ref{lem:distributional advise suffices}]
+We proceed by contrapositive.  Suppose that for every $W_Z\in\mathcal{W}$ there exists an efficient fuzzy extractor.  We denote these algorithms by $(\gen_Z, \rep_Z)$ respectively.  Across $Z$ let $\ell = \poly(n)$ represent the maximum space needed to implement some algorithm $\gen_Z$ or $\rep_Z$. We now describe how to build the fuzzy extractor $(\gen, \rep, \advise)$ with distributional advice.  Let $(\gen_Z, \rep_Z) \leftarrow \advise(Z)$ which has length at most $2\ell$.
+
+Then define $\gen(x, C)$ as follows: 1) interpret $C$ as two circuits $\gen', \rep'$ and output $\gen'(x)$.  Define $\rep(x, p, C)$ interpret $C$ as two circuits $\gen', \rep'$ and output $\rep'(x', p)$.  It is clear that $(\gen, \rep, \advise)$ is a $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, 2\ell)$ fuzzy extractor with distributional advise.
+\end{proof}
 
