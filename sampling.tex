@@ -20,8 +20,7 @@ An interesting part of this work is how we share information about $W_Z$. We wil
 
 \subsection{Distributions over $\zeroone{n}$}
 \begin{description}
-    \item[$U_{n,k}$] Picking $k$ points from $\zeroone{n}$ without replacement uniformly results in a distribution we will denote $U_{n,k}$. 
-    The only condition here is that $k \leq 2^n$.
+    \item[$U_{n,k}$] Picking $k$ points from $\zeroone{n}$ with replacement uniformly results in a distribution we will denote $U_{n,k}$. Note that there are $2^{nk}$ such distributions.
 
     \item[$U_{n,k,t}^{-}$] Another distribution of interest is picking $k$ points uniformly from $\zeroone{n}$ and then removing points that are within distance $t$ of one another, we denote this $U_{n,k,t}^{-}$. 
     This may result in fewer than $k$ points being included in the final set. 
@@ -55,7 +54,7 @@ An interesting part of this work is how we share information about $W_Z$. We wil
 U_{n, k} \setminus \mathtt{PCode}_{n, k, t, \alpha}^{*}  &=2^n \cdot {|B_t| \choose 2^{-\alpha}k}\cdot {2^n-|B_t| \choose k(1-2^{-\alpha})}\\
 &\le 2^n \cdot {|B_t| \choose 2^{-\alpha}k}\cdot {2^n \choose k(1-2^{-\alpha})}\\
 &\le 2^n \cdot 2^{nh_2(t/n) 2^{-\alpha} k} * 2^{nk(1-2^{-\alpha})}\\
-&\le \cdot 2^{nk(1-2^{-\alpha}(1-h_2(t/n)))+n}\\
+&\le 2^{nk(1-2^{-\alpha}(1-h_2(t/n)))+n}\\
  \end{align*}
  Thus, one has that 
  
