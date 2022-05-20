@@ -20,7 +20,7 @@ An interesting part of this work is how we share information about $W_Z$. We wil
 
 \subsection{Distributions over $\zeroone{n}$}
 \begin{description}
-    \item[$U_{n,k}$] Picking $k$ points from $\zeroone{n}$ with replacement uniformly results in a distribution we will denote $U_{n,k}$. Note that there are $2^{nk}$ such distributions.
+    \item[$U_{n,k}$] Picking $k$ points from $\zeroone{n}$ without replacement uniformly results in a distribution we will denote $U_{n,k}$. Note that there are ${2^{n}\choose k}$ outcomes each occuring with probability $1/{2^{n}\choose k}$.
 
     \item[$U_{n,k,t}^{-}$] Another distribution of interest is picking $k$ points uniformly from $\zeroone{n}$ and then removing points that are within distance $t$ of one another, we denote this $U_{n,k,t}^{-}$. 
     This may result in fewer than $k$ points being included in the final set. 
@@ -28,16 +28,19 @@ An interesting part of this work is how we share information about $W_Z$. We wil
 
     \item[$\mathtt{Code}_{n,k,t}^{*}$] The set of all $k$ points where all points are distance $t$ from one another.  That is, the set of all $(n,\log k, t)$ error-correcting codes. The trivial bounds from above apply here as well.  Note for all outcomes $X$ from this distribution $\Hfuzz(X) = \log k$.
     
-    \item[$\mathtt{PCode}_{n, k, t, \alpha}^{*}$] The uniform distribution over all sets $X = \{x_i\}$ with the additional condition that $\Hfuzz(X) = \alpha$.  Note that this weakens the condition of $\mathtt{Code}$ above as some distributions are allowed to lie within distance $t$ as long as fewer than $2^{-\alpha}*k$ do lie within a single ball of radius $t$.
+    \item[$\mathtt{PCode}_{n, k, t, \alpha}^{*}$] The uniform distribution over all sets $X = \{x_i\}$ of size $k$ with the additional condition that $\Hfuzz(X) \ge \alpha$.  Note that this weakens the condition of $\mathtt{Code}$ above as some distributions are allowed to lie within distance $t$ as long as fewer than $2^{-\alpha}*k$ do lie within a single ball of radius $t$.
 \end{description}
  
  
  \begin{lemma}
- $\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \alpha}^{*}) \le \frac{2^n}{2^{nk2^{-\alpha}(1-h_2(t/n))}}.$.
+ $\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \alpha}^{*}) \le 2^{n+k\log e- nk2^{-\alpha}(1-h_2(t/n))}$.
  \end{lemma}
  
  \begin{proof}
- We begin by noting that the distribution $U_{n,k}$ distribution has ${2^n \choose k}$ entries.  We analyze what fraction of members of $U_{n,k}$ are not in $\mathtt{PCode}_{n, k, t, \alpha}^{*}$.
+ We begin by noting that the size of the set of ${2^n \choose k}$ points that $U_{n,k}$ is uniformly sampled from
+ \begin{align*}
+ {2^n\choose k} \ge 2^{nk}/k^k.
+ \end{align*}.  We analyze what fraction of members of $U_{n,k}$ are not in $\mathtt{PCode}_{n, k, t, \alpha}^{*}$.
  
  We begin by enumerating the number of entries that are not in $\mathtt{PCode}$:
  
@@ -47,17 +50,21 @@ An interesting part of this work is how we share information about $W_Z$. We wil
  In the above, 
  \begin{enumerate}
  \item The choice of the point for $w^*$ that will be the center of the ball.
- \item The choice for the $2^-\alpha k$ points that need to be within distance $t$ of the center point.
+ \item The choice for the $2^{-\alpha} k$ points that need to be within distance $t$ of the center point.
  \item The choice for the remaining points $k(1-2^{-\alpha})$ that need to be somewhere in the space outside of the ball.
  \end{enumerate}
+ Continuing the computation recalling that $(a/b)^b \le {a\choose b} \le (ae/b)^b$ one has:
  \begin{align*}
-U_{n, k} \setminus \mathtt{PCode}_{n, k, t, \alpha}^{*}  &=2^n \cdot {|B_t| \choose 2^{-\alpha}k}\cdot {2^n-|B_t| \choose k(1-2^{-\alpha})}\\
+|U_{n, k} \setminus \mathtt{PCode}_{n, k, t, \alpha}^{*}|  &=2^n \cdot {|B_t| \choose 2^{-\alpha}k}\cdot {2^n-|B_t| \choose k(1-2^{-\alpha})}\\
 &\le 2^n \cdot {|B_t| \choose 2^{-\alpha}k}\cdot {2^n \choose k(1-2^{-\alpha})}\\
-&\le 2^n \cdot 2^{nh_2(t/n) 2^{-\alpha} k} * 2^{nk(1-2^{-\alpha})}\\
-&\le 2^{nk(1-2^{-\alpha}(1-h_2(t/n)))+n}\\
+&= 2^n \cdot {2^{nh_2(t/n)} \choose 2^{-\alpha}k}\cdot {2^n \choose k(1-2^{-\alpha})}\\
+&= 2^n \cdot \left(\frac{e2^{nh_2(t/n)}}{2^{-\alpha}k}\right)^{2^{-\alpha}k}\cdot \left(\frac{e2^n}{k(1-2^{-\alpha})}\right)^{k(1-2^{-\alpha})}\\
+&\le 2^{n+k\log e} \frac{2^{nk(1-2^{-\alpha}(1-h_2(t/n)))}}{(2^{-\alpha}k)^{2^{-\alpha}k} (k(1-2^{-\alpha}))^{k(1-2^{-\alpha}})}\\
  \end{align*}
  Thus, one has that 
- 
-\[\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \alpha}^{*}) \le \frac{2^n}{2^{nk2^{-\alpha}(1-h_2(t/n))}}.\]
-\todo{Come back and use correct bounds, this is rough order}
- \end{proof}
+ \begin{align*}
+\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \alpha}^{*}) &= \frac{|U_{n, k} \setminus \mathtt{PCode}_{n, k, t, \alpha}^{*}|}{|U_{n, k}|}\\
+&\le\frac{2^{n+k\log e} \frac{2^{nk(1-2^{-\alpha}(1-h_2(t/n)))}}{(2^{-\alpha}k)^{2^{-\alpha}k} (k(1-2^{-\alpha}))^{k(1-2^{-\alpha}})}}{\frac{2^{nk}}{k^k}}\\
+&\le \frac{2^{n+k\log e}}{2^{nk2^{-\alpha}(1-h_2(t/n))}} = 2^{n+k\log e- nk2^{-\alpha}(1-h_2(t/n))}.
+ \end{align*}
+  \end{proof}
