@@ -1,11 +1,71 @@
-\documentclass{article}
-\usepackage{amsmath, amsfonts, amsthm}
+\def\lncs{0}
+
+
+\ifnum\lncs=0
+  \documentclass[11pt]{article}
+  \usepackage[top=3cm, bottom=3cm, left=2cm, right=2cm]{geometry}      % [top=2cm, bottom=2cm, left=2cm, right=2cm]
+  \geometry{letterpaper}                   % ... or a4paper or a5paper or ...
+  %\geometry{landscape}                % Activate for for rotated page geometry
+  %\usepackage[parfill]{parskip}
+  \usepackage{amsthm}
+  \newtheorem{theorem}{Theorem}
+  \newtheorem{lemma}[theorem]{Lemma}
+  \newtheorem{proposition}[theorem]{Proposition}
+  \newtheorem{corollary}[theorem]{Corollary}
+  \newtheorem{conjecture}{Conjecture}
+  \newtheorem{definition}{Definition}
+  \newtheorem{assumption}{Assumption}
+  \newtheorem{claim}{Claim}
+  \newtheorem{problem}{Problem}
+  \newtheorem{construction}{Construction}
+  \newtheorem{remark}{Remark}
+  \renewcommand{\vec}[1]{\vect{#1}}      % activate for lncs style vectors
+
+\else
+  \documentclass[a4paper,UKenglish,cleveref, autoref, thm-restate]{lipics-v2021}
+  \newtheorem{construction}{Construction}
+  \renewcommand{\paragraph}[1]{\subsubsection{#1}}
+\fi
+
 \usepackage[dvipsnames]{xcolor}
 
-% Theorems
-\newtheorem{lemma}{Lemma}
-\theoremstyle{definition}
-\newtheorem*{definition}{Definition}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usepackage{amssymb, amsmath, amsfonts}
+\usepackage{enumerate}
+\usepackage{hyperref}
+\usepackage{xspace}
+\usepackage{graphicx}
+\usepackage{latexsym}
+\usepackage{color}
+\usepackage{framed}
+\usepackage{algpseudocode}
+\usepackage{breakcites}
+
+\mathchardef\mhyphen="2D
+\newcommand{\secref}[1]{\mbox{Section~\ref{#1}}}
+\newcommand{\subsecref}[1]{\mbox{Subsection~\ref{#1}}}
+\newcommand{\apref}[1]{\mbox{Appendix~\ref{#1}}}
+\newcommand{\thref}[1]{\mbox{Theorem~\ref{#1}}}
+\newcommand{\exref}[1]{\mbox{Example~\ref{#1}}}
+\newcommand{\defref}[1]{\mbox{Definition~\ref{#1}}}
+\newcommand{\corref}[1]{\mbox{Corollary~\ref{#1}}}
+\newcommand{\lemref}[1]{\mbox{Lemma~\ref{#1}}}
+\newcommand{\assref}[1]{\mbox{Assumption~\ref{#1}}}
+\newcommand{\probref}[1]{\mbox{Problem~\ref{#1}}}
+\newcommand{\clref}[1]{\mbox{Claim~\ref{#1}}}
+\newcommand{\propref}[1]{\mbox{Proposition~\ref{#1}}}
+\newcommand{\remref}[1]{\mbox{Remark~\ref{#1}}}
+\newcommand{\consref}[1]{\mbox{Construction~\ref{#1}}}
+\newcommand{\figref}[1]{\mbox{Figure~\ref{#1}}}
+\newcommand{\conditionalpara}[1]{
+\ifnum\lncs=1\noindent \textbf{#1} \else \paragraph{#1}\fi}
+\newcommand{\conditionaleqn}[1]{\ifnum\lncs=1$#1$\else \[#1\]\fi}
+\DeclareMathOperator*{\expe}{\mathbb{E}}
+\DeclareMathOperator*{\var}{\text{Var}}
+\DeclareMathOperator*{\Exp}{\mathbb{E}}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
 
 % Commands
 \newcommand{\comment}[1]{\textcolor{Mulberry}{#1}}
@@ -13,7 +73,6 @@
 \newcommand{\here}{\todo{Stopped here! }}
 
 %Probability
-\DeclareMathOperator*{\Exp}{\ensuremath{\mathbb{E}}}
 \newcommand{\Ex}[1]{\Exp\left[#1\right]}
 \newcommand{\Exlim}[2]{\Exp\limits_{#1}\br{#2}}
 \newcommand{\Prob}[1]{\Pr\br{#1}}
@@ -25,6 +84,69 @@
 \newcommand{\minent}[1]{H_{\infty}\prns{#1}}
 \newcommand{\acminent}[2]{\overset{\sim}{H}\!_{\infty}\prns{#1\,|\,#2}}
 \newcommand{\hart}[1]{H_0\prns{#1}}
+
+
+%MACROS galore!!!
+\newcommand{\class}[1]{{\ensuremath{\mathsf{#1}}}}
+\newcommand{\gen}{\ensuremath{\class{Gen}}\xspace}
+\newcommand{\aux}{\ensuremath{\class{Advise}}\xspace}
+\newcommand{\advise}{\ensuremath{\class{advise}}\xspace}
+\newcommand{\rep}{\ensuremath{\class{Rep}}\xspace}
+\newcommand{\sketch}{\ensuremath{\class{SS}}\xspace}
+\newcommand{\rec}{\ensuremath{\class{Rec}}\xspace}
+\newcommand{\enc}{\ensuremath{\class{Enc}}\xspace}
+\newcommand{\wt}{\ensuremath{\textsf{wt}}\xspace}
+\newcommand{\dec}{\ensuremath{\class{Dec}}\xspace}
+\newcommand{\prg}{\ensuremath{\class{prg}}\xspace}
+\newcommand{\zo}{\ensuremath{\{0, 1\}}}
+\newcommand{\vect}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand{\zq}{\ensuremath{\mathbb{Z}_q}}
+\newcommand{\Fq}{\ensuremath{\mathbb{F}_q}}
+\newcommand{\sample}{\ensuremath{\class{Sample}}\xspace}
+\newcommand{\neigh}{\ensuremath{\class{Neigh}}\xspace}
+\newcommand{\error}{\ensuremath{\class{Err}}\xspace}
+\newcommand{\weight}{\ensuremath{\class{Wgt}}\xspace}
+\newcommand{\dis}{\ensuremath{\mathsf{dis}}}
+\newcommand{\bin}{\ensuremath{\mathsf{Bin}}}
+\newcommand{\decode}{\ensuremath{\mathsf{Decode}}}
+\newcommand{\guess}{\mathsf{guess}}
+\newcommand{\nullsp}{\mathtt{null}}
+
+
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\F}{\mathbb{F}}
+
+
+\newcommand{\metric}{\ensuremath{\mathtt{Metric}}\xspace}
+\newcommand{\bdde}{\ensuremath{\mathtt{BDDE}}\xspace}
+\newcommand{\bdders}{\ensuremath{\mathtt{BDDE-RS}}\xspace}
+\newcommand{\bdderl}{\ensuremath{\mathtt{BDDE-RL}}\xspace}
+\newcommand{\findrep}{\ensuremath{\mathtt{FIND-REP}}\xspace}
+\newcommand{\hill}{\ensuremath{\mathtt{HILL}}\xspace}
+\newcommand{\hillrlx}{\ensuremath{\mathtt{HILL\mhyphen rlx}}\xspace}
+\newcommand{\yao}{\ensuremath{\mathtt{Yao}}\xspace}
+\newcommand{\unp}{\ensuremath{\mathtt{unp}}\xspace}
+\newcommand{\unprlx}{\ensuremath{\mathtt{unp\mhyphen rlx}}\xspace}
+\newcommand{\metricstar}{\ensuremath{\mathtt{Metric}^*}\xspace}
+\newcommand{\metricd}{\ensuremath{\mathtt{Metric}^*\mathtt{-d}}\xspace}
+\newcommand{\hillstar}{\ensuremath{\mathtt{HILL}^*}\xspace}
+\newcommand{\hillprime}{\ensuremath{\mathtt{HILL'}}\xspace}
+\newcommand{\metricprime}{\ensuremath{\mathtt{Metric'}}\xspace}
+\newcommand{\metricprimestar}{\ensuremath{\mathtt{Metric'}^*}\xspace}
+\newcommand{\hillprimestar}{\ensuremath{\mathtt{HILL'}^*}\xspace}
+\newcommand{\poly}{\ensuremath{\mathtt{poly}}\xspace}
+\newcommand{\rank}{\ensuremath{\mathtt{rank}}\xspace}
+\newcommand{\ngl}{\ensuremath{\mathtt{ngl}}\xspace}
+\newcommand{\Hoo}{\mathrm{H}_\infty}
+\newcommand{\Hav}{\tilde{\mathrm{H}}_\infty}
+\newcommand{\Hfuzz}{\mathrm{H}^{\mathtt{fuzz}}_{t,\infty}}
+\newcommand{\Huse}{\mathrm{H}_{\mathtt{usable}}}
+\newcommand{\Dom}{\mathsl{Dom}}
+\newcommand{\Range}{\mathsl{Rng}}
+\newcommand{\Keys}{\mathsl{Keys}}
+\def\col{\mathrm{Col}}
+
+
 
 
 % Useful Notation

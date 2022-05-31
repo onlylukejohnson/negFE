@@ -1,13 +1,60 @@
+%!TEX root = main.tex
+
 % Proof for NegFE
 
-\section{Proof of Main Theorem}
+\section{Main Result}
+\begin{theorem}
+Fix $(\gen, \rep, \advise)$, let $n, \kappa, t, \ell $ be parameters.  Let $\mathcal{W} = \{W_Z\}$ be a family of distributions where for each $W_Z, \Hfuzz(W) \ge \alpha$.  If $(\mathcal{M,W},\kappa, t, \epsilon, \ell)$-fuzzy extractor with auxiliary input where the following conditions are satisfied:
+\begin{enumerate}
+\itemsep0em
+\item $\kappa = \omega(\log \lambda)$ \todo{how much really}
+\item $\ell = \poly(n)$ \todo{how much really}
+\item Some complicated relationship with key length and distance \todo{be precise}.
+\item $\alpha$ is big enough.
+\end{enumerate}
+Then \[
+\epsilon> ....\]
+\end{theorem}
 
 \subsection{Proof Sketch}
-Our proof follows a fairly predictable structure. 
-We begin by borrowing an existing result from \cite{fuller2020fuzzy} which gives an upperbound on the size of a set of viable points used by any good fuzzy extractor. You can find the theorem statement in Lemma \ref{lem:smallgeneralviable}.
-We then further restrict this setting by showing that in order for an adversary to succeed on average they have to be able to align these viable points with a distribution that they have only a single sample and a polynomial length advice sting. 
-We then argue that for large high entropy distributions this advice string can only reduce the entropy of a large fraction of viable points by a small amount. 
-Then, we show that this small reduction of entropy for each point in the distribution means that on average the adversary cannot align the viable points with the distribution and there exists a distiguisher that can distinguish a uniform triple from a key triple. 
+Our proof uses the following structure
+\begin{enumerate}
+\item We start by using Lemma~\ref{lem:smallgeneralviable} which bounds the number of ``viable'' points for most public values $p$.  Note that this Lemma bounds the total number of points and holds even if $\gen, \rep$ have access to an arbitrary advice string.
+\item We then further restrict this setting by showing that in order for an adversary to succeed on average they have to be able to align these viable points with a distribution that they have only a single sample and a polynomial length advice sting. 
+\item We then argue that for large high entropy distributions this advice string can only reduce the entropy of a large fraction of viable points by a small amount. 
+\item Then, we show that this small reduction of entropy for each point in the distribution means that on average the adversary cannot align the viable points with the distribution and there exists a distinguisher that can distinguish a uniform triple from a key triple. 
+\end{enumerate}
+
+\paragraph{The family $\mathcal{W}$}
+We consider the following family $Z$ which chooses $k$ points without replacement from the space $\{0,1\}^n$.  That is, if one samples $Z$ uniformly then one obtains the distribution $U_{n,k}$. We note there are distributions $W_Z$ in this family that have little fuzzy min-entropy.  However, we will show that this family is statistically close to a family where every distribution has fuzzy min-entropy.  For the remainder of this proof we consider $U_{n,k}$ and then show that the fuzzy extractor cannot perform differently on the family $\mathtt{PCode}_{n, k, t, \alpha}^{*}$ where every distribution does have fuzzy min-entropy. For convenience we use $W_{z, 1},..., W_{z,k}$ to describe the distribution $k$ points with nonzero probability in $W_z$ for some value $z$.  We assume no ordering over these points.  For all values $x, y$, 
+\[
+\Pr[W_{z, i} =x | W_{z, j} = y] = \begin{cases} \frac{1}{2^n-1} &x\neq y\\0&x=y.\end{cases}
+\]
+
+
+\begin{lemma}
+Let $Z$ describe a uniform sample of $U_{n,k}$.  Let $(\gen, \rep, \aux)$ be an auxiliary input fuzzy extractor.  Let $\advise \leftarrow \aux(Z)$ be of length $\ell$.  For a quad $v, p, r, \advise$ define 
+\[
+\mathtt{Viable}(v, p, r, \advise) = \begin{cases} 1& \Pr[\gen(v, \advise) = (r, p)]>0\\0&\text{otherwise}\end{cases}.\]
+Fix some $p$ and let $\mathtt{GoodKey}$ be defined as in Lemma~\ref{lem:smallgeneralviable}. For each value $\advise$ there is some set $\mathcal{I}_{\advise}$ of size at most $\ell$, then it is true for each $i\not \in \mathcal{I}_\advise$ that
+\[
+\Pr\left[\mathtt{Viable}(w_i, p, \mathsf{key}, \advise) = 1\middle| \begin{aligned} z\leftarrow Z\\ \advise\leftarrow \aux(z)\\w\leftarrow W_Z\\(\mathsf{key}, p)\leftarrow \gen(w, \advise) \\\mathsf{key}\in\mathtt{GoodKey}\end{aligned} \right]< some value.
+\]
+\end{lemma}
+\begin{proof}
+Let $Z$ and $\advise$ be defined as above. We begin by noting that \[
+\Hoo(W_{z, 1},..., W_{z, k}) = \log {n\choose k}\overset{def}=\alpha.\]
+ It is thus, the case that 
+\[
+\Hav(W_{z, 1},..., W_{z, k} | \advise) \ge \alpha - |\advise|.
+\]
+ Thus, one has that 
+\begin{align*}
+\expe_{i=1}^k \left[\Hav(W_{z, i} | \advise)\right] \ge \frac{\alpha - |\advise|}{k}.
+\end{align*}
+Suppose not, then there exists the following predictor $\mathcal{P}$ for the joint distribution $W_{z, 1},..., W_{z, k} | \advise$, predict $w_{z,i}\leftarrow W_{z, i}| \advise$ (independently) and then output the joint prediction $w_{z,1},..., w_{z, k}$.  Now by Lemma
+
+\end{proof}
 
 \subsection{Proof Setting}
 Consider $\mathcal{W}$ such that each $W \in \mathcal{W}$ is a set of $2^{\phi}$ uniformly chosen independent random points in $\zeroone{n}$. 

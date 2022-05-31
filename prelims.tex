@@ -1,40 +1,63 @@
+%!TEX root = main.tex
 % Preliminary Definitions and Results for negFE
 
 \section{Preliminaries}
-In this section we will introduce existing results to help clarify our place in the literature, provide necessary existing definitions to show what we are borrowing and what we build on, and we will provide new definitions in support of our novel results.
+In this section we will introduce existing results to help clarify our place in the literature, provide necessary existing definitions to show what we are borrowing and what we build on, and we will provide new definitions in support of our novel results.  For distributions $X, Y$, $\Delta(X, Y)$ represents the statistical distance between the two distributions.  That is, 
+\[
+\Delta(X, Y)\overset{def}= \frac{1}{2}\sum_{x \in X} \left| \Pr[X=x] - \Pr[Y=y]\right|.
+\]
 
 \subsection{Existing Definitions}
 
 \begin{definition}[Entropy]
-    \emph{Entropy}, denoted $\ent{X}$, for some random variable $X$ is a measure of how stable the outcomes of the random variable are. It is calculated as \[\ent{X} \defined \sum\limits_{i=1}^n \p{x_i}\log{\p{x_i}}\] where there are $n$ values that $X$ takes and we denote them as $x_i$. 
+    \emph{Shannon Entropy} or simply Entropy, denoted $\ent{X}$, for some discrete random variable $X$ is a measure of how stable the outcomes of the random variable are. It is calculated as \[\ent{X} \defined \sum\limits_{i=1}^n \p{x_i}\log{\p{x_i}}\] where there are $n$ values that $X$ takes and we denote them as $x_i$. 
 \end{definition}
 
 \begin{definition}[Min Entropy]
-    \emph{Min Entropy}, denoted $\minent{X}$, is a best case measure of the stability of the random variable $X$. It is calculated as \[\minent{X} \defined -\log{\max\limits_{x_i} p(x_i)}\].  
+    \emph{Min Entropy}, denoted $\minent{X}$, is a best case measure of the stability of the random variable $X$. It is calculated as \[\minent{X} \defined -\log{\max\limits_{x_i} p(x_i)}.\]  
 \end{definition}
 
 \begin{definition}[Average Conditional Min Entropy]
-    \emph{Average Conditional Min Entropy}, denoted $\acminent{X}{Y}$ for two random variables $X$ and $Y$ is an average measure of the remaining entropy of the former given the outcome of the latter. It is calclulated as \[ \acminent{X}{Y} \defined -\log{\Exlim{y \leftarrow Y}{\max\limits_{x} \Prob{X = x\ |\ Y = y}}}.\] 
+    \emph{Average Conditional Min Entropy}, denoted $\acminent{X}{Y}$ for two random variables $X$ and $Y$ is an average measure of the remaining entropy of the former given the outcome of the latter. It is calculated as \[ \acminent{X}{Y} \defined -\log{\Exlim{y \leftarrow Y}{\max\limits_{x} \Prob{X = x\ |\ Y = y}}}.\] 
 \end{definition}
 
 \begin{definition}[Hartley Entropy]
-    \emph{Hartley Entropy} also called \emph{Hartley's Function} measures the uncertainty of a random variable in a basic way, measuring the number of outcomes the random variable has with non-zero probability. It can be computed as 
-    \[
+    \emph{Hartley Entropy} also called \emph{Hartley's Function} measures the uncertainty of a random variable in a basic way, measuring the number of outcomes the random variable has with non-zero probability. Formally, $
     \hart{X} = | \sbr{x \in X\,|\, \Prob{X = x} > 0}|.
-    \]
+    $
+\end{definition}
+
+\begin{definition}[Fuzzy min-entropy~\cite{fuller2020fuzzy}]
+
+For a distribution $W$ and a distance parameter $t$, the fuzzy min-entropy of $W$, denoted $\Hfuzz(W)$ is 
+\[
+\Hfuzz(W) \overset{def}= -\log{ \max_{w^*} \left(\sum_{w, \dis(w, w^*)\le t} \Pr[W=w] \right)}.
+\]
 \end{definition}
 
 \begin{definition}[Markov's Inequality]
-    Markov's inequality is a tail bound for random variables that gives an upper bound on the probability of a random variable deviating from its mean. Let $X$ be a non-negative valued random variable. Then the following inequality holds for any $\alpha > 0$: 
+    Markov's inequality is a tail bound for random variables that gives an upper bound on the probability of a random variable deviating from its mean. Let $\Pr[X>0] = 1$. Then the following inequality holds for any $\alpha > 0$: 
     \[ 
       \Prob{X \geq \alpha \cdot \Ex{X}} \leq 1/\alpha .
     \]
 \end{definition}
 
-\begin{definition}[Secure Sketch]
-    A \emph{secure sketch} is an abstract crytographic primative that hides information of a sample, but allows for recovery of the original sample if presented a sample that is close enough to the original sample. It is made of two algorithms: Sketch and Recover. Sketch takes the original sample and outputs some public value. Recover then takes some other sample and the value from Sketch and if the two samples are close enough, outputs the original sample. 
+\begin{definition}[Secure Sketch~\cite{dodis2008fuzzy}]
+For metric space $(\mathcal{M}, \dis)$, a $(\mathcal{M}, \mathcal{W}, \tilde{m}, t)$-\emph{secure sketch} is a pair of algorithms $(\sketch, \rec)$ with the following properties 
+\begin{enumerate} 
+\itemsep0em
+\item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, let $ss \leftarrow \sketch(w)$ then $\rec(w', ss) = w$ with probability $1$. 
+\item \textbf{Security} For all distributions $W \in \mathcal{W}$ it holds that $\Hav(W | \sketch(W)) \ge \tilde{m}$.
+\end{enumerate}
+\end{definition}
 
-    Formal Definition here. 
+\begin{definition}[Fuzzy Extractor~\cite{dodis2008fuzzy}]
+For metric space $(\mathcal{M}, \dis)$, a $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon)$-\emph{fuzzy extractor} is a pair of algorithms $(\gen, \rep)$ with the following properties 
+\begin{enumerate} 
+\itemsep0em
+\item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, let $r, p \leftarrow \gen(w)$ then $\rep(w', p) = r$ with probability $1$. 
+\item \textbf{Security} For all distributions $W \in \mathcal{W}$, let $R, P \leftarrow \gen(W)$ and $U_\kappa$ be a uniformly distributed random variable over $\zo^\kappa$ it holds that $\Delta((R, P), (U_\kappa, P))\le \epsilon.$
+\end{enumerate}
 \end{definition}
 
 \subsection{Previous Results}
@@ -54,49 +77,51 @@ It has been shown that universal fuzzy extractors are impossible in the informat
 \begin{proof}
     Since each $X_i$ is independent then $\minent{\vec{X}} = \sum \minent{X_i}$.
     Now, by definition,
-    \begin{align}
+    \begin{align*}
         \acminent{\vec{X}}{Y} &= -\log{\Exlim{y \leftarrow Y}{\max\limits_{\vec{x}} \Prob{\Vec{X} = \vec{x}\ |\ Y = y}}} \\
-        &= -log{\sum\limits_{y} \max\limits_{\vec{x}} \Prob{\vec{X} = \vec{x} \ |\ Y = y} \cdot \Prob{Y = y}}\\
-        &= -log{\sum\limits_{y} \max\limits_{\vec{x}} \Prob{\vec{X} = \vec{x} \vee Y = y}}\\
-        &\geq -log{\sum\limits_{y} \max\limits_{\vec{x}, y'} \Prob{\vec{X} = \vec{x}  ^ Y = y'}}\\
+        &= -\log{\sum\limits_{y} \max\limits_{\vec{x}} \Prob{\vec{X} = \vec{x} \ |\ Y = y} \cdot \Prob{Y = y}}\\
+        &= -\log{\sum\limits_{y} \max\limits_{\vec{x}} \Prob{\vec{X} = \vec{x} \vee Y = y}}\\
+        &\geq -\log{\sum\limits_{y} \max\limits_{\vec{x}, y'} \Prob{\vec{X} = \vec{x}  ^ Y = y'}}\\
         &= -\log{2^{\hart{Y}} \cdot 2^{\minent{\vec{X},Y}}}\\
         &= \minent{\vec{X},Y} - \hart{Y}\\
         &\geq \minent{\vec{X}} - \hart{Y} \\   
         &= \sum \minent{X_i} - \hart{Y}
-    \end{align}
+    \end{align*}
 \end{proof}
 
 \subsubsection{Markov Bound for Predictability}
 Markov bounds are tail bounds that use Markov's Inequality to bound the probability that a random variable deviates significantly from its expected value. In Markov's inequality, we necessarily lose a multiplicative factor (here called $alpha$) in order to control the probability of the event occuring. When discussing entropy, we are dealing with a log scaled value which makes losing multiplicative factors costly. Instead, we can perform a Markov bound on the predictability scale. In this case, rather than lose a multiplicative factor in entropy, we lose a multiplicative factor in predictability which translates to a small number of bits of entropy lost for the controlled outcomes.
 
+\todo{This is \cite[Lemma 2.2a]{dodis2008fuzzy} right? Shouldn't need to reprove.}
+
 \begin{lemma}
     \label{lem:markovpred}
-    Let $\vec{X} = (X_1, X_2, \ldots, X_k)$ be independent random variables. Let $Y$ be a random variable arbitrarility correlated with $\vec{X}$. 
+    Let $\vec{X} = (X_1, X_2, \ldots, X_k)$ be random variables. Let $Y$ be a random variable arbitrarility correlated with $\vec{X}$. 
     Let $\alpha > 0$, then for all but a $(1-1/\alpha)$ fraction of the $X_i$ the entropy loss is less than $\log{\alpha}/k$
 \end{lemma}
 
 \begin{proof} 
 
-\begin{align}
+\begin{align*}
     \acminent{\vec{X}}{Y} &= \Delta\\
     -\log{\Exlim{Y}{\max\limits_{\vec{x}} \Prob{\Vec{X} = \vec{x} \,|\, Y = y}}} &= \Delta\\
     \Exlim{Y}{\max\limits_{\vec{x}} \Prob{\Vec{X} = \vec{x} \,|\, Y = y}} &= 2^{-\Delta}\\
     \Problim{Y}{\max\limits_{\vec{x}} \Prob{\Vec{X} = \vec{x} \,|\, Y = y} \geq \alpha \cdot 2^{-\Delta}} &\leq \frac{1}{\alpha} \\
     \Problim{Y}{\log{\max\limits_{\vec{x}} \Prob{\Vec{X} = \vec{x} \,|\, Y = y}} \geq \log{\alpha} -\Delta} &\leq \frac{1}{\alpha} \\
     \Problim{Y}{-\log{\max\limits_{\vec{x}} \Prob{\Vec{X} = \vec{x} \,|\, Y = y}} < \Delta -\log{\alpha}} &\leq \frac{1}{\alpha} \\
-    \Problim{Y}{\minent{\vec{X}\, |\, Y} < \Delta -\log{\alpha}} &\leq \frac{1}{\alpha}
-\end{align}
+    \Problim{y\leftarrow Y}{\minent{\vec{X}\, |\, Y=y} < \Delta -\log{\alpha}} &\leq \frac{1}{\alpha}
+\end{align*}
     
 \end{proof}
 
 \subsubsection{Upper bound for size of a Fuzzy Extractor}
 In \cite{fuller2020fuzzy}, Fuller et al. show that the size of a fuzzy extractor can be upper bound in a general case. 
-We restate their lemma here for completeness of our main proof. 
+We restate their lemma here for the completeness of our main proof. 
 
 \begin{lemma}[Lemma 5.2 in \cite{fuller2020fuzzy}]
     \label{lem:smallgeneralviable}
     Suppose $\mathcal{M}$ is $\zeroone{n}$ with the Hamming Metric, $\kappa \geq 2$, $0 \leq t \leq n/2$, and $\epsilon > 0$. 
-    Suppose $(\mathsf{Gen, Rep})$ is a $(\mathcal{M,W},\kappa, t, \epsilon)$-fuzzy extractor with error $\delta = 0$, for some distribution family $\mathcal{W}$ over $\mathcal{M}$. 
+    Suppose $(\mathsf{Gen, Rep})$ is a $(\mathcal{M,W},\kappa, t, \epsilon)$-fuzzy extractor for some distribution family $\mathcal{W}$ over $\mathcal{M}$. 
     Let $\tau = t/n$. 
     For any fixed $p$, there is a set $\mathsf{GoodKey}_p \subseteq \zeroone{\kappa}$ of size at least $2^{\kappa - 1}$ such that for every $\mathsf{key} \in \mathsf{GoodKey}_p$,
     \[
@@ -110,3 +135,28 @@ We restate their lemma here for completeness of our main proof.
 
 \subsection{New Definitions}
 Fuzzy extractors with quasipolynomial advice. 
+
+\begin{definition}[Fuzzy Extractor with distributional advice]
+Let $\mathcal{W}$ be a family of distributions indexed by $z$.  That is, one can denote each distribution in $\mathcal{W}$ as $W_Z$ which fully describes the probability mass function of $W$.  
+For metric space $(\{0,1\}^n, \dis)$, a $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon, \ell)$-\emph{fuzzy extractor with distributional advice} is a triple of algorithms $(\gen, \rep, \aux)$ with the following properties:
+\begin{enumerate} 
+\itemsep0em
+\item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, let $r, p \leftarrow \gen(w)$ then $\rep(w', p) = r$ with probability $1$. 
+\item \textbf{Security} For all distributions $W_Z \in \mathcal{W}$, define $\advise \leftarrow \aux(Z)$, where $|\advise| \le \ell$, let $(R, P) \leftarrow \gen(W, \advise)$ and $U_\kappa$ be a uniformly distributed random variable over $\zo^\kappa$ it holds that $\Delta((R, P, Z), (U_\kappa, P, Z))\le \epsilon.$
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Efficient Fuzzy Extractor in Known Distribution Setting]
+Fix some distribution $W_Z$ Let $(\gen, \rep)$ be a $(\{0,1\}^n, \{W_Z\}, \kappa, t, \epsilon, \ell)$-fuzzy extractor.  The pair is \emph{efficient} if $\gen, \rep$ have the  additional property that they can be implemented by an algorithm that can be described in polynomial space (polynomial in the dimension $n$ of the metric space).
+\end{definition}
+
+\begin{lemma}
+Let $\mathcal{W}$ be a distribution family indexed by the random family $Z$ and suppose that no $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, \ell)$-\emph{fuzzy extractor with distributional advice} exists for all $\ell = \poly(n)$.  Then there must be some distribution $W_Z \in \mathcal{W}$ for which no  $(\{0,1\}^n, \{W_Z\}, \kappa, t, \epsilon, \ell)$ efficient fuzzy extractor exists.
+\label{lem:distributional advise suffices}
+\end{lemma}
+\begin{proof}[Proof of Lemma~\ref{lem:distributional advise suffices}]
+We proceed by contrapositive.  Suppose that for every $W_Z\in\mathcal{W}$ there exists an efficient fuzzy extractor.  We denote these algorithms by $(\gen_Z, \rep_Z)$ respectively.  Across $Z$ let $\ell = \poly(n)$ represent the maximum space needed to implement some algorithm $\gen_Z$ or $\rep_Z$. We now describe how to build the fuzzy extractor $(\gen, \rep, \advise)$ with distributional advice.  Let $(\gen_Z, \rep_Z) \leftarrow \advise(Z)$ which has length at most $2\ell$.
+
+Then define $\gen(x, C)$ as follows: 1) interpret $C$ as two circuits $\gen', \rep'$ and output $\gen'(x)$.  Define $\rep(x, p, C)$ interpret $C$ as two circuits $\gen', \rep'$ and output $\rep'(x', p)$.  It is clear that $(\gen, \rep, \advise)$ is a $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, 2\ell)$ fuzzy extractor with distributional advise.
+\end{proof}
+

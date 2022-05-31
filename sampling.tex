@@ -1,3 +1,5 @@
+%!TEX root = main.tex
+
 % Sampling Section of negFE
 
 \section{Sampling Proceedure}
@@ -14,20 +16,55 @@ In general, we will assume that $\mathcal{W}$ is public to any adversary, algori
 We will generally assume that the specific selection of $Z$ is only shared with specific parties.
 We will also assume that the specific $w$ sampled from $W_Z$ is private and only known to parties who are given it explicity. 
 
-An interesting part of this work is how we share informtaion about $W_Z$. We will allow an inefficient adversary access to the entire description of $W_Z$ and ask them to produce an advice string for an efficient adversary, that is that the advice string length is bound from above by a arbitrary polynomial function of our security parameter. 
+An interesting part of this work is how we share information about $W_Z$. We will allow an inefficient adversary access to the entire description of $W_Z$ and ask them to produce an advice string for an efficient adversary, that is that the advice string length is bound from above by a arbitrary polynomial function of our security parameter. 
 
 \subsection{Distributions over $\zeroone{n}$}
-\begin{enumerate}
-    \item Picking $k$ points from $\zeroone{n}$ uniformly results in a distribution we will denote $U_{n,k}$. 
-    Clearly, this is efficient with respect to $\max{(n,k)}$.
-    The only condition here is that $k \leq 2^n$
+\begin{description}
+    \item[$U_{n,k}$] Picking $k$ points from $\zeroone{n}$ without replacement uniformly results in a distribution we will denote $U_{n,k}$. Note that there are ${2^{n}\choose k}$ outcomes each occuring with probability $1/{2^{n}\choose k}$.
 
-    \item Another distribution of interest is picking $k$ points uniformly from $\zeroone{n}$ and then removing points that are within distance $t$ of one another, we denote this $U_{n,k,t}^{-}$. 
-    This is also efficient, but may result in fewer than $k$ points being included in the final set. 
+    \item[$U_{n,k,t}^{-}$] Another distribution of interest is picking $k$ points uniformly from $\zeroone{n}$ and then removing points that are within distance $t$ of one another, we denote this $U_{n,k,t}^{-}$. 
+    This may result in fewer than $k$ points being included in the final set. 
     The trivial bounds here also include $t \leq n$. 
 
-    \item Another way of acheieving a simillar result is by picking points until you have $k$ (or a failure condition), that all have distance at least $t$ from one another.
-    This is not guaranteed to terminate without an error condition. 
-    The trivial bounds from above apply here as well. 
-\end{enumerate}
+    \item[$\mathtt{Code}_{n,k,t}^{*}$] The set of all $k$ points where all points are distance $t$ from one another.  That is, the set of all $(n,\log k, t)$ error-correcting codes. The trivial bounds from above apply here as well.  Note for all outcomes $X$ from this distribution $\Hfuzz(X) = \log k$.
+    
+    \item[$\mathtt{PCode}_{n, k, t, \alpha}^{*}$] The uniform distribution over all sets $X = \{x_i\}$ of size $k$ with the additional condition that $\Hfuzz(X) \ge \alpha$.  Note that this weakens the condition of $\mathtt{Code}$ above as some distributions are allowed to lie within distance $t$ as long as fewer than $2^{-\alpha}*k$ do lie within a single ball of radius $t$.
+\end{description}
  
+ 
+ \begin{lemma}
+ $\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \alpha}^{*}) \le 2^{n+k\log e- nk2^{-\alpha}(1-h_2(t/n))}$.
+ \end{lemma}
+ 
+ \begin{proof}
+ We begin by noting that the size of the set of ${2^n \choose k}$ points that $U_{n,k}$ is uniformly sampled from
+ \begin{align*}
+ {2^n\choose k} \ge 2^{nk}/k^k.
+ \end{align*}.  We analyze what fraction of members of $U_{n,k}$ are not in $\mathtt{PCode}_{n, k, t, \alpha}^{*}$.
+ 
+ We begin by enumerating the number of entries that are not in $\mathtt{PCode}$:
+ 
+ \[
+  \underbrace{{2^n \choose 1}}_{(1)}  \underbrace{{|B_t| \choose 2^{-\alpha}k}}_{(2)}   \underbrace{{2^n-|B_t| \choose k(1-2^{-\alpha})}}_{(3)}
+ \]
+ In the above, 
+ \begin{enumerate}
+ \item The choice of the point for $w^*$ that will be the center of the ball.
+ \item The choice for the $2^{-\alpha} k$ points that need to be within distance $t$ of the center point.
+ \item The choice for the remaining points $k(1-2^{-\alpha})$ that need to be somewhere in the space outside of the ball.
+ \end{enumerate}
+ Continuing the bounds that $(a/b)^b \le {a\choose b} \le (ae/b)^b$ one has:
+ \begin{align*}
+|U_{n, k} \setminus \mathtt{PCode}_{n, k, t, \alpha}^{*}|  &=2^n \cdot {|B_t| \choose 2^{-\alpha}k}\cdot {2^n-|B_t| \choose k(1-2^{-\alpha})}\\
+&\le 2^n \cdot {|B_t| \choose 2^{-\alpha}k}\cdot {2^n \choose k(1-2^{-\alpha})}\\
+&= 2^n \cdot {2^{nh_2(t/n)} \choose 2^{-\alpha}k}\cdot {2^n \choose k(1-2^{-\alpha})}\\
+&= 2^n \cdot \left(\frac{e2^{nh_2(t/n)}}{2^{-\alpha}k}\right)^{2^{-\alpha}k}\cdot \left(\frac{e2^n}{k(1-2^{-\alpha})}\right)^{k(1-2^{-\alpha})}\\
+&\le 2^{n+k\log e} \frac{2^{nk(1-2^{-\alpha}(1-h_2(t/n)))}}{(2^{-\alpha}k)^{2^{-\alpha}k} (k(1-2^{-\alpha}))^{k(1-2^{-\alpha}})}\\
+ \end{align*}
+ Thus, one has that 
+ \begin{align*}
+\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \alpha}^{*}) &= \frac{|U_{n, k} \setminus \mathtt{PCode}_{n, k, t, \alpha}^{*}|}{|U_{n, k}|}\\
+&\le\frac{2^{n+k\log e} \frac{2^{nk(1-2^{-\alpha}(1-h_2(t/n)))}}{(2^{-\alpha}k)^{2^{-\alpha}k} (k(1-2^{-\alpha}))^{k(1-2^{-\alpha}})}}{\frac{2^{nk}}{k^k}}\\
+&\le \frac{2^{n+k\log e}}{2^{nk2^{-\alpha}(1-h_2(t/n))}} = 2^{n+k\log e- nk2^{-\alpha}(1-h_2(t/n))}.
+ \end{align*}
+  \end{proof}
