@@ -26,7 +26,11 @@ Our proof uses the following structure
 \end{enumerate}
 
 \paragraph{The family $\mathcal{W}$}
-We consider the following family $Z$ which chooses $k$ points with replacement from the space $\{0,1\}^n$.  That is if one samples $Z$ uniformly then one obtains the distribution $U_{n,k}$. We note there are distributions $W_Z$ in this family that have little fuzzy min-entropy.  However, we will show that this family is statistically close to a family where every distribution has fuzzy min-entropy.  For convenience we use $w_{z, 1},..., w_{z,k}$ to describe the $k$ points with nonzero probability in $W_z$ for some value $z$. Recall that points $w_{z, i}$ and $w_{z,j}$ could be equal and points are independent. 
+We consider the following family $Z$ which chooses $k$ points without replacement from the space $\{0,1\}^n$.  That is, if one samples $Z$ uniformly then one obtains the distribution $U_{n,k}$. We note there are distributions $W_Z$ in this family that have little fuzzy min-entropy.  However, we will show that this family is statistically close to a family where every distribution has fuzzy min-entropy.  For the remainder of this proof we consider $U_{n,k}$ and then show that the fuzzy extractor cannot perform differently on the family $\mathtt{PCode}_{n, k, t, \alpha}^{*}$ where every distribution does have fuzzy min-entropy. For convenience we use $W_{z, 1},..., W_{z,k}$ to describe the distribution $k$ points with nonzero probability in $W_z$ for some value $z$.  We assume no ordering over these points.  For all values $x, y$, 
+\[
+\Pr[W_{z, i} =x | W_{z, j} = y] = \begin{cases} \frac{1}{2^n-1} &x\neq y\\0&x=y.\end{cases}
+\]
+
 
 \begin{lemma}
 Let $Z$ describe a uniform sample of $U_{n,k}$.  Let $(\gen, \rep, \aux)$ be an auxiliary input fuzzy extractor.  Let $\advise \leftarrow \aux(Z)$ be of length $\ell$.  For a quad $v, p, r, \advise$ define 
@@ -38,10 +42,17 @@ Fix some $p$ and let $\mathtt{GoodKey}$ be defined as in Lemma~\ref{lem:smallgen
 \]
 \end{lemma}
 \begin{proof}
-Let $Z$ and $\advise$ be defined as above.
-\begin{enumerate}
-\item 
-\end{enumerate}
+Let $Z$ and $\advise$ be defined as above. We begin by noting that \[
+\Hoo(W_{z, 1},..., W_{z, k}) = \log {n\choose k}\overset{def}=\alpha.\]
+ It is thus, the case that 
+\[
+\Hav(W_{z, 1},..., W_{z, k} | \advise) \ge \alpha - |\advise|.
+\]
+ Thus, one has that 
+\begin{align*}
+\expe_{i=1}^k \left[\Hav(W_{z, i} | \advise)\right] \ge \frac{\alpha - |\advise|}{k}.
+\end{align*}
+Suppose not, then there exists the following predictor $\mathcal{P}$ for the joint distribution $W_{z, 1},..., W_{z, k} | \advise$, predict $w_{z,i}\leftarrow W_{z, i}| \advise$ (independently) and then output the joint prediction $w_{z,1},..., w_{z, k}$.  Now by Lemma
 
 \end{proof}
 
