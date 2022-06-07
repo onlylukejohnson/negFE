@@ -48,12 +48,35 @@ Let $Z$ and $\advise$ be defined as above. We begin by noting that \[
 \[
 \Hav(W_{z, 1},..., W_{z, k} | \advise) \ge \alpha - |\advise|.
 \]
- Thus, one has that 
+\begin{claim}
+One has that 
 \begin{align*}
 \expe_{i=1}^k \left[\Hav(W_{z, i} | \advise)\right] \ge \frac{\alpha - |\advise|}{k}.
 \end{align*}
-Suppose not, then there exists the following predictor $\mathcal{P}$ for the joint distribution $W_{z, 1},..., W_{z, k} | \advise$, predict $w_{z,i}\leftarrow W_{z, i}| \advise$ (independently) and then output the joint prediction $w_{z,1},..., w_{z, k}$.  Now by Lemma
+\label{clm:entropy distributes}
+\end{claim}
+\begin{proof}
+We begin by noting that for any random variable $\advise$ it is true that 
+\[
+\Hav(W_{z,i} | \advise, W_{z, 1}=w_{z,1},..., W_{z,i-1}) \ge \Hav(W_{z,i} | \advise).
+\]
+This is because conditioned on $W_{z, j} =w_{z,j}$ only removes the outcome $w_{z,j}$ from the support of $W_{z,i}$ increasing all other outcomes proportionally.  
 
+We now proceed to the proof of the claim
+Suppose not, then there exists the following predictor $\mathcal{P}$ for the joint distribution $W_{z, 1},..., W_{z, k} | \advise$:
+\begin{enumerate}
+\item For $i=1$ to $k$ predict $w_{z,i}\leftarrow W_{z, i}| \advise, W_{z,1}=w_{z,1},..., W_{z,i-1}=w_{z,i-1}$
+\item Output the joint prediction $w_{z,1},..., w_{z, k}$.  
+\end{enumerate}
+Let $\alpha_i$ denote the values $\Hav(W_{z,i}\advise) = \alpha_i$ for $i=1$ to $k$. 
+The probability that $\mathcal{P}$ issues a correct prediction is
+\begin{align*}
+\prod_{i=1}^k 2^{-\Hav(W_i | \advise,  W_{z,1}=w_{z,1},..., W_{z,i-1}=w_{z,i-1})} \ge \prod_{i=1}^k 2^{-\Hav(W_i | \advise)} = \prod_{i=1}^k 2^{-\alpha_i}  = 2^{-\sum_{i=1}^k \alpha_i}.
+\end{align*}
+
+Suppose that $\sum_{i=1}^k \alpha_i < \alpha$ then $\mathcal{P}$ correctly predicts with probability greater than $2^{-\alpha}$, a contradiction.  Thus, $\expe_{1\le i\le k} \alpha_i \ge \alpha/k$. 
+This completes the proof of Claim~\ref{clm:entropy distributes}.
+\end{proof}
 \end{proof}
 
 \subsection{Proof Setting}
