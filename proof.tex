@@ -36,9 +36,14 @@ We consider the following family $Z$ which chooses $k$ points without replacemen
 Let $Z$ describe a uniform sample of $U_{n,k}$.  Let $(\gen, \rep, \aux)$ be an auxiliary input fuzzy extractor.  Let $\advise \leftarrow \aux(Z)$ be of length $\ell$.  For a quad $v, p, r, \advise$ define 
 \[
 \viable(v, p, r, \advise) = \begin{cases} 1& \Pr[\gen(v, \advise) = (r, p)]>0\\0&\text{otherwise}\end{cases}.\]
-Fix some $p$ and let $\mathtt{GoodKey}$ be defined as in Lemma~\ref{lem:smallgeneralviable}. For each value $\advise$ there is some set $\mathcal{I}_{\advise}$ of size at most $\ell$, then it is true for each $i\not \in \mathcal{I}_\advise$ that
+Fix some $p$ and let $\mathtt{GoodKey}$ be defined as in Lemma~\ref{lem:smallgeneralviable}. Suppose that 
 \[
-\Pr\left[\viable(w_i, p, \mathsf{key}, \advise) = 1\middle| \begin{aligned} z\leftarrow Z\\ \advise\leftarrow \aux(z)\\w\leftarrow W_Z\\(\mathsf{key}, p)\leftarrow \gen(w, \advise) \\\mathsf{key}\in\mathtt{GoodKey}\end{aligned} \right]< some value.
+    \log{|\sbr{v \in \mathcal{M}|\prns{\mathsf{key}, p} \in \mathsf{supp}\prns{\mathsf{Gen}(v)}}|} \le \mu 
+ \]
+ For a particular $Z=z$ let $w_{z,1},..., w_{z,k}$ denote the points in $W_Z$. 
+ Then for each value $\advise$ there is some set $\mathcal{I}_{\advise}$ of size at most $\ell$, then it is true for each $i\not \in \mathcal{I}_\advise$ that
+\[
+\Pr\left[\viable(w_{z,i}, p, \mathsf{key}, \advise) = 1\middle| \begin{aligned} z\leftarrow Z\\ \advise\leftarrow \aux(z)\\w\leftarrow W_Z\\(\mathsf{key}, p)\leftarrow \gen(w, \advise) \\\mathsf{key}\in\mathtt{GoodKey}\end{aligned} \right]< some value.
 \]
 \end{lemma}
 \begin{proof}
@@ -89,7 +94,13 @@ then for $i\not\in \mathcal{I}_{\advise}$ it is true that
 \[
 \Hav(W_{z,i} | \advise, W_{z,i^*}= w_{z,i^*}) \ge -\log{\frac{1}{2^{\gamma}-1}} \ge \gamma-1.
 \]
-We now proceed to bounding $\viable(w_i, p, \mathsf{key}, \advise)$.  By Lemma~\ref{lem:smallgeneralviable} we know that there are at 
+We now proceed to bounding $\viable(w_i, p, \mathsf{key}, \advise)$.  By assumption, By Lemma~\ref{lem:smallgeneralviable} we know that there are at at moust $2^\mu$ points in $\viable(w_i, p, \mathsf{key}, \advise)$.  Thus, for all $i\not \in\mathcal{I}_{\advise}$ 
+
+\begin{align*}
+\Pr\left[\viable(w_{z,i}, p, \mathsf{key}, \advise) = 1 \right]&\le 2^{- (\gamma-1 -\mu)}\\
+&=2^{-(\frac{\alpha-|\advise|-\log{\beta}}{k}-1-\mu)}.
+\end{align*}
+
 
 \here
 \end{proof}
