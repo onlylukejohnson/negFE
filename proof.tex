@@ -91,10 +91,11 @@ Now by Lemma~\ref{lem:markovpred} it is true that there exists a set $\mathcal{I
 Let $i^*$ denote the index of the point that will be given to $\gen$ that is $p\leftarrow (w_{z,i^*}, \advise)$.  We define the set $\mathcal{I}_\advise = \mathcal{I} \cup \{w_{z,i^*}\}$ where $w$ is the point given to $\gen(w, \advise)$.  
 Let \[\gamma:=\frac{\alpha -|\advise| - \log \beta}{k},\] 
 then for $i\not\in \mathcal{I}_{\advise}$ it is true that 
-\[
-\Hav(W_{z,i} | \advise, W_{z,i^*}= w_{z,i^*}) \ge -\log{\frac{1}{2^{\gamma}-1}} \ge \gamma-1.
-\]
-We now proceed to bounding $\viable(w_i, p, \mathsf{key}, \advise)$.  By assumption, By Lemma~\ref{lem:smallgeneralviable} we know that there are at at moust $2^\mu$ points in $\viable(w_i, p, \mathsf{key}, \advise)$.  Thus, for all $i\not \in\mathcal{I}_{\advise}$ 
+\begin{align*}
+\Hav(W_{z,i} | \mathsf{key} \in \mathtt{GoodKey}, p)&\ge \\
+\Hav(W_{z,i} | \advise, W_{z,i^*}= w_{z,i^*}) &\ge -\log{\frac{1}{2^{\gamma}-1}} \ge \gamma-1.
+\end{align*}
+We now proceed to bounding $\viable(w_i, p, \mathsf{key}, \advise)$.  By assumption, By Lemma~\ref{lem:smallgeneralviable} we know that there are at most $2^\mu$ points in $\viable(w_i, p, \mathsf{key}, \advise)$.  Thus, for all $i\not \in\mathcal{I}_{\advise}$ 
 
 \begin{align*}
 \Pr\left[\viable(w_{z,i}, p, \mathsf{key}, \advise) = 1 \right]&\le 2^{- (\gamma-1 -\mu)}\\
