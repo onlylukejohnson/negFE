@@ -74,9 +74,16 @@ The probability that $\mathcal{P}$ issues a correct prediction is
 \prod_{i=1}^k 2^{-\Hav(W_i | \advise,  W_{z,1}=w_{z,1},..., W_{z,i-1}=w_{z,i-1})} \ge \prod_{i=1}^k 2^{-\Hav(W_i | \advise)} = \prod_{i=1}^k 2^{-\alpha_i}  = 2^{-\sum_{i=1}^k \alpha_i}.
 \end{align*}
 
-Suppose that $\sum_{i=1}^k \alpha_i < \alpha$ then $\mathcal{P}$ correctly predicts with probability greater than $2^{-\alpha}$, a contradiction.  Thus, $\expe_{1\le i\le k} \alpha_i \ge \alpha/k$. 
+Suppose that $\sum_{i=1}^k \alpha_i < \alpha-\advise$ then $\mathcal{P}$ correctly predicts with probability greater than $2^{-(\alpha-\advise)}$, a contradiction.  Thus, $\expe_{1\le i\le k} \alpha_i \ge (\alpha-\advise)/k$. 
 This completes the proof of Claim~\ref{clm:entropy distributes}.
 \end{proof}
+
+Now by Lemma~\ref{lem:markovpred} it is true that there exists a set $\mathcal{I}\subseteq \{1,...,k\}$ where $| \mathcal{I} | \le k/\beta$ such that for all $i\not \in \{1,...,k\} \setminus\mathcal{I}$ is true that 
+\[
+\Hav(W_{z,i} | \advise) \ge \frac{\alpha -\advise - \log \beta}{k}.
+\]
+
+\here
 \end{proof}
 
 \subsection{Proof Setting}
