@@ -48,11 +48,11 @@ Fix some $p$ and let $\mathtt{GoodKey}_p$ be defined as in Lemma~\ref{lem:smallg
 \]
 And thus, for on average across $Z$, the expected number of points outside of $\mathcal{I}_\advise$ that are included in $\viable$ is at most 
 \begin{align*}
-\expe_{Z} \left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p}\sum_{i | w_{z,i}\not\in\mathcal{I}_\advise} \viable(w_{z,i}, p, \mathsf{key}, \advise) \middle| \begin{aligned} z\leftarrow Z\\ \advise\leftarrow \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advise)\end{aligned} \right]< \frac{2^{\frac{|\advise|+\log{k}-\log{|\mathcal{I}|}}{k}+1+\mu+k}}{{2^{\alpha/k}}}.
+\expe_{Z} \left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p}\sum_{i | w_{z,i}\not\in\mathcal{I}_\advise} \viable(w_{z,i}, p, \mathsf{key}, \advise) \middle| \begin{aligned} z\leftarrow Z\\ \advise\leftarrow \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advise)\end{aligned} \right]< \frac{2^{\frac{|\advise|+\log{k}-\log{\ell}}{k}+1+\mu+k}}{{2^{\alpha/k}}}.
 \end{align*}
 And finally, 
 \begin{align*}
-\expe_{Z} \left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p}\sum_{i }  \viable(w_{z,i}, p, \mathsf{key}, \advise) \middle| \begin{aligned} z\leftarrow Z\\ \advise\leftarrow \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advise)\end{aligned} \right]< \frac{2^{\frac{|\advise|+\log{k}-\log{|\mathcal{I}|}}{k}+1+\mu+k}}{{2^{\alpha/k}}}+\ell+1.
+\expe_{Z} \left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p}\sum_{i }  \viable(w_{z,i}, p, \mathsf{key}, \advise) \middle| \begin{aligned} z\leftarrow Z\\ \advise\leftarrow \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advise)\end{aligned} \right]< \frac{2^{\frac{|\advise|+\log{k}-\log{\ell}}{k}+1+\mu+k}}{{2^{\alpha/k}}}+\ell+1.
 \end{align*}
 
 \end{lemma}
