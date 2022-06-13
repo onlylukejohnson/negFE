@@ -34,22 +34,31 @@ We consider the following family $Z$ which chooses $k$ points without replacemen
 
 \begin{lemma}
 \label{lem:info loss}
-Let $Z$ describe a uniform sample of $U_{n,k}$.  Let $(\gen, \rep, \aux)$ be an auxiliary input fuzzy extractor.  Let $\advise \leftarrow \aux(Z)$ be of length $\ell$.  For a quad $v, p, r, \advise$ define 
+Let $Z$ describe a uniform sample of $U_{n,k}$.  Let $(\gen, \rep, \aux)$ be an auxiliary input fuzzy extractor.  Let $\advise = \aux(Z)$ be of length $\ell$.  For a quad $v, p, r, \advise$ define 
 \[
 \viable(v, p, r, \advise) = \begin{cases} 1& \Pr[\gen(v, \advise) = (r, p)]>0\\0&\text{otherwise}\end{cases}.\]
-Fix some $p$ and let $\mathtt{GoodKey}$ be defined as in Lemma~\ref{lem:smallgeneralviable}. Suppose that 
+Fix some $p$ and let $\mathtt{GoodKey}_p$ be defined as in Lemma~\ref{lem:smallgeneralviable}. Suppose that 
 \[
-    \log{|\sbr{v \in \mathcal{M}|\prns{\mathsf{key}, p} \in \mathsf{supp}\prns{\mathsf{Gen}(v)}}|} \le \mu 
+   \sum_{\mathsf{key}\in \mathtt{GoodKey}_p} \left( \log{|\sbr{v \in \mathcal{M}|\prns{\mathsf{key}, p} \in \mathsf{supp}\prns{\mathsf{Gen}(v)}}|}\right) \le 2^\mu 
  \]
- For a particular $Z=z$ let $w_{z,1},..., w_{z,k}$ denote the points in $W_Z$. 
- Then for each value $\advise$ there is some set $\mathcal{I}_{\advise}$ of size at most $\ell$, then it is true for each $i\not \in \mathcal{I}_\advise$ that
+ For a particular $Z=z$ let $w_{z,1},..., w_{z,k}$ denote the points in $W_Z$. Let $\alpha:= \log {2^n\choose k}$.  
+ Then for each value $\advise$ there is some set $\mathcal{I}_{\advise}$ of size at most $\ell+1$, then it is true for each $i\not \in \mathcal{I}_\advise$ that
 \[
-\Pr\left[\viable(w_{z,i}, p, \mathsf{key}) = 1\middle| \begin{aligned} z\leftarrow Z\\ \advise\leftarrow \aux(z)\\w\leftarrow W_Z\\(\mathsf{key}, p)\leftarrow \gen(w, \advise) \\\mathsf{key}\in\mathtt{GoodKey}\end{aligned} \right]< \frac{2^{\frac{|\advise|+\log{k}-\log{\ell}}{k}+1+\mu}}{{2^n\choose k}}.
+\Pr\left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p} \viable(w_{z,i}, p, \mathsf{key}, \advise, z) \ge 1\middle| \begin{aligned} z\leftarrow Z\\ \advise= \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advise) \end{aligned} \right]< \frac{2^{\frac{|\advise|+\log{k}-\log{\ell}}{k}+1+\mu}}{{2^{\alpha/k}}}.
 \]
+And thus, for on average across $Z$, the expected number of points outside of $\mathcal{I}_\advise$ that are included in $\viable$ is at most 
+\begin{align*}
+\expe_{Z} \left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p}\sum_{i | w_{z,i}\not\in\mathcal{I}_\advise} \viable(w_{z,i}, p, \mathsf{key}, \advise) \middle| \begin{aligned} z\leftarrow Z\\ \advise\leftarrow \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advise)\end{aligned} \right]< \frac{2^{\frac{|\advise|+\log{k}-\log{|\mathcal{I}|}}{k}+1+\mu+k}}{{2^{\alpha/k}}}.
+\end{align*}
+And finally, 
+\begin{align*}
+\expe_{Z} \left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p}\sum_{i }  \viable(w_{z,i}, p, \mathsf{key}, \advise) \middle| \begin{aligned} z\leftarrow Z\\ \advise\leftarrow \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advise)\end{aligned} \right]< \frac{2^{\frac{|\advise|+\log{k}-\log{|\mathcal{I}|}}{k}+1+\mu+k}}{{2^{\alpha/k}}}+\ell+1.
+\end{align*}
+
 \end{lemma}
 \begin{proof}
 Let $Z$ and $\advise$ be defined as above. We begin by noting that \[
-\Hoo(W_{z, 1},..., W_{z, k}) = \log {2^n\choose k}\overset{def}=\alpha.\]
+\Hoo(W_{z, 1},..., W_{z, k})=\alpha.\]
  It is thus, the case that 
 \[
 \Hav(W_{z, 1},..., W_{z, k} | \advise) \ge \alpha - |\advise|.
@@ -105,28 +114,40 @@ We now proceed to bounding $\viable(w_i, p, \mathsf{key})$.  By assumption, By L
 &=2^{-(\frac{\alpha-|\advise|-\log{\beta}}{k}-1-\mu)}.
 \end{align*}
 \end{proof}
-By Lemma~\ref{lem:info loss} the expected number of points outside of $\mathcal{I}_\advise$ that are included in $\viable$ is at most 
-\begin{align*}
-\expe_{Z} \left[\sum_{i} \viable(w_{z,i}, p, \mathsf{key}, \advise) \middle| \begin{aligned} z\leftarrow Z\\ \advise\leftarrow \aux(z)\\w\leftarrow W_Z\\(\mathsf{key}, p)\leftarrow \gen(w, \advise) \\\mathsf{key}\in\mathtt{GoodKey}\\w_{z,i}\not\in\mathcal{I}_\advise\end{aligned} \right]< \frac{2^{\frac{|\advise|+\log{k}-\log{|\mathcal{I}|}}{k}+1+\mu+k}}{{2^n\choose k}}.
-\end{align*}
-\todo{do we need to sum over the keys?}
 
 \begin{lemma}
 \label{lem:convert distinguisher}
-Let all parameters be as in Lemma~\ref{lem:info loss}.  Then there is no $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon, \ell)$-fuzzy extractor with distributional advise (see Definition~\ref{def:fe distributional}) under the following conditions:
-\begin{enumerate}
-\item $\kappa\ge $
-\item $\epsilon <$.
-\end{enumerate}
+Let all parameters be as in Lemma~\ref{lem:info loss}.  Then there is no $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon, \ell)$-fuzzy extractor with distributional advise (see Definition~\ref{def:fe distributional}) if
+\[
+\epsilon< \frac{1-\left(\frac{2^{\frac{|\advise|+\log{k}-\log{|\mathcal{I}|}}{k}+1+\mu+k}}{{2^{\alpha/k+\kappa}}}+\frac{\ell+1}{2^\kappa}\right)}{2}.
+\]
 \end{lemma}
 \begin{proof}[Proof of Lemma~\ref{lem:convert distinguisher}].
 We prove the result for an average member of $Z$.  Consider the following distinguisher $\mathcal{D}$ for triples of the form $r, p, z$:
 \begin{enumerate}
-\item If $\sum_{i} \viable(w_{z, i}, r, p) =0 $ output $0$.
+\item If $r \in \mathsf{GoodKey}_p$ output $1$,
+\item Compute $\viable(z)$.
+\item If $\sum_{i} \viable(w_{z, i}, r, p) =0 $ output $0$,
 \item Else output $1$.
 \end{enumerate}
-First note that by perfect correctness it is always the case that when given $\mathsf{key}, p$ that $\mathcal{D}$ outputs $1$.  We proceed to bound the probability that $\mathcal{D}$ outputs $1$ when given $U_\kappa, p$.  We bound the number of parts with at least one point in viable.  We begin by assuming that all points in viable are in different  values $r$ so the bound on the size of $|\viable  |+ \ell$ gives a bound on the number of nonempty parts.
+First note that by perfect correctness it is always the case that when given $\mathsf{key}, p$ that $\mathcal{D}$ outputs $1$.  We proceed to bound the probability that $\mathcal{D}$ outputs $1$ when given $U_\kappa, p$.  Note that the probability that $\Pr[U_\kappa \in \mathtt{GoodKey}_p] \le 1/2$ by the definition of $\mathtt{GoodKey}_p$. 
 
+We bound the number of parts with at least one point in viable.  We begin by assuming that all points in viable are in different  values $r$ so the bound on the size of 
+\[
+\left\{w_{z, i} \middle|\sum_{\mathsf{key}\in\mathtt{Goodkey}_p} \viable(w_{z,i}, p, \mathsf{key}, \advise)>0\right\}_{i=1}^k 
+\] 
+gives a bound on the number of nonempty parts. By Lemma~\ref{lem:info loss} 
+\[
+\expe_{Z} \left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p}\sum_{i }  \viable(w_{z,i}, p, \mathsf{key}, \advise) \middle| \begin{aligned} z\leftarrow Z\\ \advise\leftarrow \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advise)\end{aligned} \right]< \frac{2^{\frac{|\advise|+\log{k}-\log{|\mathcal{I}|}}{k}+1+\mu+k}}{{2^{\alpha/k}}}+\ell+1.
+\]
+Thus the fraction of non-empty parts in $\mathsf{Goodkey}_p$ on average is at most 
+\[
+\frac{2^{\frac{|\advise|+\log{k}-\log{|\mathcal{I}|}}{k}+1+\mu+k}}{{2^{\alpha/k+\kappa}}}+\frac{\ell+1}{2^\kappa}.
+\]
+Thus, the probability that $\mathcal{D}$ outputs $0$ when given $U_\kappa, p, z$ is at least 
+\[
+\frac{1-\left(\frac{2^{\frac{|\advise|+\log{k}-\log{|\mathcal{I}|}}{k}+1+\mu+k}}{{2^{\alpha/k+\kappa}}}+\frac{\ell+1}{2^\kappa}\right)}{2}.
+\]
 
 This completes the Proof of Lemma~\ref{lem:convert distinguisher}.
 \end{proof}

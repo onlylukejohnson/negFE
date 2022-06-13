@@ -114,25 +114,6 @@ Markov bounds are tail bounds that use Markov's Inequality to bound the probabil
     
 \end{proof}
 
-\subsubsection{Upper bound for size of a Fuzzy Extractor}
-In \cite{fuller2020fuzzy}, Fuller et al. show that the size of a fuzzy extractor can be upper bound in a general case. 
-We restate their lemma here for the completeness of our main proof. 
-
-\begin{lemma}[Lemma 5.2 in \cite{fuller2020fuzzy}]
-    \label{lem:smallgeneralviable}
-    Suppose $\mathcal{M}$ is $\zeroone{n}$ with the Hamming Metric, $\kappa \geq 2$, $0 \leq t \leq n/2$, and $\epsilon > 0$. 
-    Suppose $(\mathsf{Gen, Rep})$ is a $(\mathcal{M,W},\kappa, t, \epsilon)$-fuzzy extractor for some distribution family $\mathcal{W}$ over $\mathcal{M}$. 
-    Let $\tau = t/n$. 
-    For any fixed $p$, there is a set $\mathsf{GoodKey}_p \subseteq \zeroone{\kappa}$ of size at least $2^{\kappa - 1}$ such that for every $\mathsf{key} \in \mathsf{GoodKey}_p$,
-    \[
-        \log{|\sbr{v \in \mathcal{M}|\prns{\mathsf{key}, p} \in \mathsf{supp}\prns{\mathsf{Gen}(v)}}|} \leq n \cdot h_2\prns{\frac{1}{2} - \tau} \leq n \cdot \prns{1 - \frac{2}{\ln{2}} \cdot \tau^{2}}, 
-    \]   
-    and, therefore, for any distribution $D_{\mathcal{M}}$ on $\mathcal{M}$, 
-    \[
-        \hart{D_{\mathcal{M}}|\mathsf{Gen}\prns{D_{\mathcal{M}}} = \prns{\mathsf{key}, p}} \leq n \cdot h_2\prns{\frac{1}{2} - \tau} \leq n \cdot \prns{1 - \frac{2}{\ln{2}} \cdot \tau^{2}}.
-    \]   
-\end{lemma}
-
 \subsection{New Definitions}
 Fuzzy extractors with quasipolynomial advice. 
 
@@ -143,21 +124,38 @@ For metric space $(\{0,1\}^n, \dis)$, a $(\{0,1\}^n, \mathcal{W}, \kappa, t, \ep
 \begin{enumerate} 
 \itemsep0em
 \item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, let $r, p \leftarrow \gen(w)$ then $\rep(w', p) = r$ with probability $1$. 
-\item \textbf{Security} For all distributions $W_Z \in \mathcal{W}$, define $\advise \leftarrow \aux(Z)$, where $|\advise| \le \ell$, let $(R, P) \leftarrow \gen(W, \advise)$ and $U_\kappa$ be a uniformly distributed random variable over $\zo^\kappa$ it holds that $\Delta((R, P, Z), (U_\kappa, P, Z))\le \epsilon.$
+\item \textbf{Security} Let $\aux$ be a deterministic function withouts in $\zo^\ell$.  be For all distributions $W_Z \in \mathcal{W}$, define $\advise:= \aux(Z)$, let $(R, P) \leftarrow \gen(W, \advise)$ and $U_\kappa$ be a uniformly distributed random variable over $\zo^\kappa$ it holds that $\Delta((R, P, Z), (U_\kappa, P, Z))\le \epsilon.$
 \end{enumerate}
 \end{definition}
 
 \begin{definition}[Efficient Fuzzy Extractor in Known Distribution Setting]
-Fix some distribution $W_Z$ Let $(\gen, \rep)$ be a $(\{0,1\}^n, \{W_Z\}, \kappa, t, \epsilon, \ell)$-fuzzy extractor.  The pair is \emph{efficient} if $\gen, \rep$ have the  additional property that they can be implemented by an algorithm that can be described in polynomial space (polynomial in the dimension $n$ of the metric space).
+Fix some distribution $W_Z$ Let $(\gen, \rep)$ be a $(\{0,1\}^n, \{W_Z\}, \kappa, t, \epsilon, \ell)$-fuzzy extractor.  The pair is \emph{efficient} if $\gen, \rep$ have the  additional property that they can be implemented by an algorithm that can be described in space at most $\ell$ (polynomial in the dimension $n$ of the metric space).
 \end{definition}
 
 \begin{lemma}
-Let $\mathcal{W}$ be a distribution family indexed by the random family $Z$ and suppose that no $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, \ell)$-\emph{fuzzy extractor with distributional advice} exists for all $\ell = \poly(n)$.  Then there must be some distribution $W_Z \in \mathcal{W}$ for which no  $(\{0,1\}^n, \{W_Z\}, \kappa, t, \epsilon, \ell)$ efficient fuzzy extractor exists.
+Let $\mathcal{W}$ be a distribution family indexed by the random family $Z$ and suppose that no $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, 2\ell)$-\emph{fuzzy extractor with distributional advice}.  Then there must be some distribution $W_Z \in \mathcal{W}$ for which no  $(\{0,1\}^n, \{W_Z\}, \kappa, t, \epsilon, \ell)$ efficient fuzzy extractor exists.
 \label{lem:distributional advise suffices}
 \end{lemma}
 \begin{proof}[Proof of Lemma~\ref{lem:distributional advise suffices}]
-We proceed by contrapositive.  Suppose that for every $W_Z\in\mathcal{W}$ there exists an efficient fuzzy extractor.  We denote these algorithms by $(\gen_Z, \rep_Z)$ respectively.  Across $Z$ let $\ell = \poly(n)$ represent the maximum space needed to implement some algorithm $\gen_Z$ or $\rep_Z$. We now describe how to build the fuzzy extractor $(\gen, \rep, \advise)$ with distributional advice.  Let $(\gen_Z, \rep_Z) \leftarrow \advise(Z)$ which has length at most $2\ell$.
+We proceed by contrapositive.  Suppose that for every $W_Z\in\mathcal{W}$ there exists an efficient fuzzy extractor.  We denote these algorithms by $(\gen_Z, \rep_Z)$ respectively.  Across $Z$ let $\ell = \poly(n)$ represent the maximum space needed to implement some algorithm $\gen_Z$ or $\rep_Z$. We now describe how to build the fuzzy extractor $(\gen, \rep, \advise)$ with distributional advice.  Let $(\gen_Z, \rep_Z) := \advise(Z)$ which has length at most $2\ell$.
 
 Then define $\gen(x, C)$ as follows: 1) interpret $C$ as two circuits $\gen', \rep'$ and output $\gen'(x)$.  Define $\rep(x, p, C)$ interpret $C$ as two circuits $\gen', \rep'$ and output $\rep'(x', p)$.  It is clear that $(\gen, \rep, \advise)$ is a $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, 2\ell)$ fuzzy extractor with distributional advise.
 \end{proof}
+
+\subsection{Upper bound for size of a Fuzzy Extractor}
+In \cite{fuller2020fuzzy}, Fuller et al. show that the size of a fuzzy extractor can be upper bound in a general case.  We present a stronger version of their lemma that is contained in their proof.  The difference is we bound the union of viable points across difference values of $\mathsf{key}$ while they only bound the size of a single $\mathsf{key}$ corresponding to the true point.  We also note that their argument is purely geometric so it applies to fuzzy extractors with distributional advice as well. 
+We restate their lemma here for the completeness of our main proof. 
+
+\begin{lemma}[Lemma 5.2 in \cite{fuller2020fuzzy}]
+    \label{lem:smallgeneralviable}
+    Suppose $\mathcal{M}$ is $\zeroone{n}$ with the Hamming Metric, $\kappa \geq 2$, $0 \leq t \leq n/2$, and $\epsilon > 0$. 
+    Suppose $(\mathsf{Gen, Rep})$ is a $(\mathcal{M,W},\kappa, t, \ell, \epsilon)$-fuzzy extractor with distributional advice for some distribution family $\mathcal{W}$ over $\mathcal{M}$. 
+    Let $\tau = t/n$. 
+    For any fixed $p$, for any value $\advise \in \zo^\ell$, there is a set $\mathsf{GoodKey}_p \subseteq \zeroone{\kappa}$ of size at least $2^{\kappa - 1}$ such that for every $\mathsf{key} \in \mathsf{GoodKey}_p$,
+    \[
+       \sum_{\mathsf{key} \in \mathsf{GoodKey}_p} \left( \log{|\sbr{v \in \mathcal{M}|\prns{\mathsf{key}, p} \in \mathsf{supp}\prns{\mathsf{Gen}(v, \advise)}}|}\right) \leq n \cdot h_2\prns{\frac{1}{2} - \tau} \leq n \cdot \prns{1 - \frac{2}{\ln{2}} \cdot \tau^{2}}.
+    \]   
+\end{lemma}
+
+
 
