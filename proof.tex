@@ -153,6 +153,26 @@ This completes the Proof of Lemma~\ref{lem:convert distinguisher}.
 \end{proof}
 
 
+\begin{corollary}
+Let $\gamma \in\mathbb{R}^+, n, \kappa, t, \ell, \nu \in\mathbb{Z}^+$.
+For the  family $ \mathtt{PCode}_{n, k, t, \gamma}^{*})$ there is no $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon, \ell)$-efficient fuzzy extractor for 
+\[
+\epsilon< \epsilon_1+\epsilon_2
+\]
+\end{corollary}
+\begin{proof}
+Noting that the above distinguisher always outputs $1$ on any value $\mathsf{key}, p, z$ for any distribution $z$ one notes the statistical distance between $U_{n,k}$ and  $\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \alpha}^{*}) \le 2^{n+k\log e- nk2^{-\alpha}(1-h_2(t/n))}$ by Lemma~\ref{lem:close family}.  Finally, the corollary follows by application of Lemma~\ref{lem:distributional advise suffices} and the following calculation, substituting that $\mu\le n(1-2/\ln 2 (t/n)^2).$ and ${2^n\choose k} \ge 2^{nk} /k^k$.
+\begin{align*}
+\epsilon_1 &\le \frac{1-\left(\frac{2^{\frac{|\ell|+\log{k}-\log{\nu}}{k}+1+\mu+k}}{{2^{\alpha/k+\kappa}}}+\frac{\nu+1}{2^\kappa}\right)}{2}\\
+ &\le \frac{1}{2}-\left(\frac{2^{\frac{|\ell|+\log{k}-\log{\nu}}{k}+1+\mu+k}}{{2^{n-\log k+\kappa}}}+\frac{\nu+1}{2^{\kappa+1}}\right)\\
+  &\le \frac{1}{2}-\left(\frac{1}{{2^{n-\log k+\kappa-(\frac{|\ell|+\log{k}-\log{\nu}}{k}+1+\mu+k)}}}+\frac{\nu+1}{2^{\kappa+1}}\right)\\
+    &\le \frac{1}{2}-\left(\frac{1}{{2^{nh_2(1-t/n)-\log k+\kappa-(\frac{|\ell|+\log{k}-\log{\nu}}{k}+1+k)}}}+\frac{\nu+1}{2^{\kappa+1}}\right)
+ \end{align*}
+   Add in \[\epsilon_2\le \Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \gamma}^{*}) \le 2^{n+k\log e- nk2^{-\gamma}(1-h_2(t/n))}.\]
+
+\end{proof} 
+
+
 \subsection{Proof Setting}
 Consider $\mathcal{W}$ such that each $W \in \mathcal{W}$ is a set of $2^{\phi}$ uniformly chosen independent random points in $\zeroone{n}$. 
 Let $|\mathcal{W}| = r$ and let $Z \in \br{r}$ be an indexing variable for the selection of $W_Z$ from $\mathcal{W}$. 
