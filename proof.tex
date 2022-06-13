@@ -33,6 +33,7 @@ We consider the following family $Z$ which chooses $k$ points without replacemen
 
 
 \begin{lemma}
+\label{lem:info loss}
 Let $Z$ describe a uniform sample of $U_{n,k}$.  Let $(\gen, \rep, \aux)$ be an auxiliary input fuzzy extractor.  Let $\advise \leftarrow \aux(Z)$ be of length $\ell$.  For a quad $v, p, r, \advise$ define 
 \[
 \viable(v, p, r, \advise) = \begin{cases} 1& \Pr[\gen(v, \advise) = (r, p)]>0\\0&\text{otherwise}\end{cases}.\]
@@ -43,12 +44,12 @@ Fix some $p$ and let $\mathtt{GoodKey}$ be defined as in Lemma~\ref{lem:smallgen
  For a particular $Z=z$ let $w_{z,1},..., w_{z,k}$ denote the points in $W_Z$. 
  Then for each value $\advise$ there is some set $\mathcal{I}_{\advise}$ of size at most $\ell$, then it is true for each $i\not \in \mathcal{I}_\advise$ that
 \[
-\Pr\left[\viable(w_{z,i}, p, \mathsf{key}, \advise) = 1\middle| \begin{aligned} z\leftarrow Z\\ \advise\leftarrow \aux(z)\\w\leftarrow W_Z\\(\mathsf{key}, p)\leftarrow \gen(w, \advise) \\\mathsf{key}\in\mathtt{GoodKey}\end{aligned} \right]< some value.
+\Pr\left[\viable(w_{z,i}, p, \mathsf{key}) = 1\middle| \begin{aligned} z\leftarrow Z\\ \advise\leftarrow \aux(z)\\w\leftarrow W_Z\\(\mathsf{key}, p)\leftarrow \gen(w, \advise) \\\mathsf{key}\in\mathtt{GoodKey}\end{aligned} \right]< \frac{2^{\frac{|\advise|+\log{k}-\log{\ell}}{k}+1+\mu}}{{2^n\choose k}}.
 \]
 \end{lemma}
 \begin{proof}
 Let $Z$ and $\advise$ be defined as above. We begin by noting that \[
-\Hoo(W_{z, 1},..., W_{z, k}) = \log {n\choose k}\overset{def}=\alpha.\]
+\Hoo(W_{z, 1},..., W_{z, k}) = \log {2^n\choose k}\overset{def}=\alpha.\]
  It is thus, the case that 
 \[
 \Hav(W_{z, 1},..., W_{z, k} | \advise) \ge \alpha - |\advise|.
@@ -61,31 +62,33 @@ One has that
 \label{clm:entropy distributes}
 \end{claim}
 \begin{proof}
-We begin it is true that 
+We begin it is true that $\forall w_{z,1},..., w_{z,i-1}$ that 
 \[
-\Hav(W_{z,i} | \advise, W_{z, 1}=w_{z,1},..., W_{z,i-1}) \le \Hav(W_{z,i} | \advise).
+\Hav(W_{z,i} | \advise, W_{z, 1}=w_{z,1},..., W_{z,i-1}=w_{z,i-1}) \le \Hav(W_{z,i} | \advise).
 \]
 This is because conditioned on $W_{z, j} =w_{z,j}$ only removes the outcome $w_{z,j}$ from the support of $W_{z,i}$ increasing all other outcomes proportionally.  
+We now proceed to the proof of the claim. 
 
-We now proceed to the proof of the claim
 Suppose not, then there exists the following predictor $\mathcal{P}$ for the joint distribution $W_{z, 1},..., W_{z, k} | \advise$:
 \begin{enumerate}
 \item For $i=1$ to $k$ predict $w_{z,i}\leftarrow W_{z, i}| \advise, W_{z,1}=w_{z,1},..., W_{z,i-1}=w_{z,i-1}$
 \item Output the joint prediction $w_{z,1},..., w_{z, k}$.  
 \end{enumerate}
-Let $\alpha_i$ denote the values $\Hav(W_{z,i}\advise) = \alpha_i$ for $i=1$ to $k$. 
+Let $\alpha_i$ denote the values $\Hav(W_{z,i}| \advise) = \alpha_i$ for $i=1$ to $k$. 
 The probability that $\mathcal{P}$ issues a correct prediction is
 \begin{align*}
 \prod_{i=1}^k 2^{-\Hav(W_i | \advise,  W_{z,1}=w_{z,1},..., W_{z,i-1}=w_{z,i-1})} \ge \prod_{i=1}^k 2^{-\Hav(W_i | \advise)} = \prod_{i=1}^k 2^{-\alpha_i}  = 2^{-\sum_{i=1}^k \alpha_i}.
 \end{align*}
 
+\noindent
 Suppose that $\sum_{i=1}^k \alpha_i < \alpha-\advise$ then $\mathcal{P}$ correctly predicts with probability greater than $2^{-(\alpha-\advise)}$, a contradiction.  Thus, $\expe_{1\le i\le k} \alpha_i \ge (\alpha-\advise)/k$. 
 This completes the proof of Claim~\ref{clm:entropy distributes}.
 \end{proof}
 
-Now by Lemma~\ref{lem:markovpred} it is true that there exists a set $\mathcal{I}\subseteq \{1,...,k\}$ where $| \mathcal{I} | \le k/\beta$ such that for all $i\not \in \{1,...,k\} \setminus\mathcal{I}$ is true that 
+\noindent
+Now by Lemma~\ref{lem:markovpred} it is true that there exists a set $\mathcal{I}\subseteq \{1,...,k\}$ where $\beta: =  k/| \mathcal{I} |$ such that for all $i\not \in \{1,...,k\} \setminus\mathcal{I}$ is true that 
 \[
-\Hav(W_{z,i} | \advise) \ge \frac{\alpha -|\advise| - \log \beta}{k}.
+\Hav(W_{z,i} | \advise) \ge \frac{\alpha -|\advise| - \log \beta}{k} = \frac{\alpha -|\advise| - \log k + \log{|\mathcal{I}|}}{k}.
 \]
 
 Let $i^*$ denote the index of the point that will be given to $\gen$ that is $p\leftarrow (w_{z,i^*}, \advise)$.  We define the set $\mathcal{I}_\advise = \mathcal{I} \cup \{w_{z,i^*}\}$ where $w$ is the point given to $\gen(w, \advise)$.  
@@ -95,16 +98,39 @@ then for $i\not\in \mathcal{I}_{\advise}$ it is true that
 \Hav(W_{z,i} | \mathsf{key} \in \mathtt{GoodKey}, p)&\ge \\
 \Hav(W_{z,i} | \advise, W_{z,i^*}= w_{z,i^*}) &\ge -\log{\frac{1}{2^{\gamma}-1}} \ge \gamma-1.
 \end{align*}
-We now proceed to bounding $\viable(w_i, p, \mathsf{key}, \advise)$.  By assumption, By Lemma~\ref{lem:smallgeneralviable} we know that there are at most $2^\mu$ points in $\viable(w_i, p, \mathsf{key}, \advise)$.  Thus, for all $i\not \in\mathcal{I}_{\advise}$ 
+We now proceed to bounding $\viable(w_i, p, \mathsf{key})$.  By assumption, By Lemma~\ref{lem:smallgeneralviable} we know that there are at most $2^\mu$ points in $\viable(w_i, p, \mathsf{key})$.  Thus, for all $i\not \in\mathcal{I}_{\advise}$ 
 
 \begin{align*}
 \Pr\left[\viable(w_{z,i}, p, \mathsf{key}, \advise) = 1 \right]&\le 2^{- (\gamma-1 -\mu)}\\
 &=2^{-(\frac{\alpha-|\advise|-\log{\beta}}{k}-1-\mu)}.
 \end{align*}
-
-
-\here
 \end{proof}
+By Lemma~\ref{lem:info loss} the expected number of points outside of $\mathcal{I}_\advise$ that are included in $\viable$ is at most 
+\begin{align*}
+\expe_{Z} \left[\sum_{i} \viable(w_{z,i}, p, \mathsf{key}, \advise) \middle| \begin{aligned} z\leftarrow Z\\ \advise\leftarrow \aux(z)\\w\leftarrow W_Z\\(\mathsf{key}, p)\leftarrow \gen(w, \advise) \\\mathsf{key}\in\mathtt{GoodKey}\\w_{z,i}\not\in\mathcal{I}_\advise\end{aligned} \right]< \frac{2^{\frac{|\advise|+\log{k}-\log{|\mathcal{I}|}}{k}+1+\mu+k}}{{2^n\choose k}}.
+\end{align*}
+\todo{do we need to sum over the keys?}
+
+\begin{lemma}
+\label{lem:convert distinguisher}
+Let all parameters be as in Lemma~\ref{lem:info loss}.  Then there is no $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon, \ell)$-fuzzy extractor with distributional advise (see Definition~\ref{def:fe distributional}) under the following conditions:
+\begin{enumerate}
+\item $\kappa\ge $
+\item $\epsilon <$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}[Proof of Lemma~\ref{lem:convert distinguisher}].
+We prove the result for an average member of $Z$.  Consider the following distinguisher $\mathcal{D}$ for triples of the form $r, p, z$:
+\begin{enumerate}
+\item If $\sum_{i} \viable(w_{z, i}, r, p) =0 $ output $0$.
+\item Else output $1$.
+\end{enumerate}
+First note that by perfect correctness it is always the case that when given $\mathsf{key}, p$ that $\mathcal{D}$ outputs $1$.  We proceed to bound the probability that $\mathcal{D}$ outputs $1$ when given $U_\kappa, p$.  We bound the number of parts with at least one point in viable.  We begin by assuming that all points in viable are in different  values $r$ so the bound on the size of $|\viable  |+ \ell$ gives a bound on the number of nonempty parts.
+
+
+This completes the Proof of Lemma~\ref{lem:convert distinguisher}.
+\end{proof}
+
 
 \subsection{Proof Setting}
 Consider $\mathcal{W}$ such that each $W \in \mathcal{W}$ is a set of $2^{\phi}$ uniformly chosen independent random points in $\zeroone{n}$. 
@@ -129,7 +155,7 @@ From Lemma \ref{lem:smallgeneralviable}, we have the largest size of a set of vi
 Now, it is clear from our setting that when building the Fuzzy Extractor the constructor has a single point $w$, a full description of the family of distributions $\mathcal{W}$, and the prepared advice string $\mathsf{info}$ about the specific selected distribution $W_Z$. 
 We are primarily concerned with the ability of the constructor to align the points in the selected $W_Z$, with the partition induced by $\mathsf{pub}$. 
 Clearly, if $\mathsf{info}$ is allowed to describe every point in $W_Z$ (or every point but $w$) then the constructor can include a point from $W_Z$ in each viable section of the partition induced by $\mathsf{pub}$. 
-Fortuntely for us, the distribution has exponential entropy and the advice string has polynomial length so the advice string cannot describe the entire remainder of the distribution. 
+Fortunately for us, the distribution has exponential entropy and the advice string has polynomial length so the advice string cannot describe the entire remainder of the distribution. 
 The question remains, how much entropy remains in the distribution after seeing the advice string? 
 
 Since each point in the distribution is independent and uniform in $\zeroone{n}$ the beginning  entropy (and min-entropy) of the distribution is $|W_Z| \cdot n$. 
