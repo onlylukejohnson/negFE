@@ -119,7 +119,7 @@ We now proceed to bounding $\viable(w_i, p, \mathsf{key})$.  By assumption, By L
 \label{lem:convert distinguisher}
 Let all parameters be as in Lemma~\ref{lem:info loss} with $\nu \in\mathbb{Z}^+$.  Then there is no $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon, \ell)$-fuzzy extractor with distributional advise (see Definition~\ref{def:fe distributional}) if
 \[
-\epsilon< \frac{1-\left(\frac{2^{\frac{|\ell|+\log{k}-\log{\nu}}{k}+1+\mu+k}}{{2^{\alpha/k+\kappa}}}+\frac{\nu+1}{2^\kappa}\right)}{2}.
+\epsilon\ge  \frac{1-\left(\frac{2^{\frac{|\ell|+\log{k}-\log{\nu}}{k}+1+\mu+k}}{{2^{\alpha/k+\kappa}}}+\frac{\nu+1}{2^\kappa}\right)}{2}.
 \]
 \end{lemma}
 \begin{proof}[Proof of Lemma~\ref{lem:convert distinguisher}].
@@ -130,7 +130,7 @@ We prove the result for an average member of $Z$.  Consider the following distin
 \item If $\sum_{i} \viable(w_{z, i}, r, p) =0 $ output $0$,
 \item Else output $1$.
 \end{enumerate}
-First note that by perfect correctness it is always the case that when given $\mathsf{key}, p$ that $\mathcal{D}$ outputs $1$.  We proceed to bound the probability that $\mathcal{D}$ outputs $1$ when given $U_\kappa, p$.  Note that the probability that $\Pr[U_\kappa \in \mathtt{GoodKey}_p] \le 1/2$ by the definition of $\mathtt{GoodKey}_p$. 
+First note that by perfect correctness it is always the case that when given $\mathsf{key}, p$ that $\mathcal{D}$ outputs $1$.  We proceed to bound the probability that $\mathcal{D}$ outputs $1$ when given $U_\kappa, p$.  Note that the probability that $\Pr[U_\kappa \in \mathtt{GoodKey}_p] \ge 1/2$ by the definition of $\mathtt{GoodKey}_p$. 
 
 We bound the number of parts with at least one point in viable.  We begin by assuming that all points in viable are in different  values $r$ so the bound on the size of 
 \[
@@ -142,11 +142,11 @@ gives a bound on the number of nonempty parts. By Lemma~\ref{lem:info loss}
 \]
 Thus the fraction of non-empty parts in $\mathsf{Goodkey}_p$ on average is at most 
 \[
-\frac{2^{\frac{|\advise|+\log{k}-\log{\nu}}{k}+1+\mu+k}}{{2^{\alpha/k+\kappa}}}+\frac{\ell+1}{2^\kappa}.
+\frac{2^{\frac{|\advise|+\log{k}-\log{\nu}}{k}+1+\mu+k}}{{2^{\alpha/k+\kappa}}}+\frac{\nu+1}{2^\kappa}.
 \]
 Thus, the probability that $\mathcal{D}$ outputs $0$ when given $U_\kappa, p, z$ is at least 
 \[
-\frac{1-\left(\frac{2^{\frac{|\advise|+\log{k}-\log{\nu}}{k}+1+\mu+k}}{{2^{\alpha/k+\kappa}}}+\frac{\ell+1}{2^\kappa}\right)}{2}.
+\frac{1-\left(\frac{2^{\frac{|\advise|+\log{k}-\log{\nu}}{k}+1+\mu+k}}{{2^{\alpha/k+\kappa}}}+\frac{\nu+1}{2^\kappa}\right)}{2}.
 \]
 
 This completes the Proof of Lemma~\ref{lem:convert distinguisher}.
@@ -155,9 +155,9 @@ This completes the Proof of Lemma~\ref{lem:convert distinguisher}.
 
 \begin{corollary}
 Let $\gamma \in\mathbb{R}^+, n, \kappa, t, \ell, \nu \in\mathbb{Z}^+$.
-For the  family $ \mathtt{PCode}_{n, k, t, \gamma}^{*})$ there is no $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon, \ell)$-efficient fuzzy extractor for 
+For the  family $ \mathtt{PCode}_{n, k, t, \gamma}^{*}$ there is no $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon, \ell)$-efficient fuzzy extractor for 
 \[
-\epsilon< \epsilon_1+\epsilon_2
+\epsilon< \epsilon_1-\epsilon_2
 \]
 \end{corollary}
 \begin{proof}

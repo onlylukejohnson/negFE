@@ -23,9 +23,6 @@ An interesting part of this work is how we share information about $W_Z$. We wil
     \item[$U_{n,k}$] Picking $k$ points from $\zeroone{n}$ without replacement uniformly results in a distribution we will denote $U_{n,k}$. Note that there are ${2^{n}\choose k}$ outcomes each occuring with probability $1/{2^{n}\choose k}$.
 
 %    \item[$U_{n,k,t}^{-}$] Another distribution of interest is picking $k$ points uniformly from $\zeroone{n}$ and then removing points that are within distance $t$ of one another, we denote this $U_{n,k,t}^{-}$. 
-    This may result in fewer than $k$ points being included in the final set. 
-    The trivial bounds here also include $t \leq n$. 
-
     \item[$\mathtt{Code}_{n,k,t}^{*}$] The set of all $k$ points where all points are distance $t$ from one another.  That is, the set of all $(n,\log k, t)$ error-correcting codes. The trivial bounds from above apply here as well.  Note for all outcomes $X$ from this distribution $\Hfuzz(X) = \log k$.
     
     \item[$\mathtt{PCode}_{n, k, t, \alpha}^{*}$] The uniform distribution over all sets $X = \{x_i\}$ of size $k$ with the additional condition that $\Hfuzz(X) \ge \alpha$.  Note that this weakens the condition of $\mathtt{Code}$ above as some distributions are allowed to lie within distance $t$ as long as fewer than $2^{-\alpha}*k$ do lie within a single ball of radius $t$.
