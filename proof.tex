@@ -119,7 +119,7 @@ We now proceed to bounding $\viable(w_i, p, \mathsf{key})$.  By assumption, By L
 \label{lem:convert distinguisher}
 Let all parameters be as in Lemma~\ref{lem:info loss} with $\nu \in\mathbb{Z}^+$.  Then there is no $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon, \ell)$-fuzzy extractor with distributional advise (see Definition~\ref{def:fe distributional}) if
 \[
-\epsilon\ge  \frac{1-\left(\frac{2^{\frac{|\ell|+\log{k}-\log{\nu}}{k}+1+\mu+k}}{{2^{\alpha/k+\kappa}}}+\frac{\nu+1}{2^\kappa}\right)}{2}.
+\epsilon<   \frac{1-\left(\frac{2^{\frac{|\ell|+\log{k}-\log{\nu}}{k}+1+\mu+k}}{{2^{\alpha/k+\kappa}}}+\frac{\nu+1}{2^\kappa}\right)}{2}.
 \]
 \end{lemma}
 \begin{proof}[Proof of Lemma~\ref{lem:convert distinguisher}].
@@ -169,10 +169,22 @@ Noting that the above distinguisher always outputs $1$ on any value $\mathsf{key
     &\le \frac{1}{2}-\left(\frac{1}{{2^{nh_2(1-t/n)-\log k+\kappa-(\frac{|\ell|+\log{k}-\log{\nu}}{k}+1+k)}}}+\frac{\nu+1}{2^{\kappa+1}}\right)
  \end{align*}
    Add in \[\epsilon_2\le \Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \gamma}^{*}) \le 2^{n+k\log e- nk2^{-\gamma}(1-h_2(t/n))}.\]
-
 \end{proof} 
 
+\[
+\epsilon> \frac{1}{2}-\left(\frac{2^{\frac{|\ell|+\log{k}-\log{\nu}}{k}+1+\mu+k}}{{2^{\alpha/k+\kappa}}}+\frac{\nu+1}{2^\kappa}+\frac{2^{n+k\log e}}{2^{nk2^{-\gamma}(1-h_2(t/n))}}\right)
+\]
 
+\begin{enumerate}
+\item $\ell$ length of advice large polynomial.
+\item $k$ Number of points in code, think exponential in $n$.
+\item $\gamma$ required entropy think $\omega(\log n)$ but higher is better.
+\item $\alpha$ just shorthand for $ \log {2^n\choose k}$.
+\item $\kappa$ length of key, shorter is better for result.
+\item $\nu$ number of points we give away for free, this is a free parameter.
+\item $\mu$ is our bound for number of viable points.  So far without errors this is $\mu:= n \cdot \prns{1 - \frac{2}{\ln{2}} \cdot \tau^{2}}$.
+\item $t$ is distance corrected by fuzzy extractor, lower is better for result.
+\end{enumerate}
 \subsection{Proof Setting}
 Consider $\mathcal{W}$ such that each $W \in \mathcal{W}$ is a set of $2^{\phi}$ uniformly chosen independent random points in $\zeroone{n}$. 
 Let $|\mathcal{W}| = r$ and let $Z \in \br{r}$ be an indexing variable for the selection of $W_Z$ from $\mathcal{W}$. 
