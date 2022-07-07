@@ -4,26 +4,28 @@
 
 \section{Main Result}
 \begin{theorem}
-Fix $(\gen, \rep, \advise)$, let $n, \kappa, t, \ell $ be parameters.  Let $\mathcal{W} = \{W_Z\}$ be a family of distributions where for each $W_Z, \Hfuzz(W) \ge \alpha$.  If $(\mathcal{M,W},\kappa, t, \epsilon, \ell)$-fuzzy extractor with auxiliary input where the following conditions are satisfied:
-\begin{enumerate}
-\itemsep0em
-\item $\kappa = \omega(\log \lambda)$ \todo{how much really}
-\item $\ell = \poly(n)$ \todo{how much really}
-\item Some complicated relationship with key length and distance \todo{be precise}.
-\item $\alpha$ is big enough.
-\end{enumerate}
-Then \[
-\epsilon> ....\]
+Let $\gamma \in\mathbb{R}^+, n, \kappa, t, \ell, \nu \in\mathbb{Z}^+$ be paraemters.
+For the  family $ \mathtt{PCode}_{n, k, t, \gamma}^{*}$ there is no $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon, \ell)$-efficient fuzzy extractor for 
+\[
+\epsilon< \epsilon_1-\epsilon_2
+\]
+For 
+\begin{align*}\epsilon_1&:= 1/2-\left(\frac{2^{\frac{|\advise|+\log{k}-\log{\nu}}{k}+1+\mu+k}}{{2^{\alpha/k+\kappa+1}}}+\frac{\nu+1}{2^{\kappa+1}}\right)\\\epsilon_2 &:=2^{n+k\log e- nk2^{-\gamma}(1-h_2(t/n))}.\end{align*}
+\label{thm:main theorem}
 \end{theorem}
 
 \subsection{Proof Sketch}
 Our proof uses the following structure
 \begin{enumerate}
-\item We start by using Lemma~\ref{lem:smallgeneralviable} which bounds the number of ``viable'' points for most public values $p$.  Note that this Lemma bounds the total number of points and holds even if $\gen, \rep$ have access to an arbitrary advice string.
-\item We then further restrict this setting by showing that in order for an adversary to succeed on average they have to be able to align these viable points with a distribution that they have only a single sample and a polynomial length advice sting. 
-\item We then argue that for large high entropy distributions this advice string can only reduce the entropy of a large fraction of viable points by a small amount. 
-\item Then, we show that this small reduction of entropy for each point in the distribution means that on average the adversary cannot align the viable points with the distribution and there exists a distinguisher that can distinguish a uniform triple from a key triple. 
+\item Lemma~\ref{lem:smallgeneralviable} which bounds the number of ``viable'' points for most public values $p$.  Note that this Lemma bounds the total number of points and holds even if $\gen, \rep$ have access to an arbitrary advice string.
+\item Lemma~\ref{lem:info loss} We then further restrict this setting by showing that in order for an adversary to succeed on average they have to be able to align these viable points with a distribution that they have only a single sample and a polynomial length advice sting. 
+
+ We then argue that for large high entropy distributions this advice string can only reduce the entropy of a large fraction of viable points by a small amount. 
+\item Lemma~\ref{lem:convert distinguisher} Then, we show that this small reduction of entropy for each point in the distribution means that on average the adversary cannot align the viable points with the distribution and there exists a distinguisher that can distinguish a uniform triple from a key triple. 
 \end{enumerate}
+
+\noindent
+We present Lemmas~\ref{lem:info loss} and \ref{lem:convert distinguisher} first and then return to the proof of Theorem~\ref{thm:main theorem}.
 
 \paragraph{The family $\mathcal{W}$}
 We consider the following family $Z$ which chooses $k$ points without replacement from the space $\{0,1\}^n$.  That is, if one samples $Z$ uniformly then one obtains the distribution $U_{n,k}$. We note there are distributions $W_Z$ in this family that have little fuzzy min-entropy.  However, we will show that this family is statistically close to a family where every distribution has fuzzy min-entropy.  For the remainder of this proof we consider $U_{n,k}$ and then show that the fuzzy extractor cannot perform differently on the family $\mathtt{PCode}_{n, k, t, \alpha}^{*}$ where every distribution does have fuzzy min-entropy. For convenience we use $W_{z, 1},..., W_{z,k}$ to describe the distribution $k$ points with nonzero probability in $W_z$ for some value $z$.  We assume no ordering over these points.  For all values $x, y$, 
@@ -119,8 +121,9 @@ We now proceed to bounding $\viable(w_i, p, \mathsf{key})$.  By assumption, By L
 \label{lem:convert distinguisher}
 Let all parameters be as in Lemma~\ref{lem:info loss} with $\nu \in\mathbb{Z}^+$.  Then there is no $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon, \ell)$-fuzzy extractor with distributional advise (see Definition~\ref{def:fe distributional}) if
 \[
-\epsilon<   \frac{1-\left(\frac{2^{\frac{|\ell|+\log{k}-\log{\nu}}{k}+1+\mu+k}}{{2^{\alpha/k+\kappa}}}+\frac{\nu+1}{2^\kappa}\right)}{2}.
+\epsilon<1/2-\left(\frac{2^{\frac{|\advise|+\log{k}-\log{\nu}}{k}+1+\mu+k}}{{2^{\alpha/k+\kappa}}}+\frac{\nu+1}{2^{\kappa}}\right).
 \]
+Furthermore, there exists an algorithm $\mathcal{D}$ that always outputs $1$ when given samples of the form $r, p, z$ that are correctly generated by the fuzzy extractor.
 \end{lemma}
 \begin{proof}[Proof of Lemma~\ref{lem:convert distinguisher}].
 We prove the result for an average member of $Z$.  Consider the following distinguisher $\mathcal{D}$ for triples of the form $r, p, z$:
@@ -146,22 +149,41 @@ Thus the fraction of non-empty parts in $\mathsf{Goodkey}_p$ on average is at mo
 \]
 Thus, the probability that $\mathcal{D}$ outputs $0$ when given $U_\kappa, p, z$ is at least 
 \[
-\frac{1-\left(\frac{2^{\frac{|\advise|+\log{k}-\log{\nu}}{k}+1+\mu+k}}{{2^{\alpha/k+\kappa}}}+\frac{\nu+1}{2^\kappa}\right)}{2}.
+1/2-\left(\frac{2^{\frac{|\advise|+\log{k}-\log{\nu}}{k}+1+\mu+k}}{{2^{\alpha/k+\kappa}}}+\frac{\nu+1}{2^{\kappa}}\right).
 \]
-
+\noindent
 This completes the Proof of Lemma~\ref{lem:convert distinguisher}.
 \end{proof}
 
 
-\begin{corollary}
-Let $\gamma \in\mathbb{R}^+, n, \kappa, t, \ell, \nu \in\mathbb{Z}^+$.
-For the  family $ \mathtt{PCode}_{n, k, t, \gamma}^{*}$ there is no $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon, \ell)$-efficient fuzzy extractor for 
+\begin{proof}[Proof of Theorem~\ref{thm:main theorem}]
+Restating Lemma~\ref{lem:convert distinguisher} one has that for $(R_{U_{n,k}},P_{U_{n,k}}) \leftarrow \gen(U_{n,k}, \advise(Z_{U_{n,k}}))$
 \[
-\epsilon< \epsilon_1-\epsilon_2
+\Delta((R_{U_{n,k}}, P_{U_{n,k}}, Z_{U_{n,k}}), (U_n, P_{U_{n,k}}, Z_{U_{n,k}}))\ge \epsilon_1.
 \]
-\end{corollary}
-\begin{proof}
-Noting that the above distinguisher always outputs $1$ on any value $\mathsf{key}, p, z$ for any distribution $z$ one notes the statistical distance between $U_{n,k}$ and  $\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \alpha}^{*}) \le 2^{n+k\log e- nk2^{-\alpha}(1-h_2(t/n))}$ by Lemma~\ref{lem:close family}.  Finally, the corollary follows by application of Lemma~\ref{lem:distributional advise suffices} and the following calculation, substituting that $\mu\le n(1-2/\ln 2 (t/n)^2).$ and ${2^n\choose k} \ge 2^{nk} /k^k$.
+\todo{make it clear in the lemma statement that such a thing exists.}Noting that the above distinguisher always outputs $1$ on any value $\mathsf{key}, p, z$ for any distribution $z$ 
+Let $\mathcal{D}$ be one distinguisher such that 
+\begin{align*}
+\Pr[\mathcal{D}((R_{U_{n,k}}, P_{U_{n,k}}, Z_{U_{n,k}}))=1] &=1\\
+\Pr[\mathcal{D}(U_n, P_{U_{n,k}}, Z_{U_{n,k}})=1]&\le 1-\epsilon_1.
+\end{align*}
+Recall that $\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \alpha}^{*}) \le \epsilon_2$ by Lemma~\ref{lem:close family} .  Define \[(R_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})\leftarrow \gen(\mathtt{PCode}_{n, k, t, \alpha}^{*}, \advise(Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})).\]
+it is thus true that 
+\begin{align*}
+\Pr[\mathcal{D}(R_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})=1]&=1\\
+\Pr[\mathcal{D}(U_n, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})=1]&\le 1-(\epsilon_1-\epsilon_2).
+\end{align*}
+and thus that 
+\[
+\Delta((R_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}), (U_n, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}))\ge \epsilon_1-\epsilon_2.
+\]
+
+\noindent
+Finally, the theorem follows by application of Lemma~\ref{lem:distributional advise suffices}.
+\end{proof} 
+
+\paragraph{Analysis of parameters}
+ and the following calculation, substituting that $\mu\le n(1-2/\ln 2 (t/n)^2).$ and ${2^n\choose k} \ge 2^{nk} /k^k$.
 \begin{align*}
 \epsilon_1 &\le \frac{1-\left(\frac{2^{\frac{|\ell|+\log{k}-\log{\nu}}{k}+1+\mu+k}}{{2^{\alpha/k+\kappa}}}+\frac{\nu+1}{2^\kappa}\right)}{2}\\
  &\le \frac{1}{2}-\left(\frac{2^{\frac{|\ell|+\log{k}-\log{\nu}}{k}+1+\mu+k}}{{2^{n-\log k+\kappa}}}+\frac{\nu+1}{2^{\kappa+1}}\right)\\
@@ -169,9 +191,8 @@ Noting that the above distinguisher always outputs $1$ on any value $\mathsf{key
     &\le \frac{1}{2}-\left(\frac{1}{{2^{nh_2(1-t/n)-\log k+\kappa-(\frac{|\ell|+\log{k}-\log{\nu}}{k}+1+k)}}}+\frac{\nu+1}{2^{\kappa+1}}\right)
  \end{align*}
    Add in \[\epsilon_2\le \Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \gamma}^{*}) \le 2^{n+k\log e- nk2^{-\gamma}(1-h_2(t/n))}.\]
-\end{proof} 
 
-\todo{Make it clear on the connection with with Lemma~\ref{lem:close family}.  In particular, I think we need twice that value for statistical distance}
+
 \[
 \epsilon> \frac{1}{2}-\left(\frac{2^{\frac{|\ell|+\log{k}-\log{\nu}}{k}+1+\mu+k}}{{2^{\alpha/k+\kappa}}}+\frac{\nu+1}{2^\kappa}+\frac{2^{n+k\log e}}{2^{nk2^{-\gamma}(1-h_2(t/n))}}\right)
 \]
