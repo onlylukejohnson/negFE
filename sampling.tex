@@ -40,29 +40,29 @@ An interesting part of this work is how we share information about $W_Z$. We wil
  {2^n\choose k} \ge 2^{nk}/k^k.
  \end{align*}  We analyze what fraction of members of $U_{n,k}$ are not in $\mathtt{PCode}_{n, k, t, \alpha}^{*}$.
  We begin by enumerating the number of entries that are not in $\mathtt{PCode}$:
- \todo{Luke mentioned that this considers exactly $2^{-\alpha}k$ points in a ball not at least that many}
  \[
-  \underbrace{{2^n \choose 1}}_{(1)}  \underbrace{{|B_t| \choose 2^{-\alpha}k}}_{(2)}   \underbrace{{2^n-|B_t| \choose k(1-2^{-\alpha})}}_{(3)}
+  \underbrace{{2^n \choose 1}}_{(1)}  \underbrace{{|B_t| \choose 2^{-\alpha}k}}_{(2)}   \underbrace{{2^n \choose k(1-2^{-\alpha})}}_{(3)}
  \]
  In the above, 
  \begin{enumerate}
  \itemsep0em
  \item The choice of the point for $w^*$ that will be the center of the ball.
- \item The choice for the $2^{-\alpha} k$ points that need to be within distance $t$ of the center point.
- \item The choice for the remaining points $k(1-2^{-\alpha})$ that need to be somewhere in the space outside of the ball.
+ \item The choice for the at least $2^{-\alpha} k$ points that need to be within distance $t$ of the center point.
+ \item The choice for the remaining points $k(1-2^{-\alpha})$ that need to be somewhere in the space outside of the ball.  
  \end{enumerate}
  Now one has: 
  \begin{align*}
-|U_{n, k} \setminus \mathtt{PCode}_{n, k, t, \alpha}^{*}|  &=2^n \cdot {|B_t| \choose 2^{-\alpha}k}\cdot {2^n-|B_t| \choose k(1-2^{-\alpha})}\\
-&\le 2^n \cdot {|B_t| \choose 2^{-\alpha}k}\cdot {2^n \choose k(1-2^{-\alpha})}\\
+|U_{n, k} \setminus \mathtt{PCode}_{n, k, t, \alpha}^{*}|  &=2^n \cdot {|B_t| \choose 2^{-\alpha}k}\cdot {2^n \choose k(1-2^{-\alpha})}\\
 &= 2^n \cdot {2^{nh_2(t/n)} \choose 2^{-\alpha}k}\cdot {2^n \choose k(1-2^{-\alpha})}\\
-&= 2^n \cdot \left(\frac{e2^{nh_2(t/n)}}{2^{-\alpha}k}\right)^{2^{-\alpha}k}\cdot \left(\frac{e2^n}{k(1-2^{-\alpha})}\right)^{k(1-2^{-\alpha})}\\
+&\le 2^n \cdot \left(\frac{e2^{nh_2(t/n)}}{2^{-\alpha}k}\right)^{2^{-\alpha}k}\cdot \left(\frac{e2^n}{k(1-2^{-\alpha})}\right)^{k(1-2^{-\alpha})}\\
 &\le 2^{n+k\log e} \frac{2^{nk(1-2^{-\alpha}(1-h_2(t/n)))}}{(2^{-\alpha}k)^{2^{-\alpha}k} (k(1-2^{-\alpha}))^{k(1-2^{-\alpha}})}\\
  \end{align*}
+ \todo{This needs to be tighter}
  Thus, one has that 
  \begin{align*}
 \Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \alpha}^{*}) &= \frac{|U_{n, k} \setminus \mathtt{PCode}_{n, k, t, \alpha}^{*}|}{|U_{n, k}|}\\
 &\le\frac{2^{n+k\log e} \frac{2^{nk(1-2^{-\alpha}(1-h_2(t/n)))}}{(2^{-\alpha}k)^{2^{-\alpha}k} (k(1-2^{-\alpha}))^{k(1-2^{-\alpha}})}}{\frac{2^{nk}}{k^k}}\\
+&\le\frac{2^{n+k\log e} \frac{2^{nk} 2^{-nk2^{-\alpha}(1-h_2(t/n)))}}{2^{-\alpha 2^{-\alpha k}}k^kk^{-k2^{-\alpha}}}}{\frac{2^{nk}}{k^k}}\\
 &\le \frac{2^{n+k\log e}}{2^{nk2^{-\alpha}(1-h_2(t/n))}} = 2^{n+k\log e- nk2^{-\alpha}(1-h_2(t/n))}.
  \end{align*}
   \end{proof}

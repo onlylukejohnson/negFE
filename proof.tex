@@ -14,7 +14,6 @@ For
 \label{thm:main theorem}
 \end{theorem}
 
-\subsection{Proof Sketch}
 Our proof uses the following structure
 \begin{enumerate}
 \item Lemma~\ref{lem:smallgeneralviable} which bounds the number of ``viable'' points for most public values $p$.  Note that this Lemma bounds the total number of points and holds even if $\gen, \rep$ have access to an arbitrary advice string.
@@ -183,7 +182,7 @@ Finally, the theorem follows by application of Lemma~\ref{lem:distributional adv
 \end{proof} 
 
 \paragraph{Analysis of parameters}
- and the following calculation, substituting that $\mu\le n(1-2/\ln 2 (t/n)^2).$ and ${2^n\choose k} \ge 2^{nk} /k^k$.
+Substituting that $\mu\le n(1-2/\ln 2 (t/n)^2).$ and ${2^n\choose k} \ge 2^{nk} /k^k$.
 \begin{align*}
 \epsilon_1 &\le \frac{1-\left(\frac{2^{\frac{|\ell|+\log{k}-\log{\nu}}{k}+1+\mu+k}}{{2^{\alpha/k+\kappa}}}+\frac{\nu+1}{2^\kappa}\right)}{2}\\
  &\le \frac{1}{2}-\left(\frac{2^{\frac{|\ell|+\log{k}-\log{\nu}}{k}+1+\mu+k}}{{2^{n-\log k+\kappa}}}+\frac{\nu+1}{2^{\kappa+1}}\right)\\
@@ -207,6 +206,16 @@ Finally, the theorem follows by application of Lemma~\ref{lem:distributional adv
 \item $\mu$ is our bound for number of viable points.  So far without errors this is $\mu:= n \cdot \prns{1 - \frac{2}{\ln{2}} \cdot (t/n)^{2}}$.
 \item $t$ is distance corrected by fuzzy extractor, lower is better for result.
 \end{enumerate}
+
+Want three things to be negligible at the same time:
+\[\frac{\nu+1}{2^\kappa} 
+\]
+Requires $\nu$ to be a super polynomial amount smaller than $2^\kappa$.  Requires $\kappa = \omega(\log \lambda)$.
+ 
+ \[
+\frac{2^{n+k\log e}}{2^{nk2^{-\gamma}(1-h_2(t/n))}}
+ \]
+ Think of $k$ as being fixed.  Then the requirement is that $n 2^{-\gamma}(1-h_2(t/n))>1$.  Think of $1-h_2(t/n) = \Theta(1)$ then this requires that $n2^{-\gamma} >1$  Requires a very big $n$ and is problematic. 
 \subsection{Proof Setting}
 Consider $\mathcal{W}$ such that each $W \in \mathcal{W}$ is a set of $2^{\phi}$ uniformly chosen independent random points in $\zeroone{n}$. 
 Let $|\mathcal{W}| = r$ and let $Z \in \br{r}$ be an indexing variable for the selection of $W_Z$ from $\mathcal{W}$. 
