@@ -66,3 +66,35 @@ An interesting part of this work is how we share information about $W_Z$. We wil
 &\le \frac{2^{n+k\log e}}{2^{nk2^{-\alpha}(1-h_2(t/n))}} = 2^{n+k\log e- nk2^{-\alpha}(1-h_2(t/n))}.
  \end{align*}
   \end{proof}
+  
+  \todo{This is Alex's new claim, will integrate into old language}
+  \begin{theorem}
+  Let $n,k,a$ be positive integers for which $k + \operatorname{log}_2(a) \leq n$.  Let $a^* = a/(1 - a2^{-k})$. Let $K$
+  be a random variable uniform among all subsets of $\{0,1\}^n$ of
+  size $2^k$. Let $A$ be a fixed subset of size $a \cdot 2^{n-k}$. Then
+  $\Exp[|K \cap A|] = a$ and any $\gamma > 0$,
+  \[
+    \Pr[|K \cap A| \geq a^*(1 + \gamma)] \leq \left[\frac{e^\gamma}{(1+\gamma)^{1+\gamma}}\right]^{a^*}\,.
+  \]
+\end{theorem}
+\begin{proof}
+  For the purposes of bookkeeping, arrange the elements of $A$ in an
+  arbitrary order, and let
+  \[
+    X_1, \ldots, X_{a2^{n-k}}
+  \]
+  be indicator random variables so that $X_i = 1$ if and only if the
+  $i$th element of $A$ lies in $K$.  Observe that under any conditioning on the
+  variables $X_1, \ldots, X_t$,
+  \[
+    \Pr[X_{t+1} = 1] \leq \frac{2^k}{2^n - a2^{n-k}} = \frac{2^k}{2^n(1 - a2^{-k})}\,.
+  \]
+   Let $Y_i$ be a sequence of
+  i.i.d.\ random variables (with the same index set) for which
+  \[
+    \Pr[Y_i = 1] = \frac{2^{k}}{2^n(1 - a2^{-k})}\,.
+  \]It follows that the random variable $\sum_i X_i$ is stochastically
+  dominated by the random variable $\sum_i Y_i$. Observe that
+  $\Exp[\sum Y_i] = a^*$. Applying a standard Chernoff upper tail
+  bound to the $Y_i$ then yields the result.
+\end{proof}
