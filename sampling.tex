@@ -93,18 +93,25 @@ Now we consider a union bound across all $y^*$ which is equivalent to asking the
 
 The difference between $U_{n,k}$ and $\mathtt{PCode}_{n, k, t, \gamma}^{*}$ is exactly the above probability mass which is removed from the entries of $U_{n,k}$ that are not in $\mathtt{PCode}_{n, k, t, \gamma}^{*}$ and uniformly distributed to the entries in $\mathtt{PCode}_{n, k, t, \gamma}^{*}$.  This means that 
 \[
-\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \gamma}^{*}) \le \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}.
+\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \gamma}^{*}) \le \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.
 \]
 \end{proof}
 
 \paragraph{Parameter Analysis}
-
-Let $c_1, c_2>0$ such that $c_1+c_2\ge 1$.  Then Lemma~\ref{lem:close family} is $\ngl(n)$ as long as 
+ Lemma~\ref{lem:close family} yields a negligible statistical distances as long as 
 \begin{align*}
-e2^{\gamma - k}&\le  \frac{1}{2}\\
-2^{k-\beta}&\ge n+\omega(\log n).
+2^{\gamma - \beta} &\le \frac{1}{2e},\\
+ \gamma &\le \beta -\log{2e}.\\
+2^{k-\beta}&\ge n+\omega(\log n)\\
+k &\ge \beta + \log{n+ \omega(\log{n})}.
 \end{align*}
 
-
+\noindent
+Combining Ash~\cite[Lemma 4.7.2, Equation 4.7.5, p. 115]{ash2012information} and Guruswami~\cite{venkatLecture} one has
+\[ nh_2(t/n)  -1/2\log{n} - 1/2 \le \log{|B_t|} \le  nh_2(t/n).\]
+This leads to 
+\[
+2^\beta = \frac{2^n - |B_t|}{|B_t|} \ge \frac{2^n}{|B_t|} -1 \ge 2^{n(1-h_2(t/n)) - 1/2 \log{n}-1/2} -1 \ge 2^{n(1-h_2(t/n)) - 1/2\log{n}}.
+\]
 
 
