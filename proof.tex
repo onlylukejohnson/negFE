@@ -4,13 +4,14 @@
 
 \section{Main Result}
 \begin{theorem}
-Let $\gamma \in\mathbb{R}^+, n, \kappa, t, \ell, \nu \in\mathbb{Z}^+$ be paraemters.
+Let $\gamma \in\mathbb{R}^+, n, \kappa, t, \ell, \nu \in\mathbb{Z}^+$ be parameters.
 For the  family $ \mathtt{PCode}_{n, k, t, \gamma}^{*}$ there is no $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon, \ell)$-efficient fuzzy extractor for 
 \[
 \epsilon< \epsilon_1-\epsilon_2
 \]
 For 
-\begin{align*}\epsilon_1&:= 1/2-\left(\frac{2^{\frac{|\advise|+\log{k}-\log{\nu}}{k}+1+\mu+k}}{{2^{\alpha/k+\kappa+1}}}+\frac{\nu+1}{2^{\kappa+1}}\right)\\\epsilon_2 &:=2^{n+k\log e- nk2^{-\gamma}(1-h_2(t/n))}.\end{align*}
+\begin{align*}\epsilon_1&:= 1/2-\left(\frac{2^{\frac{|\advise|+\log{k}-\log{\nu}}{k}+1+\mu+k}}{{2^{\alpha/k+\kappa+1}}}+\frac{\nu+1}{2^{\kappa+1}}\right)\\\epsilon_2 &:=\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}.
+\end{align*}
 \label{thm:main theorem}
 \end{theorem}
 
@@ -27,7 +28,9 @@ Our proof uses the following structure
 We present Lemmas~\ref{lem:info loss} and \ref{lem:convert distinguisher} first and then return to the proof of Theorem~\ref{thm:main theorem}.
 
 \paragraph{The family $\mathcal{W}$}
-We consider the following family $Z$ which chooses $k$ points without replacement from the space $\{0,1\}^n$.  That is, if one samples $Z$ uniformly then one obtains the distribution $U_{n,k}$. We note there are distributions $W_Z$ in this family that have little fuzzy min-entropy.  However, we will show that this family is statistically close to a family where every distribution has fuzzy min-entropy.  For the remainder of this proof we consider $U_{n,k}$ and then show that the fuzzy extractor cannot perform differently on the family $\mathtt{PCode}_{n, k, t, \alpha}^{*}$ where every distribution does have fuzzy min-entropy. For convenience we use $W_{z, 1},..., W_{z,k}$ to describe the distribution $k$ points with nonzero probability in $W_z$ for some value $z$.  We assume no ordering over these points.  For all values $x, y$, 
+We consider the following family $Z$ which chooses $2^k$ points without replacement from the space $\{0,1\}^n$.  That is, if one samples $Z$ uniformly then one obtains the distribution $U_{n,k}$. There are distributions in this family with little fuzzy min-entropy.  As shown in Lemma~\ref{lem:close family} $U_{n,k}$  is statistically close to $\mathtt{PCode}_{n, k, t, \gamma}^{*}$, a family with fuzzy min-entropy.  For the remainder of this proof we consider $U_{n,k}$ and then show that the fuzzy extractor cannot perform differently on the family $\mathtt{PCode}_{n, k, t, \gamma}^{*}$ where every distribution does have fuzzy min-entropy. 
+
+For convenience we use $W_{z, 1},..., W_{z,2^k}$ to describe the $2^k$ points with nonzero probability in $W_z$ for some value $z$.  We assume no ordering over these points.  For all values $x, y$, 
 \[
 \Pr[W_{z, i} =x | W_{z, j} = y] = \begin{cases} \frac{1}{2^n-1} &x\neq y\\0&x=y.\end{cases}
 \]
@@ -35,46 +38,46 @@ We consider the following family $Z$ which chooses $k$ points without replacemen
 
 \begin{lemma}
 \label{lem:info loss}
-Let $Z$ describe a uniform sample of $U_{n,k}$.  Let $(\gen, \rep, \aux)$ be an auxiliary input fuzzy extractor.  Let $\advise = \aux(Z)$ be of length $\ell$.  For a quad $v, p, r, \advise$ define 
+Let $Z$ describe a uniform sample of $U_{n,k}$.  Let $(\gen, \rep, \aux)$ be an auxiliary input fuzzy extractor.  Let $\advise = \aux(Z)$ be of length $\ell$.  For a tuple $(v, p, r, \advise)$ define 
 \[
 \viable(v, p, r, \advise) = \begin{cases} 1& \Pr[\gen(v, \advise) = (r, p)]>0\\0&\text{otherwise}\end{cases}.\]
 Fix some $p$ and let $\mathtt{GoodKey}_p$ be defined as in Lemma~\ref{lem:smallgeneralviable}. Suppose that 
 \[
    \sum_{\mathsf{key}\in \mathtt{GoodKey}_p} \left( \log{|\sbr{v \in \mathcal{M}|\prns{\mathsf{key}, p} \in \mathsf{supp}\prns{\mathsf{Gen}(v)}}|}\right) \le 2^\mu 
  \]
- For a particular $Z=z$ let $w_{z,1},..., w_{z,k}$ denote the points in $W_Z$. Let $\alpha:= \log {2^n\choose k}$.  
+ For a particular $Z=z$ let $w_{z,1},..., w_{z,2^k}$ denote the points in $W_Z$. Let $\alpha:= \log {2^n\choose 2^k}$.  
  Then for each value $\advise$ there is some set $\mathcal{I}_{\advise}$ of size at most $\nu+1$, then it is true for each $i\not \in \mathcal{I}_\advise$ that
 \[
-\Pr\left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p} \viable(w_{z,i}, p, \mathsf{key}, \advise, z) \ge 1\middle| \begin{aligned} z\leftarrow Z\\ \advise= \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advise) \end{aligned} \right]< \frac{2^{\frac{|\advise|+\log{k}-\log{\nu}}{k}+1+\mu}}{{2^{\alpha/k}}}.
+\Pr\left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p} \viable(w_{z,i}, p, \mathsf{key}, \advise, z) \ge 1\middle| \begin{aligned} z\leftarrow Z\\ \advise= \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advise) \end{aligned} \right]< 2^{-\frac{\alpha+\log{\nu}-|\advise|-k}{2^k}+1+\mu}.
 \]
 And thus, for on average across $Z$, the expected number of points outside of $\mathcal{I}_\advise$ that are included in $\viable$ is at most 
 \begin{align*}
-\expe_{Z} \left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p}\sum_{i | w_{z,i}\not\in\mathcal{I}_\advise} \viable(w_{z,i}, p, \mathsf{key}, \advise) \middle| \begin{aligned} z\leftarrow Z\\ \advise\leftarrow \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advise)\end{aligned} \right]< \frac{2^{\frac{|\advise|+\log{k}-\log{\nu}}{k}+1+\mu+k}}{{2^{\alpha/k}}}.
+\expe_{Z} \left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p}\sum_{i | w_{z,i}\not\in\mathcal{I}_\advise} \viable(w_{z,i}, p, \mathsf{key}, \advise) \middle| \begin{aligned} z\leftarrow Z\\ \advise\leftarrow \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advise)\end{aligned} \right]< 2^{-\frac{\alpha+\log{\nu} - |\advise|-k}{2^k}+1+\mu+2^k}.
 \end{align*}
 And finally, 
 \begin{align*}
-\expe_{Z} \left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p}\sum_{i }  \viable(w_{z,i}, p, \mathsf{key}, \advise) \middle| \begin{aligned} z\leftarrow Z\\ \advise\leftarrow \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advise)\end{aligned} \right]< \frac{2^{\frac{|\advise|+\log{k}-\log{\nu}}{k}+1+\mu+k}}{{2^{\alpha/k}}}+\nu+1.
+\expe_{Z} \left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p}\sum_{i }  \viable(w_{z,i}, p, \mathsf{key}, \advise) \middle| \begin{aligned} z\leftarrow Z\\ \advise\leftarrow \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advise)\end{aligned} \right]< 2^{-\frac{\alpha+\log{\nu}-|\advise|-k}{2^k}+1+\mu+2^k}+\nu+1.
 \end{align*}
 
 \end{lemma}
 \begin{proof}
 Let $Z$ and $\advise$ be defined as above. We begin by noting that 
 \[
-\Hoo(W_{z, 1},..., W_{z, k})=\alpha.
+\Hoo(W_{z, 1},..., W_{z, 2^k})=\alpha.
 \]
  It is thus, the case that 
 \[
-\Hav(W_{z, 1},..., W_{z, k} | \advise) \ge \alpha - |\advise|.
+\Hav(W_{z, 1},..., W_{z, 2^ k} | \advise) \ge \alpha - |\advise|.
 \]
 \begin{claim}
 One has that 
 \begin{align*}
-\expe_{i=1}^k \left[\Hav(W_{z, i} | \advise)\right] \ge \frac{\alpha - |\advise|}{k}.
+\expe_{i=1}^{2^k} \left[\Hav(W_{z, i} | \advise)\right] \ge \frac{\alpha - |\advise|}{2^k}.
 \end{align*}
 \label{clm:entropy distributes}
 \end{claim}
 \begin{proof}
-We begin it is true that $\forall w_{z,1},..., w_{z,i-1}$ that 
+It is true that $\forall w_{z,1},..., w_{z,i-1}$ that 
 \[
 \Hav(W_{z,i} | \advise, W_{z, 1}=w_{z,1},..., W_{z,i-1}=w_{z,i-1}) \le \Hav(W_{z,i} | \advise).
 \]
@@ -89,22 +92,22 @@ Suppose not, then there exists the following predictor $\mathcal{P}$ for the joi
 Let $\alpha_i$ denote the values $\Hav(W_{z,i}| \advise) = \alpha_i$ for $i=1$ to $k$. 
 The probability that $\mathcal{P}$ issues a correct prediction is
 \begin{align*}
-\prod_{i=1}^k 2^{-\Hav(W_i | \advise,  W_{z,1}=w_{z,1},..., W_{z,i-1}=w_{z,i-1})} \ge \prod_{i=1}^k 2^{-\Hav(W_i | \advise)} = \prod_{i=1}^k 2^{-\alpha_i}  = 2^{-\sum_{i=1}^k \alpha_i}.
+\prod_{i=1}^{2^k} 2^{-\Hav(W_i | \advise,  W_{z,1}=w_{z,1},..., W_{z,i-1}=w_{z,i-1})} \ge \prod_{i=1}^{2^k} 2^{-\Hav(W_i | \advise)} = \prod_{i=1}^{2^k} 2^{-\alpha_i}  = 2^{-\sum_{i=1}^{2^k} \alpha_i}.
 \end{align*}
 
 \noindent
-Suppose that $\sum_{i=1}^k \alpha_i < \alpha-\advise$ then $\mathcal{P}$ correctly predicts with probability greater than $2^{-(\alpha-\advise)}$, a contradiction.  Thus, $\expe_{1\le i\le k} \alpha_i \ge (\alpha-\advise)/k$. 
+Suppose that $\sum_{i=1}^{2^k} \alpha_i < \alpha-\advise$ then $\mathcal{P}$ correctly predicts with probability greater than $2^{-(\alpha-\advise)}$, a contradiction.  Thus, $\expe_{1\le i\le k} \alpha_i \ge (\alpha-\advise)/2^k$. 
 This completes the proof of Claim~\ref{clm:entropy distributes}.
 \end{proof}
 
 \noindent
-Now by Lemma~\ref{lem:markovpred} it is true that there exists a set $\mathcal{I}\subseteq \{1,...,k\}$ where $\beta: =  k/| \mathcal{I} | = k/\nu$ such that for all $i\not \in \{1,...,k\} \setminus\mathcal{I}$ is true that 
+Now by Lemma~\ref{lem:markovpred} it is true that there exists a set $\mathcal{I}\subseteq \{1,...,2^k\}$ where $\beta: =  2^k/| \mathcal{I} | = 2^k/\nu$ such that for all $i\not \in \{1,...,2^k\} \setminus\mathcal{I}$ is true that 
 \[
-\Hav(W_{z,i} | \advise) \ge \frac{\alpha -|\advise| - \log \beta}{k} = \frac{\alpha -|\advise| - \log k + \log{\nu}}{k}.
+\Hav(W_{z,i} | \advise) \ge \frac{\alpha -|\advise| - \log \beta}{2^k} = \frac{\alpha +\log{\nu}-|\advise| - k}{k}.
 \]
 
 Let $i^*$ denote the index of the point that will be given to $\gen$ that is $p\leftarrow (w_{z,i^*}, \advise)$.  We define the set $\mathcal{I}_\advise = \mathcal{I} \cup \{w_{z,i^*}\}$ where $w$ is the point given to $\gen(w, \advise)$.  
-Let \[\gamma:=\frac{\alpha -|\advise| - \log \beta}{k},\] 
+Let \[\gamma:=\frac{\alpha -|\advise| - \log \beta}{2^k},\] 
 then for $i\not\in \mathcal{I}_{\advise}$ it is true that 
 \begin{align*}
 \Hav(W_{z,i} | \mathsf{key} \in \mathtt{GoodKey}, p)&\ge \\
@@ -122,7 +125,7 @@ We now proceed to bounding $\viable(w_i, p, \mathsf{key})$.  By assumption, By L
 \label{lem:convert distinguisher}
 Let all parameters be as in Lemma~\ref{lem:info loss} with $\nu \in\mathbb{Z}^+$.  Then there is no $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon, \ell)$-fuzzy extractor with distributional advise (see Definition~\ref{def:fe distributional}) if
 \[
-\epsilon<1/2-\left(\frac{2^{\frac{|\advise|+\log{k}-\log{\nu}}{k}+1+\mu+k}}{{2^{\alpha/k+\kappa}}}+\frac{\nu+1}{2^{\kappa}}\right).
+\epsilon<1/2-\left(2^{-\frac{\alpha+\log{\nu}-|\advise|-k}{2^k}+1+\mu+k}+\frac{\nu+1}{2^{\kappa}}\right).
 \]
 Furthermore, there exists an algorithm $\mathcal{D}$ that always outputs $1$ when given samples of the form $r, p, z$ that are correctly generated by the fuzzy extractor.
 \end{lemma}

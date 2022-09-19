@@ -28,7 +28,20 @@ An interesting part of this work is how we share information about $W_Z$. We wil
     \item[$\mathtt{PCode}_{n, k, t, \alpha}^{*}$] The uniform distribution over all sets $X = \{x_i\}$ of size $2^k$ with the additional condition that $\Hfuzz(X) \ge \alpha$.  Note that this weakens the condition of $\mathtt{Code}$ above as some distributions are allowed to lie within distance $t$ as long as fewer than $2^{k-\alpha}$ do lie within a single ball of radius $t$.
 \end{description}
  
- Before showing that $\mathtt{PCode}_{n, k, t, \alpha}^{*}$ is statistically close to $U_{n,k}$ we show a technical lemma about $U_{n,k}$ intersecting with a fixed set. 
+ \noindent
+We show that $\mathtt{PCode}_{n, k, t, \alpha}^{*}$ is statistically close to $U_{n,k}$.
+
+\begin{lemma}
+ \label{lem:close family}
+Let $n, k, t, \gamma$ be parameters such that $|B_t|/2^n\ge 2$ which is satisfied as long as $t< n/2 $. Define \[2^\beta:=\frac{2^n-|B_t|}{|B_t|}\ge 1,\] then one has that 
+\[\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \gamma}^{*}) \le \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.\]
+\end{lemma}
+\begin{proof}
+We begin by showing the fraction of items in the support of $U_{n,k}$ that are not in the support of $\mathtt{PCode}_{n, k, t, \gamma}^{*}$ is at most $\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n$.  That is, 
+\[\Pr\left[U_{n,k} \not \in \mathtt{PCode}_{n, k, t, \alpha}^{*}\right] \le \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n
+\]
+A distribution is not in $\mathtt{PCode}_{n, k, t, \gamma}^{*}$ if there exists some center $y$ such that there are at least $2^{-\gamma}2^k = 2^{k-\gamma}$ points within distance $t$ of $y$.  Fix some arbitrary $y^*$. The point $y^*$ defines a set $A_{y^*}$ of all points within distance $t$ and note that $|A_{y^*}| = |B_t|$.  We now show that the probability that values in $U_{n,k}$ has a large intersection with $A_{y^*}$ is small.  
+
   \begin{lemma}
   \label{lem:chernoff independence}
   Let $n,k,a$ be positive integers for which $\log a < k$.  Let $a^* = a/(1 - a2^{-k})$. Let $K$
@@ -61,13 +74,8 @@ An interesting part of this work is how we share information about $W_Z$. We wil
   bound to the $Y_i$ then yields the result.
 \end{proof}
 
-\begin{lemma}
- \label{lem:close family}
-Let $n, k, t, \gamma$ be parameters such that $|B_t|/2^n\ge 2$ which is satisfied as long as $t< n/2 $. Define \[2^\beta:=\frac{2^n-|B_t|}{|B_t|}\ge 1,\] then one has that 
-\[\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \gamma}^{*}) \le \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.\]
-\end{lemma}
-\begin{proof}
-It suffices to show that the number of items in the support of $U_{n,k}$ that are not in the support of $\mathtt{PCode}_{n, k, t, \gamma}^{*}$ is at most $\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n$ because both distributions are uniformly distributed over their support. \todo{have to actually be careful because this rescales the probability of other things.} A distribution is not in $\mathtt{PCode}_{n, k, t, \gamma}^{*}$ if there exists some center $y$ such that there are at least $2^{-\gamma}2^k = 2^{k-\gamma}$ points within distance $t$ of $y$.  Fix some arbitrary $y^*$. The point $y^*$ defines a set $A_{y^*}$ of all points within distance $t$ and note that $|A_{y^*}| = |B_t|$.  Using the notation of Lemma~\ref{lem:chernoff independence}, let 
+\noindent
+We now continue using the notation of Lemma~\ref{lem:chernoff independence}, let 
 \[
 a^* =\frac{2^k|B_t|}{2^n - |B_t|}=2^{k-\beta}.
 \]
@@ -82,13 +90,19 @@ Now we consider a union bound across all $y^*$ which is equivalent to asking the
 \[
 \Pr_{U\leftarrow U_{n,k}}[\Hfuzz(U)\ge \gamma] = \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.
 \]
+
+The difference between $U_{n,k}$ and $\mathtt{PCode}_{n, k, t, \gamma}^{*}$ is exactly the above probability mass which is removed from the entries of $U_{n,k}$ that are not in $\mathtt{PCode}_{n, k, t, \gamma}^{*}$ and uniformly distributed to the entries in $\mathtt{PCode}_{n, k, t, \gamma}^{*}$.  This means that 
+\[
+\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \gamma}^{*}) \le \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}.
+\]
 \end{proof}
 
 \paragraph{Parameter Analysis}
 
 Let $c_1, c_2>0$ such that $c_1+c_2\ge 1$.  Then Lemma~\ref{lem:close family} is $\ngl(n)$ as long as 
-\begin{align*}2^{\beta-\gamma}&\ge 2^{c_1n+\log e}\\
-2^{k-\gamma}&\ge c_2+\omega(\log n).
+\begin{align*}
+e2^{\gamma - k}&\le  \frac{1}{2}\\
+2^{k-\beta}&\ge n+\omega(\log n).
 \end{align*}
 
 
