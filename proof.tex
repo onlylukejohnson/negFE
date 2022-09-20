@@ -204,7 +204,7 @@ We first consider $\epsilon_2$ and $\epsilon_3$.
  \gamma &\le \beta -\log{2e},\\
 k &\ge \gamma + \log{n+ \omega(\log{n})}.
 \end{align*}
-For some arbitrary constant $0<c_1 < 1$ We set $k = \gamma + cn$. 
+For some arbitrary constant $0<c < 1$ We set $k = \gamma + cn$. 
 \end{enumerate}
 We now turn to our analysis of $\epsilon_1$.  Recall that $(n/k)^k \le {n\choose k} < ((ne)/k)^k$.  Recalling parameters: 
 \begin{align*}
@@ -221,18 +221,19 @@ This implies that
 &>  \kappa+\frac{(n-2k)2^k-|\advise|-k}{2^k} - nh_2(1/2-t/n) .
 \end{align*}
 
-Since we know that $\kappa =\omega(\log n)$. Then as long as $|\advise| = o(k 2^k) = o (n2^n)$ there exists some constant $0<c_2<1$ \todo{work out the size of $c_2$ in terms of $c_1$} such that 
+Since we know that $\kappa =\omega(\log n)$. Then as long as $|\advise| = o(k 2^k) = o (n2^n)$ then 
 \begin{align*}
 0 &\le \frac{(n-2k)2^k-|\advise|-k}{2^k} - nh_2(1/2-t/n) \\
- &\le n-c_2n - 2\gamma - nh_2(1/2-t/n) \\
-&\le n(1-c_2)-2\gamma - nh_2(1/2-t/n)\\
-\gamma &\le \frac{n(1-c_2 - h_2(1/2-t/n))}{2}.\\
+ &\le n-2cn - 2\gamma - nh_2(1/2-t/n) \\
+&\le n(1-2c)-2\gamma - nh_2(1/2-t/n)\\
+\gamma &\le \frac{n(1-2c - h_2(1/2-t/n))}{2}.\\
 \end{align*}
 
+\todo{if we want to be clean we need to work out the smallest $n$ for which this is true.}
 Adding the constraint from Subsection~\ref{ssec:how much fuzzy}
 this means that 
 \[
-\gamma \le \min\left\{n(1-h_2(t/n)) - \log{2e}, \frac{n(1-c_2 - h_2(1/2-t/n))}{2}\right\}.
+\frac{\gamma}{n} \le \min\left\{(1-h_2(t/n)) - \log{2e}, \frac{(1-2c - h_2(1/2-t/n))}{2}\right\}.
 \]
 
 %\begin{align*}
