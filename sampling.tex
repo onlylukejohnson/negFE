@@ -97,7 +97,8 @@ The difference between $U_{n,k}$ and $\mathtt{PCode}_{n, k, t, \gamma}^{*}$ is e
 \]
 \end{proof}
 
-\paragraph{Parameter Analysis}
+\subsection{The maximum supported fuzzy min-entropy}
+\label{ssec:how much fuzzy}
  Lemma~\ref{lem:close family} yields a negligible statistical distances as long as 
 \begin{align*}
 2^{\gamma - \beta} &\le \frac{1}{2e},\\
@@ -105,13 +106,15 @@ The difference between $U_{n,k}$ and $\mathtt{PCode}_{n, k, t, \gamma}^{*}$ is e
 2^{k-\beta}&\ge n+\omega(\log n)\\
 k &\ge \beta + \log{n+ \omega(\log{n})}.
 \end{align*}
-
-\noindent
-Combining Ash~\cite[Lemma 4.7.2, Equation 4.7.5, p. 115]{ash2012information} and Guruswami~\cite{venkatLecture} one has
+Using Ash~\cite[Lemma 4.7.2, Equation 4.7.5, p. 115]{ash2012information} one has
 \[ nh_2(t/n)  -1/2\log{n} - 1/2 \le \log{|B_t|} \le  nh_2(t/n).\]
 This leads to 
+\begin{align*}
+\beta &= \log{\frac{2^n - |B_t|}{|B_t|}} = \log{\frac{2^n}{|B_t|} -1} \ge \log{2^{n(1-h_2(t/n)) - 1/2 \log{n}-1/2} -1} \ge n(1-h_2(t/n)) - 1/2\log{n}-1\\
+\beta&\le \log{2^{n(1-h_2(t/n))} -1} \le n(1-h_2(t/n)).
+\end{align*}
+
+Recall that for any $W$ in $\zo^n$ it is true that $\Hfuzz(W) \le n -\log{|B_t|} \le n(1-h_2(t/n))$.  Thus, the additional constraint that 
 \[
-2^\beta = \frac{2^n - |B_t|}{|B_t|} \ge \frac{2^n}{|B_t|} -1 \ge 2^{n(1-h_2(t/n)) - 1/2 \log{n}-1/2} -1 \ge 2^{n(1-h_2(t/n)) - 1/2\log{n}}.
-\]
-
-
+\gamma \le \beta - \log{2e}
+\le n(1-h_2(t/n)) - \log{2e}\] imposes an additive $\log{2e}$ impact on the maximal fuzzy min-entropy that can be supported. 
