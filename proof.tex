@@ -3,6 +3,8 @@
 % Proof for NegFE
 
 \section{Main Result}
+
+
 \begin{theorem}
 Let $\gamma \in\mathbb{R}^+, n, \kappa, t, \ell, \gamma \in\mathbb{Z}^+$ be parameters such that $|B_t|/2^n\ge 2$ which is satisfied as long as $t< n/2 $. Define \[2^\beta:=\frac{2^n-|B_t|}{|B_t|}\ge 1,\] 
 
@@ -173,14 +175,14 @@ This completes the Proof of Lemma~\ref{lem:convert distinguisher}.
 \begin{proof}[Proof of Theorem~\ref{thm:main theorem}]
 Restating Lemma~\ref{lem:convert distinguisher} one has that for $(R_{U_{n,k}},P_{U_{n,k}}) \leftarrow \gen(U_{n,k}, \advise(Z_{U_{n,k}}))$
 \[
-\Delta((R_{U_{n,k}}, P_{U_{n,k}}, Z_{U_{n,k}}), (U_n, P_{U_{n,k}}, Z_{U_{n,k}}))\ge \epsilon_1.
+\Delta((R_{U_{n,k}}, P_{U_{n,k}}, Z_{U_{n,k}}), (U_n, P_{U_{n,k}}, Z_{U_{n,k}}))\ge \epsilon_1+\epsilon_2.
 \]
 Let $\mathcal{D}$ be one distinguisher that always outputs $1$ on any value $\mathsf{key}, p, z$ for any distribution $z$, then
 \begin{align*}
 \Pr[\mathcal{D}((R_{U_{n,k}}, P_{U_{n,k}}, Z_{U_{n,k}}))=1] &=1\\
-\Pr[\mathcal{D}(U_n, P_{U_{n,k}}, Z_{U_{n,k}})=1]&\le 1-\epsilon_1.
+\Pr[\mathcal{D}(U_n, P_{U_{n,k}}, Z_{U_{n,k}})=1]&\le 1-(\epsilon_1+\epsilon_2).
 \end{align*}
-Recall that $\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \alpha}^{*}) \le \epsilon_2$ by Lemma~\ref{lem:close family} .  Define \[(R_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})\leftarrow \gen(\mathtt{PCode}_{n, k, t, \alpha}^{*}, \advise(Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})).\]
+Recall that $\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \alpha}^{*}) \le \epsilon_3$ by Lemma~\ref{lem:close family} .  Define \[(R_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})\leftarrow \gen(\mathtt{PCode}_{n, k, t, \alpha}^{*}, \advise(Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})).\]
 it is thus true that 
 \begin{align*}
 \Pr[\mathcal{D}(R_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})=1]&=1\\
@@ -201,7 +203,7 @@ We separately consider $\epsilon_1, \epsilon_2$ and $\epsilon_3$. We refer to th
 
 
 \paragraph{Free Points}
-For $\epsilon_2$ to be negligible it suffices that $\nu/2^\kappa$ is negligible.  In the case when $\kappa = \omega(\log{n})$, setting $\nu = \Theta(\log{n})$ suffices.
+For $\epsilon_2$ to be negligible it suffices that $\nu/2^\kappa$ is negligible.  In the case when $\kappa = \omega(\log{n})$, setting $\nu = \poly(n)$ suffices.
 \paragraph{Distributional Closeness}
  Lemma~\ref{lem:close family} yields a negligible statistical distance as long as 
 \begin{align*}

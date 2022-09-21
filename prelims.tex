@@ -9,6 +9,11 @@ In this section we will introduce existing results to help clarify our place in 
 
 For a metric space $(\mathcal{M}, \dis)$ let $B_t(x) = \{y | \dis(x, y)\le t\}$. For a metric space if the size of $B_t(x)$ is the same for all points $x$ we use $|B_t|$ to denote this quantity and say that the \emph{size of balls is center independent}.
 
+This work considers the possibility of constructing fuzzy extractors from a finite family of distributions that we will call $\mathcal{W}$. 
+Throughout, we will need the ability to describe a particular value in this family.  
+We let $Z$ be an index for the distributions in the family and we denote the $Z$th distribution $W_Z$. 
+The distribution $W_Z$ can then be sampled, and we denote a sample of $W_Z$ as $w_{Z} \in \zeroone{n}$. When $Z$ is clear, we will omit the subscript.
+
 \subsection{Notions of Entroy}
 
 \begin{definition}[Entropy]
@@ -47,7 +52,8 @@ For a metric space $(\mathcal{M}, \dis)$ let $B_t(x) = \{y | \dis(x, y)\le t\}$.
 \end{lemma} 
 
 
-\subsection{Fuzzy Min-Entropy and Size of Hamming Balls}
+
+\subsection{Fuzzy Min-Entropy and Hamming Balls}
 \begin{definition}[Fuzzy min-entropy~\cite{fuller2020fuzzy}]
 
 For a distribution $W$ and a distance parameter $t$, the fuzzy min-entropy of $W$, denoted $\Hfuzz(W)$ is 
@@ -91,6 +97,11 @@ By Equation~\ref{eq:size of balls} one has:
 \beta&\le \log{2^{n(1-h_2(t/n))} -1} \le n(1-h_2(t/n)).
 \end{align*}
 \end{proof}
+
+
+Our main results show the impossibility of constructing fuzzy extractors for the family of distributions $\mathcal{W}$ of $2^k$ random points sampled from $\zo^n$ (without replacement).  Unfortunately, there are distributions $W_Z$ for some values $Z$ that do not have fuzzy min-entropy so there is no reason to expect a fuzzy extractor to be able to secure these distributions.  However, below we show a closely related family of distributions where all $W_Z$ have fuzzy min-entropy that is statistically close to $k$ random points.
+
+\input{sampling}
 
 %\begin{definition}[Markov's Inequality]
 %    Markov's inequality is a tail bound for random variables that gives an upper bound on the probability of a random variable deviating from its mean. Let $\Pr[X>0] = 1$. Then the following inequality holds for any $\alpha > 0$: 
@@ -160,11 +171,11 @@ Fuzzy extractors with quasipolynomial advice.
 
 \begin{definition}[Fuzzy Extractor with distributional advice]
 \label{def:fe distributional}
-Let $\mathcal{W}$ be a family of distributions indexed by $z$.  That is, one can denote each distribution in $\mathcal{W}$ as $W_Z$ which fully describes the probability mass function of $W$.  
+Let $\mathcal{W}$ be a family of distributions indexed by $z$.  That is, denote each distribution in $\mathcal{W}$ as $W_Z$ with $Z$ describing the probability mass function of $W$.  
 For metric space $(\{0,1\}^n, \dis)$, a $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon, \ell)$-\emph{fuzzy extractor with distributional advice} is a triple of algorithms $(\gen, \rep, \aux)$ with the following properties:
 \begin{enumerate} 
 \itemsep0em
-\item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, let $r, p \leftarrow \gen(w)$ then $\rep(w', p) = r$ with probability $1$. 
+\item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, let $(r, p) \leftarrow \gen(w)$ then $\rep(w', p) = r$ with probability $1$. 
 \item \textbf{Security} Let $\aux$ be a deterministic function withouts in $\zo^\ell$.  be For all distributions $W_Z \in \mathcal{W}$, define $\advise:= \aux(Z)$, let $(R, P) \leftarrow \gen(W, \advise)$ and $U_\kappa$ be a uniformly distributed random variable over $\zo^\kappa$ it holds that $\Delta((R, P, Z), (U_\kappa, P, Z))\le \epsilon.$
 \end{enumerate}
 \end{definition}
@@ -185,7 +196,7 @@ Then define $\gen(x, C)$ as follows: 1) interpret $C$ as two circuits $\gen', \r
 \end{proof}
 
 \subsection{Upper bound for size of a Fuzzy Extractor}
-In \cite{fuller2020fuzzy}, Fuller et al. show that the size of a fuzzy extractor can be upper bound in a general case.  We present a stronger version of their lemma that is contained in their proof.  The difference is we bound the union of viable points across difference values of $\mathsf{key}$ while they only bound the size of a single $\mathsf{key}$ corresponding to the true point.  We also note that their argument is purely geometric so it applies to fuzzy extractors with distributional advice as well. 
+Fuller, Reyzin, and Smith~\cite{fuller2016fuzzy,fuller2020fuzzy} show that the size of a fuzzy extractor can be upper bound in a general case.  We present a stronger version of their lemma that is contained in their proof.  The difference is we bound the union of viable points across difference values of $\mathsf{key}$ while they only bound the size of a single $\mathsf{key}$ corresponding to the true point.  Their argument is purely geometric, so it also applies to fuzzy extractors with distributional advice. 
 We restate their lemma here for the completeness of our main proof. 
 
 \begin{lemma}[Lemma 5.2 in \cite{fuller2020fuzzy}]

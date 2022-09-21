@@ -1,24 +1,6 @@
 %!TEX root = main.tex
 
 % Sampling Section of negFE
-
-\section{Sampling Proceedure}
-The sampling proceedure that we will use and discuss in this work is two fold.
-There is first, a family of distributions that we will call $\mathcal{W}$. 
-There is some finite number of distributions in this family, we call $|\mathcal{W}| = \mathcal{R}$. 
-We let $Z$ be an index for the distributions in the family and we denote the $Z$th distribution $W_Z$. 
-The distribution $W_Z$ can then be sampled, and we denote a sample of $W_Z$ as $w_{Z} \in \zeroone{n}$. When $Z$ is clear, we will omit the subscript.
-
-To sample a uniform point in $\mathcal{W}$, we can uniformly select $Z$ and then pick from $W_Z$ unifromly. 
-This two stage process gives us more tools to reason about the ability of an efficient adversary. 
-
-In general, we will assume that $\mathcal{W}$ is public to any adversary, algorithm, or party we may discuss. 
-We will generally assume that the specific selection of $Z$ is only shared with specific parties.
-We will also assume that the specific $w$ sampled from $W_Z$ is private and only known to parties who are given it explicity. 
-
-An interesting part of this work is how we share information about $W_Z$. We will allow an inefficient adversary access to the entire description of $W_Z$ and ask them to produce an advice string for an efficient adversary, that is that the advice string length is bound from above by a arbitrary polynomial function of our security parameter. 
-
-\subsection{Distributions over $\zeroone{n}$}
 \begin{description}
     \item[$U_{n,k}$] Picking $2^k$ points from $\zeroone{n}$ without replacement uniformly results in a distribution we will denote $U_{n,k}$. Note that there are ${2^{n}\choose 2^k}$ outcomes each occuring with probability $1/{2^{n}\choose 2^k}$.
 
