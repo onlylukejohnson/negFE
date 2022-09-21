@@ -195,17 +195,30 @@ and thus that
 Finally, the theorem follows by application of Lemma~\ref{lem:distributional advise suffices}.
 \end{proof} 
 
-\paragraph{Analysis of parameters}
-We first consider $\epsilon_2$ and $\epsilon_3$.  
-\begin{enumerate}
-\item For $\epsilon_2$ to be negligible it suffices that $\nu/2^\kappa$ is negligible.  Setting $\nu = \Theta(\log{n})$ suffices.
-\item As discussed in Section~\ref{ssec:how much fuzzy} for $\epsilon_3$ to be negligible it suffices that 
+\subsection{Analysis of parameters}
+We separately consider $\epsilon_1, \epsilon_2$ and $\epsilon_3$. We refer to these three terms as average points, free points, and distributional closeness respectively. This is because $\epsilon_1$ describes how much information the $\advise$ has about average points in $W_Z$, $\epsilon_2$ considers a small number of points that are more thoroughly described by $\advise$, and $\epsilon_3$ controls the statistical distance between $U_{n, k}$ and $\mathtt{PCode}_{n, k, t, \alpha}$.
+
+
+
+\paragraph{Free Points}
+For $\epsilon_2$ to be negligible it suffices that $\nu/2^\kappa$ is negligible.  In the case when $\kappa = \omega(\log{n})$, setting $\nu = \Theta(\log{n})$ suffices.
+\paragraph{Distributional Closeness}
+ Lemma~\ref{lem:close family} yields a negligible statistical distance as long as 
 \begin{align*}
- \gamma &\le \beta -\log{2e},\\
+2^{\gamma - \beta} &\le \frac{1}{2e},\\
+ \gamma &\le \beta -\log{2e}.\\
+2^{k-\gamma}&\ge n+\omega(\log n)\\
 k &\ge \gamma + \log{n+ \omega(\log{n})}.
 \end{align*}
+
+
+By Lemma~\ref{lem:max fuzz ent} for any $W$ in $\zo^n$ it is true that $\Hfuzz(W) \le n -\log{|B_t|} \le n(1-h_2(t/n))$.  Thus, the additional constraint that 
+\[
+\gamma \le \beta - \log{2e}
+\le n(1-h_2(t/n)) - \log{2e}\] imposes an additive $\log{2e}$ impact on the maximal fuzzy min-entropy that can be supported. 
 For some arbitrary constant $0<c < 1$ We set $k = \gamma + cn$. 
-\end{enumerate}
+
+\paragraph{Average Points} 
 We now turn to our analysis of $\epsilon_1$.  Recall that $(n/k)^k \le {n\choose k} < ((ne)/k)^k$.  Recalling parameters: 
 \begin{align*}
 \mu&\le n(1-2/\ln 2 (t/n)^2),\\
@@ -230,10 +243,10 @@ Since we know that $\kappa =\omega(\log n)$. Then as long as $|\advise| = o(k 2^
 \end{align*}
 
 \todo{if we want to be clean we need to work out the smallest $n$ for which this is true.}
-Adding the constraint from Subsection~\ref{ssec:how much fuzzy}
+Adding the constraint from \textbf{Distributional Closeness}
 this means that 
 \[
-\frac{\gamma}{n} \le \min\left\{(1-h_2(t/n)) - \log{2e}, \frac{(1-2c - h_2(1/2-t/n))}{2}\right\}.
+\frac{\gamma}{n} \le \min\left\{(1-h_2(t/n)) - \frac{\log{2e}}{n}, \frac{(1-2c - h_2(1/2-t/n))}{2}\right\}.
 \]
 
 %\begin{align*}
