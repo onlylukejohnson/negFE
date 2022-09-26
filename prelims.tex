@@ -24,8 +24,13 @@ The distribution $W_Z$ can then be sampled, and we denote a sample of $W_Z$ as $
     \emph{Min Entropy}, denoted $\minent{X}$, is a best case measure of the stability of the random variable $X$. It is calculated as \[\minent{X} \defined -\log{\max\limits_{x_i} p(x_i)}.\]  
 \end{definition}
 
-\begin{definition}[Average Conditional Min Entropy]
-    \emph{Average Conditional Min Entropy}, denoted $\acminent{X}{Y}$ for two random variables $X$ and $Y$ is an average measure of the remaining entropy of the former given the outcome of the latter. It is calculated as \[ \acminent{X}{Y} \defined -\log{\Exlim{y \leftarrow Y}{\max\limits_{x} \Prob{X = x\ |\ Y = y}}}.\] 
+\begin{definition}[Average Min Entropy]
+    \emph{Average Min Entropy}, denoted $\acminent{X}{Y}$ for two random variables $X$ and $Y$ is \[ \acminent{X}{Y} \defined -\log{\Exlim{y \leftarrow Y}{\max\limits_{x} \Prob{X = x\ |\ Y = y}}}.\] 
+\end{definition}
+
+\begin{definition}[Smooth Conditional Min Entropy~\cite{renner2005simple}]
+    \emph{Smooth Conditional Min Entropy}, denoted $\acminent{X}{Y}$ for two random variables $X$ and $Y$ is \[\max_{Z | \Delta((Z, Y), (X, Y))\le \epsilon} \left( \acminent{Z}{Y}\right).
+    \] 
 \end{definition}
 
 
@@ -112,20 +117,25 @@ Our main results show the impossibility of constructing fuzzy extractors for the
 
 \subsection{Fuzzy Extractors and Secure Sketches}
 \begin{definition}[Secure Sketch~\cite{dodis2008fuzzy}]
-For metric space $(\mathcal{M}, \dis)$, a $(\mathcal{M}, \mathcal{W}, \tilde{m}, t)$-\emph{secure sketch} is a pair of algorithms $(\sketch, \rec)$ with the following properties 
+For metric space $(\mathcal{M}, \dis)$, a $(\mathcal{M}, \mathcal{W}, \tilde{m}, t, \epsilon, \delta, \ell)$-\emph{secure sketch} is a pair of algorithms $(\sketch, \rec)$ with the following properties 
 \begin{enumerate} 
 \itemsep0em
-\item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, let $ss \leftarrow \sketch(w)$ then $\rec(w', ss) = w$ with probability $1$. 
-\item \textbf{Security} For all distributions $W \in \mathcal{W}$ it holds that $\Hav(W | \sketch(W)) \ge \tilde{m}$.
+\item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, then \[\Pr_{ss \leftarrow \sketch(w)}[\rec(w', ss) = w]\ge 1-\delta.\]
+\item \textbf{Security} For all distributions $W \in \mathcal{W}$ it holds that $\Haveps(W | \sketch(W)) \ge \tilde{m}$.
+\item \textbf{Space Bounded} The circuits $\sketch$ and $\rec$ require at most $\ell$ bits to describe.  That is, $|\sketch| +|\rec|\le \ell$.
 \end{enumerate}
 \end{definition}
+
+\paragraph{The use of smooth min-entropy} In the above, the secure sketch is required to retain smooth conditional min-entropy of $W$ conditioned on the sketch.  Many definitions consider $\epsilon=0$ or average min-entropy.  However, smooth min-entropy is the necessary condition for privacy amplification through the use of an average-case randomness extractor~\cite{renner2005simple} so it captures whether the non-interactive information-reconciliation task is possible. 
 
 \begin{definition}[Fuzzy Extractor~\cite{dodis2008fuzzy}]
 For metric space $(\mathcal{M}, \dis)$, a $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon)$-\emph{fuzzy extractor} is a pair of algorithms $(\gen, \rep)$ with the following properties 
 \begin{enumerate} 
 \itemsep0em
-\item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, let $r, p \leftarrow \gen(w)$ then $\rep(w', p) = r$ with probability $1$. 
-\item \textbf{Security} For all distributions $W \in \mathcal{W}$, let $R, P \leftarrow \gen(W)$ and $U_\kappa$ be a uniformly distributed random variable over $\zo^\kappa$ it holds that $\Delta((R, P), (U_\kappa, P))\le \epsilon.$
+\item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, then 
+\[\Pr_{r, p \leftarrow \gen(w)}[\rep(w', p) = r]=1.\] 
+\item \textbf{Security} For all distributions $W \in \mathcal{W}$, let $R, P \leftarrow \gen(W)$ and $U_\kappa$ be a uniformly distributed random variable over $\zo^\kappa$ it holds that \[\Delta((R, P), (U_\kappa, P))\le \epsilon.\]
+\item  \textbf{Space Bounded} The circuits $\gen$ and $\rep$ require at most $\ell$ bits to describe.  That is, $|\gen| +|\rec|\le \ell$.
 \end{enumerate}
 \end{definition}
 
@@ -167,7 +177,19 @@ For metric space $(\mathcal{M}, \dis)$, a $(\mathcal{M}, \mathcal{W}, \kappa, t,
     
 
 \subsubsection{New Fuzzy Extractor Definitions}
-Fuzzy extractors with quasipolynomial advice. 
+Fuzzy extractors and secure sketches with advice. 
+
+\begin{definition}[Secure Sketch with distributional advice]
+\label{def:ss distributional}
+Let $\mathcal{W}$ be a family of distributions indexed by $z$.  That is, denote each distribution in $\mathcal{W}$ as $W_Z$ with $Z$ describing the probability mass function of $W$.  
+For metric space $(\{0,1\}^n, \dis)$, a $(\{0,1\}^n, \mathcal{W}, \tilde{m}, t, \epsilon, \delta, \ell)$-\emph{secure sketch with distributional advice} is a triple of algorithms $(\gen, \rep, \aux)$ with the following properties:
+\begin{enumerate} 
+\itemsep0em
+\item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, let \[\Pr_{(r, p) \leftarrow \sketch(w)}[\rec(w', p) = w]\ge 1-\delta.\]
+\item \textbf{Security} Let $\aux$ be a deterministic function with output in $\zo^\ell$.  For all distributions $W_Z \in \mathcal{W}$, define $\advise:= \aux(Z)$, let $ss \leftarrow \sketch(W, \advise)$ then $\Haveps(W| ss) \ge \tilde{m}$.
+\end{enumerate}
+\end{definition}
+
 
 \begin{definition}[Fuzzy Extractor with distributional advice]
 \label{def:fe distributional}
@@ -175,38 +197,52 @@ Let $\mathcal{W}$ be a family of distributions indexed by $z$.  That is, denote 
 For metric space $(\{0,1\}^n, \dis)$, a $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon, \ell)$-\emph{fuzzy extractor with distributional advice} is a triple of algorithms $(\gen, \rep, \aux)$ with the following properties:
 \begin{enumerate} 
 \itemsep0em
-\item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, let $(r, p) \leftarrow \gen(w)$ then $\rep(w', p) = r$ with probability $1$. 
-\item \textbf{Security} Let $\aux$ be a deterministic function withouts in $\zo^\ell$.  be For all distributions $W_Z \in \mathcal{W}$, define $\advise:= \aux(Z)$, let $(R, P) \leftarrow \gen(W, \advise)$ and $U_\kappa$ be a uniformly distributed random variable over $\zo^\kappa$ it holds that $\Delta((R, P, Z), (U_\kappa, P, Z))\le \epsilon.$
+\item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, let \[\Pr_{(r, p) \leftarrow \gen(w)}[\rep(w', p) = r]=1.\]
+\item \textbf{Security} Let $\aux$ be a deterministic function with output in $\zo^\ell$.  be For all distributions $W_Z \in \mathcal{W}$, define $\advise:= \aux(Z)$, let $(R, P) \leftarrow \gen(W, \advise)$ and $U_\kappa$ be a uniformly distributed random variable over $\zo^\kappa$ it holds that \[\Delta((R, P, Z), (U_\kappa, P, Z))\le \epsilon.\]
 \end{enumerate}
 \end{definition}
 
-\begin{definition}[Efficient Fuzzy Extractor in Known Distribution Setting]
-Fix some distribution $W_Z$ Let $(\gen, \rep)$ be a $(\{0,1\}^n, \{W_Z\}, \kappa, t, \epsilon, \ell)$-fuzzy extractor.  The pair is \emph{efficient} if $\gen, \rep$ have the  additional property that they can be implemented by an algorithm that can be described in space at most $\ell$ (polynomial in the dimension $n$ of the metric space).
-\end{definition}
 
 \begin{lemma}
 
-Let $\mathcal{W}$ be a distribution family indexed by the random family $Z$ and suppose that no $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, 2\ell)$-\emph{fuzzy extractor with distributional advice}.  Then there must be some distribution $W_Z \in \mathcal{W}$ for which no  $(\{0,1\}^n, \{W_Z\}, \kappa, t, \epsilon, \ell)$ efficient fuzzy extractor exists.
+Let $\mathcal{W}$ be a distribution family indexed by the random family $Z$ and suppose that no $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, \ell)$-fuzzy extractor with distributional advice exists.  There is some distribution $W_Z \in \mathcal{W}$ for which no  $(\{0,1\}^n, \{W_Z\}, \kappa, t, \epsilon, \ell)$ efficient fuzzy extractor exists.
 \label{lem:distributional advise suffices}
 \end{lemma}
 \begin{proof}[Proof of Lemma~\ref{lem:distributional advise suffices}]
-We proceed by contrapositive.  Suppose that for every $W_Z\in\mathcal{W}$ there exists an efficient fuzzy extractor.  We denote these algorithms by $(\gen_Z, \rep_Z)$ respectively.  Across $Z$ let $\ell = \poly(n)$ represent the maximum space needed to implement some algorithm $\gen_Z$ or $\rep_Z$. We now describe how to build the fuzzy extractor $(\gen, \rep, \advise)$ with distributional advice.  Let $(\gen_Z, \rep_Z) := \advise(Z)$ which has length at most $2\ell$.
+We proceed by contrapositive.  Suppose that for every $W_Z\in\mathcal{W}$ there exists an efficient fuzzy extractor.  We denote these algorithms by $(\gen_Z, \rep_Z)$ respectively.  Across $Z$ let $\ell$ represent the maximum space needed to implement some algorithm $\gen_Z$ or $\rep_Z$. We now describe how to build the fuzzy extractor $(\gen, \rep, \advise)$ with distributional advice.  Let $(\gen_Z, \rep_Z) := \advise(Z)$ which has length at most $\ell$.
 
 Then define $\gen(x, C)$ as follows: 1) interpret $C$ as two circuits $\gen', \rep'$ and output $\gen'(x)$.  Define $\rep(x, p, C)$ interpret $C$ as two circuits $\gen', \rep'$ and output $\rep'(x', p)$.  It is clear that $(\gen, \rep, \advise)$ is a $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, 2\ell)$ fuzzy extractor with distributional advise.
 \end{proof}
 
-\subsection{Upper bound for size of a Fuzzy Extractor}
+\begin{lemma}
+Let $\mathcal{W}$ be a distribution family indexed by the random family $Z$ and suppose that no $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, \delta, \ell)$-secure sketch with distributional advice exists.  Then there must be some distribution $W_Z \in \mathcal{W}$ for which no  $(\{0,1\}^n, \{W_Z\}, \kappa, t, \epsilon, \delta, \ell)$ efficient fuzzy extractor exists.
+\label{lem:distributional advise suffices ss}
+\end{lemma}
+
+\noindent
+The proof of Lemma~\ref{lem:distributional advise suffices ss} is identical to the proof of Lemma~\ref{lem:distributional advise suffices} and is omitted.
+
+\subsection{Upper bound for size of Fuzzy Extractors and Secure Sketches}
 Fuller, Reyzin, and Smith~\cite{fuller2016fuzzy,fuller2020fuzzy} show that the size of a fuzzy extractor can be upper bound in a general case.  We present a stronger version of their lemma that is contained in their proof.  The difference is we bound the union of viable points across difference values of $\mathsf{key}$ while they only bound the size of a single $\mathsf{key}$ corresponding to the true point.  Their argument is purely geometric, so it also applies to fuzzy extractors with distributional advice. 
-We restate their lemma here for the completeness of our main proof. 
+We restate their lemma here for the completeness. 
 
 \begin{lemma}[Lemma 5.2 in \cite{fuller2020fuzzy}]
     \label{lem:smallgeneralviable}
     Suppose $\mathcal{M}$ is $\zeroone{n}$ with the Hamming Metric, $\kappa \geq 2$, $0 \leq t \leq n/2$, and $\epsilon > 0$. 
     Suppose $(\mathsf{Gen, Rep})$ is a $(\mathcal{M,W},\kappa, t, \ell, \epsilon)$-fuzzy extractor with distributional advice for some distribution family $\mathcal{W}$ over $\mathcal{M}$. 
-    For any fixed $p$, for any value $\advise \in \zo^\ell$, there is a set $\mathsf{GoodKey}_p \subseteq \zeroone{\kappa}$ of size at least $2^{\kappa - 1}$ such that for every $\mathsf{key} \in \mathsf{GoodKey}_p$,
+    For any fixed $p$, for any value $\advise \in \zo^\ell$, there is a set $\mathsf{GoodKey}_p \subseteq \zeroone{\kappa}$ of size at least $2^{\kappa - 1}$ such that for every $\mathsf{key} \in \goodkey_p$,
     \[
-       \sum_{\mathsf{key} \in \mathsf{GoodKey}_p} \left( \log{|\sbr{v \in \mathcal{M}|\prns{\mathsf{key}, p} \in \mathsf{supp}\prns{\mathsf{Gen}(v, \advise)}}|}\right) \leq n \cdot h_2\prns{\frac{1}{2} - \frac{t}{n}}.
+       \sum_{\mathsf{key} \in \goodkey_p} \left( \log{|\sbr{v \in \mathcal{M}|\prns{\mathsf{key}, p} \in \mathsf{supp}\prns{\mathsf{Gen}(v, \advise)}}|}\right) \leq n \cdot h_2\prns{\frac{1}{2} - \frac{t}{n}}.
     \]   
+\end{lemma}
+
+\begin{lemma}[Lemma 7.3 in \cite{fuller2020fuzzy}]
+\label{lem:smallgeneralviable ss}
+    Suppose $\mathcal{M}$ is $\zeroone{n}$ with the Hamming Metric. Suppose $(\sketch, \rec)$ is a $(\zo^n, \mathcal{W}, \tilde{m}, t)$ secure sketch with error $\delta$, for some family $\mathcal{W}$. Then for every $v\in \mathcal{M}$ there exists a set $\goodsketch_v$where $\Pr[\sketch(v)\in \goodsketch_v] \ge 1/2$ and for any fixed $\sketch$,
+    
+    \[
+    \log{|\{v \in \mathcal{M} | \sketch \in \goodsketch_v\}|} \le \frac{n - \log{|B_t|} +h_2(2\delta)}{1-2\delta} \le \frac{n(1-h_2(t/n)) +h_2(2\delta)}{2\delta}.
+    \]
 \end{lemma}
 
 
