@@ -29,7 +29,7 @@ The distribution $W_Z$ can then be sampled, and we denote a sample of $W_Z$ as $
 \end{definition}
 
 \begin{definition}[Smooth Conditional Min Entropy~\cite{renner2005simple}]
-    \emph{Smooth Conditional Min Entropy}, denoted $\acminent{X}{Y}$ for two random variables $X$ and $Y$ is \[\max_{Z | \Delta((Z, Y), (X, Y))\le \epsilon} \left( \acminent{Z}{Y}\right).
+    \emph{Smooth Conditional Min Entropy}, denoted $\acminent{X}{Y}$ for two random variables $X$ and $Y$ is \[\max_{(X', Y') | \Delta((X', Y'), (X, Y))\le \epsilon} \left( \acminent{X'}{Y'}\right).
     \] 
 \end{definition}
 
@@ -39,6 +39,36 @@ The distribution $W_Z$ can then be sampled, and we denote a sample of $W_Z$ as $
     \hart{X} = | \sbr{x \in X\,|\, \Prob{X = x} > 0}|.
     $
 \end{definition}
+
+\subsection{Basic Entropy Results}
+\begin{lemma}
+Let $(X, Y)$ be a pair of random variables and event $\eta$ be a possibly randomized function of $X, Y$ then 
+\[
+\Haveps(X|Y, \nu)\ge \Haveps(X|Y) - \log{ 1/\Pr[\eta]}.
+\]
+\label{lem:smooth ent cond}
+\end{lemma}
+\begin{proof}
+Let $\nu := \Haveps(X|Y) - \log 1/\Pr[\eta]$.
+Let $X', Y'$ be a distribution such that $\Delta((X, Y), (X', Y')) \le \epsilon$.  Then 
+\begin{align*}
+\Hav(X' | Y') &= -\log{\expe_{y\leftarrow Y'}\left[\max_{x} \Pr[X'=x | Y'=y]\right]}\\ 
+&=-\log{\expe_{y\leftarrow Y'}\left[\max_{x} \frac{\Pr[X'=x \wedge Y'=y]}{\Pr[Y'=y]}\right]}\\
+&\le-\log{\expe_{y\leftarrow Y'}\left[\max_{x} \frac{\Pr[X'=x \wedge Y'=y \wedge \eta]}{\Pr[Y'=y]}\right]}\\
+&=-\log{\expe_{y\leftarrow Y'}\left[\max_{x} \frac{\Pr[X'=x \wedge Y'=y |\eta]\Pr[\eta]}{\Pr[Y'=y]}\right]}\\
+&=\log{\frac{1}{\Pr[\eta]}}-\log{\expe_{y\leftarrow Y'}\left[\max_{x} \frac{\Pr[X'=x \wedge Y'=y |\eta]}{\Pr[Y'=y]}\right]}\\
+&=\log{\frac{1}{\Pr[\eta]}}-\log{\sum_{y\leftarrow Y'}\left[\max_{x} \Pr[X'=x \wedge Y'=y |\eta]\right]}\\
+&=\log{\frac{1}{\Pr[\eta]}}-\log{\expe_{y\leftarrow Y' | \eta}\left[\max_{x} \frac{\Pr[X'=x \wedge Y'=y |\eta]}{\Pr[Y'=y |\eta]}\right]}\\
+&=\log{\frac{1}{\Pr[\eta]}}-\log{\expe_{y\leftarrow Y' | \eta}\left[\max_{x} \Pr[X'=x | \eta \wedge Y'=y ]\right]}\\
+&=\log{\frac{1}{\Pr[\eta]}}+\Hav(X'| \eta, Y').
+\end{align*}
+The proof completes by noting that $\Delta((X, Y), (X', Y'))\le \epsilon$ implies that $\Delta((X, Y, \eta), (X', Y', \eta))\le \epsilon$ which implies that 
+\[
+\Haveps(X| Y) \le \Haveps(X|Y, \eta) +\log{1/\Pr[\eta])}.
+\]
+This completes the proof of Lemma~\ref{lem:smooth ent cond}.
+\end{proof}
+
 
 \begin{lemma}{\cite[Lemma 2.2a]{dodis2008fuzzy}}
     \label{lem:markovpred}
