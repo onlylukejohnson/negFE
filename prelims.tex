@@ -29,7 +29,7 @@ The distribution $W_Z$ can then be sampled, and we denote a sample of $W_Z$ as $
 \end{definition}
 
 \begin{definition}[Smooth Conditional Min Entropy~\cite{renner2005simple}]
-    \emph{Smooth Conditional Min Entropy}, denoted $\acminent{X}{Y}$ for two random variables $X$ and $Y$ is \[\max_{X' | \Delta((X', Y), (X, Y))\le \epsilon} \left( \acminent{X'}{Y}\right).
+    \emph{Smooth Conditional Min Entropy}, denoted $\acminent{X}{Y}$ for two random variables $X$ and $Y$ is \[\max_{(X',Y') | \Delta((X', Y'), (X, Y))\le \epsilon} \left( \acminent{X'}{Y'}\right).
     \] 
 \end{definition}
 
@@ -49,19 +49,14 @@ Let $(X, Y)$ be a pair of random variables and event $\eta$ be a randomized func
 \label{lem:smooth ent cond}
 \end{lemma}
 \begin{proof}
-Let $X', Y$ be a distribution such that $\Delta((X, Y), (X', Y)) \le \epsilon$.  By \cite[Lemma 7.8]{fuller2020fuzzy} 
+Let $X', Y'$ be a distribution such that $\Delta((X, Y), (X', Y')) \le \epsilon$.  By \cite[Lemma 7.8]{fuller2020fuzzy} 
 \begin{align*}
-\Hav(X' | Y) =\log{\frac{1}{\Pr[\eta]}}+\Hav(X'| \eta, Y).
+\Hav(X' | Y') =\log{\frac{1}{\Pr[\eta]}}+\Hav(X'| \eta, Y').
 \end{align*}
 Let $f$ denote the randomized function such that $\eta = f(X, Y)$.    
-The proof completes by noting that $\Delta((X, Y), (X', Y))\le \epsilon$ implies that 
-\begin{align*}
-\Delta&((X, Y, f(X, Y)), (X', Y, f(X, Y)))\\ &=\frac{1}{2}\sum_{x, y, z} \left| \Pr[X =x \wedge Y=y \wedge f(X, Y) = z] - \Pr[X'=x \wedge Y=y \wedge f(x, y) = z]\right|\\
-&=\frac{1}{2}\sum_{x, y, z} \left| \Pr[X =x \wedge Y=y | f(X, Y) = z]\Pr[f(X,Y) =z] - \Pr[X'=x \wedge Y=y | f(X, Y) = z]\Pr[f(X,Y)=z]\right|\\
-&=\frac{1}{2}\sum_{x, y, z} \Pr[f(x,y)=z]\left| \Pr[X =x \wedge Y=y | f(X, Y) = z] - \Pr[X'=x \wedge Y=y | f(X, Y) = z]\right|\\
-&\le \frac{1}{2}\sum_{x, y} \max_{z}\left| \Pr[X =x \wedge Y=y | f(X, Y) = z] - \Pr[X'=x \wedge Y=y | f(X, Y) = z]\right|\\
-&=\frac{1}{2}\sum_{x, y} \left| \Pr[X =x \wedge Y=y ] - \Pr[X'=x \wedge Y=y ]\right|\le \epsilon.
-\end{align*}  which implies that 
+The proof completes by noting that $\Delta((X, Y), (X', Y'))\le \epsilon$ implies that 
+\[
+\Delta((X, Y, f(X, Y)), (X', Y,' f(X', Y')))\le \epsilon.\]  which implies that 
 \[
 \Haveps(X| Y) \le \Haveps(X|Y, \eta) +\log{1/\Pr[\eta])}.
 \]
@@ -264,15 +259,5 @@ We restate their lemma here for the completeness.
        \sum_{\mathsf{key} \in \goodkey_p} \left( \log{|\sbr{v \in \mathcal{M}|\prns{\mathsf{key}, p} \in \mathsf{supp}\prns{\mathsf{Gen}(v, \advise)}}|}\right) \leq n \cdot h_2\prns{\frac{1}{2} - \frac{t}{n}}.
     \]   
 \end{lemma}
-
-\begin{lemma}[Lemma 7.3 in \cite{fuller2020fuzzy}]
-\label{lem:smallgeneralviable ss}
-    Suppose $\mathcal{M}$ is $\zeroone{n}$ with the Hamming Metric. Suppose $(\sketch, \rec)$ is a $(\zo^n, \mathcal{W}, \tilde{m}, t)$ secure sketch with error $\delta$, for some family $\mathcal{W}$. Then for every $v\in \mathcal{M}$ there exists a set $\goodsketch_v$where $\Pr[\sketch(v)\in \goodsketch_v] \ge 1/2$ and for any fixed $\sketch$,
-    
-    \[
-    \log{|\{v \in \mathcal{M} | \sketch \in \goodsketch_v\}|} \le \frac{n - \log{|B_t|} +h_2(2\delta)}{1-2\delta} \le \frac{n(1-h_2(t/n)) +h_2(2\delta)}{2\delta}.
-    \]
-\end{lemma}
-
 
 

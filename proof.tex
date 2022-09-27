@@ -301,6 +301,21 @@ For
 \label{thm:main theorem ss}
 \end{theorem}
 \begin{proof}[Proof of Theorem~\ref{thm:main theorem ss}]
+Fuller, Reyzin, and Smith~\cite[Lemma 7.3]{fuller2020fuzzy} showed that good secure sketches are bounded in size as they imply good Shannon error correcting codes.  This result holds true if one considers a secure sketch that retains smooth min-entropy with no loss in parameters.  
+
+\begin{lemma}
+\label{lem:smallgeneralviable ss}
+    Suppose $\mathcal{M}$ is $\zeroone{n}$ with the Hamming Metric. Suppose $(\sketch, \rec)$ is a $(\zo^n, \mathcal{W}, \tilde{m}, t, \epsilon, \delta)$-secure sketch, for some family $\mathcal{W}$. 
+    
+%    Let $W\in \mathcal{W}$, and let $W', SS'$ be a distribution such that $\Delta((W, \sketch(W)), (W', SS'))\le \epsilon$ and $\Hav(W' |SS')\ge \tilde{m}$.
+   For every $v\in \mathcal{M}$ there exists a set $\goodsketch_v$ where $\Pr[\sketch(v)\in \goodsketch_v] \ge 1/2$ and for any fixed $\sketch$,
+    
+    \[
+    \log{|\{v \in \mathcal{M} | \sketch \in \goodsketch_v\}|} \le \frac{n - \log{|B_t|} +h_2(2\delta)}{1-2\delta} \le \frac{n(1-h_2(t/n)) +h_2(2\delta)}{2\delta}.
+    \]
+\end{lemma}
+
+
 We begin with a corollary bounding how many points are ``viable'' from the output of the secure sketch.
 
 
@@ -311,23 +326,29 @@ Let $Z$ describe a uniform sample of $U_{n,k}$.  Let $(\gen, \rep, \aux)$ be an 
     \[
     \mu:=\log{|\{v \in \mathcal{M} | \sketch \in \goodsketch_v\}|} \le \frac{n - \log{|B_t|} +h_2(2\delta)}{1-2\delta} \le \frac{n(1-h_2(t/n)) +h_2(2\delta)}{2\delta}.
     \]
-For a triple $(v, ss, \advise)$ define 
-\[
-\viable(v, ss, \advise) = \begin{cases} 1& \Pr[\gen(v, \advise) = ss]>0 \wedge ss\in\goodsketch_v\\0&\text{otherwise}\end{cases}.\]
+For a triple $(v, ss, z)$ define $\viable(v, ss, z)=1$ if
+\begin{enumerate}
+\itemsep0em
+\item $\Pr[\gen(v, \advise(z)) = ss]>0$,
+\item $ss\in\goodsketch_v$, and
+\item $\Pr[W_z = v]>0$.
+\end{enumerate}
+and set $\viable(v, ss, z)=0$ otherwise. 
  For a particular $Z=z$ let $w_{z,1},..., w_{z,2^k}$ denote the points in $W_Z$. Let $\alpha:= \log {2^n\choose 2^k}$.  
- Then for each value $\advise$ there is some set $\mathcal{I}_{\advise}$ of size at most $\nu+1$, then it is true for each $i\not \in \mathcal{I}_\advise$ that any value $ss$
+ Then for each value $\advise$ there is some set $\mathcal{I}_{\advise}$ of size at most $\nu+1$, then it is true for each $\forall i\not \in \mathcal{I}_\advise, \forall ss$
 \[
-\Pr\left[\viable(w_{z,i},ss, \advise) =1\middle| \begin{aligned} z\leftarrow Z\\ \advise= \aux(z)\end{aligned} \right]< 2^{-\frac{\alpha+\log{\nu}-|\advise|-k}{2^k}+1+\mu}.
+\Pr_{z\leftarrow Z}\left[\viable(w_{z,i},ss,z) =1\right]< 2^{-\frac{\alpha+\log{\nu}-|\advise|-k}{2^k}+1+\mu}.
 \]
-And thus, for on average across $Z$, the expected number of points outside of $\mathcal{I}_\advise$ that are included in $\viable$ is at most 
+And thus, for on average across $Z$, for all $ss$ the expected number of points outside of $\mathcal{I}_\advise$ that are included in $\viable$ is at most 
 \begin{align*}
-\expe_{Z} \left[\sum_{i | w_{z,i}\not\in\mathcal{I}_\advise} \viable(w_{z,i}, ss, \advise) \middle| \begin{aligned} z\leftarrow Z\\ \advise\leftarrow \aux(z)\\w\leftarrow W_Z\\ss\leftarrow \sketch(w, \advise)\end{aligned} \right]< 2^{-\frac{\alpha+\log{\nu} - |\advise|-k}{2^k}+1+\mu+k}.
+\expe_{z\leftarrow Z} \left[\sum_{i | w_{z,i}\not\in\mathcal{I}_\advise} \viable(w_{z,i}, ss, z) \right]< 2^{-\frac{\alpha+\log{\nu} - |\advise|-k}{2^k}+1+\mu+k}.
 \end{align*}
-And finally, 
+And finally, for all $ss$
 \begin{align*}
-\expe_{Z} \left[\sum_{i }  \viable(w_{z,i}, ss, \advise) \middle| \begin{aligned} z\leftarrow Z\\ \advise\leftarrow \aux(z)\\w\leftarrow W_Z\\ss\leftarrow \sketch(w, \advise)\end{aligned} \right]< 2^{-\frac{\alpha+\log{\nu}-|\advise|-k}{2^k}+1+\mu+k}+\nu+1.
+\expe_{z\leftarrow Z} \left[\sum_{i }  \viable(w_{z,i}, ss, \advise)  \right]< 2^{-\frac{\alpha+\log{\nu}-|\advise|-k}{2^k}+1+\mu+k}+\nu+1.
 \end{align*}
 \end{corollary}
+\noindent
 The above corollary follows by combination of Lemma~\ref{lem:smallgeneralviable ss} and \ref{lem:entr of members}.
 \end{proof}
 \begin{lemma}
