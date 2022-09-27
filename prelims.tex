@@ -42,23 +42,23 @@ The distribution $W_Z$ can then be sampled, and we denote a sample of $W_Z$ as $
 
 \subsection{Basic Entropy Results}
 \begin{lemma}
-Let $(X, Y)$ be a pair of random variables and event $\eta$ be a randomized function of $(X, Y)$ then 
+Let $(X, Y)$ be a pair of random variables and let $S(X, Y)$ be a set that is the output of a randomized function on input $(X, Y)$ then 
 \[
-\Haveps(X|Y, \eta)\ge \Haveps(X|Y) + \log{ 1/\Pr[\eta]}.
+\Haveps(X|Y, \eta)\ge \Haveps(X|Y) + \log{ 1/\Pr[Y\in S(X, Y)]}.
 \]
 \label{lem:smooth ent cond}
 \end{lemma}
 \begin{proof}
-Let $X', Y'$ be a distribution such that $\Delta((X, Y), (X', Y')) \le \epsilon$.  By \cite[Lemma 7.8]{fuller2020fuzzy} 
+Let $X', Y'$ be a distribution such that $\Delta((X, Y), (X', Y')) \le \epsilon$.  By \cite[Lemma 7.8]{fuller2020fuzzy} for any event $\eta$
 \begin{align*}
 \Hav(X' | Y') =\log{\frac{1}{\Pr[\eta]}}+\Hav(X'| \eta, Y').
 \end{align*}
 Let $f$ denote the randomized function such that $\eta = f(X, Y)$.    
 The proof completes by noting that $\Delta((X, Y), (X', Y'))\le \epsilon$ implies that 
 \[
-\Delta((X, Y, f(X, Y)), (X', Y,' f(X', Y')))\le \epsilon.\]  which implies that 
+\Delta((X, Y, Y\in S(X, Y)), (X', Y,' Y'\in S(X', Y')))\le \epsilon.\]  which implies that 
 \[
-\Haveps(X| Y) \le \Haveps(X|Y, \eta) +\log{1/\Pr[\eta])}.
+\Haveps(X| Y) \le \Haveps(X|Y, \eta) +\log{\frac{1}{\Pr[Y\in S(X,Y)]}}.
 \]
 This completes the proof of Lemma~\ref{lem:smooth ent cond}.
 \end{proof}
@@ -199,9 +199,8 @@ For metric space $(\mathcal{M}, \dis)$, a $(\mathcal{M}, \mathcal{W}, \kappa, t,
 %    \Problim{y\leftarrow Y}{\minent{\vec{X}\, |\, Y=y} < \Delta -\log{\alpha}} &\leq \frac{1}{\alpha}
 %\end{align*}
     
-
-\subsubsection{New Fuzzy Extractor Definitions}
-Fuzzy extractors and secure sketches with advice. 
+\noindent
+We now define fuzzy extractors and secure sketches with advice.  This is an intermediate definition that will be used in proofs throughout.  As we show below, the impossibility of building a fuzzy extractor with advice for a family $\mathcal{W}$ implies the impossibility of building a fuzzy extractor for some $W\in\mathcal{W}$.
 
 \begin{definition}[Secure Sketch with distributional advice]
 \label{def:ss distributional}

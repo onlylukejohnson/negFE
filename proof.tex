@@ -66,9 +66,8 @@ For some arbitrary constant $0<c < 1$ We set $k = \gamma + cn$.
 \paragraph{Average Points} 
 We now turn to our analysis of $\epsilon_1$.  Recall that $(n/k)^k \le {n\choose k} < ((ne)/k)^k$.  Recalling parameters: 
 \begin{align*}
-\mu&\le n(1-2/\ln 2 (t/n)^2),\\
+\mu&\le nh_2(1/2-t/n),\\
 \alpha &= \log{2^n\choose 2^k} \ge \log{2^{n2^k} /2^{k2^k}} = (n-k)2^k,\\
-k &\le n(1-h_2(t/n)) + \log{2n}
 \end{align*}
 This implies that 
 \begin{align*}
@@ -287,31 +286,77 @@ Let $\gamma \in\mathbb{R}^+, n, \kappa, t, \ell, \gamma \in\mathbb{Z}^+$ be para
 \itemsep0em
 \item Define $2^\beta:=\frac{2^n-|B_t|}{|B_t|}$ and suppose that $2^\beta\ge 1$ which is satisfied as long as $t< n/2 $. 
 \item Let $\nu \in \mathbb{Z}^+$ be a free parameter, and
-\item Let $\mu =(n(1-h_2(t/n)) +h_2(2\delta))/(2\delta)$.
+\item Let $\mu =(n(1-h_2(t/n)) +h_2(2\delta))/(1-2\delta)$.
 \end{enumerate}
 There is some distribution $W\in \mathtt{PCode}_{n, k, t, \gamma}^{*}$ for which there is no $(\{0,1\}^n, W, \tilde{m}, t, \epsilon,\delta, \ell)$-secure sketch for 
 \[
-\epsilon< 1/2 - (\epsilon_1+\epsilon_2+\epsilon_3)
+\tilde{m}\ge  -\log{1-\epsilon'} +1 + 2\max\left\{-\frac{\alpha+\log{\nu}-|\advise|-k}{2^k}+1+\mu+k, \log{\nu+1}\right\}.
 \]
-For 
-\begin{align*}\log{\epsilon_1}&:= -\left(\kappa+\frac{\alpha +\log{\nu}-\ell-k}{2^k} - \mu -2^k\right),\\
-\epsilon_2&:=\frac{\nu+1}{2^{\tilde{m}+1}}\\
-\epsilon_3&:=\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.
-\end{align*}
+where $\epsilon' = \epsilon+\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.$
 \label{thm:main theorem ss}
 \end{theorem}
+
+\subsection{Analysis of parameters}
+We assume that $\epsilon\le 1/4$ for simplicity.  As before for  
+\[
+\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n = \ngl(n)\]  it suffices 
+\begin{align*}
+ \gamma &\le \beta -\log{2e}.\\
+k &\ge \gamma + \log{n+ \omega(\log{n})}.
+\end{align*}
+These two conditions imply that $\epsilon'\le 1/2$ and $-\log{1-\epsilon'}\le 1$.
+
+We assume that $\nu = \poly(n)$ and define $c_1$ such that  $\log{\nu+1} \le c_1\log{n}$.
+By Lemma~\ref{lem:max fuzz ent} for any $W$ in $\zo^n$ it is true that $\Hfuzz(W) \le n -\log{|B_t|} \le n(1-h_2(t/n))$.  Thus, the additional constraint that 
+\[
+\gamma \le \beta - \log{2e}
+\le n(1-h_2(t/n)) - \log{2e}\] imposes an additive $\log{2e}$ impact on the maximal fuzzy min-entropy that can be supported. 
+For some arbitrary constant $0<c_2 < 1$ We set $k = \gamma + c_2n$. 
+
+Define $\chi: =-\frac{\alpha+\log{\nu}-|\advise|-k}{2^k}+1+\mu+k$
+We now turn to our analysis of $\chi$.  Recall that $(n/k)^k \le {n\choose k} < ((ne)/k)^k$.  Recalling parameters: 
+\begin{align*}
+\mu&\le \frac{(n(1-h_2(t/n)) +h_2(2\delta))}{(2\delta)},\\
+\alpha &= \log{2^n\choose 2^k} \ge \log{2^{n2^k} /2^{k2^k}} = (n-k)2^k,\\
+\end{align*}
+This implies that 
+\begin{align*}
+\chi&= -\frac{\alpha +\log{\nu}-\ell-k}{2^k} + \mu +k\\
+&\le  \frac{\alpha +\log{\nu}-\ell-k}{2^k} +\frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta}  + k,\\
+&\le - \frac{(n-k)2^k +\log{\nu}-\ell-k}{2^k} +\frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta} + k,\\
+&\le  -\frac{(n-k)2^k-k2^{k} +\log{\nu}-\ell-k}{2^k} + \frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta}\\
+&< - \frac{(n-2k)2^k-\ell-k}{2^k} + \frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta} .
+\end{align*}
+
+As long as $\ell = o(k 2^k) = o (n2^n)$ and $\delta \le 1/4$ then 
+\begin{align*}
+0 &\ge -\frac{(n-2k)2^k-\ell-k}{2^k} + 2nh_2(1-t/n) \\
+ &\ge -(n-2c_2n - 2\gamma) + 2nh_2(1-t/n) \\
+&\ge -n(1-2c_2)+2\gamma + 2nh_2(1-t/n)\\
+\gamma &\le \frac{n(1-2c_2 - 2h_2(1-t/n))}{2}.\\
+\end{align*}
+
+\todo{if we want to be clean we need to work out the smallest $n$ for which this is true.}
+Adding the constraint from \textbf{Distributional Closeness}
+this means that 
+\[
+\frac{\gamma}{n} \le \min\left\{(1-h_2(t/n)) - \frac{\log{2e}}{n}, \frac{(1-2c_2 - 2h_2(1-t/n))}{2}\right\}.
+\]
+suffices for $\tilde{m} = \Theta(\log n)$.
+
+\subsection{Proof}
 \begin{proof}[Proof of Theorem~\ref{thm:main theorem ss}]
-Fuller, Reyzin, and Smith~\cite[Lemma 7.3]{fuller2020fuzzy} showed that good secure sketches are bounded in size as they imply good Shannon error correcting codes.  This result holds true if one considers a secure sketch that retains smooth min-entropy with no loss in parameters.  
+Fuller, Reyzin, and Smith~\cite[Lemma 7.3]{fuller2020fuzzy} showed that good secure sketches are bounded in size as they imply good Shannon error correcting codes.  This result holds true if one considers a secure sketch that retains smooth min-entropy with no loss in parameters because it only relies on the correctness of the secure sketch (not the security property).  
 
 \begin{lemma}
 \label{lem:smallgeneralviable ss}
-    Suppose $\mathcal{M}$ is $\zeroone{n}$ with the Hamming Metric. Suppose $(\sketch, \rec)$ is a $(\zo^n, \mathcal{W}, \tilde{m}, t, \epsilon, \delta)$-secure sketch, for some family $\mathcal{W}$. 
+    Suppose $\mathcal{M}$ is $\zeroone{n}$ with the Hamming Metric. Suppose $(\sketch, \rec)$ is a $(\zo^n, \mathcal{W}, \tilde{m}, t, \epsilon_\sketch, \delta)$-secure sketch, for some family $\mathcal{W}$. 
     
 %    Let $W\in \mathcal{W}$, and let $W', SS'$ be a distribution such that $\Delta((W, \sketch(W)), (W', SS'))\le \epsilon$ and $\Hav(W' |SS')\ge \tilde{m}$.
    For every $v\in \mathcal{M}$ there exists a set $\goodsketch_v$ where $\Pr[\sketch(v)\in \goodsketch_v] \ge 1/2$ and for any fixed $\sketch$,
     
     \[
-    \log{|\{v \in \mathcal{M} | \sketch \in \goodsketch_v\}|} \le \frac{n - \log{|B_t|} +h_2(2\delta)}{1-2\delta} \le \frac{n(1-h_2(t/n)) +h_2(2\delta)}{2\delta}.
+    \log{|\{v \in \mathcal{M} | \sketch \in \goodsketch_v\}|} \le \frac{n - \log{|B_t|} +h_2(2\delta)}{1-2\delta} \le \frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta}.
     \]
 \end{lemma}
 
@@ -324,7 +369,7 @@ We begin with a corollary bounding how many points are ``viable'' from the outpu
 Let $Z$ describe a uniform sample of $U_{n,k}$.  Let $(\gen, \rep, \aux)$ be an auxiliary input fuzzy extractor.  Let $\advise = \aux(Z)$ be of length $\ell$.       For every $v\in \mathcal{M}$ there exists a set $\goodsketch_v$ where $\Pr[\sketch(v)\in \goodsketch_v] \ge 1/2$ and for any fixed $\sketch$,
     
     \[
-    \mu:=\log{|\{v \in \mathcal{M} | \sketch \in \goodsketch_v\}|} \le \frac{n - \log{|B_t|} +h_2(2\delta)}{1-2\delta} \le \frac{n(1-h_2(t/n)) +h_2(2\delta)}{2\delta}.
+    \mu:=\log{|\{v \in \mathcal{M} | \sketch \in \goodsketch_v\}|} \le \frac{n - \log{|B_t|} +h_2(2\delta)}{1-2\delta} \le \frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta}.
     \]
 For a triple $(v, ss, z)$ define $\viable(v, ss, z)=1$ if
 \begin{enumerate}
@@ -353,65 +398,74 @@ The above corollary follows by combination of Lemma~\ref{lem:smallgeneralviable 
 \end{proof}
 \begin{lemma}
 \label{lem:convert distinguisher ss}
-Let all parameters be as in Corollary~\ref{corollary:info loss ss} with $\nu \in\mathbb{Z}^+$.  Then there is no $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon, \delta, \ell)$-secure sketch with distributional advise (see Definition~\ref{def:ss distributional}) if
+Let all parameters be as in Corollary~\ref{corollary:info loss ss} with $\nu \in\mathbb{Z}^+$.  Then there is no $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon_\sketch, \delta, \ell)$-secure sketch with distributional advise (see Definition~\ref{def:ss distributional}) if
 \[
-\epsilon<\left(\epsilon_1+\epsilon_2\right)\\
+\tilde{m}> -\log{1-\epsilon_\sketch} +1 + 2\max\left\{-\frac{\alpha+\log{\nu}-|\advise|-k}{2^k}+1+\mu+k, \log{\nu+1}\right\}.
 \]
-where 
-\begin{align*}
-\epsilon_1&= 2^{-\frac{\alpha+\log{\nu}-|\advise|-k}{2^k}+1+\mu+k},\\
-\epsilon_2&=\frac{\nu+1}{2^{\kappa}}.
-\end{align*}
+
 Furthermore, there exists an algorithm $\mathcal{D}$ that always outputs $1$ when given samples of the form $w, ss, z$ that are correctly generated by the secure sketch.
 \end{lemma}
 \begin{proof}[Proof of Lemma~\ref{lem:convert distinguisher ss}].
 We prove the result for an average member of $Z$.  First note that for every $v\in \mathcal{M}$ there exists a set $\goodsketch_v$ where $\Pr[\sketch(v)\in \goodsketch_v] \ge 1/2$.  By Lemma~\ref{lem:smooth ent cond}
 \[
-\Haveps(W| \sketch(W)) \le \Haveps(W| \sketch(W), \goodsketch_W) +1.
+\Haveps(W| \sketch(W)) \le \Haveps(W| \sketch(W), \sketch(W)\in \goodsketch_W) +1.
 \]
-Let $X', Y'$ be distributions and $\eta'$ be an event where $\Delta((X, Y, \eta), (X', Y', \eta'))\le \epsilon$. Consider the following distinguisher $\mathcal{D}$ for tuples of the form $a, b, c, d$:
-\begin{enumerate}
-\item If $c\neq 1$ output $0$,
-\item If $\viable(a, b, \advise(d)) =0 $ output $0$,
-\item If $\Pr[W_z = w] = 0$ output $0$.
-\item Output $1$.
-\end{enumerate}
-Note that when given $(w, ss, \goodsketch_w, z)|\goodsketch_w$ that $\mathcal{D}$ outputs $1$ with probability $1$.  
+We now restrict our attention to the case when $\sketch(w) \in \goodsketch_w$.   
+Let $X', Y'$ be distributions  be an event where $\Delta((W, \sketch(W)), (X', Y'))\le \epsilon$. Note that 
+\[
+\Pr[\viable(W, \sketch(W), Z) = 1| \sketch_W \in \goodsketch_W] = 1.
+\]
 Thus, it must be the case that 
 \[
-\Pr[D(x', y', \eta') = 1] \ge 1- \epsilon.
+\Pr[\viable(X', Y', Z) = 1] \ge 1-\epsilon.
 \]
-That is, 
-$\Pr[x'\in W_z] \ge 1-\epsilon.$
-Recall that by Corollary~\ref{corollary:info loss ss} there are most 
-
-
-\todo{Stopped here}
-
-
-We bound the number of parts with at least one point in viable.  We begin by assuming that all points in viable are in different  values $r$ so the bound on the size of 
-\[
-\left\{w_{z, i} \middle|\sum_{\mathsf{key}\in\mathtt{Goodkey}_p} \viable(w_{z,i}, p, \mathsf{key}, \advise)>0\right\}_{i=1}^k 
-\] 
-gives a bound on the number of nonempty parts. By Corollary~\ref{corollary:info loss} 
-\[
-\expe_{Z} \left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p}\sum_{i }  \viable(w_{z,i}, p, \mathsf{key}, \advise) \middle| \begin{aligned} z\leftarrow Z\\ \advise\leftarrow \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advise)\end{aligned} \right]< 2^{-\frac{\alpha+\log{\nu}-|\advise|-k}{2^k}+1+\mu+k}+\nu+1.
-\]
-Thus the fraction of non-empty parts in $\mathsf{Goodkey}_p$ on average is at most 
-\[
-2^{-\kappa-\frac{\alpha+\log{\nu}-|\advise|-k}{2^k}+1+\mu+k}+\frac{\nu+1}{2^\kappa}.
-\]
-Thus, the probability that $\mathcal{D}$ outputs $0$ when given $U_\kappa, p, z$ is at least 
-$1/2-(\epsilon_1+\epsilon_2)$
-where 
+By the definition of $\viable$, the support of $X'$ must be drawn from points in $W_Z$.  For any fixed value of $y\in Y$ by Corollary~\ref{corollary:info loss ss}, it is true that 
 \begin{align*}
-\epsilon_1:&=2^{-\kappa-\frac{\alpha+\log{\nu}-|\advise|-k}{2^k}+1+\mu+k},\\
-\epsilon_2:&=\frac{\nu+1}{2^{\kappa}}.
+\expe_{z\leftarrow Z} \left[\sum_{i }  \viable(w_{z,i}, y', \advise)  \right]< 2^{-\frac{\alpha+\log{\nu}-|\advise|-k}{2^k}+1+\mu+k}+\nu+1.
 \end{align*}
-\noindent
+One has, 
+\begin{align*}
+2^{-\Hav(X'|Y')} &\ge  \Pr[X' \in W_Z] 2^{-\Hav(X'|Y', X'\in W_Z) }+ \Pr[X'\not\in W_Z] 2^{-\Hav(X'|Y', X'\not\in W_Z)}\\
+ &\ge  (1-\epsilon)2^{-\Hav(X'|Y', X'\in W_Z) }
+\end{align*}
+And thus, 
+\[
+\Hav(X'|Y') \le  -\log{1-\epsilon_\sketch} +\Hav(X'|Y', X'\in W_Z).
+\]
+The min-entropy of $X' |Y'$ is maximized by considering the uniform distribution over such points. \begin{align*}
+\Hav(X'|Y' , X'\in W_Z) &\le \log {2^{-\frac{\alpha+\log{\nu}-|\advise|-k}{2^k}+1+\mu+k}+\nu+1}\\
+&\le 2\max\left\{-\frac{\alpha+\log{\nu}-|\advise|-k}{2^k}+1+\mu+k, \log{\nu+1}\right\}.
+\end{align*}
+This implies that 
+\[
+\Haveps(W| \sketch(W)) \le -\log{1-\epsilon_\sketch} +1 + 2\max\left\{-\frac{\alpha+\log{\nu}-|\advise|-k}{2^k}+1+\mu+k, \log{\nu+1}\right\}.
+\]
 This completes the Proof of Lemma~\ref{lem:convert distinguisher ss}.
 \end{proof}
 
+\noindent
+We now proceed to the proof of Theorem~\ref{thm:main theorem ss}.   Let \[\chi:= -\log{1-\epsilon_\sketch} +1 + 2\max\left\{-\frac{\alpha+\log{\nu}-|\advise|-k}{2^k}+1+\mu+k, \log{\nu+1}\right\}.\]  Restating Lemma~\ref{lem:convert distinguisher} one has that 
+\[
+\Hav^{\epsilon_\sketch}(U_{n,k} | \sketch(U_{n,k}), Z_{U_{n,k}})) \le \chi.
+\]
+That is, for all $A, B, C$ such that $\Delta((A, B, C), (U_{n,k},\sketch(U_{n,k}), Z_{U_{n,k}}))\le \epsilon_{\sketch}$ it is true that $\Hav(A|B, C) \le \tilde{m}$.  Define \[P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}\leftarrow \sketch(\mathtt{PCode}_{n, k, t, \alpha}^{*}, \advise(Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})).\]
+Recall that $\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \alpha}^{*}) \le \epsilon_{\mathtt{PCode}}$ by Lemma~\ref{lem:close family} .  
+It is thus true that 
+\[
+\Hav^{\epsilon_{\sketch}-\epsilon_{\mathtt{PCode}}}(\mathtt{PCode}_{n, k, t, \alpha}^{*} | \sketch(\mathtt{PCode}_{n, k, t, \alpha}^{*}), Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})\le \tilde{m}.
+\]
+Suppose not, then there exists some $A, B, C$ where 
+\[
+\Delta((A, B, C), (\mathtt{PCode}_{n, k, t, \alpha}^{*} , \sketch(\mathtt{PCode}_{n, k, t, \alpha}^{*}), Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}))\le \epsilon_{\sketch}-\epsilon_{\mathtt{PCode}}.
+\]
+and $\Hav(A|B, C)>\chi$.
+Thus, 
+\begin{align*}
+\Delta&((A, B, C), (U_{n,k},\sketch(U_{n,k}), Z_{U_{n,k}}))\\&\le \Delta((A, B, C), ((\mathtt{PCode}_{n, k, t, \alpha}^{*} , \sketch(\mathtt{PCode}_{n, k, t, \alpha}^{*}), Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}))+\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \alpha}^{*})\\
+&\le \epsilon_{\sketch}-\epsilon_{\mathtt{PCode}}+ \epsilon_{\mathtt{PCode}} = \epsilon_{\sketch}.
+\end{align*}
+This contradicts the fact that $\Hav^{\epsilon_\sketch}(U_{n,k} | \sketch(U_{n,k}), Z_{U_{n,k}})) \le \chi.$
+Finally, Theorem~\ref{thm:main theorem ss} follows by application of Lemma~\ref{lem:distributional advise suffices ss}.
 
 
 
