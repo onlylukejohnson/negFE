@@ -41,6 +41,7 @@ Our proof uses the following structure
 \end{enumerate}
 
 \subsection{Analysis of parameters}
+\label{ssec:analysis params}
 We separately consider $\epsilon_1, \epsilon_2$ and $\epsilon_3$. We refer to these three terms as average points, free points, and distributional closeness respectively. This is because $\epsilon_1$ describes how much information the $\advise$ has about average points in $W_Z$, $\epsilon_2$ considers a small number of points that are more thoroughly described by $\advise$, and $\epsilon_3$ controls the statistical distance between $U_{n, k}$ and $\mathtt{PCode}_{n, k, t, \alpha}$.
 
 
@@ -297,7 +298,7 @@ where $\epsilon' = \epsilon+\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.$
 \end{theorem}
 
 \subsection{Analysis of parameters}
-We assume that $\epsilon\le 1/4$ for simplicity.  As before for  
+We assume that $\epsilon\le 1/4$ and $\delta<1/4$.  As before for  
 \[
 \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n = \ngl(n)\]  it suffices 
 \begin{align*}
@@ -305,9 +306,8 @@ We assume that $\epsilon\le 1/4$ for simplicity.  As before for
 k &\ge \gamma + \log{n+ \omega(\log{n})}.
 \end{align*}
 These two conditions imply that $\epsilon'\le 1/2$ and $-\log{1-\epsilon'}\le 1$.
-
 We assume that $\nu = \poly(n)$ and define $c_1$ such that  $\log{\nu+1} \le c_1\log{n}$.
-By Lemma~\ref{lem:max fuzz ent} for any $W$ in $\zo^n$ it is true that $\Hfuzz(W) \le n -\log{|B_t|} \le n(1-h_2(t/n))$.  Thus, the additional constraint that 
+As in Section~\ref{ssec:analysis params} the additional constraint that 
 \[
 \gamma \le \beta - \log{2e}
 \le n(1-h_2(t/n)) - \log{2e}\] imposes an additive $\log{2e}$ impact on the maximal fuzzy min-entropy that can be supported. 
@@ -321,28 +321,28 @@ We now turn to our analysis of $\chi$.  Recall that $(n/k)^k \le {n\choose k} < 
 \end{align*}
 This implies that 
 \begin{align*}
-\chi&= -\frac{\alpha +\log{\nu}-\ell-k}{2^k} + \mu +k\\
-&\le  \frac{\alpha +\log{\nu}-\ell-k}{2^k} +\frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta}  + k,\\
-&\le - \frac{(n-k)2^k +\log{\nu}-\ell-k}{2^k} +\frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta} + k,\\
-&\le  -\frac{(n-k)2^k-k2^{k} +\log{\nu}-\ell-k}{2^k} + \frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta}\\
-&< - \frac{(n-2k)2^k-\ell-k}{2^k} + \frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta} .
+\chi&= -\frac{\alpha +\log{\nu}-\ell-k}{2^k} + \mu +k+1\\
+&\le  -\frac{\alpha +\log{\nu}-\ell-k}{2^k} +\frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta}  + k+1,\\
+&\le - \frac{(n-k)2^k +\log{\nu}-\ell-k}{2^k} +\frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta} + k+1,\\
+&\le  -\frac{(n-k)2^k-k2^{k} +\log{\nu}-\ell-k}{2^k} + \frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta}+1\\
+&< - \frac{(n-2k)2^k-\ell-k}{2^k} + \frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta} +1.
 \end{align*}
-
-As long as $\ell = o(k 2^k) = o (n2^n)$ and $\delta \le 1/4$ then 
+As long as $\ell = o(k 2^k) = o (n2^n)$ and $\delta < 1/10$ then 
+\todo{be more precise with the setting of $\delta$, paying a lot here}
 \begin{align*}
-0 &\ge -\frac{(n-2k)2^k-\ell-k}{2^k} + 2nh_2(1-t/n) \\
- &\ge -(n-2c_2n - 2\gamma) + 2nh_2(1-t/n) \\
-&\ge -n(1-2c_2)+2\gamma + 2nh_2(1-t/n)\\
-\gamma &\le \frac{n(1-2c_2 - 2h_2(1-t/n))}{2}.\\
+0 &\ge -\frac{(n-2k)2^k-\ell-k}{2^k} + 2nh_2(1-t/n) +2\\
+ &\ge -(n-2c_2n - 2\gamma) + 2nh_2(1-t/n) +2\\
+&\ge -n(1-2c_2)+2\gamma + 2nh_2(1-t/n)+2\\
+\gamma &\le \frac{n(1-2c_2 - 2h_2(1-t/n))}{2}-1.\\
 \end{align*}
 
 \todo{if we want to be clean we need to work out the smallest $n$ for which this is true.}
 Adding the constraint from \textbf{Distributional Closeness}
 this means that 
 \[
-\frac{\gamma}{n} \le \min\left\{(1-h_2(t/n)) - \frac{\log{2e}}{n}, \frac{(1-2c_2 - 2h_2(1-t/n))}{2}\right\}.
+\frac{\gamma}{n} = \Theta\left(\min\left\{(1-h_2(t/n)) - \frac{\log{2e}}{n}, \frac{(1-2c_2 - 2h_2(1-t/n))}{2}\right\}\right).
 \]
-suffices for $\tilde{m} = \Theta(\log n)$.
+suffices to ensure $\tilde{m} = \Theta(\log n)$.
 
 \subsection{Proof}
 \begin{proof}[Proof of Theorem~\ref{thm:main theorem ss}]
