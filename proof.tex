@@ -327,22 +327,31 @@ This implies that
 &\le  -\frac{(n-k)2^k-k2^{k} +\log{\nu}-\ell-k}{2^k} + \frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta}+1\\
 &< - \frac{(n-2k)2^k-\ell-k}{2^k} + \frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta} +1.
 \end{align*}
-As long as $\ell = o(k 2^k) = o (n2^n)$ and $\delta < 1/10$ then 
+As long as $\ell = o(k 2^k) = o (n2^n)$ and $\delta < 1/25$ then 
 \todo{be more precise with the setting of $\delta$, paying a lot here}
 \begin{align*}
-0 &\ge -\frac{(n-2k)2^k-\ell-k}{2^k} + 2nh_2(1-t/n) +2\\
- &\ge -(n-2c_2n - 2\gamma) + 2nh_2(1-t/n) +2\\
-&\ge -n(1-2c_2)+2\gamma + 2nh_2(1-t/n)+2\\
-\gamma &\le \frac{n(1-2c_2 - 2h_2(1-t/n))}{2}-1.\\
+0 &\ge -\frac{(n-2k)2^k-\ell-k}{2^k} + 2n(1-h_2(t/n)) +2\\
+ &\ge -(n-2c_2n - 2\gamma) + 2n(1-h_2(t/n)) +2\\
+&\ge -n+2c_2n+2\gamma + 2n(1-h_2(t/n))+2\\
+\gamma &\le \frac{n(-1-2c_2 + 2h_2(t/n))}{2}-1.\\
 \end{align*}
-
-\todo{if we want to be clean we need to work out the smallest $n$ for which this is true.}
 Adding the constraint from \textbf{Distributional Closeness}
 this means that 
 \[
 \frac{\gamma}{n} = \Theta\left(\min\left\{(1-h_2(t/n)) - \frac{\log{2e}}{n}, \frac{(1-2c_2 - 2h_2(1-t/n))}{2}\right\}\right).
 \]
 suffices to ensure $\tilde{m} = \Theta(\log n)$.
+
+
+When $\delta = 0$ one has
+\[
+\gamma \le \frac{n(2c_2 + h_2(t/n))}{2}-1.\]
+yielding
+\[
+\frac{\gamma}{n} \le \Theta\left(\left\{(1-h_2(t/n)) - \frac{\log{2e}}{n}, \frac{(2c_2 + h_2(1-t/n))}{2}\right\}\right).
+\]
+
+\todo{if we want to be clean we need to work out the smallest $n$ for which this is true.}
 
 \subsection{Proof}
 \begin{proof}[Proof of Theorem~\ref{thm:main theorem ss}]
