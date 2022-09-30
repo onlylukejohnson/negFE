@@ -34,3 +34,29 @@ Talk about how traditional randomness extraction~\cite{nisan1993randomness} $\Ho
 \paragraph{Fuzzy extractors are computational}
 
 \subsection{Proof Techniques}
+The core of our negative results show impossibility of a fuzzy extractor variant that directly encodes the information available to $(\gen, \rep)$ about the distribution $W$.  Specifically, we know consider a tuple of algorithms $(\advise, \gen, \rep)$ and the following game:
+\begin{enumerate}
+\itemsep0em
+\item A uniform sample from $W_z\leftarrow \mathcal{W}$ where $z$ describes the distribution.
+\item A bounded length $\advise = \advise(z)$ is computed.
+\item One computes $w\leftarrow W_z$.
+\item The algorithm computes $(r, p)\leftarrow \gen(w, \advise)$.
+\item The adversary is given either $(r, p, z)$ or $(u, p, z)$ for a uniform $u$.
+\end{enumerate}
+We call this a \emph{fuzzy extractor with distributional advise}.  Hardness of building such a primitive for an average $z$ implies that an average $z$ does not have a description with less than $|\advise|$ bits~\ref{lem:distributional advise suffices}. 
+
+We consider the set of distributions $\{W_Z\}$ of all distributions with fuzzy min-entropy $\gamma$.  This distribution is statistically close to the set of all distributions with $2^k$ points chosen uniformly without replacement where $k = \gamma +cn$ for an arbitrary constant $c>0$.  We call this set of distributions $U_{n,k}$ and let $w_1,...., w_{2^k}$.  Since the  $2^k$ points are minimally correlated, as long as $|\advise|$ is shorter than $k2^k$, most points $w_i | \advise$ are unpredictable.  
+
+Once one has a bound on the predictability of points in $w_i$, one can use the correctness guarantees of the fuzzy extractor to show that:
+\begin{enumerate}
+\item Not all points $w\in\zo^n$ are viable for a particular value of $p$.  For a realistic $w$ all nearby points should map to the same key.
+\item Since the values of $w_i$ are unpredictable given $\advise$ very few of the $w_i$ will be included in the set of viable points.
+\item The adversary knowing $z$ can check the intersection between $w_i$ and $\viable$ points.  
+\item If the expected size of the intersection is smaller than the number of keys, then for some keys there is no explanation in terms of a viable $w_i$.
+\item Keys with no viable explanation must belong to the uniform distribution.
+\end{enumerate}
+
+The techniques for the secure sketch setting are similar, however, there are stronger geometric bounds on the number of viable points since secure sketches imply Shannon error correcting codes.  Crucially, our result considers a secure sketch that retains smooth min-entropy instead of min-entropy.  This is so we can use $U_{n,k}$ throughout the proof and show this implies the hardness of building a secure sketch for all distributions with sufficient fuzzy min-entropy.  
+
+
+Importantly, both results operate generically in the size of the maximum number of viable points for the relevant primitive.  Such bounds have been well established in the literature due to their connections with coding theory.  This means if one can provide a new bound on fuzzy extractor or secure sketch quality this can be directly used in our results.
