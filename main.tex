@@ -31,6 +31,7 @@
 
 \usepackage{tikz}
 \usepackage{graphicx}
+\usepackage{csquotes}
 \usepackage{amssymb, amsmath, amsfonts}
 \usepackage{enumerate}
 \usepackage{hyperref}
@@ -145,6 +146,7 @@
 \newcommand{\goodsketch}{\ensuremath{\mathsf{GoodSketch}}\xspace}
 \newcommand{\goodkey}{\ensuremath{\mathsf{GoodKey}}\xspace}
 \newcommand{\Hfuzz}{\mathrm{H}^{\mathtt{fuzz}}_{t,\infty}}
+\newcommand{\Wallfuzz}{\mathcal{W}_{\mathtt{fuzz}}^{\mathtt{all}}}
 \newcommand{\Huse}{\mathrm{H}_{\mathtt{usable}}}
 \newcommand{\Dom}{\mathsl{Dom}}
 \newcommand{\Range}{\mathsl{Rng}}
@@ -174,6 +176,6 @@
   \input{intro.tex}
   \input{prelims.tex}
   \input{proof.tex}
-  \bibliographystyle{plain}
+  \bibliographystyle{alpha}
   \bibliography{negFE}
 \end{document}
