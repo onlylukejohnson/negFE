@@ -2,26 +2,29 @@
 % Preliminary Definitions and Results for negFE
 
 \section{Preliminaries}
-In this section we will introduce existing results to help clarify our place in the literature, provide necessary existing definitions to show what we are borrowing and what we build on, and we will provide new definitions in support of our novel results.  For distributions $X, Y$, $\Delta(X, Y)$ represents the statistical distance between the two distributions.  That is, 
+\label{sec:prelim}
+For distributions $X, Y$ over the same discrete domain,
 \[
 \Delta(X, Y)\overset{def}= \frac{1}{2}\sum_{x \in X} \left| \Pr[X=x] - \Pr[Y=y]\right|.
 \]
-
-For a metric space $(\mathcal{M}, \dis)$ let $B_t(x) = \{y | \dis(x, y)\le t\}$. For a metric space if the size of $B_t(x)$ is the same for all points $x$ we use $|B_t|$ to denote this quantity and say that the \emph{size of balls is center independent}.
+For a metric space $(\mathcal{M}, \dis)$ let $B_t(x) = \{y | \dis(x, y)\le t\}$. If the size of $B_t(x)$ is the same for all points $x$ we use $|B_t|$ to denote this quantity and say that the \emph{size of balls is center independent}.  All logarithms are base $2$.
 
 This work considers the possibility of constructing fuzzy extractors from a finite family of distributions that we will call $\mathcal{W}$. 
 Throughout, we will need the ability to describe a particular value in this family.  
 We let $Z$ be an index for the distributions in the family and we denote the $Z$th distribution $W_Z$. 
-The distribution $W_Z$ can then be sampled, and we denote a sample of $W_Z$ as $w_{Z} \in \zeroone{n}$. When $Z$ is clear, we will omit the subscript.
+The distribution $W_Z$ can then be sampled, and we denote a sample of $W_Z$ as $w \in \zeroone{n}$. 
 
 \subsection{Notions of Entroy}
 
 \begin{definition}[Entropy]
     \emph{Shannon Entropy} or simply Entropy, denoted $\ent{X}$, for some discrete random variable $X$ is a measure of how stable the outcomes of the random variable are. It is calculated as \[\ent{X} \defined \sum\limits_{i=1}^n \p{x_i}\log{\p{x_i}}\] where there are $n$ values that $X$ takes and we denote them as $x_i$. 
+    
+    If the two possible outcomes of $x$ are $0$ and $1$ with $\Pr[X=1] = p$ the binary entropy of $X$ is  \[h_2(X) :=-p\cdot\log{p} - (1-p)\cdot\log{1-p}.\] 
 \end{definition}
 
 \begin{definition}[Min Entropy]
-    \emph{Min Entropy}, denoted $\minent{X}$, is a best case measure of the stability of the random variable $X$. It is calculated as \[\minent{X} \defined -\log{\max\limits_{x_i} p(x_i)}.\]  
+For a discrete random variable $X$, 
+    \emph{min Entropy}, denoted $\minent{X}$, is negative log of the probability of the most likely event of $X$: \[\minent{X} \defined -\log{\max\limits_{x_i} p(x_i)}.\]  
 \end{definition}
 
 \begin{definition}[Average Min Entropy]
@@ -35,9 +38,13 @@ The distribution $W_Z$ can then be sampled, and we denote a sample of $W_Z$ as $
 
 
 \begin{definition}[Hartley Entropy]
-    \emph{Hartley Entropy} also called \emph{Hartley's Function} measures the uncertainty of a random variable in a basic way, measuring the number of outcomes the random variable has with non-zero probability. Formally, $
-    \hart{X} = | \sbr{x \in X\,|\, \Prob{X = x} > 0}|.
-    $
+For a discrete random variable $X$ \emph{Hartley entropy}, denoted $\hart{X}$ is the logarithm of the support size of $X$: 
+\[    \hart{X} = | \sbr{x \in X\,|\, \Prob{X = x} > 0}|.
+    \]
+%    For a pair of discrete random variables $X, Y$ conditional Hartley entropy is 
+%    \[
+%    \hart{X|Y} = -\log{\expe_{y\leftarrow Y} 2^{-\hart{X|Y=y}}}.
+%    \]
 \end{definition}
 
 \subsection{Basic Entropy Results}
@@ -70,15 +77,18 @@ This completes the proof of Lemma~\ref{lem:smooth ent cond}.
     Let $\alpha > 0$, then for all but a $(1-1/\alpha)$ fraction of the $X_i$ the entropy loss is less than $\log{\alpha}/k$. 
 \end{lemma}
 
+
 \begin{lemma}
     \label{lem:conditionalminentloss}
     Let $\vec{X} = (X_1, X_2, \ldots, X_k)$ be independent random variables. 
     Let $Y$ be a random variable arbitrarily correlated with $\vec{X}$. 
     Then 
     \[
-        \acminent{\vec{X}}{Y} \geq \sum \minent{X_i} - \hart{Y}
+        \acminent{\vec{X}}{Y} \geq \minent{\vec{X}} - \hart{Y} = \sum \minent{X_i} - \hart{Y}
     \]
 \end{lemma} 
+\noindent
+Lemma~\ref{lem:conditionalminentloss} follows by \cite[Lemma 2.2b]{dodis2008fuzzy} and independence of the $X_i$.
 
 
 
@@ -105,6 +115,8 @@ and thus,
 \Hfuzz(W) \le n(1-h_2(t/n)).
 \]
 
+\noindent
+We now introduce the notion of $\beta$-density which measures the size of a Hamming ball in comparison to the whole metric space.  $\beta$-density is crucial for all of our proofs. 
 \begin{definition}
 Let $(\mathcal{M}, \dis)$ be a metric space where the size of balls is center independent.  The $\beta$ density is
 \[
@@ -112,7 +124,7 @@ Let $(\mathcal{M}, \dis)$ be a metric space where the size of balls is center in
 \]
 \end{definition}
 \begin{claim} 
-For the binary Hamming metric 
+For the binary Hamming metric over $\zo^n$ for $t<n/2$
 \[
 n(1-h_2(t/n))-\frac{\log{n}}{2}-1 \le \beta \le n(1-h_2(t/n)).
 \]
@@ -128,18 +140,7 @@ By Equation~\ref{eq:size of balls} one has:
 \end{proof}
 
 
-Our main results show the impossibility of constructing fuzzy extractors for the family of distributions $\mathcal{W}$ of $2^k$ random points sampled from $\zo^n$ (without replacement).  Unfortunately, there are distributions $W_Z$ for some values $Z$ that do not have fuzzy min-entropy so there is no reason to expect a fuzzy extractor to be able to secure these distributions.  However, below we show a closely related family of distributions where all $W_Z$ have fuzzy min-entropy that is statistically close to $k$ random points.
-
-\input{sampling}
-
-%\begin{definition}[Markov's Inequality]
-%    Markov's inequality is a tail bound for random variables that gives an upper bound on the probability of a random variable deviating from its mean. Let $\Pr[X>0] = 1$. Then the following inequality holds for any $\alpha > 0$: 
-%    \[ 
-%      \Prob{X \geq \alpha \cdot \Ex{X}} \leq 1/\alpha .
-%    \]
-%\end{definition}
-
-\subsection{Fuzzy Extractors and Secure Sketches}
+    \subsection{Fuzzy Extractors and Secure Sketches}
 \begin{definition}[Secure Sketch~\cite{dodis2008fuzzy}]
 For metric space $(\mathcal{M}, \dis)$, a $(\mathcal{M}, \mathcal{W}, \tilde{m}, t, \epsilon, \delta, \ell)$-\emph{secure sketch} is a pair of algorithms $(\sketch, \rec)$ with the following properties 
 \begin{enumerate} 
@@ -159,46 +160,11 @@ For metric space $(\mathcal{M}, \dis)$, a $(\mathcal{M}, \mathcal{W}, \kappa, t,
 \item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, then 
 \[\Pr_{r, p \leftarrow \gen(w)}[\rep(w', p) = r]=1.\] 
 \item \textbf{Security} For all distributions $W \in \mathcal{W}$, let $R, P \leftarrow \gen(W)$ and $U_\kappa$ be a uniformly distributed random variable over $\zo^\kappa$ it holds that \[\Delta((R, P), (U_\kappa, P))\le \epsilon.\]
-\item  \textbf{Space Bounded} The circuits $\gen$ and $\rep$ require at most $\ell$ bits to describe.  That is, $|\gen| +|\rec|\le \ell$.
+\item  \textbf{Space Bounded} The circuits $\gen$ and $\rep$ require $\ell$ bits to describe.  That is, $|\gen| +|\rec|\le \ell$.
 \end{enumerate}
+\label{def:fe}
 \end{definition}
 
-%\subsection{Conditional Min-Entropy Technical Results}
-%It has been shown that universal fuzzy extractors are impossible in the information theoretic setting. 
-%
-%\subsection{Average Conditional Min-Entropy Loss}
-%
-%
-%\begin{proof}
-%    Since each $X_i$ is independent then $\minent{\vec{X}} = \sum \minent{X_i}$.
-%    Now, by definition,
-%    \begin{align*}
-%        \acminent{\vec{X}}{Y} &= -\log{\Exlim{y \leftarrow Y}{\max\limits_{\vec{x}} \Prob{\Vec{X} = \vec{x}\ |\ Y = y}}} \\
-%        &= -\log{\sum\limits_{y} \max\limits_{\vec{x}} \Prob{\vec{X} = \vec{x} \ |\ Y = y} \cdot \Prob{Y = y}}\\
-%        &= -\log{\sum\limits_{y} \max\limits_{\vec{x}} \Prob{\vec{X} = \vec{x} \vee Y = y}}\\
-%        &\geq -\log{\sum\limits_{y} \max\limits_{\vec{x}, y'} \Prob{\vec{X} = \vec{x}  \wedge Y = y'}}\\
-%        &= -\log{2^{\hart{Y}} \cdot 2^{\minent{\vec{X},Y}}}\\
-%        &= \minent{\vec{X},Y} - \hart{Y}\\
-%        &\geq \minent{\vec{X}} - \hart{Y} \\   
-%        &= \sum \minent{X_i} - \hart{Y}
-%    \end{align*}
-%\end{proof}
-%
-%\subsubsection{Markov Bound for Predictability}
-%Markov bounds are tail bounds that use Markov's Inequality to bound the probability that a random variable deviates significantly from its expected value. In Markov's inequality, we necessarily lose a multiplicative factor (here called $alpha$) in order to control the probability of the event occuring. When discussing entropy, we are dealing with a log scaled value which makes losing multiplicative factors costly. Instead, we can perform a Markov bound on the predictability scale. In this case, rather than lose a multiplicative factor in entropy, we lose a multiplicative factor in predictability which translates to a small number of bits of entropy lost for the controlled outcomes.
-%
-%
-
-%\begin{align*}
-%    \acminent{\vec{X}}{Y} &= \Delta\\
-%    -\log{\Exlim{Y}{\max\limits_{\vec{x}} \Prob{\Vec{X} = \vec{x} \,|\, Y = y}}} &= \Delta\\
-%    \Exlim{Y}{\max\limits_{\vec{x}} \Prob{\Vec{X} = \vec{x} \,|\, Y = y}} &= 2^{-\Delta}\\
-%    \Problim{Y}{\max\limits_{\vec{x}} \Prob{\Vec{X} = \vec{x} \,|\, Y = y} \geq \alpha \cdot 2^{-\Delta}} &\leq \frac{1}{\alpha} \\
-%    \Problim{Y}{\log{\max\limits_{\vec{x}} \Prob{\Vec{X} = \vec{x} \,|\, Y = y}} \geq \log{\alpha} -\Delta} &\leq \frac{1}{\alpha} \\
-%    \Problim{Y}{-\log{\max\limits_{\vec{x}} \Prob{\Vec{X} = \vec{x} \,|\, Y = y}} < \Delta -\log{\alpha}} &\leq \frac{1}{\alpha} \\
-%    \Problim{y\leftarrow Y}{\minent{\vec{X}\, |\, Y=y} < \Delta -\log{\alpha}} &\leq \frac{1}{\alpha}
-%\end{align*}
-    
 \noindent
 We now define fuzzy extractors and secure sketches with advice.  This is an intermediate definition that will be used in proofs throughout.  As we show below, the impossibility of building a fuzzy extractor with advice for a family $\mathcal{W}$ implies the impossibility of building a fuzzy extractor for some $W\in\mathcal{W}$.
 
@@ -225,6 +191,7 @@ For metric space $(\{0,1\}^n, \dis)$, a $(\{0,1\}^n, \mathcal{W}, \kappa, t, \ep
 \end{enumerate}
 \end{definition}
 
+\todo{redefine the above on average and show the below lemmas on average}
 
 \begin{lemma}
 

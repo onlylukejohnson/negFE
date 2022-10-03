@@ -5,9 +5,9 @@
     \item[$U_{n,k}$] Picking $2^k$ points from $\zeroone{n}$ without replacement uniformly results in a distribution we will denote $U_{n,k}$. Note that there are ${2^{n}\choose 2^k}$ outcomes each occuring with probability $1/{2^{n}\choose 2^k}$.
 
 %    \item[$U_{n,k,t}^{-}$] Another distribution of interest is picking $k$ points uniformly from $\zeroone{n}$ and then removing points that are within distance $t$ of one another, we denote this $U_{n,k,t}^{-}$. 
-    \item[$\mathtt{Code}_{n,k,t}$] The set of all $2^k$ points where all points are distance $t$ from one another.  Note for all outcomes $X$ from this distribution $\Hfuzz(X) = \log k$.
+%    \item[$\mathtt{Code}_{n,k,t}$] The set of all $2^k$ points where all points are distance $t$ from one another.  Note for all outcomes $X$ from this distribution $\Hfuzz(X) = \log k$.
     
-    \item[$\mathtt{PCode}_{n, k, t, \alpha}$] The uniform distribution over all sets $X = \{x_i\}$ of size $2^k$ with the additional condition that $\Hfuzz(X) \ge \alpha$.  Note that this weakens the condition of $\mathtt{Code}$ above as some distributions are allowed to lie within distance $t$ as long as fewer than $2^{k-\alpha}$ do lie within a single ball of radius $t$.
+    \item[$\mathtt{PCode}_{n, k, t, \alpha}$] The uniform distribution over all sets $X = \{x_i\}$ of size $2^k$ with the additional condition that $\Hfuzz(X) \ge \alpha$.  Some points are allowed to lie within distance $t$ as long as fewer than $2^{k-\alpha}$ lie within a single ball of radius $t$.
 \end{description}
  
  \noindent

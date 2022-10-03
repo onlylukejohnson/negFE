@@ -3,7 +3,7 @@
 % Proof for NegFE
 
 \section{Efficient Information-Theoretic Fuzzy Extractors do not exist for all distributions with fuzzy min-entropy}
-
+\label{sec:fe}
 
 \begin{theorem}
 Let $\gamma \in\mathbb{R}^+, n, \kappa, t, \ell, \gamma \in\mathbb{Z}^+$ be parameters. 
@@ -279,6 +279,7 @@ Finally, the theorem follows by application of Lemma~\ref{lem:distributional adv
 \end{proof} 
 
 \section{Secure Sketches}
+\label{sec:ss}
 This section creates an upper bound on the quality of efficient secure sketches.  This bound considers has stronger parameters than Theorem~\ref{thm:main theorem} due largely to the difference between Lemmas~\ref{lem:smallgeneralviable} and~\ref{lem:smallgeneralviable ss}.
 
 \begin{theorem}
@@ -327,8 +328,7 @@ This implies that
 &\le  -\frac{(n-k)2^k-k2^{k} +\log{\nu}-\ell-k}{2^k} + \frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta}+1\\
 &< - \frac{(n-2k)2^k-\ell-k}{2^k} + \frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta} +1.
 \end{align*}
-As long as $\ell = o(k 2^k) = o (n2^n)$ and $\delta < 1/25$ then 
-\todo{be more precise with the setting of $\delta$, paying a lot here}
+As long as $\ell = o(k 2^k) = o (n2^n)$ and $\delta < 1/4$ then 
 \begin{align*}
 0 &\ge -\frac{(n-2k)2^k-\ell-k}{2^k} + 2n(1-h_2(t/n)) +2\\
  &\ge -(n-2c_2n - 2\gamma) + 2n(1-h_2(t/n)) +2\\

@@ -82,10 +82,10 @@
 \newcommand{\p}[1]{p\prns{#1}}
 
 % Entropy
-\newcommand{\ent}[1]{H\prns{#1}}
-\newcommand{\minent}[1]{H_{\infty}\prns{#1}}
-\newcommand{\acminent}[2]{\overset{\sim}{H}\!_{\infty}\prns{#1\,|\,#2}}
-\newcommand{\hart}[1]{H_0\prns{#1}}
+\newcommand{\ent}[1]{\mathrm{H}\prns{#1}}
+\newcommand{\minent}[1]{\mathrm{H}_{\infty}\prns{#1}}
+\newcommand{\acminent}[2]{\tilde{\mathrm{H}}_{\infty}\prns{#1|#2}}
+\newcommand{\hart}[1]{\mathrm{H}_0\prns{#1}}
 
 
 %MACROS galore!!!
@@ -164,7 +164,7 @@
 \renewcommand{\log}[1]{\mathsf{log}\prns{#1}}
 \newcommand{\zeroone}[1]{\sbr{0,1}^{#1}}
 
-\title{Information-Theoretic Fuzzy Extractors are Necessarily Inefficient}
+\title{Information-Theoretic Fuzzy Extractors must be Inefficient}
 \author{Luke Demarest\\University of Connecticut\\luke.h.demarest@gmail.com \and Benjamin Fuller\\University of Connecticut\\benjamin.fuller@uconn.edu\and Alexander Russell\\University of Connecticut\\acr@uconn.edu}
 \date{\today}
 
@@ -175,6 +175,7 @@
   \input{abstract.tex}
   \input{intro.tex}
   \input{prelims.tex}
+  \input{family.tex}
   \input{proof.tex}
   \bibliographystyle{alpha}
   \bibliography{negFE}
