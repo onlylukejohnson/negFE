@@ -142,25 +142,25 @@ By Equation~\ref{eq:size of balls} one has:
 
     \subsection{Fuzzy Extractors and Secure Sketches}
 \begin{definition}[Secure Sketch~\cite{dodis2008fuzzy}]
-For metric space $(\mathcal{M}, \dis)$, a $(\mathcal{M}, \mathcal{W}, \tilde{m}, t, \epsilon, \delta, \ell)$-\emph{secure sketch} is a pair of algorithms $(\sketch, \rec)$ with the following properties 
+For metric space $(\mathcal{M}, \dis)$ and distribution $W$ with probability mass function $z$, a $(\mathcal{M}, \tilde{m}, t, \epsilon, \delta, \ell)$-\emph{secure sketch} is a pair of algorithms $(\sketch_z, \rec_z)$ with the following properties 
 \begin{enumerate} 
 \itemsep0em
-\item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, then \[\Pr_{ss \leftarrow \sketch(w)}[\rec(w', ss) = w]\ge 1-\delta.\]
-\item \textbf{Security} For all distributions $W \in \mathcal{W}$ it holds that $\Haveps(W | \sketch(W)) \ge \tilde{m}$.
-\item \textbf{Space Bounded} The circuits $\sketch$ and $\rec$ require at most $\ell$ bits to describe.  That is, $|\sketch| +|\rec|\le \ell$.
+\item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, then \[\Pr_{ss \leftarrow \sketch(w)}[\rec_z(w', ss) = w]\ge 1-\delta.\]
+\item \textbf{Security}  $\Haveps(W | \sketch_z(W)) \ge \tilde{m}$.
+\item \textbf{Space Bounded} The circuits $\sketch_z$ and $\rec_z$ require at most $\ell$ bits to describe.  That is, $|\sketch_z| +|\rec_z|\le \ell$.
 \end{enumerate}
 \end{definition}
 
 \paragraph{The use of smooth min-entropy} In the above, the secure sketch is required to retain smooth conditional min-entropy of $W$ conditioned on the sketch.  Many definitions consider $\epsilon=0$ or average min-entropy.  However, smooth min-entropy is the necessary condition for privacy amplification through the use of an average-case randomness extractor~\cite{renner2005simple} so it captures whether the non-interactive information-reconciliation task is possible. 
 
 \begin{definition}[Fuzzy Extractor~\cite{dodis2008fuzzy}]
-For metric space $(\mathcal{M}, \dis)$, a $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon)$-\emph{fuzzy extractor} is a pair of algorithms $(\gen, \rep)$ with the following properties 
+For metric space $(\mathcal{M}, \dis)$ and probability distribution $W$ with probability mass function $z$, a $(\mathcal{M}, \kappa, t, \epsilon)$-\emph{fuzzy extractor} is a pair of algorithms $(\gen_z, \rep_z)$ with the following properties 
 \begin{enumerate} 
 \itemsep0em
 \item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, then 
 \[\Pr_{r, p \leftarrow \gen(w)}[\rep(w', p) = r]=1.\] 
-\item \textbf{Security} For all distributions $W \in \mathcal{W}$, let $R, P \leftarrow \gen(W)$ and $U_\kappa$ be a uniformly distributed random variable over $\zo^\kappa$ it holds that \[\Delta((R, P), (U_\kappa, P))\le \epsilon.\]
-\item  \textbf{Space Bounded} The circuits $\gen$ and $\rep$ require $\ell$ bits to describe.  That is, $|\gen| +|\rec|\le \ell$.
+\item \textbf{Security} Let $R, P \leftarrow \gen_z(W)$ and $U_\kappa$ be a uniformly distributed random variable over $\zo^\kappa$ it holds that \[\Delta((R, P), (U_\kappa, P))\le \epsilon.\]
+\item  \textbf{Space Bounded} The circuits $\gen_z$ and $\rep_z$ require $\ell$ bits to describe.  That is, $|\gen| +|\rec|\le \ell$.
 \end{enumerate}
 \label{def:fe}
 \end{definition}
@@ -175,7 +175,10 @@ For metric space $(\{0,1\}^n, \dis)$, a $(\{0,1\}^n, \mathcal{W}, \tilde{m}, t, 
 \begin{enumerate} 
 \itemsep0em
 \item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, let \[\Pr_{(r, p) \leftarrow \sketch(w)}[\rec(w', p) = w]\ge 1-\delta.\]
-\item \textbf{Security} Let $\aux$ be a deterministic function with output in $\zo^\ell$.  For all distributions $W_Z \in \mathcal{W}$, define $\advise:= \aux(Z)$, let $ss \leftarrow \sketch(W, \advise)$ then $\Haveps(W| ss) \ge \tilde{m}$.
+\item \textbf{Security} Let $\aux$ be a deterministic function with output in $\zo^\ell$.  For all distributions $W_Z \in \mathcal{W}$, define $\advise_Z:= \aux(Z)$ and let $ss \leftarrow \sketch(W_Z, \advise_Z)$. Then,
+\[
+\expe_{Z} [\Haveps(W_Z| ss)] \ge \tilde{m}.
+\]
 \end{enumerate}
 \end{definition}
 
@@ -187,25 +190,34 @@ For metric space $(\{0,1\}^n, \dis)$, a $(\{0,1\}^n, \mathcal{W}, \kappa, t, \ep
 \begin{enumerate} 
 \itemsep0em
 \item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, let \[\Pr_{(r, p) \leftarrow \gen(w)}[\rep(w', p) = r]=1.\]
-\item \textbf{Security} Let $\aux$ be a deterministic function with output in $\zo^\ell$.  be For all distributions $W_Z \in \mathcal{W}$, define $\advise:= \aux(Z)$, let $(R, P) \leftarrow \gen(W, \advise)$ and $U_\kappa$ be a uniformly distributed random variable over $\zo^\kappa$ it holds that \[\Delta((R, P, Z), (U_\kappa, P, Z))\le \epsilon.\]
+\item \textbf{Security} Let $\aux$ be a deterministic function with output in $\zo^\ell$.  For a distribution $W_Z \in \mathcal{W}$, define $\advise_Z:= \aux(Z)$, let $(R, P) \leftarrow \gen(W, \advise_Z)$ and $U_\kappa$ be a uniformly distributed random variable over $\zo^\kappa$ it holds that \[\Delta((R, P, Z), (U_\kappa, P, Z))\le \epsilon.\]
 \end{enumerate}
 \end{definition}
 
-\todo{redefine the above on average and show the below lemmas on average}
 
 \begin{lemma}
 
-Let $\mathcal{W}$ be a distribution family indexed by the random family $Z$ and suppose that no $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, \ell)$-fuzzy extractor with distributional advice exists.  There is some distribution $W_Z \in \mathcal{W}$ for which no  $(\{0,1\}^n, \{W_Z\}, \kappa, t, \epsilon, \ell)$ efficient fuzzy extractor exists.
+Let $\mathcal{W}$ be a distribution family indexed by the random family $Z$ and suppose that no $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, 2\ell)$-fuzzy extractor with distributional advice exists.  For all families $\mathcal{W}'\subseteq \mathcal{W}$ with probability mass functions $Z'\subseteq Z$ where $\Pr[Z\in Z']\ge \zeta$ such that for some $Z'$ there is no  $(\{0,1\}^n,\kappa, t, (\epsilon-(1-\zeta))/\zeta, \ell)$ efficient fuzzy extractor.
 \label{lem:distributional advise suffices}
 \end{lemma}
 \begin{proof}[Proof of Lemma~\ref{lem:distributional advise suffices}]
-We proceed by contrapositive.  Suppose that for every $W_Z\in\mathcal{W}$ there exists an efficient fuzzy extractor.  We denote these algorithms by $(\gen_Z, \rep_Z)$ respectively.  Across $Z$ let $\ell$ represent the maximum space needed to implement some algorithm $\gen_Z$ or $\rep_Z$. We now describe how to build the fuzzy extractor $(\gen, \rep, \advise)$ with distributional advice.  Let $(\gen_Z, \rep_Z) := \advise(Z)$ which has length at most $\ell$.
-
-Then define $\gen(x, C)$ as follows: 1) interpret $C$ as two circuits $\gen', \rep'$ and output $\gen'(x)$.  Define $\rep(x, p, C)$ interpret $C$ as two circuits $\gen', \rep'$ and output $\rep'(x', p)$.  It is clear that $(\gen, \rep, \advise)$ is a $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, 2\ell)$ fuzzy extractor with distributional advise.
+We proceed by contrapositive.  Let $\mathcal{W}'$ be some subset of $\mathcal{W}$ with relative size at least $\zeta$ where  for every $W_Z\in\mathcal{W}'$ there exists an $(\{0,1\}^n,\kappa, t, (\epsilon-(1-\zeta))/\zeta, \ell)$-fuzzy extractor.  We denote these algorithms by $(\gen_Z, \rep_Z)$ respectively.  We now describe how to build the fuzzy extractor $(\gen, \rep, \advise)$ with distributional advice.  Let 
+\[
+\advise(Z) = \begin{cases} (\gen_Z, \rep_Z)& Z\in Z'\\\perp&\text{otherwise.}\end{cases}
+\]
+In both cases, $\advise(Z)$ has length at most $\ell$. Then define $\gen(x, C)$ as follows:  if $C = \perp$ sample a random key $r$ output ``fail'', $r$, otherwise interpret $C$ as two circuits $\gen', \rep'$ and output $\gen'(x)$.  Define $\rep(x, p, C)$ interpret $C$ if $C$ is ``fail'', $r$, output $r$, otherwise parse $C$ as two circuits $\gen', \rep'$ and output $\rep'(x', p)$.  
+Then 
+\begin{align*}
+\Delta((R, P, Z), (U_\kappa, P, Z)) &= \Delta((R, P, Z), (U_\kappa, P, Z) | Z\in Z')+\Delta((R, P, Z), (U_\kappa, P, Z) | Z\not\in Z')\\
+&\le \frac{\epsilon-(1-\zeta)}{\zeta} * \zeta + 1* (1-\zeta) = \epsilon.
+\end{align*}
+It is clear that $(\gen, \rep, \advise)$ is a $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, 2\ell)$ fuzzy extractor with distributional advise.
 \end{proof}
 
+In particular if one sets $\zeta = 1-\sqrt{\epsilon}$ this implies that for all subsets $\mathcal{W}' \subseteq \mathcal{W}$ where $\Pr[Z\in Z']\ge 1-\sqrt{\epsilon}.$ there is no $(\{0,1\}^n,\kappa, t, \sqrt{\epsilon}, \ell)$-fuzzy extractor for some element of $\mathcal{W}'$.  This shows that at least $1-\sqrt{\epsilon}$ fraction of elements in $\mathcal{W}$ do not have $(\{0,1\}^n,\kappa, t, \sqrt{\epsilon}, \ell)$-fuzzy extractors.
+
 \begin{lemma}
-Let $\mathcal{W}$ be a distribution family indexed by the random family $Z$ and suppose that no $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, \delta, \ell)$-secure sketch with distributional advice exists.  Then there must be some distribution $W_Z \in \mathcal{W}$ for which no  $(\{0,1\}^n, \{W_Z\}, \kappa, t, \epsilon, \delta, \ell)$ efficient fuzzy extractor exists.
+Let $\mathcal{W}$ be a distribution family indexed by the random family $Z$ and suppose that no $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, \delta, 2\ell)$-secure sketch with distributional advice exists.  Then there must be some distribution $W_Z \in \mathcal{W}$ for which no  $(\{0,1\}^n, \{W_Z\}, \kappa, t, \epsilon, \delta, \ell)$ efficient fuzzy extractor exists.
 \label{lem:distributional advise suffices ss}
 \end{lemma}
 
