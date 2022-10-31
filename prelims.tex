@@ -197,7 +197,7 @@ For metric space $(\{0,1\}^n, \dis)$, a $(\{0,1\}^n, \mathcal{W}, \kappa, t, \ep
 
 \begin{lemma}
 
-Let $\mathcal{W}$ be a distribution family indexed by the random family $Z$ and suppose that no $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, 2\ell)$-fuzzy extractor with distributional advice exists.  For all families $\mathcal{W}'\subseteq \mathcal{W}$ with probability mass functions $Z'\subseteq Z$ where $\Pr[Z\in Z']\ge \zeta$ such that for some $Z'$ there is no  $(\{0,1\}^n,\kappa, t, (\epsilon-(1-\zeta))/\zeta, \ell)$ efficient fuzzy extractor.
+Let $\mathcal{W}$ be a distribution family indexed by the random family $Z$ and suppose that no $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, 2\ell)$-fuzzy extractor with distributional advice exists.  For all families $\mathcal{W}'\subseteq \mathcal{W}$ with probability mass functions $Z'\subseteq Z$ where $\Pr[Z\in Z']\ge \zeta$ there is some $Z'$ there is no  $(\{0,1\}^n,\kappa, t, (\epsilon-(1-\zeta))/\zeta, \ell)$ fuzzy extractor $(\gen_Z, \rep_Z)$.
 \label{lem:distributional advise suffices}
 \end{lemma}
 \begin{proof}[Proof of Lemma~\ref{lem:distributional advise suffices}]
@@ -205,7 +205,7 @@ We proceed by contrapositive.  Let $\mathcal{W}'$ be some subset of $\mathcal{W}
 \[
 \advise(Z) = \begin{cases} (\gen_Z, \rep_Z)& Z\in Z'\\\perp&\text{otherwise.}\end{cases}
 \]
-In both cases, $\advise(Z)$ has length at most $\ell$. Then define $\gen(x, C)$ as follows:  if $C = \perp$ sample a random key $r$ output ``fail'', $r$, otherwise interpret $C$ as two circuits $\gen', \rep'$ and output $\gen'(x)$.  Define $\rep(x, p, C)$ interpret $C$ if $C$ is ``fail'', $r$, output $r$, otherwise parse $C$ as two circuits $\gen', \rep'$ and output $\rep'(x', p)$.  
+In both cases, $\advise(Z)$ has length at most $\ell$. Then define $\gen(x, C)$ as follows:  if $C = \perp$ sample a random key $r$ output $(r, r)$, otherwise interpret $C$ as two circuits $\gen', \rep'$ and output $\gen'(x)$.  Define $\rep(x, p, C)$ interpret $C$ if $C = \perp$ output $p$, otherwise parse $C$ as two circuits $\gen', \rep'$ and output $\rep'(x', p)$.  
 Then 
 \begin{align*}
 \Delta((R, P, Z), (U_\kappa, P, Z)) &= \Delta((R, P, Z), (U_\kappa, P, Z) | Z\in Z')+\Delta((R, P, Z), (U_\kappa, P, Z) | Z\not\in Z')\\
@@ -214,19 +214,32 @@ Then
 It is clear that $(\gen, \rep, \advise)$ is a $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, 2\ell)$ fuzzy extractor with distributional advise.
 \end{proof}
 
+\paragraph{Interpretation} 
 In particular if one sets $\zeta = 1-\sqrt{\epsilon}$ this implies that for all subsets $\mathcal{W}' \subseteq \mathcal{W}$ where $\Pr[Z\in Z']\ge 1-\sqrt{\epsilon}.$ there is no $(\{0,1\}^n,\kappa, t, \sqrt{\epsilon}, \ell)$-fuzzy extractor for some element of $\mathcal{W}'$.  This shows that at least $1-\sqrt{\epsilon}$ fraction of elements in $\mathcal{W}$ do not have $(\{0,1\}^n,\kappa, t, \sqrt{\epsilon}, \ell)$-fuzzy extractors.
 
 \begin{lemma}
-Let $\mathcal{W}$ be a distribution family indexed by the random family $Z$ and suppose that no $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, \delta, 2\ell)$-secure sketch with distributional advice exists.  Then there must be some distribution $W_Z \in \mathcal{W}$ for which no  $(\{0,1\}^n, \{W_Z\}, \kappa, t, \epsilon, \delta, \ell)$ efficient fuzzy extractor exists.
+Let $\mathcal{W}$ be a distribution family indexed by the random family $Z$ and suppose that no $(\zo^n, \mathcal{W}, \tilde{m}, t, \epsilon, \delta, 2\ell)$-secure sketch with distributional advice exists.  For all families $\mathcal{W}'\subseteq \mathcal{W}$ with probability mass functions $Z'\subseteq Z$ where $\Pr[Z\in Z']\ge 1-\zeta$ where 
+\[
+1-\zeta = 2^{-(\tilde{m}-1)+(n-\log{|B_t|}+\log{1/\epsilon})}.
+\]
+there is some $Z'$ for which no  $(\zo^n, \tilde{m}-1, t, \epsilon, \delta, \ell)$ fuzzy extractor $(\sketch_{Z'}, \rec_{Z'})$  exists.
 \label{lem:distributional advise suffices ss}
 \end{lemma}
 
-\noindent
-The proof of Lemma~\ref{lem:distributional advise suffices ss} is identical to the proof of Lemma~\ref{lem:distributional advise suffices} and is omitted.
+\begin{proof}
+The proof of Lemma~\ref{lem:distributional advise suffices ss} follows the structure of the proof of Lemma~\ref{lem:distributional advise suffices} with the following inequality for smooth min-entropy.
+
+\begin{align*}
+\expe_{Z} [\Haveps(W_Z| ss)] &= -\log{\Pr[Z\in Z']\expe_{Z\in Z'} 2^{\Haveps(W_Z| ss)}+ \Pr[Z\not\in Z']\expe_{Z\not \in Z'} 2^{-\Haveps(W_Z| ss)]}}\\
+&\le -\log{ 1* 2^{-(\tilde{m}-1)} + (1-\zeta)*2^{-(n-\log{|B_t|}+\log{1/\epsilon})} } \\
+&\le -\log{ 1* 2^{-(\tilde{m}-1)} + 2^{-(\tilde{m}-1)+(n-\log{|B_t|}+\log{1/\epsilon})-(n-\log{|B_t|}+\log{1/\epsilon})} }\\
+&\le -\log{ 2^{-(\tilde{m}-1)}+ 2^{-(\tilde{m}-1)}} = \tilde{m}.
+\end{align*}
+\end{proof}
 
 \subsection{Upper bound for size of Fuzzy Extractors and Secure Sketches}
 Fuller, Reyzin, and Smith~\cite{fuller2016fuzzy,fuller2020fuzzy} show that the size of a fuzzy extractor can be upper bound in a general case.  We present a stronger version of their lemma that is contained in their proof.  The difference is we bound the union of viable points across difference values of $\mathsf{key}$ while they only bound the size of a single $\mathsf{key}$ corresponding to the true point.  Their argument is purely geometric, so it also applies to fuzzy extractors with distributional advice. 
-We restate their lemma here for the completeness. 
+We restate their lemma here for completeness. 
 
 \begin{lemma}[Lemma 5.2 in \cite{fuller2020fuzzy}]
     \label{lem:smallgeneralviable}
