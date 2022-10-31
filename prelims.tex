@@ -227,11 +227,11 @@ Fuller, Reyzin, and Smith~\cite[Lemma 7.3]{fuller2020fuzzy} showed that good sec
 \subsection{Converting between advice and the distribution sensitive setting}
 \begin{lemma}
 
-Let $\mathcal{W}$ be a distribution family indexed by the random family $Z$ and suppose that no $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, 2\ell)$-fuzzy extractor with distributional advice exists.  For all families $\mathcal{W}'\subseteq \mathcal{W}$ with probability mass functions $Z'\subseteq Z$ where $\Pr[Z\in Z']\ge \zeta$ there is some $Z'$ there is no  $(\{0,1\}^n,\kappa, t, (\epsilon-(1-\zeta))/\zeta, \ell)$ fuzzy extractor $(\gen_Z, \rep_Z)$.
+Let $\mathcal{W}$ be a distribution family indexed by the random family $Z$ and suppose that no $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, 2\ell)$-fuzzy extractor with distributional advice exists.  For all families $\mathcal{W}'\subseteq \mathcal{W}$ with probability mass functions $Z'\subseteq Z$ where $\Pr[Z\in Z']\ge 1-\zeta$ there is some $Z'$ there is no  $(\{0,1\}^n,\kappa, t, (\epsilon-\zeta))/(1-\zeta), \ell)$ fuzzy extractor $(\gen_Z, \rep_Z)$.
 \label{lem:distributional advise suffices}
 \end{lemma}
 \begin{proof}[Proof of Lemma~\ref{lem:distributional advise suffices}]
-We proceed by contrapositive.  Let $\mathcal{W}'$ be some subset of $\mathcal{W}$ with relative size at least $\zeta$ where  for every $W_Z\in\mathcal{W}'$ there exists an $(\{0,1\}^n,\kappa, t, (\epsilon-(1-\zeta))/\zeta, \ell)$-fuzzy extractor.  We denote these algorithms by $(\gen_Z, \rep_Z)$ respectively.  We now describe how to build the fuzzy extractor $(\gen, \rep, \advise)$ with distributional advice.  Let 
+We proceed by contrapositive.  Let $\mathcal{W}'$ be some subset of $\mathcal{W}$ with relative size at least $1-\zeta$ where  for every $W_Z\in\mathcal{W}'$ there exists an $(\{0,1\}^n,\kappa, t, (\epsilon-\zeta)/(1-\zeta), \ell)$-fuzzy extractor.  We denote these algorithms by $(\gen_Z, \rep_Z)$ respectively.  We now describe how to build the fuzzy extractor $(\gen, \rep, \advise)$ with distributional advice.  Let 
 \[
 \advise(Z) = \begin{cases} (\gen_Z, \rep_Z)& Z\in Z'\\\perp&\text{otherwise.}\end{cases}
 \]
@@ -239,26 +239,29 @@ In both cases, $\advise(Z)$ has length at most $\ell$. Then define $\gen(x, C)$ 
 Then 
 \begin{align*}
 \Delta((R, P, Z), (U_\kappa, P, Z)) &= \Delta((R, P, Z), (U_\kappa, P, Z) | Z\in Z')+\Delta((R, P, Z), (U_\kappa, P, Z) | Z\not\in Z')\\
-&\le \frac{\epsilon-(1-\zeta)}{\zeta} * \zeta + 1* (1-\zeta) = \epsilon.
+&\le \frac{\epsilon-\zeta}{1-\zeta} * (1-\zeta) + 1* \zeta = \epsilon.
 \end{align*}
 It is clear that $(\gen, \rep, \advise)$ is a $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, 2\ell)$ fuzzy extractor with distributional advise.
 \end{proof}
 
 \paragraph{Interpretation} 
-In particular if one sets $\zeta = 1-\sqrt{\epsilon}$ this implies that for all subsets $\mathcal{W}' \subseteq \mathcal{W}$ where $\Pr[Z\in Z']\ge 1-\sqrt{\epsilon}.$ there is no $(\{0,1\}^n,\kappa, t, \sqrt{\epsilon}, \ell)$-fuzzy extractor for some element of $\mathcal{W}'$.  This shows that at least $1-\sqrt{\epsilon}$ fraction of elements in $\mathcal{W}$ do not have $(\{0,1\}^n,\kappa, t, \sqrt{\epsilon}, \ell)$-fuzzy extractors.
+In particular if one sets $\zeta = \sqrt{\epsilon}$ this implies that for all subsets $\mathcal{W}' \subseteq \mathcal{W}$ where $\Pr[Z\in Z']\ge 1-\sqrt{\epsilon}.$ there is no $(\{0,1\}^n,\kappa, t, \sqrt{\epsilon}, \ell)$-fuzzy extractor for some element of $\mathcal{W}'$.  This shows that at least $1-\sqrt{\epsilon}$ fraction of elements in $\mathcal{W}$ do not have $(\{0,1\}^n,\kappa, t, \sqrt{\epsilon}, \ell)$-fuzzy extractors.
 
 \begin{lemma}
-Let $\mathcal{W}$ be a distribution family indexed by the random family $Z$ and suppose that no $(\zo^n, \mathcal{W}, \tilde{m}, t, \epsilon, \delta, 2\ell)$-secure sketch with distributional advice exists.  For all families $\mathcal{W}'\subseteq \mathcal{W}$ with probability mass functions $Z'\subseteq Z$ where $\Pr[Z\in Z']\ge 1/2$ where 
+Let $\mathcal{W}$ be a distribution family indexed by the random family $Z$ and suppose that no $(\zo^n, \mathcal{W}, \tilde{m}, t, \epsilon, \delta, 2\ell)$-secure sketch with distributional advice exists.  For all families $\mathcal{W}'\subseteq \mathcal{W}$ with probability mass functions $Z'\subseteq Z$ where $\Pr[Z\in Z']\ge 1-\zeta$ where 
+\[
+\zeta = 2^{-\tilde{m}+1}.
+\]
 there is some $Z'$ for which no  $(\zo^n, \tilde{m}-1, t, \epsilon, \delta, \ell)$ fuzzy extractor $(\sketch_{Z'}, \rec_{Z'})$  exists.
 \label{lem:distributional advise suffices ss}
 \end{lemma}
 
 \begin{proof}
-The proof of Lemma~\ref{lem:distributional advise suffices ss} follows the structure of the proof of Lemma~\ref{lem:distributional advise suffices} with the following observation for smooth conditional min-entropy.  Let $1_{Z'}$ be a indicator random variables with $\Pr[1_{Z'} = 1] =1/2$, then 
+The proof of Lemma~\ref{lem:distributional advise suffices ss} follows the structure of the proof of Lemma~\ref{lem:distributional advise suffices} with the following equation for computing the residual smooth conditional min-entropy.
 \begin{align*}
-\expe_{Z} [\Haveps(W_Z| ss)] &\le \min\left\{\expe_{Z} [\Haveps(W_Z| ss, 1_{Z'} = 1)],\expe_{Z} [\Haveps(W_Z| ss, 1_{Z'} = 0)] \right\}+1\\
-&\le \expe_{Z} [\Haveps(W_Z| ss, 1_{Z'} = 1)]+1\\
-&\le \tilde{m}-1+1 = \tilde{m}.
+\expe_{Z} [\Haveps(W_Z| ss)] &= -\log{\Pr[Z\in Z']\expe_{Z} 2^{-\Haveps(W_Z| ss, Z\in Z')}+ \Pr[Z\not\in Z']\expe_{Z} 2^{-\Haveps(W_Z| ss, Z\not\in Z'] }}\\
+&\ge -\log{1 \cdot 2^{-\tilde{m}+1}+ \zeta\cdot 1}\\
+&\ge -\log{2^{-\tilde{m}+1}+2^{-\tilde{m}+1}}  = \tilde{m}.
 \end{align*}
 \end{proof}
 
