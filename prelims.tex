@@ -101,11 +101,11 @@ For a distribution $W$ and a distance parameter $t$, the fuzzy min-entropy of $W
 \]
 \end{definition}
 
-\begin{lemma} \label{lem:max fuzz ent}
+\begin{proposition} \label{lem:max fuzz ent}
 For all distributions $W$ over a metric space $(\mathcal{M}, \dis)$, 
 \[\Hfuzz(W) \le \log{|\mathcal{M}|} - \log{|B_t|}.
 \]
-\end{lemma}
+\end{proposition}
 \noindent
 For $\mathcal{M} = \zo^n$ and the binary Hamming metric,
 Using Ash~\cite[Lemma 4.7.2, Equation 4.7.5, p. 115]{ash2012information} one has
@@ -195,6 +195,36 @@ For metric space $(\{0,1\}^n, \dis)$, a $(\{0,1\}^n, \mathcal{W}, \kappa, t, \ep
 \end{definition}
 
 
+\subsection{Upper bound for size of Fuzzy Extractors and Secure Sketches}
+Fuller, Reyzin, and Smith~\cite{fuller2016fuzzy,fuller2020fuzzy} show that the size of a fuzzy extractor can be upper bound in a general case.  We present a stronger version of their lemma that is contained in their proof.  The difference is we bound the union of viable points across difference values of $\mathsf{key}$ while they only bound the size of a single $\mathsf{key}$ corresponding to the true point.  Their argument is purely geometric, so it also applies to fuzzy extractors with distributional advice. 
+We restate their lemma here for completeness. 
+
+\begin{lemma}[Lemma 5.2 in \cite{fuller2020fuzzy}]
+    \label{lem:smallgeneralviable}
+    Suppose $\mathcal{M}$ is $\zeroone{n}$ with the Hamming Metric, $\kappa \geq 2$, $0 \leq t \leq n/2$, and $\epsilon > 0$. 
+    Suppose $(\mathsf{Gen, Rep})$ is a $(\mathcal{M,W},\kappa, t, \ell, \epsilon)$-fuzzy extractor with distributional advice for some distribution family $\mathcal{W}$ over $\mathcal{M}$. 
+    For any fixed $p$, for any value $\advise \in \zo^\ell$, there is a set $\mathsf{GoodKey}_p \subseteq \zeroone{\kappa}$ of size at least $2^{\kappa - 1}$ such that for every $\mathsf{key} \in \goodkey_p$,
+    \[
+       \sum_{\mathsf{key} \in \goodkey_p} \left( \log{|\sbr{v \in \mathcal{M}|\prns{\mathsf{key}, p} \in \mathsf{supp}\prns{\mathsf{Gen}(v, \advise)}}|}\right) \leq n \cdot h_2\prns{\frac{1}{2} - \frac{t}{n}}.
+    \]   
+\end{lemma}
+
+Fuller, Reyzin, and Smith~\cite[Lemma 7.3]{fuller2020fuzzy} showed that good secure sketches are bounded in size as they imply good Shannon error correcting codes.  This result holds true if one considers a secure sketch that retains smooth min-entropy with no loss in parameters because it only relies on the correctness of the secure sketch (not the security property).  
+
+\begin{lemma}
+\label{lem:smallgeneralviable ss}
+    Suppose $\mathcal{M}$ is $\zeroone{n}$ with the Hamming Metric. Suppose $(\sketch, \rec)$ is a $(\zo^n, \mathcal{W}, \tilde{m}, t, \epsilon_\sketch, \delta)$-secure sketch, for some family $\mathcal{W}$. 
+    
+%    Let $W\in \mathcal{W}$, and let $W', SS'$ be a distribution such that $\Delta((W, \sketch(W)), (W', SS'))\le \epsilon$ and $\Hav(W' |SS')\ge \tilde{m}$.
+   For every $v\in \mathcal{M}$ there exists a set $\goodsketch_v$ where $\Pr[\sketch(v)\in \goodsketch_v] \ge 1/2$ and for any fixed $\sketch$,
+    
+    \[
+    \log{|\{v \in \mathcal{M} | \sketch \in \goodsketch_v\}|} \le \frac{n - \log{|B_t|} +h_2(2\delta)}{1-2\delta} \le \frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta}.
+    \]
+\end{lemma}
+
+
+\subsection{Converting between advice and the distribution sensitive setting}
 \begin{lemma}
 
 Let $\mathcal{W}$ be a distribution family indexed by the random family $Z$ and suppose that no $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, 2\ell)$-fuzzy extractor with distributional advice exists.  For all families $\mathcal{W}'\subseteq \mathcal{W}$ with probability mass functions $Z'\subseteq Z$ where $\Pr[Z\in Z']\ge \zeta$ there is some $Z'$ there is no  $(\{0,1\}^n,\kappa, t, (\epsilon-(1-\zeta))/\zeta, \ell)$ fuzzy extractor $(\gen_Z, \rep_Z)$.
@@ -218,37 +248,19 @@ It is clear that $(\gen, \rep, \advise)$ is a $(\mathcal{M}, \mathcal{W}, \kappa
 In particular if one sets $\zeta = 1-\sqrt{\epsilon}$ this implies that for all subsets $\mathcal{W}' \subseteq \mathcal{W}$ where $\Pr[Z\in Z']\ge 1-\sqrt{\epsilon}.$ there is no $(\{0,1\}^n,\kappa, t, \sqrt{\epsilon}, \ell)$-fuzzy extractor for some element of $\mathcal{W}'$.  This shows that at least $1-\sqrt{\epsilon}$ fraction of elements in $\mathcal{W}$ do not have $(\{0,1\}^n,\kappa, t, \sqrt{\epsilon}, \ell)$-fuzzy extractors.
 
 \begin{lemma}
-Let $\mathcal{W}$ be a distribution family indexed by the random family $Z$ and suppose that no $(\zo^n, \mathcal{W}, \tilde{m}, t, \epsilon, \delta, 2\ell)$-secure sketch with distributional advice exists.  For all families $\mathcal{W}'\subseteq \mathcal{W}$ with probability mass functions $Z'\subseteq Z$ where $\Pr[Z\in Z']\ge 1-\zeta$ where 
-\[
-1-\zeta = 2^{-(\tilde{m}-1)+(n-\log{|B_t|}+\log{1/\epsilon})}.
-\]
+Let $\mathcal{W}$ be a distribution family indexed by the random family $Z$ and suppose that no $(\zo^n, \mathcal{W}, \tilde{m}, t, \epsilon, \delta, 2\ell)$-secure sketch with distributional advice exists.  For all families $\mathcal{W}'\subseteq \mathcal{W}$ with probability mass functions $Z'\subseteq Z$ where $\Pr[Z\in Z']\ge 1/2$ where 
 there is some $Z'$ for which no  $(\zo^n, \tilde{m}-1, t, \epsilon, \delta, \ell)$ fuzzy extractor $(\sketch_{Z'}, \rec_{Z'})$  exists.
 \label{lem:distributional advise suffices ss}
 \end{lemma}
 
 \begin{proof}
-The proof of Lemma~\ref{lem:distributional advise suffices ss} follows the structure of the proof of Lemma~\ref{lem:distributional advise suffices} with the following inequality for smooth min-entropy.
-
+The proof of Lemma~\ref{lem:distributional advise suffices ss} follows the structure of the proof of Lemma~\ref{lem:distributional advise suffices} with the following observation for smooth conditional min-entropy.  Let $1_{Z'}$ be a indicator random variables with $\Pr[1_{Z'} = 1] =1/2$, then 
 \begin{align*}
-\expe_{Z} [\Haveps(W_Z| ss)] &= -\log{\Pr[Z\in Z']\expe_{Z\in Z'} 2^{\Haveps(W_Z| ss)}+ \Pr[Z\not\in Z']\expe_{Z\not \in Z'} 2^{-\Haveps(W_Z| ss)]}}\\
-&\le -\log{ 1* 2^{-(\tilde{m}-1)} + (1-\zeta)*2^{-(n-\log{|B_t|}+\log{1/\epsilon})} } \\
-&\le -\log{ 1* 2^{-(\tilde{m}-1)} + 2^{-(\tilde{m}-1)+(n-\log{|B_t|}+\log{1/\epsilon})-(n-\log{|B_t|}+\log{1/\epsilon})} }\\
-&\le -\log{ 2^{-(\tilde{m}-1)}+ 2^{-(\tilde{m}-1)}} = \tilde{m}.
+\expe_{Z} [\Haveps(W_Z| ss)] &\le \min\left\{\expe_{Z} [\Haveps(W_Z| ss, 1_{Z'} = 1)],\expe_{Z} [\Haveps(W_Z| ss, 1_{Z'} = 0)] \right\}+1\\
+&\le \expe_{Z} [\Haveps(W_Z| ss, 1_{Z'} = 1)]+1\\
+&\le \tilde{m}-1+1 = \tilde{m}.
 \end{align*}
 \end{proof}
 
-\subsection{Upper bound for size of Fuzzy Extractors and Secure Sketches}
-Fuller, Reyzin, and Smith~\cite{fuller2016fuzzy,fuller2020fuzzy} show that the size of a fuzzy extractor can be upper bound in a general case.  We present a stronger version of their lemma that is contained in their proof.  The difference is we bound the union of viable points across difference values of $\mathsf{key}$ while they only bound the size of a single $\mathsf{key}$ corresponding to the true point.  Their argument is purely geometric, so it also applies to fuzzy extractors with distributional advice. 
-We restate their lemma here for completeness. 
-
-\begin{lemma}[Lemma 5.2 in \cite{fuller2020fuzzy}]
-    \label{lem:smallgeneralviable}
-    Suppose $\mathcal{M}$ is $\zeroone{n}$ with the Hamming Metric, $\kappa \geq 2$, $0 \leq t \leq n/2$, and $\epsilon > 0$. 
-    Suppose $(\mathsf{Gen, Rep})$ is a $(\mathcal{M,W},\kappa, t, \ell, \epsilon)$-fuzzy extractor with distributional advice for some distribution family $\mathcal{W}$ over $\mathcal{M}$. 
-    For any fixed $p$, for any value $\advise \in \zo^\ell$, there is a set $\mathsf{GoodKey}_p \subseteq \zeroone{\kappa}$ of size at least $2^{\kappa - 1}$ such that for every $\mathsf{key} \in \goodkey_p$,
-    \[
-       \sum_{\mathsf{key} \in \goodkey_p} \left( \log{|\sbr{v \in \mathcal{M}|\prns{\mathsf{key}, p} \in \mathsf{supp}\prns{\mathsf{Gen}(v, \advise)}}|}\right) \leq n \cdot h_2\prns{\frac{1}{2} - \frac{t}{n}}.
-    \]   
-\end{lemma}
-
+The natural interpretation of the above is that half of the distributions of $Z$ have no efficient secure sketch retaining $\tilde{m}-1$ bits of entropy.
 

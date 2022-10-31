@@ -355,21 +355,6 @@ yielding
 
 \subsection{Proof}
 \begin{proof}[Proof of Theorem~\ref{thm:main theorem ss}]
-Fuller, Reyzin, and Smith~\cite[Lemma 7.3]{fuller2020fuzzy} showed that good secure sketches are bounded in size as they imply good Shannon error correcting codes.  This result holds true if one considers a secure sketch that retains smooth min-entropy with no loss in parameters because it only relies on the correctness of the secure sketch (not the security property).  
-
-\begin{lemma}
-\label{lem:smallgeneralviable ss}
-    Suppose $\mathcal{M}$ is $\zeroone{n}$ with the Hamming Metric. Suppose $(\sketch, \rec)$ is a $(\zo^n, \mathcal{W}, \tilde{m}, t, \epsilon_\sketch, \delta)$-secure sketch, for some family $\mathcal{W}$. 
-    
-%    Let $W\in \mathcal{W}$, and let $W', SS'$ be a distribution such that $\Delta((W, \sketch(W)), (W', SS'))\le \epsilon$ and $\Hav(W' |SS')\ge \tilde{m}$.
-   For every $v\in \mathcal{M}$ there exists a set $\goodsketch_v$ where $\Pr[\sketch(v)\in \goodsketch_v] \ge 1/2$ and for any fixed $\sketch$,
-    
-    \[
-    \log{|\{v \in \mathcal{M} | \sketch \in \goodsketch_v\}|} \le \frac{n - \log{|B_t|} +h_2(2\delta)}{1-2\delta} \le \frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta}.
-    \]
-\end{lemma}
-
-
 We begin with a corollary bounding how many points are ``viable'' from the output of the secure sketch.
 
 
