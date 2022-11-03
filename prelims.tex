@@ -14,7 +14,7 @@ Throughout, we will need the ability to describe a particular value in this fami
 We let $Z$ be an index for the distributions in the family and we denote the $Z$th distribution $W_Z$. 
 The distribution $W_Z$ can then be sampled, and we denote a sample of $W_Z$ as $w \in \zeroone{n}$. 
 
-\subsection{Notions of Entroy}
+\subsection{Notions of Entropy}
 
 \begin{definition}[Entropy]
     \emph{Shannon Entropy} or simply Entropy, denoted $\ent{X}$, for some discrete random variable $X$ is a measure of how stable the outcomes of the random variable are. It is calculated as \[\ent{X} \defined \sum\limits_{i=1}^n \p{x_i}\log{\p{x_i}}\] where there are $n$ values that $X$ takes and we denote them as $x_i$. 
@@ -245,25 +245,28 @@ It is clear that $(\gen, \rep, \advise)$ is a $(\mathcal{M}, \mathcal{W}, \kappa
 \end{proof}
 
 \paragraph{Interpretation} 
-In particular if one sets $\zeta = \sqrt{\epsilon}$ this implies that for all subsets $\mathcal{W}' \subseteq \mathcal{W}$ where $\Pr[Z\in Z']\ge 1-\sqrt{\epsilon}.$ there is no $(\{0,1\}^n,\kappa, t, \sqrt{\epsilon}, \ell)$-fuzzy extractor for some element of $\mathcal{W}'$.  This shows that at least $1-\sqrt{\epsilon}$ fraction of elements in $\mathcal{W}$ do not have $(\{0,1\}^n,\kappa, t, \sqrt{\epsilon}, \ell)$-fuzzy extractors.
+We consider two natural settings where $\epsilon = \ngl(n)$ and when $\epsilon = \Theta(1)$.
+
+For the setting when $\epsilon = \ngl(n)$  if one sets $\zeta = \sqrt{\epsilon}$ this implies that for all subsets $\mathcal{W}' \subseteq \mathcal{W}$ where $\Pr[Z\in Z']\ge 1-\sqrt{\epsilon}.$ there is no $(\{0,1\}^n,\kappa, t, \sqrt{\epsilon}, \ell)$-fuzzy extractor for some element of $\mathcal{W}'$.  This shows that at least $1-\sqrt{\epsilon}$ fraction of elements in $\mathcal{W}$ do not have $(\{0,1\}^n,\kappa, t, \sqrt{\epsilon}, \ell)$-fuzzy extractors.
+
+In the setting when $\epsilon = \Theta(1)$ then setting $\zeta = \epsilon/2$ implies that for all subsets $\mathcal{W}' \subseteq \mathcal{W}$ where $\Pr[Z\in Z']\ge 1-\epsilon/2 = 1-\Theta(1)$ there is no $(\{0,1\}^n,\kappa, t, \epsilon/(2-\epsilon)=\Theta(1), \ell)$-fuzzy extractor for some element of $\mathcal{W}'$.  This shows that at least $\Theta(1)$ fraction of elements in $\mathcal{W}$ do not have $(\{0,1\}^n,\kappa, t, \epsilon/(2-\epsilon), \ell)$-fuzzy extractors. This is the setting consider in Section~\ref{sec:fe}.
+
 
 \begin{lemma}
-Let $\mathcal{W}$ be a distribution family indexed by the random family $Z$ and suppose that no $(\zo^n, \mathcal{W}, \tilde{m}, t, \epsilon, \delta, 2\ell)$-secure sketch with distributional advice exists.  For all families $\mathcal{W}'\subseteq \mathcal{W}$ with probability mass functions $Z'\subseteq Z$ where $\Pr[Z\in Z']\ge 1-\zeta$ where 
-\[
-\zeta = 2^{-\tilde{m}+1}.
-\]
-there is some $Z'$ for which no  $(\zo^n, \tilde{m}-1, t, \epsilon, \delta, \ell)$ fuzzy extractor $(\sketch_{Z'}, \rec_{Z'})$  exists.
+Let $\mathcal{W}$ be a distribution family indexed by the random family $Z$ and suppose that no $(\zo^n, \mathcal{W}, \tilde{m}, t, \epsilon, \delta, 2\ell)$-secure sketch with distributional advice exists.  For all families $\mathcal{W}'\subseteq \mathcal{W}$ with probability mass functions $Z'\subseteq Z$ where $\Pr[Z\in Z']\ge 1-2^{-\zeta}$ 
+there is some $Z'$ for which no  $(\zo^n, \min\{\tilde{m}, \zeta\}, t, \epsilon, \delta, \ell)$ fuzzy extractor $(\sketch_{Z'}, \rec_{Z'})$  exists.
 \label{lem:distributional advise suffices ss}
 \end{lemma}
 
 \begin{proof}
 The proof of Lemma~\ref{lem:distributional advise suffices ss} follows the structure of the proof of Lemma~\ref{lem:distributional advise suffices} with the following equation for computing the residual smooth conditional min-entropy.
 \begin{align*}
-\expe_{Z} [\Haveps(W_Z| ss)] &= -\log{\Pr[Z\in Z']\expe_{Z} 2^{-\Haveps(W_Z| ss, Z\in Z')}+ \Pr[Z\not\in Z']\expe_{Z} 2^{-\Haveps(W_Z| ss, Z\not\in Z'] }}\\
-&\ge -\log{1 \cdot 2^{-\tilde{m}+1}+ \zeta\cdot 1}\\
-&\ge -\log{2^{-\tilde{m}+1}+2^{-\tilde{m}+1}}  = \tilde{m}.
+\expe_{Z} [\Haveps(W_Z| \sketch(W_Z), Z)] &= -\log{\Pr[Z\in Z']\expe_{Z} 2^{-\Haveps(W_Z| ss, Z\in Z')}+ \Pr[Z\not\in Z']\expe_{Z} 2^{-\Haveps(W_Z| ss, Z\not\in Z'] }}\\
+&\ge -\log{1 \cdot 2^{-\tilde{m}+1}+ 2^{-\zeta}\cdot 1}\\
+&\ge -\log{2^{-\tilde{m}+1}+2^{-\zeta}}  = \min\{\tilde{m},\zeta\}.
 \end{align*}
 \end{proof}
 
-The natural interpretation of the above is that half of the distributions of $Z$ have no efficient secure sketch retaining $\tilde{m}-1$ bits of entropy.
+\paragraph{Interpretation}
+The natural parameter setting of the above is setting $\zeta = \max\{\tilde{m},1\} $ which shows that half of the distributions have no secure sketch extractor.  In the setting considered later in this work where $\tilde{m} = \Theta(n)$ this shows that almost all distributions have no secure sketch.
 
