@@ -71,11 +71,18 @@ This completes the proof of Lemma~\ref{lem:smooth ent cond}.
 \end{proof}
 
 
-\begin{lemma}{\cite[Lemma 2.2a]{dodis2008fuzzy}}
+\begin{lemma}
     \label{lem:markovpred}
-    Let $\vec{X} = (X_1, X_2, \ldots, X_k)$ be random variables. Let $Y$ be a random variable arbitrarility correlated with $\vec{X}$. 
-    Let $\alpha > 0$, then for all but a $(1-1/\alpha)$ fraction of the $X_i$ the entropy loss is less than $\log{\alpha}/k$. 
+    Let $\vec{X} = (X_1, X_2, \ldots, X_k)$ be random variables and let $Y$ be a random variable arbitrarility correlated with $\vec{X}$. Suppose that $\expe_i[\Hoo(X_i | Y) \ge \Delta$. 
+    Let $\alpha > 0$, then \[\Pr_i[ \Hoo(X_i|Y)< \Delta - \log{\alpha}]\le 1/\alpha.\] 
 \end{lemma}
+Let $\expe_i [\Hav(X_i|Y)] = \Delta$. Then by Markov's inequality
+\begin{align}
+    \Problim{i}{\max\limits_{x} \Prob{X_i = x \,|\, Y = y} \geq \alpha \cdot 2^{-\Delta}} &\leq \frac{1}{\alpha} \\
+    \Problim{i}{\log{\max\limits_{x} \Prob{X_i = x \,|\, Y = y}} \geq \log{\alpha} -\Delta} &\leq \frac{1}{\alpha} \\
+    \Problim{i}{-\log{\max\limits_{x} \Prob{X_i = x \,|\, Y = y}} < \Delta -\log{\alpha}} &\leq \frac{1}{\alpha} \\
+    \Problim{i}{\minent{X_i\, |\, Y} < \Delta -\log{\alpha}} &\leq \frac{1}{\alpha}
+\end{align}
 
 
 \begin{lemma}
@@ -249,7 +256,7 @@ We consider two natural settings where $\epsilon = \ngl(n)$ and when $\epsilon =
 
 For the setting when $\epsilon = \ngl(n)$  if one sets $\zeta = \sqrt{\epsilon}$ this implies that for all subsets $\mathcal{W}' \subseteq \mathcal{W}$ where $\Pr[Z\in Z']\ge 1-\sqrt{\epsilon}.$ there is no $(\{0,1\}^n,\kappa, t, \sqrt{\epsilon}, \ell)$-fuzzy extractor for some element of $\mathcal{W}'$.  This shows that at least $1-\sqrt{\epsilon}$ fraction of elements in $\mathcal{W}$ do not have $(\{0,1\}^n,\kappa, t, \sqrt{\epsilon}, \ell)$-fuzzy extractors.
 
-In the setting when $\epsilon = \Theta(1)$ then setting $\zeta = \epsilon/2$ implies that for all subsets $\mathcal{W}' \subseteq \mathcal{W}$ where $\Pr[Z\in Z']\ge 1-\epsilon/2 = 1-\Theta(1)$ there is no $(\{0,1\}^n,\kappa, t, \epsilon/(2-\epsilon)=\Theta(1), \ell)$-fuzzy extractor for some element of $\mathcal{W}'$.  This shows that at least $\Theta(1)$ fraction of elements in $\mathcal{W}$ do not have $(\{0,1\}^n,\kappa, t, \epsilon/(2-\epsilon), \ell)$-fuzzy extractors. This is the setting consider in Section~\ref{sec:fe}.
+In the setting when $\epsilon = \Theta(1)$ then setting $\zeta = \epsilon/2$ implies that for all subsets $\mathcal{W}' \subseteq \mathcal{W}$ where $\Pr[Z\in Z']\ge 1-\epsilon/2 = 1-\Theta(1)$ there is no $(\{0,1\}^n,\kappa, t, \epsilon/(2-\epsilon), \ell)$-fuzzy extractor for some element of $\mathcal{W}'$.  This shows that at least $\Theta(1)$ fraction of elements in $\mathcal{W}$ do not have $(\{0,1\}^n,\kappa, t, \epsilon/(2-\epsilon), \ell)$-fuzzy extractors. This is the setting consider in Section~\ref{sec:fe}.
 
 
 \begin{lemma}
@@ -262,8 +269,8 @@ there is some $Z'$ for which no  $(\zo^n, \min\{\tilde{m}, \zeta\}, t, \epsilon,
 The proof of Lemma~\ref{lem:distributional advise suffices ss} follows the structure of the proof of Lemma~\ref{lem:distributional advise suffices} with the following equation for computing the residual smooth conditional min-entropy.
 \begin{align*}
 \expe_{Z} [\Haveps(W_Z| \sketch(W_Z), Z)] &= -\log{\Pr[Z\in Z']\expe_{Z} 2^{-\Haveps(W_Z| ss, Z\in Z')}+ \Pr[Z\not\in Z']\expe_{Z} 2^{-\Haveps(W_Z| ss, Z\not\in Z'] }}\\
-&\ge -\log{1 \cdot 2^{-\tilde{m}+1}+ 2^{-\zeta}\cdot 1}\\
-&\ge -\log{2^{-\tilde{m}+1}+2^{-\zeta}}  = \min\{\tilde{m},\zeta\}.
+&\ge -\log{1 \cdot 2^{-\tilde{m}}+ 2^{-\zeta}\cdot 1}\\
+&\ge -\log{2^{-\tilde{m}}+2^{-\zeta}}  \ge \min\{\tilde{m},\zeta\}.
 \end{align*}
 \end{proof}
 
