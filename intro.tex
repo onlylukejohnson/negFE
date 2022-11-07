@@ -45,12 +45,12 @@ There isn't an obvious sufficient condition to use instead of fuzzy min-entropy.
 
 \paragraph{Fuzzy extractors are computational objects} The other natural explanation of the result is that non-interactive information-reconciliation should be considered a computational object. This is our preferred interpretation since one can build universal (and efficient) fuzzy extractors if computational security suffices.  We note that the only known constructions assume either general obfuscation~\cite{BarakBCKPS13,BitanskyCKP14,bitansky2017virtual} or specific number-theoretic assumptions that are not well studied~\cite{galbraith2019obfuscated}. Thus, an important piece of research is to understand the required assumptions to build efficient, universal fuzzy extractors with computational security. 
 
-\begin{figure*}[t]
+\begin{figure}[t]
 \centering
-\includegraphics[width=.8\textwidth]{EntropyvsError.jpg}
+\includegraphics[width=.9\textwidth]{EntropyvsError.jpg}
 \caption{The region of error rate $t/n$ ($x$-axis) and fuzzy entropy rate $\gamma/n$ (y-axis) pairs for which the two negative results apply.  The six curves are maximum fuzzy min-entropy $\gamma/n = (1-h_2(t/n))$, Theorem~\ref{thm:main theorem}, Theorem~\ref{thm:main theorem ss} with $\delta=.25$,  Theorem~\ref{thm:main theorem ss} with $\delta =0$, \cite[Theorem 5.1]{fuller2020fuzzy} and \cite[Theorem 7.2]{fuller2020fuzzy}.}
 \label{fig:param regime}
-\end{figure*}
+\end{figure}
 
 \subsection{Proof Techniques}
 Our results are information-theoretic in nature. Recall that we consider a family of distributions $\mathcal{W}$ and use $W_Z$ to denote sampling a random distribution from $\mathcal{W}$ with $Z$ describing the distribution.  Lastly, we use $w\leftarrow W_Z$ to denote sampling a point from the distribution.  We show the impossibility of two types of fuzzy extractors:
