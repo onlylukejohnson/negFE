@@ -381,7 +381,7 @@ and set $\viable(v, ss, z)=0$ otherwise.
  For a particular $Z=z$ let $w_{z,1},..., w_{z,2^k}$ denote the points in $W_Z$. Let $\alpha:= \log {2^n\choose 2^k}$.  
  Then for each value $\advise$ there is some set $\mathcal{I}_{\advise}$ of size at most $\nu+1$, then it is true for each $\forall i\not \in \mathcal{I}_\advise, \forall ss$
 \[
-\Pr_{z\leftarrow Z}\left[\viable(w_{z,i},ss,z) =1\right]< 2^{-\frac{\alpha-|\advise|}{2^k}+1+\mu - (k-\log{\nu})}.
+\Pr_{z\leftarrow Z}\left[\viable(w_{z,i},ss,z) =1\right]< 2^{-\frac{\alpha-|\advise|}{2^k}+1+\mu + k-\log{\nu}}.
 \]
 And thus, for on average across $Z$, for all $ss$ the expected number of points outside of $\mathcal{I}_\advise$ that are included in $\viable$ is at most 
 \begin{align*}
