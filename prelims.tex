@@ -71,18 +71,30 @@ This completes the proof of Lemma~\ref{lem:smooth ent cond}.
 \end{proof}
 
 
+
 \begin{lemma}
     \label{lem:markovpred}
-    Let $\vec{X} = (X_1, X_2, \ldots, X_k)$ be random variables and let $Y$ be a random variable arbitrarility correlated with $\vec{X}$. Suppose that $\expe_i[\Hoo(X_i | Y) \ge \Delta$. 
-    Let $\alpha > 0$, then \[\Pr_i[ \Hoo(X_i|Y)< \Delta - \log{\alpha}]\le 1/\alpha.\] 
+    Let $\vec{X} = (X_1, X_2, \ldots, X_{2^k})$ be random variables and let $Y$ be a random variable arbitrarily correlated with $\vec{X}$. Suppose that $\expe_i[\Hoo(X_i | Y) \ge \Delta$. Then 
+    \[
+    \left|\left\{X_i | \Hav(X_i |Y) < \Delta - (k+\log{\nu})\right\}\right|\le \nu.
+    \]
 \end{lemma}
+\begin{proof}[Proof of Lemma~\ref{lem:markovpred}]
 Let $\expe_i [\Hav(X_i|Y)] = \Delta$. Then by Markov's inequality
-\begin{align}
-    \Problim{i}{\max\limits_{x} \Prob{X_i = x \,|\, Y = y} \geq \alpha \cdot 2^{-\Delta}} &\leq \frac{1}{\alpha} \\
-    \Problim{i}{\log{\max\limits_{x} \Prob{X_i = x \,|\, Y = y}} \geq \log{\alpha} -\Delta} &\leq \frac{1}{\alpha} \\
-    \Problim{i}{-\log{\max\limits_{x} \Prob{X_i = x \,|\, Y = y}} < \Delta -\log{\alpha}} &\leq \frac{1}{\alpha} \\
-    \Problim{i}{\minent{X_i\, |\, Y} < \Delta -\log{\alpha}} &\leq \frac{1}{\alpha}
-\end{align}
+\[
+    \Problim{i}{\expe_{y}\left( \max\limits_{x} \Prob{X_i = x \,|\, Y = y}\right) \geq \alpha \cdot 2^{-\Delta}} \leq \frac{1}{\alpha} 
+  \]
+  Which implies that 
+      \[  
+    \Problim{i}{-\log{\expe_y\left(\max\limits_{x} \Prob{X_i = x \,|\, Y = y}\right)} \leq \Delta -\log{\alpha}} \leq \frac{1}{\alpha} 
+    \]
+      and finally
+        \[
+      \Problim{i}{\Hav{X_i\, |\, Y} < \Delta -\log{\alpha}} \leq \frac{1}{\alpha}
+      \]
+
+The statement of the lemma follows by setting $\alpha = 2^k/\nu$.
+\end{proof}
 
 
 \begin{lemma}
