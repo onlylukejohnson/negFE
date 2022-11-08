@@ -4,16 +4,19 @@
 
 \section{Efficient Information-Theoretic Fuzzy Extractors do not exist for all distributions with fuzzy min-entropy}
 \label{sec:fe}
+We begin by introducing the family of distributions used for our impossibility result.
+
+\input{family}
 
 \begin{theorem}
 Let $\gamma \in\mathbb{R}^+, n, \kappa, t, \ell, \gamma \in\mathbb{Z}^+$ be parameters. 
 \begin{enumerate}
 \itemsep0em
-\item Define $2^\beta:=\frac{2^n-|B_t|}{|B_t|}$ and assume that $2^\beta\ge 1$ which is  satisfied as long as $t< n/2 $,
+\item The $\beta$-density is at least $1$ which is  satisfied as long as $t< n/2 $ (see Definition~\ref{def:b density}),
 \item Let $\nu \in \mathbb{Z}^+$ be a free parameter, and
 \item Let $\mu =  n \cdot h_2\prns{\frac{1}{2} - \frac{t}{n}}$.
 \end{enumerate}
-For a quarter of the distributions $W\in \mathtt{PCode}_{n, k, t, \gamma}^{*}$ there is no $(\{0,1\}^n, W, \kappa, t, \epsilon, \ell)$-fuzzy extractors for 
+There is a family of distributions $\mathcal{W}$ where at least of aFor a quarter of the distributions $W\in \mathtt{PCode}_{n, k, t, \gamma}$ there is no $(\{0,1\}^n, W, \kappa, t, \epsilon, \ell)$-fuzzy extractors for 
 \[
 \epsilon< \frac{1}{3} - \frac{4(\epsilon_1+\epsilon_2+\epsilon_3)}{3}.
 \]
@@ -26,11 +29,12 @@ For
 \end{theorem}
 
 \subsection{Proof Outline}
-Our proof uses the following structure
+Recall that Lemma~\ref{lem:distributional advise suffices} states that to show the hardness of building a fuzzy extractor with distributional advise for $\mathtt{PCode}_{n, k, t, \gamma}$ it suffices to show the hardness of building an auxiliary input fuzzy extractor for the family $\mathtt{PCode}_{n, k, t, \gamma}$. 
+
+Our proof uses the following structure:
 \begin{enumerate}
 
-\item Lemma~\ref{lem:distributional advise suffices} shows that to show hardness of building a fuzzy extractor with distributional advise for $\mathtt{PCode}_{n, k, t, \gamma}^{*}$ it suffices to show hardness of building an auxiliary input fuzzy extractor for the family $U_{n,k}$ where each element is $2^k$ points chosen without replacement. For the remainder of the proof we consider $U_{n,k}$.
-
+\item Lemma~\ref{lem:close family} shows that the distribution $\mathtt{PCode}_{n, k, t, \gamma}$ is statistically close to the distribution $U_{n,k}$.  For the remainder of the proof we consider $U_{n,k}$.
 \item Lemma~\ref{lem:smallgeneralviable} which bounds the number of ``viable'' points for most public values $p$.  Note that this Lemma bounds the total number of points and holds even if $\gen, \rep$ have access to an arbitrary advice string. 
 
 \item Lemma~\ref{lem:entr of members} for the distribution, $U_{n,k}$ the advice string can only reduce the entropy of a large fraction of viable points by a small amount. We call such points \textbf{Average Points}.  There are some points that the adversary has a large amount of information on that we call \textbf{Free Points}
@@ -39,6 +43,117 @@ Our proof uses the following structure
 
 \item Lemma~\ref{lem:convert distinguisher} Shows that since the construction cannot align the viable points with the distribution there exists a distinguisher that can distinguish a uniform triple from a key triple. 
 \end{enumerate}
+
+We present the formal versions of the above statements first and then present the proof of Theorem~\ref{thm:main theorem}.
+
+\subsection{Technical Lemmas}
+We show that $\mathtt{PCode}_{n, k, t, \alpha}$ is statistically close to $U_{n,k}$.
+
+\begin{lemma}
+ \label{lem:close family}
+Let $n, k, t, \gamma$ be parameters such that the $\beta$ density is at least $0$ (which is satisfied as long as $t< n/2 $). Then one has that 
+\[\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \gamma}) \le \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.\]
+\end{lemma}
+
+Fuller, Reyzin, and Smith~\cite{fuller2016fuzzy,fuller2020fuzzy} bound the number of points that could have produced the output of a fuzzy extractor.  Such points are called viable.  We present a stronger version of their lemma that is contained in their proof.  The difference is we bound the union of viable points across different values of $\mathsf{key}$ while they only bound the size of a single $\mathsf{key}$ corresponding to the true point.  Their argument is purely geometric, so it also applies to fuzzy extractors with distributional advice. 
+We restate the stronger version of \cite[Lemma 5.2]{fuller2020fuzzy} 
+
+\begin{lemma}
+    \label{lem:smallgeneralviable}
+    Suppose $\mathcal{M}$ is $\zeroone{n}$ with the Hamming Metric, $\kappa \geq 2$, $0 \leq t \leq n/2$, and $\epsilon > 0$. 
+    Suppose $(\mathsf{Gen, Rep})$ is a $(\mathcal{M,W},\kappa, t, \ell, \epsilon)$-fuzzy extractor with distributional advice for some distribution family $\mathcal{W}$ over $\mathcal{M}$. 
+    For any fixed $p$, for any value $\advise \in \zo^\ell$, there is a set $\mathsf{GoodKey}_p \subseteq \zeroone{\kappa}$ of size at least $2^{\kappa - 1}$ such that for every $\mathsf{key} \in \goodkey_p$,
+    \[
+      \mu:= \sum_{\mathsf{key} \in \goodkey_p} \left( \log{|\sbr{v \in \mathcal{M}|\prns{\mathsf{key}, p} \in \mathsf{supp}\prns{\mathsf{Gen}(v, \advise)}}|}\right) \leq n \cdot h_2\prns{\frac{1}{2} - \frac{t}{n}}.
+    \]   
+\end{lemma}
+
+We consider the following family $Z$ which chooses $2^k$ points without replacement from the space $\{0,1\}^n$.  That is, if one samples $Z$ uniformly then one obtains the distribution $U_{n,k}$. There are distributions in this family with little fuzzy min-entropy.  As shown in Lemma~\ref{lem:close family} $U_{n,k}$  is statistically close to $\mathtt{PCode}_{n, k, t, \gamma}^{*}$, a family with fuzzy min-entropy. 
+
+For convenience we use $W_{z, 1},..., W_{z,2^k}$ to describe the $2^k$ points with nonzero probability in $W_z$ for some value $z$.  We assume no ordering over these points.  For all values $x, y$, 
+\[
+\Pr[W_{z, i} =x | W_{z, j} = y] = \begin{cases} \frac{1}{2^n-1} &x\neq y\\0&x=y.\end{cases}
+\]
+
+Lemma~\ref{lem:entr of members} bounds how much information $\advise$ contains about the points in the distribution.  Let $Z$ describe a uniform sample of $U_{n,k}$.  Let $(\gen, \rep, \aux)$ be an auxiliary input fuzzy extractor.  Let $\advise = \aux(Z)$ be of length $\ell$.  For a tuple $(v, p, r, \advise)$ define 
+\[
+\viable(v, p, r, \advise) = \begin{cases} 1& \Pr[\gen(v, \advise) = (r, p)]>0\\0&\text{otherwise}\end{cases}.\]
+Fix some $p$ and let $\mathtt{GoodKey}_p$ be defined as in Lemma~\ref{lem:smallgeneralviable}. 
+
+\begin{lemma}
+Let $Z$ describe a uniform sample of $U_{n,k}$.  Let $\advise = \aux(Z)$ be of length $\ell$.
+ For a particular $Z=z$ let $w_{z,1},..., w_{z,2^k}$ denote the points in $W_Z$. Let $\alpha:= \log {2^n\choose 2^k}$.  Let $\mu$ be defined as in Lemma~\ref{lem:smallgeneralviable}.  
+For each value $\advise$ there is some set $\mathcal{I}_{\advise}$ of size at most $\nu+1$, it is true for each $i\not \in \mathcal{I}_\advise$ that
+\[
+\log{\Pr\left[\viable(w_{z,i}, p, \mathsf{key}, \advise) = 1 \right]}\le -\frac{\alpha -|\advise| }{2^k}+1+\mu+k-\log{\nu}.
+\]
+\label{lem:entr of members}
+\end{lemma}
+
+\begin{corollary}
+\label{corollary:info loss}
+Suppose that 
+\[
+   \sum_{\mathsf{key}\in \mathtt{GoodKey}_p} \left( \log{|\sbr{v \in \mathcal{M}|\prns{\mathsf{key}, p} \in \mathsf{supp}\prns{\mathsf{Gen}(v)}}|}\right) \le 2^\mu 
+ \]
+ For a particular $Z=z$ let $w_{z,1},..., w_{z,2^k}$ denote the points in $W_Z$. Let $\alpha:= \log {2^n\choose 2^k}$.  
+ Then for each value $\advise$ there is some set $\mathcal{I}_{\advise}$ of size at most $\nu+1$, then it is true for each $i\not \in \mathcal{I}_\advise$ that
+\[
+\Pr\left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p} \viable(w_{z,i}, p, \mathsf{key}, \advise, z) \ge 1\middle| \begin{aligned} z\leftarrow Z\\ \advise= \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advise) \end{aligned} \right]< 2^{-\frac{\alpha-|\advise|}{2^k}+1+\mu+k-\log{\nu} }.
+\]
+And thus, for on average across $Z$, the expected number of points outside of $\mathcal{I}_\advise$ that are included in $\viable$ is at most 
+\begin{align*}
+\expe_{Z} \left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p}\sum_{i | w_{z,i}\not\in\mathcal{I}_\advise} \viable(w_{z,i}, p, \mathsf{key}, \advise) \middle| \begin{aligned} z\leftarrow Z\\ \advise\leftarrow \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advise)\end{aligned} \right]< 2^{-\frac{\alpha - |\advise|}{2^k}+1+\mu+2k-\log{\nu}}.
+\end{align*}
+And finally, 
+\begin{align*}
+\expe_{Z} \left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p}\sum_{i }  \viable(w_{z,i}, p, \mathsf{key}, \advise) \middle| \begin{aligned} z\leftarrow Z\\ \advise\leftarrow \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advise)\end{aligned} \right]< 2^{-\frac{\alpha-|\advise|}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1.
+\end{align*}
+
+\end{corollary}
+
+\begin{lemma}
+\label{lem:convert distinguisher}
+Let all parameters be as in Corollary~\ref{corollary:info loss} with $\nu \in\mathbb{Z}^+$.  Then there is no $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon, \ell)$-fuzzy extractor with distributional advise (see Definition~\ref{def:fe distributional}) if
+\[
+\epsilon<1/2-\left(\epsilon_1+\epsilon_2\right)\\
+\]
+where 
+\begin{align*}
+\epsilon_1&= 2^{-\kappa-\frac{\alpha-|\advise|}{2^k}+1+\mu+2k-\log{\nu}},\\
+\epsilon_2&=\frac{\nu+1}{2^{\kappa}}.
+\end{align*}
+Furthermore, there exists an algorithm $\mathcal{D}$ that always outputs $1$ when given samples of the form $r, p, z$ that are correctly generated by the fuzzy extractor.
+\end{lemma}
+
+
+\subsection{Proof of Theorem~\ref{thm:main theorem}}
+\begin{proof}[Proof of Theorem~\ref{thm:main theorem}]
+Restating Lemma~\ref{lem:convert distinguisher} one has that for $(R_{U_{n,k}},P_{U_{n,k}}) \leftarrow \gen(U_{n,k}, \advise(Z_{U_{n,k}}))$
+\[
+\Delta((R_{U_{n,k}}, P_{U_{n,k}}, Z_{U_{n,k}}), (U_n, P_{U_{n,k}}, Z_{U_{n,k}}))\ge \epsilon_1+\epsilon_2.
+\]
+Let $\mathcal{D}$ be one distinguisher that always outputs $1$ on any value $\mathsf{key}, p, z$ for any distribution $z$, then
+\begin{align*}
+\Pr[\mathcal{D}((R_{U_{n,k}}, P_{U_{n,k}}, Z_{U_{n,k}}))=1] &=1\\
+\Pr[\mathcal{D}(U_n, P_{U_{n,k}}, Z_{U_{n,k}})=1]&\le 1-(\epsilon_1+\epsilon_2).
+\end{align*}
+Recall that $\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \alpha}^{*}) \le \epsilon_3$ by Lemma~\ref{lem:close family} .  Define \[(R_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})\leftarrow \gen(\mathtt{PCode}_{n, k, t, \alpha}^{*}, \advise(Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})).\]
+it is thus true that 
+\begin{align*}
+\Pr[\mathcal{D}(R_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})=1]&=1\\
+\Pr[\mathcal{D}(U_n, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})=1]&\le 1-(\epsilon_1-\epsilon_2).
+\end{align*}
+and thus that 
+\[
+\Delta((R_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}), (U_n, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}))\ge \epsilon_1-\epsilon_2.
+\]
+
+\noindent
+Finally, the theorem follows by application of Lemma~\ref{lem:distributional advise suffices} with the setting of $\zeta = 1/4$.
+\end{proof} 
+
+
 
 \subsection{Analysis of parameters}
 \label{ssec:analysis params}
@@ -117,31 +232,15 @@ In this setting let $c_{\kappa^*} n = \kappa+\log{\nu}$.  Setting
 \gamma&\le \frac{n}{3}\left(1+c_{\kappa^*} -3c_{k,2}-h_2(1/2-t/n)\right) - \omega(\log{n})
 \end{align*}
 yields that \[ (1+c_{\kappa})\kappa+\frac{(n-3k)2^k-\ell}{2^k} - nh_2(1/2-t/n) = \omega(\log n)\] 
-\subsection{Proof}
-\noindent
-We present Lemmas~\ref{lem:entr of members} and \ref{lem:convert distinguisher} first and then return to the proof of Theorem~\ref{thm:main theorem}.
+
+\section{Proof of Technical Lemmas}
+\subsection{Proof of Lemma~\ref{lem:close family}}
+\input{sampling}
 
 
-\paragraph{The family $\mathcal{W}$}
-We consider the following family $Z$ which chooses $2^k$ points without replacement from the space $\{0,1\}^n$.  That is, if one samples $Z$ uniformly then one obtains the distribution $U_{n,k}$. There are distributions in this family with little fuzzy min-entropy.  As shown in Lemma~\ref{lem:close family} $U_{n,k}$  is statistically close to $\mathtt{PCode}_{n, k, t, \gamma}^{*}$, a family with fuzzy min-entropy.  For the remainder of this proof we consider $U_{n,k}$ and then show that the fuzzy extractor cannot perform differently on the family $\mathtt{PCode}_{n, k, t, \gamma}^{*}$ where every distribution does have fuzzy min-entropy. 
+\subsection{Proof of Lemma~\ref{lem:entr of members}}
 
-For convenience we use $W_{z, 1},..., W_{z,2^k}$ to describe the $2^k$ points with nonzero probability in $W_z$ for some value $z$.  We assume no ordering over these points.  For all values $x, y$, 
-\[
-\Pr[W_{z, i} =x | W_{z, j} = y] = \begin{cases} \frac{1}{2^n-1} &x\neq y\\0&x=y.\end{cases}
-\]
-
-We begin with Lemma bounding how much information $\advise$ contains about the points in the distribution.
-\begin{lemma}
-Let $Z$ describe a uniform sample of $U_{n,k}$.  Let $\advise = \aux(Z)$ be of length $\ell$.
- For a particular $Z=z$ let $w_{z,1},..., w_{z,2^k}$ denote the points in $W_Z$. Let $\alpha:= \log {2^n\choose 2^k}$.  
-For each value $\advise$ there is some set $\mathcal{I}_{\advise}$ of size at most $\nu+1$, it is true for each $i\not \in \mathcal{I}_\advise$ that
-\[
-\log{\Pr\left[\viable(w_{z,i}, p, \mathsf{key}, \advise) = 1 \right]}\le -\frac{\alpha -|\advise| }{2^k}+1+\mu+k-\log{\nu}.
-\]
-\label{lem:entr of members}
-\end{lemma}
-
-\begin{proof}
+\begin{proof}[Proof of Lemma~\ref{lem:entr of members}]
 Let $Z$ and $\advise$ be defined as above. We begin by noting that 
 \[
 \Hoo(W_{z, 1},..., W_{z, 2^k})=\alpha.
@@ -202,45 +301,9 @@ We now proceed to bounding $\viable(w_i, p, \mathsf{key})$.  By assumption, By L
 This completes the proof of Lemma~\ref{lem:entr of members}.
 \end{proof}
 
-\begin{corollary}
-\label{corollary:info loss}
-Let $Z$ describe a uniform sample of $U_{n,k}$.  Let $(\gen, \rep, \aux)$ be an auxiliary input fuzzy extractor.  Let $\advise = \aux(Z)$ be of length $\ell$.  For a tuple $(v, p, r, \advise)$ define 
-\[
-\viable(v, p, r, \advise) = \begin{cases} 1& \Pr[\gen(v, \advise) = (r, p)]>0\\0&\text{otherwise}\end{cases}.\]
-Fix some $p$ and let $\mathtt{GoodKey}_p$ be defined as in Lemma~\ref{lem:smallgeneralviable}. Suppose that 
-\[
-   \sum_{\mathsf{key}\in \mathtt{GoodKey}_p} \left( \log{|\sbr{v \in \mathcal{M}|\prns{\mathsf{key}, p} \in \mathsf{supp}\prns{\mathsf{Gen}(v)}}|}\right) \le 2^\mu 
- \]
- For a particular $Z=z$ let $w_{z,1},..., w_{z,2^k}$ denote the points in $W_Z$. Let $\alpha:= \log {2^n\choose 2^k}$.  
- Then for each value $\advise$ there is some set $\mathcal{I}_{\advise}$ of size at most $\nu+1$, then it is true for each $i\not \in \mathcal{I}_\advise$ that
-\[
-\Pr\left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p} \viable(w_{z,i}, p, \mathsf{key}, \advise, z) \ge 1\middle| \begin{aligned} z\leftarrow Z\\ \advise= \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advise) \end{aligned} \right]< 2^{-\frac{\alpha-|\advise|}{2^k}+1+\mu+k-\log{\nu} }.
-\]
-And thus, for on average across $Z$, the expected number of points outside of $\mathcal{I}_\advise$ that are included in $\viable$ is at most 
-\begin{align*}
-\expe_{Z} \left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p}\sum_{i | w_{z,i}\not\in\mathcal{I}_\advise} \viable(w_{z,i}, p, \mathsf{key}, \advise) \middle| \begin{aligned} z\leftarrow Z\\ \advise\leftarrow \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advise)\end{aligned} \right]< 2^{-\frac{\alpha - |\advise|}{2^k}+1+\mu+2k-\log{\nu}}.
-\end{align*}
-And finally, 
-\begin{align*}
-\expe_{Z} \left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p}\sum_{i }  \viable(w_{z,i}, p, \mathsf{key}, \advise) \middle| \begin{aligned} z\leftarrow Z\\ \advise\leftarrow \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advise)\end{aligned} \right]< 2^{-\frac{\alpha-|\advise|}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1.
-\end{align*}
 
-\end{corollary}
+\subsection{Proof of Lemma~\ref{lem:convert distinguisher}}
 
-
-\begin{lemma}
-\label{lem:convert distinguisher}
-Let all parameters be as in Corollary~\ref{corollary:info loss} with $\nu \in\mathbb{Z}^+$.  Then there is no $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon, \ell)$-fuzzy extractor with distributional advise (see Definition~\ref{def:fe distributional}) if
-\[
-\epsilon<1/2-\left(\epsilon_1+\epsilon_2\right)\\
-\]
-where 
-\begin{align*}
-\epsilon_1&= 2^{-\kappa-\frac{\alpha-|\advise|}{2^k}+1+\mu+2k-\log{\nu}},\\
-\epsilon_2&=\frac{\nu+1}{2^{\kappa}}.
-\end{align*}
-Furthermore, there exists an algorithm $\mathcal{D}$ that always outputs $1$ when given samples of the form $r, p, z$ that are correctly generated by the fuzzy extractor.
-\end{lemma}
 \begin{proof}[Proof of Lemma~\ref{lem:convert distinguisher}].
 We prove the result for an average member of $Z$.
 Consider the following distinguisher $\mathcal{D}$ for triples of the form $r, p, z$:
@@ -274,32 +337,6 @@ where
 This completes the Proof of Lemma~\ref{lem:convert distinguisher}.
 \end{proof}
 
-
-\begin{proof}[Proof of Theorem~\ref{thm:main theorem}]
-Restating Lemma~\ref{lem:convert distinguisher} one has that for $(R_{U_{n,k}},P_{U_{n,k}}) \leftarrow \gen(U_{n,k}, \advise(Z_{U_{n,k}}))$
-\[
-\Delta((R_{U_{n,k}}, P_{U_{n,k}}, Z_{U_{n,k}}), (U_n, P_{U_{n,k}}, Z_{U_{n,k}}))\ge \epsilon_1+\epsilon_2.
-\]
-Let $\mathcal{D}$ be one distinguisher that always outputs $1$ on any value $\mathsf{key}, p, z$ for any distribution $z$, then
-\begin{align*}
-\Pr[\mathcal{D}((R_{U_{n,k}}, P_{U_{n,k}}, Z_{U_{n,k}}))=1] &=1\\
-\Pr[\mathcal{D}(U_n, P_{U_{n,k}}, Z_{U_{n,k}})=1]&\le 1-(\epsilon_1+\epsilon_2).
-\end{align*}
-Recall that $\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \alpha}^{*}) \le \epsilon_3$ by Lemma~\ref{lem:close family} .  Define \[(R_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})\leftarrow \gen(\mathtt{PCode}_{n, k, t, \alpha}^{*}, \advise(Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})).\]
-it is thus true that 
-\begin{align*}
-\Pr[\mathcal{D}(R_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})=1]&=1\\
-\Pr[\mathcal{D}(U_n, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})=1]&\le 1-(\epsilon_1-\epsilon_2).
-\end{align*}
-and thus that 
-\[
-\Delta((R_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}), (U_n, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}))\ge \epsilon_1-\epsilon_2.
-\]
-
-\noindent
-Finally, the theorem follows by application of Lemma~\ref{lem:distributional advise suffices} with the setting of $\zeta = 1/4$.
-\end{proof} 
-
 \section{Secure Sketches}
 \label{sec:ss}
 This section creates an upper bound on the quality of efficient secure sketches.  This bound considers has stronger parameters than Theorem~\ref{thm:main theorem} due largely to the difference between Lemmas~\ref{lem:smallgeneralviable} and~\ref{lem:smallgeneralviable ss}.
@@ -308,7 +345,7 @@ This section creates an upper bound on the quality of efficient secure sketches.
 Let $\gamma \in\mathbb{R}^+, n, \kappa, t, \ell, \gamma \in\mathbb{Z}^+$ be parameters.
 \begin{enumerate}
 \itemsep0em
-\item Define $2^\beta:=\frac{2^n-|B_t|}{|B_t|}$ and suppose that $2^\beta\ge 1$ which is satisfied as long as $t< n/2 $. 
+\item The $\beta$-density is at least $1$ which is  satisfied as long as $t< n/2 $ (see Definition~\ref{def:b density}),
 \item Let $\nu \in \mathbb{Z}^+$ be a free parameter, and
 \item Let $\mu =(n(1-h_2(t/n)) +h_2(2\delta))/(1-2\delta)$.
 \end{enumerate}
@@ -384,7 +421,42 @@ if $\ell\le 3(c_1-c_2)n2^{\gamma+c_1n}$.
 
 \subsection{Proof}
 \begin{proof}[Proof of Theorem~\ref{thm:main theorem ss}]
-We begin with a corollary bounding how many points are ``viable'' from the output of the secure sketch.
+
+Fuller, Reyzin, and Smith~\cite[Lemma 7.3]{fuller2020fuzzy} showed that good secure sketches are bounded in size as they imply good Shannon error correcting codes.  This result holds true if one considers a secure sketch that retains smooth min-entropy with no loss in parameters because it only relies on the correctness of the secure sketch (not the security property).  
+
+\begin{lemma}
+\label{lem:smallgeneralviable ss}
+    Suppose $\mathcal{M}$ is $\zeroone{n}$ with the Hamming Metric. Suppose $(\sketch, \rec)$ is a $(\zo^n, \mathcal{W}, \tilde{m}, t, \epsilon_\sketch, \delta)$-secure sketch, for some family $\mathcal{W}$. 
+    
+%    Let $W\in \mathcal{W}$, and let $W', SS'$ be a distribution such that $\Delta((W, \sketch(W)), (W', SS'))\le \epsilon$ and $\Hav(W' |SS')\ge \tilde{m}$.
+   For every $v\in \mathcal{M}$ there exists a set $\goodsketch_v$ where $\Pr[\sketch(v)\in \goodsketch_v] \ge 1/2$ and for any fixed $\sketch$,
+    
+    \[
+   \mu:= \log{|\{v \in \mathcal{M} | \sketch \in \goodsketch_v\}|} \le \frac{n - \log{|B_t|} +h_2(2\delta)}{1-2\delta} \le \frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta}.
+    \]
+\end{lemma}
+
+We present an analog of Lemma~\ref{lem:entr of members} adapted to the secure sketch setting. Let $\goodsketch(x)$ be a set. For a triple $(v, ss, z)$ define $\viable(v, ss, z)=1$ if
+\begin{enumerate}
+\itemsep0em
+\item $\Pr[\gen(v, \advise(z)) = ss]>0$,
+\item $ss\in\goodsketch(v)$, and
+\item $\Pr[W_z = v]>0$.
+\end{enumerate}
+and set $\viable(v, ss, z)=0$ otherwise. 
+
+\begin{lemma}
+\label{lem:ent members ss}
+Let $Z$ describe a uniform sample of $U_{n,k}$.  Let $\advise = \aux(Z)$ be of length $\ell$.
+ For a particular $Z=z$ let $w_{z,1},..., w_{z,2^k}$ denote the points in $W_Z$. Let $\alpha:= \log {2^n\choose 2^k}$.  Let $\mu$ be defined as in Lemma~\ref{lem:smallgeneralviable ss}. 
+For each value $\advise$ there is some set $\mathcal{I}_{\advise}$ of size at most $\nu+1$, it is true for each $i\not \in \mathcal{I}_\advise$ that
+\[
+\log{\Pr\left[\viable(w_{z,i}, ss, \advise) = 1 \right]}\le -\frac{\alpha -|\advise| }{2^k}+1+\mu+k-\log{\nu}.
+\]
+\end{lemma}
+
+The proof of Lemma~\ref{lem:ent members ss} is identical to the proof of Lemma~\ref{lem:entr of members} and is omitted. 
+Lemma~\ref{lem:ent members ss} suffices to bound how many points are ``viable'' from the output of the secure sketch.
 
 
 \begin{corollary}
@@ -417,7 +489,7 @@ And finally, for all $ss$
 \end{align*}
 \end{corollary}
 \noindent
-The above corollary follows by combination of Lemma~\ref{lem:smallgeneralviable ss} and \ref{lem:entr of members}.
+The above corollary follows by combination of Lemma~\ref{lem:smallgeneralviable ss} and \ref{lem:ent members ss}.
 \end{proof}
 \begin{lemma}
 \label{lem:convert distinguisher ss}

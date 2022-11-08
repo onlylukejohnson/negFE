@@ -1,28 +1,13 @@
 %!TEX root = main.tex
 
 % Sampling Section of negFE
-\begin{description}
-    \item[$U_{n,k}$] Picking $2^k$ points from $\zeroone{n}$ without replacement uniformly results in a distribution we will denote $U_{n,k}$. Note that there are ${2^{n}\choose 2^k}$ outcomes each occuring with probability $1/{2^{n}\choose 2^k}$.
 
-%    \item[$U_{n,k,t}^{-}$] Another distribution of interest is picking $k$ points uniformly from $\zeroone{n}$ and then removing points that are within distance $t$ of one another, we denote this $U_{n,k,t}^{-}$. 
-%    \item[$\mathtt{Code}_{n,k,t}$] The set of all $2^k$ points where all points are distance $t$ from one another.  Note for all outcomes $X$ from this distribution $\Hfuzz(X) = \log k$.
-    
-    \item[$\mathtt{PCode}_{n, k, t, \alpha}$] The uniform distribution over all sets $X = \{x_i\}$ of size $2^k$ with the additional condition that $\Hfuzz(X) \ge \alpha$.  Some points are allowed to lie within distance $t$ as long as fewer than $2^{k-\alpha}$ lie within a single ball of radius $t$.
-\end{description}
  
- \noindent
-We show that $\mathtt{PCode}_{n, k, t, \alpha}$ is statistically close to $U_{n,k}$.
-
-\begin{lemma}
- \label{lem:close family}
-Let $n, k, t, \gamma$ be parameters such that the $\beta$ density is at least $0$ (which is satisfied as long as $t< n/2 $). Then one has that 
-\[\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \gamma}^{*}) \le \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.\]
-\end{lemma}
-\begin{proof}
-We begin by showing the fraction of items in the support of $U_{n,k}$ that are not in the support of $\mathtt{PCode}_{n, k, t, \gamma}^{*}$ is at most $\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n$.  That is, 
+\begin{proof}[Proof of Lemma~\ref{lem:close family}]
+We begin by showing the fraction of items in the support of $U_{n,k}$ that are not in the support of $\mathtt{PCode}_{n, k, t, \gamma}$ is at most $\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n$.  That is, 
 \[\Pr\left[U_{n,k} \not \in \mathtt{PCode}_{n, k, t, \alpha}\right] \le \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n
 \]
-A distribution is not in $\mathtt{PCode}_{n, k, t, \gamma}^{*}$ if there exists some center $y$ such that there are at least $2^{-\gamma}2^k = 2^{k-\gamma}$ points within distance $t$ of $y$.  Fix some arbitrary $y^*$. The point $y^*$ defines a set $A_{y^*}$ of all points within distance $t$ and note that $|A_{y^*}| = |B_t|$.  We now show that the probability that values in $U_{n,k}$ has a large intersection with $A_{y^*}$ is small.  
+A distribution is not in $\mathtt{PCode}_{n, k, t, \gamma}$ if there exists some center $y$ such that there are at least $2^{-\gamma}2^k = 2^{k-\gamma}$ points within distance $t$ of $y$.  Fix some arbitrary $y^*$. The point $y^*$ defines a set $A_{y^*}$ of all points within distance $t$ and note that $|A_{y^*}| = |B_t|$.  We now show that the probability that values in $U_{n,k}$ has a large intersection with $A_{y^*}$ is small.  
 
   \begin{lemma}
   \label{lem:chernoff independence}
@@ -73,7 +58,7 @@ Now we consider a union bound across all $y^*$ which is equivalent to asking the
 \Pr_{U\leftarrow U_{n,k}}[\Hfuzz(U)\ge \gamma] = \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.
 \]
 
-The difference between $U_{n,k}$ and $\mathtt{PCode}_{n, k, t, \gamma}^{*}$ is exactly the above probability mass which is removed from the entries of $U_{n,k}$ that are not in $\mathtt{PCode}_{n, k, t, \gamma}^{*}$ and uniformly distributed to the entries in $\mathtt{PCode}_{n, k, t, \gamma}^{*}$.  This means that 
+The difference between $U_{n,k}$ and $\mathtt{PCode}_{n, k, t, \gamma}$ is exactly the above probability mass which is removed from the entries of $U_{n,k}$ that are not in $\mathtt{PCode}_{n, k, t, \gamma}$ and uniformly distributed to the entries in $\mathtt{PCode}_{n, k, t, \gamma}$.  This means that 
 \[
 \Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \gamma}^{*}) \le \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n,
 \]
