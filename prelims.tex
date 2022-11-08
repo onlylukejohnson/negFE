@@ -218,7 +218,7 @@ Then
 \Delta((R, P, Z), (U_\kappa, P, Z)) &= \Delta((R, P, Z), (U_\kappa, P, Z) | Z\in Z')+\Delta((R, P, Z), (U_\kappa, P, Z) | Z\not\in Z')\\
 &\le \frac{\epsilon-\zeta}{1-\zeta} * (1-\zeta) + 1* \zeta = \epsilon.
 \end{align*}
-It is clear that $(\gen, \rep, \advise)$ is a $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, 2\ell)$ fuzzy extractor with distributional advise.
+It is clear that $(\gen, \rep, \advise)$ is a $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, \ell)$ fuzzy extractor with distributional advise.
 \end{proof}
 
 \paragraph{Interpretation} 
@@ -226,7 +226,7 @@ We consider two natural settings where $\epsilon = \ngl(n)$ and when $\epsilon =
 
 For the setting when $\epsilon = \ngl(n)$  if one sets $\zeta = \sqrt{\epsilon}$ this implies that for all subsets $\mathcal{W}' \subseteq \mathcal{W}$ where $\Pr[Z\in Z']\ge 1-\sqrt{\epsilon}.$ there is no $(\{0,1\}^n,\kappa, t, \sqrt{\epsilon}, \ell)$-fuzzy extractor for some element of $\mathcal{W}'$.  This shows that at least $1-\sqrt{\epsilon}$ fraction of elements in $\mathcal{W}$ do not have $(\{0,1\}^n,\kappa, t, \sqrt{\epsilon}, \ell)$-fuzzy extractors.
 
-In the setting when $\epsilon = \Theta(1)$ then setting $\zeta = \epsilon/2$ implies that for all subsets $\mathcal{W}' \subseteq \mathcal{W}$ where $\Pr[Z\in Z']\ge 1-\epsilon/2 = 1-\Theta(1)$ there is no $(\{0,1\}^n,\kappa, t, \epsilon/(2-\epsilon), \ell)$-fuzzy extractor for some element of $\mathcal{W}'$.  This shows that at least $\Theta(1)$ fraction of elements in $\mathcal{W}$ do not have $(\{0,1\}^n,\kappa, t, \epsilon/(2-\epsilon), \ell)$-fuzzy extractors. This is the setting consider in Section~\ref{sec:fe}.
+In the setting when $\epsilon = \Theta(1)$ then setting $\zeta = \epsilon/2$ implies that for all subsets $\mathcal{W}' \subseteq \mathcal{W}$ where $\Pr[Z\in Z']\ge 1-\epsilon/2 = 1-\Theta(1)$ there is no $(\{0,1\}^n,\kappa, t, \epsilon/(2-\epsilon), \ell)$-fuzzy extractor for some element of $\mathcal{W}'$.  This shows that at least $\Theta(1)$ fraction of elements in $\mathcal{W}$ do not have $(\{0,1\}^n,\kappa, t, \epsilon/(2-\epsilon), \ell)$-fuzzy extractors. This is the setting considered in Section~\ref{sec:fe}.
 
 
 \begin{lemma}

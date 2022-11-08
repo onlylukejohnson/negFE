@@ -2,10 +2,8 @@
 
 % Proof for NegFE
 
-\section{Efficient Information-Theoretic Fuzzy Extractors do not exist for all distributions with fuzzy min-entropy}
+\section{Efficient Information-Theoretic Fuzzy Extractors do not exist for most distributions with fuzzy min-entropy}
 \label{sec:fe}
-We begin by introducing the family of distributions used for our impossibility result.
-
 \input{family}
 
 \begin{theorem}
@@ -16,7 +14,7 @@ Let $\gamma \in\mathbb{R}^+, n, \kappa, t, \ell, \gamma \in\mathbb{Z}^+$ be para
 \item Let $\nu \in \mathbb{Z}^+$ be a free parameter, and
 \item Let $\mu =  n \cdot h_2\prns{\frac{1}{2} - \frac{t}{n}}$.
 \end{enumerate}
-There is a family of distributions $\mathcal{W}$ where at least of aFor a quarter of the distributions $W\in \mathtt{PCode}_{n, k, t, \gamma}$ there is no $(\{0,1\}^n, W, \kappa, t, \epsilon, \ell)$-fuzzy extractors for 
+For a quarter of the distributions $W\in \mathtt{PCode}_{n, k, t, \gamma}$ there is no $(\{0,1\}^n, W, \kappa, t, \epsilon, \ell)$-fuzzy extractors for 
 \[
 \epsilon< \frac{1}{3} - \frac{4(\epsilon_1+\epsilon_2+\epsilon_3)}{3}.
 \]
@@ -28,7 +26,6 @@ For
 \label{thm:main theorem}
 \end{theorem}
 
-\subsection{Proof Outline}
 Recall that Lemma~\ref{lem:distributional advise suffices} states that to show the hardness of building a fuzzy extractor with distributional advise for $\mathtt{PCode}_{n, k, t, \gamma}$ it suffices to show the hardness of building an auxiliary input fuzzy extractor for the family $\mathtt{PCode}_{n, k, t, \gamma}$. 
 
 Our proof uses the following structure:
@@ -37,16 +34,16 @@ Our proof uses the following structure:
 \item Lemma~\ref{lem:close family} shows that the distribution $\mathtt{PCode}_{n, k, t, \gamma}$ is statistically close to the distribution $U_{n,k}$.  For the remainder of the proof we consider $U_{n,k}$.
 \item Lemma~\ref{lem:smallgeneralviable} which bounds the number of ``viable'' points for most public values $p$.  Note that this Lemma bounds the total number of points and holds even if $\gen, \rep$ have access to an arbitrary advice string. 
 
-\item Lemma~\ref{lem:entr of members} for the distribution, $U_{n,k}$ the advice string can only reduce the entropy of a large fraction of viable points by a small amount. We call such points \textbf{Average Points}.  There are some points that the adversary has a large amount of information on that we call \textbf{Free Points}
+\item Lemma~\ref{lem:entr of members} for the distribution, $U_{n,k}$ the advice string can only reduce the entropy of almost all viable points by a small amount. We call such points \textbf{Average Points}.  There are some points that the adversary has a large amount of information on that we call \textbf{Free Points}.
 
 \item Corollary~\ref{corollary:info loss} puts together the above two Lemmas to show that the adversary includes a small number of points from the distribution in the viable set.
 
-\item Lemma~\ref{lem:convert distinguisher} Shows that since the construction cannot align the viable points with the distribution there exists a distinguisher that can distinguish a uniform triple from a key triple. 
+\item Lemma~\ref{lem:convert distinguisher} shows that since the construction cannot align the viable points with the distribution there exists a distinguisher that can distinguish a uniform triple from a key triple. 
 \end{enumerate}
 
 We present the formal versions of the above statements first and then present the proof of Theorem~\ref{thm:main theorem}.
 
-\subsection{Technical Lemmas}
+\subsection{Proof Overview}
 We show that $\mathtt{PCode}_{n, k, t, \alpha}$ is statistically close to $U_{n,k}$.
 
 \begin{lemma}
@@ -56,7 +53,7 @@ Let $n, k, t, \gamma$ be parameters such that the $\beta$ density is at least $0
 \end{lemma}
 
 Fuller, Reyzin, and Smith~\cite{fuller2016fuzzy,fuller2020fuzzy} bound the number of points that could have produced the output of a fuzzy extractor.  Such points are called viable.  We present a stronger version of their lemma that is contained in their proof.  The difference is we bound the union of viable points across different values of $\mathsf{key}$ while they only bound the size of a single $\mathsf{key}$ corresponding to the true point.  Their argument is purely geometric, so it also applies to fuzzy extractors with distributional advice. 
-We restate the stronger version of \cite[Lemma 5.2]{fuller2020fuzzy} 
+We restate the stronger version of \cite[Lemma 5.2]{fuller2020fuzzy}.
 
 \begin{lemma}
     \label{lem:smallgeneralviable}
@@ -68,12 +65,8 @@ We restate the stronger version of \cite[Lemma 5.2]{fuller2020fuzzy}
     \]   
 \end{lemma}
 
-We consider the following family $Z$ which chooses $2^k$ points without replacement from the space $\{0,1\}^n$.  That is, if one samples $Z$ uniformly then one obtains the distribution $U_{n,k}$. There are distributions in this family with little fuzzy min-entropy.  As shown in Lemma~\ref{lem:close family} $U_{n,k}$  is statistically close to $\mathtt{PCode}_{n, k, t, \gamma}^{*}$, a family with fuzzy min-entropy. 
-
-For convenience we use $W_{z, 1},..., W_{z,2^k}$ to describe the $2^k$ points with nonzero probability in $W_z$ for some value $z$.  We assume no ordering over these points.  For all values $x, y$, 
-\[
-\Pr[W_{z, i} =x | W_{z, j} = y] = \begin{cases} \frac{1}{2^n-1} &x\neq y\\0&x=y.\end{cases}
-\]
+We consider the following family $Z$ which chooses $2^k$ points without replacement from the space $\{0,1\}^n$.  That is, if one samples $Z$ uniformly then one obtains the distribution $U_{n,k}$. 
+For convenience we use $W_{z, 1},..., W_{z,2^k}$ to describe the $2^k$ points with nonzero probability in $W_z$ for some value $z$.  We assume no ordering over these points.  
 
 Lemma~\ref{lem:entr of members} bounds how much information $\advise$ contains about the points in the distribution.  Let $Z$ describe a uniform sample of $U_{n,k}$.  Let $(\gen, \rep, \aux)$ be an auxiliary input fuzzy extractor.  Let $\advise = \aux(Z)$ be of length $\ell$.  For a tuple $(v, p, r, \advise)$ define 
 \[
@@ -234,6 +227,7 @@ In this setting let $c_{\kappa^*} n = \kappa+\log{\nu}$.  Setting
 yields that \[ (1+c_{\kappa})\kappa+\frac{(n-3k)2^k-\ell}{2^k} - nh_2(1/2-t/n) = \omega(\log n)\] 
 
 \section{Proof of Technical Lemmas}
+\label{sec:tech lemmas}
 \subsection{Proof of Lemma~\ref{lem:close family}}
 \input{sampling}
 
@@ -248,6 +242,10 @@ Let $Z$ and $\advise$ be defined as above. We begin by noting that
  It is thus, the case that 
 \[
 \Hav(W_{z, 1},..., W_{z, 2^ k} | \advise) \ge \alpha - |\advise|.
+\]
+For all values $x, y$, 
+\[
+\Pr[W_{z, i} =x | W_{z, j} = y] = \begin{cases} \frac{1}{2^n-1} &x\neq y\\0&x=y.\end{cases}
 \]
 \begin{claim}
 One has that 
