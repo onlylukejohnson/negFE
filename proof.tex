@@ -436,11 +436,11 @@ Fuller, Reyzin, and Smith~\cite[Lemma 7.3]{fuller2020fuzzy} showed that good sec
     \]
 \end{lemma}
 
-We present an analog of Lemma~\ref{lem:entr of members} adapted to the secure sketch setting. Let $\goodsketch(x)$ be a set. For a triple $(v, ss, z)$ define $\viable(v, ss, z)=1$ if
+We present an analog of Lemma~\ref{lem:entr of members} adapted to the secure sketch setting. Let $\goodsketch_v$ be defined as in Lemma~\ref{lem:smallgeneralviable ss}. For a triple $(v, ss, z)$ define $\viable(v, ss, z)=1$ if
 \begin{enumerate}
 \itemsep0em
 \item $\Pr[\gen(v, \advise(z)) = ss]>0$,
-\item $ss\in\goodsketch(v)$, and
+\item $ss\in\goodsketch_v$, and
 \item $\Pr[W_z = v]>0$.
 \end{enumerate}
 and set $\viable(v, ss, z)=0$ otherwise. 
