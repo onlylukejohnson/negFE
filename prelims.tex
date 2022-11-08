@@ -11,61 +11,48 @@ For a metric space $(\mathcal{M}, \dis)$ let $B_t(x) = \{y | \dis(x, y)\le t\}$.
 
 This work considers the possibility of constructing fuzzy extractors from a finite family of distributions that we will call $\mathcal{W}$. 
 Throughout, we will need the ability to describe a particular value in this family.  
-We let $Z$ be an index for the distributions in the family and we denote the $Z$th distribution $W_Z$. 
+We let $Z$ be an index for the distributions in the family and we denote a distribution as $W_Z$. 
 The distribution $W_Z$ can then be sampled, and we denote a sample of $W_Z$ as $w \in \zeroone{n}$. 
 
 \subsection{Notions of Entropy}
-
-\begin{definition}[Entropy]
-    \emph{Shannon Entropy} or simply Entropy, denoted $\ent{X}$, for some discrete random variable $X$ is a measure of how stable the outcomes of the random variable are. It is calculated as \[\ent{X} \defined \sum\limits_{i=1}^n \p{x_i}\log{\p{x_i}}\] where there are $n$ values that $X$ takes and we denote them as $x_i$. 
-    
-    If the two possible outcomes of $x$ are $0$ and $1$ with $\Pr[X=1] = p$ the binary entropy of $X$ is  \[h_2(X) :=-p\cdot\log{p} - (1-p)\cdot\log{1-p}.\] 
-\end{definition}
-
-\begin{definition}[Min Entropy]
+    \textbf{Entropy}, denoted $\ent{X}$, for some discrete random variable $X$ is $\ent{X} \defined \expe_x\left[-\log{\Pr[X=x]}\right]$. 
+    For a random variable $X$ whose outcomes are in $\{0,1\}$, let $\Pr[X=1] = p$. The \textbf{binary entropy} of $X$ is  $h_2(X) :=H(X)=-p\cdot\log{p} - (1-p)\cdot\log{1-p}.$ 
 For a discrete random variable $X$, 
-    \emph{min Entropy}, denoted $\minent{X}$, is negative log of the probability of the most likely event of $X$: \[\minent{X} \defined -\log{\max\limits_{x_i} p(x_i)}.\]  
-\end{definition}
-
+    \textbf{min-entropy} is $\minent{X} \defined -\log{\max_{x_i} \Pr(X=x_i)}$.  
+For a discrete random variable $X$ \textbf{Hartley entropy}, denoted $\hart{X}$ is 
+$  \hart{X} = | \sbr{x \in X\,|\, \Prob{X = x} > 0}|.
+  $
 \begin{definition}[Average Min Entropy]
-    \emph{Average Min Entropy}, denoted $\acminent{X}{Y}$ for two random variables $X$ and $Y$ is \[ \acminent{X}{Y} \defined -\log{\Exlim{y \leftarrow Y}{\max\limits_{x} \Prob{X = x\ |\ Y = y}}}.\] 
+Let $X$ be a discrete random variable and let $Y$ be a random variable.  The \emph{average min-entropy} of $X|Y$ is  \[ \acminent{X}{Y} \defined -\log{\Exlim{y \leftarrow Y}{\max\limits_{x} \Prob{X = x\ |\ Y = y}}}.\] 
 \end{definition}
 
 \begin{definition}[Smooth Conditional Min Entropy~\cite{renner2005simple}]
-    \emph{Smooth Conditional Min Entropy}, denoted $\acminent{X}{Y}$ for two random variables $X$ and $Y$ is \[\max_{(X',Y') | \Delta((X', Y'), (X, Y))\le \epsilon} \left( \acminent{X'}{Y'}\right).
+    \emph{Smooth Conditional Min Entropy}, denoted $\acminent{X}{Y}$ for two random variables $X$ and $Y$ is \[\max_{(X',Y') | \Delta((X', Y'), (X, Y))\le \epsilon} \acminent{X'}{Y'}.
     \] 
 \end{definition}
 
+The above definition combines definitions from Renner and Wolf~\cite{renner2005simple} and Dodis et al.~\cite{dodis2008fuzzy}.  Renner and Wolf's definition considers the worst case $Y$.  We focus on the average case $Y$ because the above definition suffices for randomness extraction.
 
-\begin{definition}[Hartley Entropy]
-For a discrete random variable $X$ \emph{Hartley entropy}, denoted $\hart{X}$ is the logarithm of the support size of $X$: 
-\[    \hart{X} = | \sbr{x \in X\,|\, \Prob{X = x} > 0}|.
-    \]
-%    For a pair of discrete random variables $X, Y$ conditional Hartley entropy is 
-%    \[
-%    \hart{X|Y} = -\log{\expe_{y\leftarrow Y} 2^{-\hart{X|Y=y}}}.
-%    \]
-\end{definition}
 
 \subsection{Basic Entropy Results}
 \begin{lemma}
-Let $(X, Y)$ be a pair of random variables and let $S(X, Y)$ be a set that is the output of a randomized function on input $(X, Y)$ then 
+Let $(X, Y)$ be a pair of random variables and, $S(X, Y)$ be a set, let $f$ be a randomized function taking inputs on the domain of $(X, Y)$. Then 
 \[
-\Haveps(X|Y, \eta)\ge \Haveps(X|Y) + \log{ 1/\Pr[Y\in S(X, Y)]}.
+\Haveps(X|Y, f(X, Y) \in S(X, Y))\ge \Haveps(X|Y) + \log{ \Pr[f(X, Y) \in S(X, Y)]}.
 \]
 \label{lem:smooth ent cond}
 \end{lemma}
 \begin{proof}
 Let $X', Y'$ be a distribution such that $\Delta((X, Y), (X', Y')) \le \epsilon$.  By \cite[Lemma 7.8]{fuller2020fuzzy} for any event $\eta$
 \begin{align*}
-\Hav(X' | Y') =\log{\frac{1}{\Pr[\eta]}}+\Hav(X'| \eta, Y').
+\Hav(X'| Y', \eta) \ge \Hav(X' | Y') +\log{\Pr[\eta]}.
 \end{align*}
-Let $f$ denote the randomized function such that $\eta = f(X, Y)$.    
+Let $\eta$ denote the event that $f(X, Y) \in S(X, Y)$.
 The proof completes by noting that $\Delta((X, Y), (X', Y'))\le \epsilon$ implies that 
 \[
-\Delta((X, Y, Y\in S(X, Y)), (X', Y,' Y'\in S(X', Y')))\le \epsilon.\]  which implies that 
+\Delta((X, Y, f(X, Y) \in S(X, Y)), (X', Y,' f(X', Y')\in S(X', Y')))\le \epsilon\] by the information processing lemma. This is turn implies that 
 \[
-\Haveps(X| Y) \le \Haveps(X|Y, \eta) +\log{\frac{1}{\Pr[Y\in S(X,Y)]}}.
+\Haveps(X|Y, f(X, Y) \in S(X, Y))\ge \Haveps(X|Y) +\Pr[f(X, Y) \in S(X, Y)].
 \]
 This completes the proof of Lemma~\ref{lem:smooth ent cond}.
 \end{proof}
@@ -76,7 +63,7 @@ This completes the proof of Lemma~\ref{lem:smooth ent cond}.
     \label{lem:markovpred}
     Let $\vec{X} = (X_1, X_2, \ldots, X_{2^k})$ be random variables and let $Y$ be a random variable arbitrarily correlated with $\vec{X}$. Suppose that $\expe_i[\Hoo(X_i | Y) \ge \Delta$. Then 
     \[
-    \left|\left\{X_i | \Hav(X_i |Y) < \Delta - (k+\log{\nu})\right\}\right|\le \nu.
+    \left|\left\{X_i | \Hav(X_i |Y) < \Delta - (k-\log{\nu})\right\}\right|\le \nu.
     \]
 \end{lemma}
 \begin{proof}[Proof of Lemma~\ref{lem:markovpred}]
@@ -131,7 +118,7 @@ Using Ash~\cite[Lemma 4.7.2, Equation 4.7.5, p. 115]{ash2012information} one has
 \begin{align} nh_2(t/n)  -1/2\log{n} - 1/2 \le \log{|B_t|} \le  nh_2(t/n)\label{eq:size of balls}.\end{align}
 and thus, 
 \[
-\Hfuzz(W) \le n(1-h_2(t/n)).
+\Hfuzz(W) \le \log{|\mathcal{M}|} - \log{|B_t|}\le n\left(1-h_2\left(\frac{t}{n}\right)\right)+ \frac{\log{n}}{2} +1/2.
 \]
 
 \noindent
@@ -145,7 +132,7 @@ Let $(\mathcal{M}, \dis)$ be a metric space where the size of balls is center in
 \begin{claim} 
 For the binary Hamming metric over $\zo^n$ for $t<n/2$
 \[
-n(1-h_2(t/n))-\frac{\log{n}}{2}-1 \le \beta \le n(1-h_2(t/n)).
+n\left(1-h_2\left(\frac{t}{n}\right)\right)-\frac{\log{n}}{2}-1 \le \beta \le n\left(1-h_2\left(\frac{t}{n}\right)\right).
 \]
 
 \end{claim}
@@ -153,8 +140,8 @@ n(1-h_2(t/n))-\frac{\log{n}}{2}-1 \le \beta \le n(1-h_2(t/n)).
 \begin{proof}
 By Equation~\ref{eq:size of balls} one has: 
 \begin{align*}
-\beta &= \log{\frac{2^n - |B_t|}{|B_t|}} \\&= \log{\frac{2^n}{|B_t|} -1} \\&\ge \log{2^{n(1-h_2(t/n)) - 1/2 \log{n}-1/2} -1} \\&\ge n(1-h_2(t/n)) - 1/2\log{n}-1\\
-\beta&\le \log{2^{n(1-h_2(t/n))} -1} \le n(1-h_2(t/n)).
+\beta &= \log{\frac{2^n - |B_t|}{|B_t|}} \\&= \log{\frac{2^n}{|B_t|} -1} \\&\ge \log{2^{n\left(1-h_2\left(\frac{t}{n}\right)\right) - 1/2 \log{n}-1/2} -1} \\&\ge n\left(1-h_2\left(\frac{t}{n}\right)\right) - 1/2\log{n}-1\\
+\beta&\le \log{2^{n\left(1-h_2\left(\frac{t}{n}\right)\right)} -1} \le n(1-h_2(t/n)).
 \end{align*}
 \end{proof}
 
