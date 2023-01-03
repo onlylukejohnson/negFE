@@ -44,7 +44,7 @@ Our proof uses the following structure:
 We present the formal versions of the above statements first and then present the proof of Theorem~\ref{thm:main theorem}.
 
 \subsection{Proof Overview}
-We show that $\mathtt{PCode}_{n, k, t, \alpha}$ is statistically close to $U_{n,k}$.
+We show that $\mathtt{PCode}_{n, k, t, \gamma}$ is statistically close to $U_{n,k}$.
 
 \begin{lemma}
  \label{lem:close family}
@@ -226,13 +226,13 @@ In this setting let $c_{\kappa^*} n = \kappa+\log{\nu}$.  Setting
 \end{align*}
 yields that \[ (1+c_{\kappa})\kappa+\frac{(n-3k)2^k-\ell}{2^k} - nh_2(1/2-t/n) = \omega(\log n)\] 
 
-\section{Proof of Technical Lemmas}
+\subsection{Proof of Technical Lemmas}
 \label{sec:tech lemmas}
-\subsection{Proof of Lemma~\ref{lem:close family}}
+\subsubsection{Proof of Lemma~\ref{lem:close family}}
 \input{sampling}
 
 
-\subsection{Proof of Lemma~\ref{lem:entr of members}}
+\subsubsection{Proof of Lemma~\ref{lem:entr of members}}
 
 \begin{proof}[Proof of Lemma~\ref{lem:entr of members}]
 Let $Z$ and $\advise$ be defined as above. We begin by noting that 
@@ -300,7 +300,7 @@ This completes the proof of Lemma~\ref{lem:entr of members}.
 \end{proof}
 
 
-\subsection{Proof of Lemma~\ref{lem:convert distinguisher}}
+\subsubsection{Proof of Lemma~\ref{lem:convert distinguisher}}
 
 \begin{proof}[Proof of Lemma~\ref{lem:convert distinguisher}].
 We prove the result for an average member of $Z$.
