@@ -14,7 +14,7 @@ Let $\gamma \in\mathbb{R}^+, n, \kappa, t, \ell, \gamma \in\mathbb{Z}^+$ be para
 \item Let $\nu \in \mathbb{Z}^+$ be a free parameter, and
 \item Let $\mu =  n \cdot h_2\prns{\frac{1}{2} - \frac{t}{n}}$.
 \end{enumerate}
-For a quarter of the distributions $W\in \mathtt{PCode}_{n, k, t, \gamma}$ there is no $(\{0,1\}^n, W, \kappa, t, \epsilon, \ell)$-fuzzy extractors for 
+For a quarter of the distributions $W\in \mathtt{PCode}_{n, k, t, \gamma}$ there is no $(\{0,1\}^n, W, \kappa, t, \epsilon, \ell)$-fuzzy extractor for 
 \[
 \epsilon< \frac{1}{3} - \frac{4(\epsilon_1+\epsilon_2+\epsilon_3)}{3}.
 \]
@@ -31,7 +31,7 @@ Recall that Lemma~\ref{lem:distributional advise suffices} states that to show t
 Our proof uses the following structure:
 \begin{enumerate}
 
-\item Lemma~\ref{lem:close family} shows that the distribution $\mathtt{PCode}_{n, k, t, \gamma}$ is statistically close to the distribution $U_{n,k}$.  For the remainder of the proof we consider $U_{n,k}$.
+\item The family $\mathtt{PCode}_{n, k, t, \gamma}$ is complicated to work with.  Thus, as a first step we show it is statistically close to the family that picks $k$ points without replacement, which we denote as $U_{n,k}$.\footnote{For $U_{n,k}$, there are ${2^{n}\choose 2^k}$ outcomes each occurring with probability $1/{2^{n}\choose 2^k}$.}  Lemma~\ref{lem:close family} shows that the distribution $\mathtt{PCode}_{n, k, t, \gamma}$ is statistically close to the distribution $U_{n,k}$.  For the remainder of the proof we consider $U_{n,k}$.
 \item Lemma~\ref{lem:smallgeneralviable} which bounds the number of ``viable'' points for most public values $p$.  Note that this Lemma bounds the total number of points and holds even if $\gen, \rep$ have access to an arbitrary advice string. 
 
 \item Lemma~\ref{lem:entr of members} for the distribution, $U_{n,k}$ the advice string can only reduce the entropy of almost all viable points by a small amount. We call such points \textbf{Average Points}.  There are some points that the adversary has a large amount of information on that we call \textbf{Free Points}.
@@ -41,6 +41,7 @@ Our proof uses the following structure:
 \item Lemma~\ref{lem:convert distinguisher} shows that since the construction cannot align the viable points with the distribution there exists a distinguisher that can distinguish a uniform triple from a key triple. 
 \end{enumerate}
 
+\noindent
 We present the formal versions of the above statements first and then present the proof of Theorem~\ref{thm:main theorem}.
 
 \subsection{Proof Overview}
@@ -92,7 +93,7 @@ Suppose that
  For a particular $Z=z$ let $w_{z,1},..., w_{z,2^k}$ denote the points in $W_Z$. Let $\alpha:= \log {2^n\choose 2^k}$.  
  Then for each value $\advise$ there is some set $\mathcal{I}_{\advise}$ of size at most $\nu+1$, then it is true for each $i\not \in \mathcal{I}_\advise$ that
 \[
-\Pr\left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p} \viable(w_{z,i}, p, \mathsf{key}, \advise, z) \ge 1\middle| \begin{aligned} z\leftarrow Z\\ \advise= \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advise) \end{aligned} \right]< 2^{-\frac{\alpha-|\advise|}{2^k}+1+\mu+k-\log{\nu} }.
+\Pr\left[\left(\sum_{\mathsf{key} \in \mathtt{Goodkey}_p} \viable(w_{z,i}, p, \mathsf{key}, \advise, z)\right) = 1\middle| \begin{aligned} z\leftarrow Z\\ \advise= \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advise) \end{aligned} \right]< 2^{-\frac{\alpha-|\advise|}{2^k}+1+\mu+k-\log{\nu} }.
 \]
 And thus, for on average across $Z$, the expected number of points outside of $\mathcal{I}_\advise$ that are included in $\viable$ is at most 
 \begin{align*}
@@ -279,7 +280,30 @@ This completes the proof of Claim~\ref{clm:entropy distributes}.
 \end{proof}
 
 \noindent
-We now proceed to the proof of Lemma~\ref{lem:entr of members}
+Before proceeding to the proof of Lemma~\ref{lem:entr of members} we need an elementary lemma:
+\begin{lemma}
+    \label{lem:markovpred}
+    Let $\vec{X} = (X_1, X_2, \ldots, X_{2^k})$ be random variables and let $Y$ be a random variable arbitrarily correlated with $\vec{X}$. Suppose that $\expe_i[\Hoo(X_i | Y)] \ge \Delta$. Then 
+    \[
+    \left|\left\{X_i | \Hav(X_i |Y) < \Delta - (k-\log{\nu})\right\}\right|\le \nu.
+    \]
+\end{lemma}
+\begin{proof}[Proof of Lemma~\ref{lem:markovpred}]
+Let $\expe_i [\Hav(X_i|Y)] = \Delta$. Then by Markov's inequality
+\[
+    \Problim{i}{\expe_{y}\left( \max\limits_{x} \Prob{X_i = x \,|\, Y = y}\right) \geq \alpha \cdot 2^{-\Delta}} \leq \frac{1}{\alpha} 
+  \]
+  Which implies that 
+      \[  
+    \Problim{i}{-\log{\expe_y\left(\max\limits_{x} \Prob{X_i = x \,|\, Y = y}\right)} \leq \Delta -\log{\alpha}} \leq \frac{1}{\alpha} 
+    \]
+      and finally
+        \[
+      \Problim{i}{\Hav(X_i\, |\, Y)< \Delta -\log{\alpha}} \leq \frac{1}{\alpha}
+      \]
+
+The statement of the lemma follows by setting $\alpha = 2^k/\nu$.
+\end{proof}
 By Lemma~\ref{lem:markovpred} it is true that there exists a set $\mathcal{I}\subseteq \{1,...,2^k\}$ of size $\nu$ where  such that for all $i\not \in \{1,...,2^k\} \setminus\mathcal{I}$ is true that 
 \[
 \eta:=\Hav(W_{z,i} | \advise) \ge \frac{\alpha -|\advise|}{2^k} -\left(k-\log{\nu}\right).
@@ -293,7 +317,7 @@ Then for $i\not\in \mathcal{I}_{\advise}$ it is true that
 We now proceed to bounding $\viable(w_i, p, \mathsf{key})$.  By assumption, By Lemma~\ref{lem:smallgeneralviable} we know that there are at most $2^\mu$ points in $\viable(w_i, p, \mathsf{key})$.  Thus, for all $i\not \in\mathcal{I}_{\advise}$ 
 
 \begin{align*}
-\log{\Pr\left[\viable(w_{z,i}, p, \mathsf{key}, \advise) = 1 \right]}&\le - (\eta-1 -\mu) - \\
+\log{\Pr\left[\viable(w_{z,i}, p, \mathsf{key}, \advise) = 1 \right]}&\le - (\eta-1 -\mu) \\
 &=-\left(\frac{\alpha -|\advise| }{2^k}-1-\mu-\left(k-\log{\nu}\right)\right).
 \end{align*}
 This completes the proof of Lemma~\ref{lem:entr of members}.
@@ -417,7 +441,7 @@ yielding
 \]
 if $\ell\le 3(c_1-c_2)n2^{\gamma+c_1n}$.
 
-\subsection{Proof}
+\subsection{Proof Overview}
 \begin{proof}[Proof of Theorem~\ref{thm:main theorem ss}]
 
 Fuller, Reyzin, and Smith~\cite[Lemma 7.3]{fuller2020fuzzy} showed that good secure sketches are bounded in size as they imply good Shannon error correcting codes.  This result holds true if one considers a secure sketch that retains smooth min-entropy with no loss in parameters because it only relies on the correctness of the secure sketch (not the security property).  
@@ -498,8 +522,32 @@ Let all parameters be as in Corollary~\ref{corollary:info loss ss} with $\nu \in
 
 Furthermore, there exists an algorithm $\mathcal{D}$ that always outputs $1$ when given samples of the form $w, ss, z$ that are correctly generated by the secure sketch.
 \end{lemma}
+\subsubsection{Proof of Lemma~\ref{lem:convert distinguisher ss}}
 \begin{proof}[Proof of Lemma~\ref{lem:convert distinguisher ss}]
-We prove the result for an average member of $Z$.  First note that for every $v\in \mathcal{M}$ there exists a set $\goodsketch_v$ where $\Pr[\sketch(v)\in \goodsketch_v] \ge 1/2$.  By Lemma~\ref{lem:smooth ent cond}
+We prove the result for an average member of $Z$.  First note that for every $v\in \mathcal{M}$ there exists a set $\goodsketch_v$ where $\Pr[\sketch(v)\in \goodsketch_v] \ge 1/2$.  We first need an elementary lemma: 
+\begin{lemma}
+Let $(X, Y)$ be a pair of random variables and, $S(X, Y)$ be a set, let $f$ be a randomized function taking inputs on the domain of $(X, Y)$. Then 
+\[
+\Haveps(X|Y, f(X, Y) \in S(X, Y))\ge \Haveps(X|Y) + \log{ \Pr[f(X, Y) \in S(X, Y)]}.
+\]
+\label{lem:smooth ent cond}
+\end{lemma}
+\begin{proof}[Proof of Lemma~\ref{lem:smooth ent cond}]
+Let $X', Y'$ be a distribution such that $\Delta((X, Y), (X', Y')) \le \epsilon$.  By \cite[Lemma 7.8]{fuller2020fuzzy} for any event $\eta$
+\begin{align*}
+\Hav(X'| Y', \eta) \ge \Hav(X' | Y') +\log{\Pr[\eta]}.
+\end{align*}
+Let $\eta$ denote the event that $f(X, Y) \in S(X, Y)$.
+The proof completes by noting that $\Delta((X, Y), (X', Y'))\le \epsilon$ implies that 
+\[
+\Delta((X, Y, f(X, Y) \in S(X, Y)), (X', Y,' f(X', Y')\in S(X', Y')))\le \epsilon\] by the information processing lemma. This is turn implies that 
+\[
+\Haveps(X|Y, f(X, Y) \in S(X, Y))\ge \Haveps(X|Y) +\Pr[f(X, Y) \in S(X, Y)].
+\]
+This completes the proof of Lemma~\ref{lem:smooth ent cond}.
+\end{proof}
+
+By Lemma~\ref{lem:smooth ent cond}
 \[
 \Haveps(W| \sketch(W)) \le \Haveps(W| \sketch(W), \sketch(W)\in \goodsketch_W) +1.
 \]
@@ -536,8 +584,8 @@ This implies that
 This completes the Proof of Lemma~\ref{lem:convert distinguisher ss}.
 \end{proof}
 
-\noindent
-We now proceed to the proof of Theorem~\ref{thm:main theorem ss}.   Let \[\chi:= -\log{1-\epsilon_\sketch} +1 + 2\max\left\{-\frac{\alpha+-|\advise|}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.\]  Restating Lemma~\ref{lem:convert distinguisher} one has that 
+\subsubsection{Proof of Theorem~\ref{thm:main theorem ss}}
+We now proceed to the proof of Theorem~\ref{thm:main theorem ss}.   Let \[\chi:= -\log{1-\epsilon_\sketch} +1 + 2\max\left\{-\frac{\alpha+-|\advise|}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.\]  Restating Lemma~\ref{lem:convert distinguisher ss} one has that 
 \[
 \Hav^{\epsilon_\sketch}(U_{n,k} | \sketch(U_{n,k}), Z_{U_{n,k}})) \le \chi.
 \]

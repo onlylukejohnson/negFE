@@ -27,74 +27,25 @@ Let $X$ be a discrete random variable and let $Y$ be a random variable.  The \em
 \end{definition}
 
 \begin{definition}[Smooth Conditional Min Entropy~\cite{renner2005simple}]
-    \emph{Smooth Conditional Min Entropy}, denoted $\acminent{X}{Y}$ for two random variables $X$ and $Y$ is \[\max_{(X',Y') | \Delta((X', Y'), (X, Y))\le \epsilon} \acminent{X'}{Y'}.
+    \emph{Smooth Conditional Min Entropy}, denoted $\Haveps(X|Y)$ for two random variables $X$ and $Y$ is \[\Haveps(X|Y):=\max_{(X',Y') | \Delta((X', Y'), (X, Y))\le \epsilon} \acminent{X'}{Y'}.
     \] 
 \end{definition}
 
 The above definition combines definitions from Renner and Wolf~\cite{renner2005simple} and Dodis et al.~\cite{dodis2008fuzzy}.  Renner and Wolf's definition considers the worst case $Y$.  We focus on the average case $Y$ because the above definition suffices for randomness extraction.
 
 
-\subsection{Basic Entropy Results}
-\begin{lemma}
-Let $(X, Y)$ be a pair of random variables and, $S(X, Y)$ be a set, let $f$ be a randomized function taking inputs on the domain of $(X, Y)$. Then 
-\[
-\Haveps(X|Y, f(X, Y) \in S(X, Y))\ge \Haveps(X|Y) + \log{ \Pr[f(X, Y) \in S(X, Y)]}.
-\]
-\label{lem:smooth ent cond}
-\end{lemma}
-\begin{proof}
-Let $X', Y'$ be a distribution such that $\Delta((X, Y), (X', Y')) \le \epsilon$.  By \cite[Lemma 7.8]{fuller2020fuzzy} for any event $\eta$
-\begin{align*}
-\Hav(X'| Y', \eta) \ge \Hav(X' | Y') +\log{\Pr[\eta]}.
-\end{align*}
-Let $\eta$ denote the event that $f(X, Y) \in S(X, Y)$.
-The proof completes by noting that $\Delta((X, Y), (X', Y'))\le \epsilon$ implies that 
-\[
-\Delta((X, Y, f(X, Y) \in S(X, Y)), (X', Y,' f(X', Y')\in S(X', Y')))\le \epsilon\] by the information processing lemma. This is turn implies that 
-\[
-\Haveps(X|Y, f(X, Y) \in S(X, Y))\ge \Haveps(X|Y) +\Pr[f(X, Y) \in S(X, Y)].
-\]
-This completes the proof of Lemma~\ref{lem:smooth ent cond}.
-\end{proof}
 
-
-
-\begin{lemma}
-    \label{lem:markovpred}
-    Let $\vec{X} = (X_1, X_2, \ldots, X_{2^k})$ be random variables and let $Y$ be a random variable arbitrarily correlated with $\vec{X}$. Suppose that $\expe_i[\Hoo(X_i | Y) \ge \Delta$. Then 
-    \[
-    \left|\left\{X_i | \Hav(X_i |Y) < \Delta - (k-\log{\nu})\right\}\right|\le \nu.
-    \]
-\end{lemma}
-\begin{proof}[Proof of Lemma~\ref{lem:markovpred}]
-Let $\expe_i [\Hav(X_i|Y)] = \Delta$. Then by Markov's inequality
-\[
-    \Problim{i}{\expe_{y}\left( \max\limits_{x} \Prob{X_i = x \,|\, Y = y}\right) \geq \alpha \cdot 2^{-\Delta}} \leq \frac{1}{\alpha} 
-  \]
-  Which implies that 
-      \[  
-    \Problim{i}{-\log{\expe_y\left(\max\limits_{x} \Prob{X_i = x \,|\, Y = y}\right)} \leq \Delta -\log{\alpha}} \leq \frac{1}{\alpha} 
-    \]
-      and finally
-        \[
-      \Problim{i}{\Hav{X_i\, |\, Y} < \Delta -\log{\alpha}} \leq \frac{1}{\alpha}
-      \]
-
-The statement of the lemma follows by setting $\alpha = 2^k/\nu$.
-\end{proof}
-
-
-\begin{lemma}
-    \label{lem:conditionalminentloss}
-    Let $\vec{X} = (X_1, X_2, \ldots, X_k)$ be independent random variables. 
-    Let $Y$ be a random variable arbitrarily correlated with $\vec{X}$. 
-    Then 
-    \[
-        \acminent{\vec{X}}{Y} \geq \minent{\vec{X}} - \hart{Y} = \sum \minent{X_i} - \hart{Y}
-    \]
-\end{lemma} 
-\noindent
-Lemma~\ref{lem:conditionalminentloss} follows by \cite[Lemma 2.2b]{dodis2008fuzzy} and independence of the $X_i$.
+%\begin{lemma}
+%    \label{lem:conditionalminentloss}
+%    Let $\vec{X} = (X_1, X_2, \ldots, X_k)$ be independent random variables. 
+%    Let $Y$ be a random variable arbitrarily correlated with $\vec{X}$. 
+%    Then 
+%    \[
+%        \acminent{\vec{X}}{Y} \geq \minent{\vec{X}} - \hart{Y} = \sum \minent{X_i} - \hart{Y}
+%    \]
+%\end{lemma} 
+%\noindent
+%Lemma~\ref{lem:conditionalminentloss} follows by \cite[Lemma 2.2b]{dodis2008fuzzy} and independence of the $X_i$.
 
 
 
@@ -103,7 +54,7 @@ Lemma~\ref{lem:conditionalminentloss} follows by \cite[Lemma 2.2b]{dodis2008fuzz
 
 For a distribution $W$ and a distance parameter $t$, the fuzzy min-entropy of $W$, denoted $\Hfuzz(W)$ is 
 \[
-\Hfuzz(W) \overset{def}= -\log{ \max_{w^*} \left(\sum_{w, \dis(w, w^*)\le t} \Pr[W=w] \right)}.
+\Hfuzz(W):= -\log{ \max_{w^*} \left(\sum_{w, \dis(w, w^*)\le t} \Pr[W=w] \right)}.
 \]
 \end{definition}
 
@@ -141,7 +92,7 @@ n\left(1-h_2\left(\frac{t}{n}\right)\right)-\frac{\log{n}}{2}-1 \le \beta \le n\
 \begin{proof}
 By Equation~\ref{eq:size of balls} one has: 
 \begin{align*}
-\beta &= \log{\frac{2^n - |B_t|}{|B_t|}} \\&= \log{\frac{2^n}{|B_t|} -1} \\&\ge \log{2^{n\left(1-h_2\left(\frac{t}{n}\right)\right) - 1/2 \log{n}-1/2} -1} \\&\ge n\left(1-h_2\left(\frac{t}{n}\right)\right) - 1/2\log{n}-1\\
+\beta &= \log{\frac{2^n - |B_t|}{|B_t|}} = \log{\frac{2^n}{|B_t|} -1} \\&\ge \log{2^{n\left(1-h_2\left(\frac{t}{n}\right)\right) - 1/2 \log{n}-1/2} -1} \\&\ge n\left(1-h_2\left(\frac{t}{n}\right)\right) - 1/2\log{n}-1\\
 \beta&\le \log{2^{n\left(1-h_2\left(\frac{t}{n}\right)\right)} -1} \le n(1-h_2(t/n)).
 \end{align*}
 \end{proof}
@@ -152,7 +103,7 @@ By Equation~\ref{eq:size of balls} one has:
 For metric space $(\mathcal{M}, \dis)$ and distribution $W$ with probability mass function $z$, a $(\mathcal{M}, \tilde{m}, t, \epsilon, \delta, \ell)$-\emph{secure sketch} is a pair of algorithms $(\sketch_z, \rec_z)$ with the following properties 
 \begin{enumerate} 
 \itemsep0em
-\item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, then \[\Pr_{ss \leftarrow \sketch(w)}[\rec_z(w', ss) = w]\ge 1-\delta.\]
+\item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, then $\Pr_{ss \leftarrow \sketch(w)}[\rec_z(w', ss) = w]\ge 1-\delta.$
 \item \textbf{Security}  $\Haveps(W | \sketch_z(W)) \ge \tilde{m}$.
 \item \textbf{Space Bounded} The circuits $\sketch_z$ and $\rec_z$ require at most $\ell$ bits to describe.  That is, $|\sketch_z| +|\rec_z|\le \ell$.
 \end{enumerate}
@@ -165,15 +116,15 @@ For metric space $(\mathcal{M}, \dis)$ and probability distribution $W$ with pro
 \begin{enumerate} 
 \itemsep0em
 \item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, then 
-\[\Pr_{r, p \leftarrow \gen(w)}[\rep(w', p) = r]=1.\] 
-\item \textbf{Security} Let $R, P \leftarrow \gen_z(W)$ and $U_\kappa$ be a uniformly distributed random variable over $\zo^\kappa$ it holds that \[\Delta((R, P), (U_\kappa, P))\le \epsilon.\]
+$\Pr_{r, p \leftarrow \gen(w)}[\rep(w', p) = r]=1.$ 
+\item \textbf{Security} Let $R, P \leftarrow \gen_z(W)$ and $U_\kappa$ be a uniformly distributed random variable over $\zo^\kappa$, $\Delta((R, P), (U_\kappa, P))\le \epsilon.$
 \item  \textbf{Space Bounded} The circuits $\gen_z$ and $\rep_z$ require $\ell$ bits to describe.  That is, $|\gen| +|\rec|\le \ell$.
 \end{enumerate}
 \label{def:fe}
 \end{definition}
 
 \noindent
-We now define fuzzy extractors and secure sketches with advice.  This is an intermediate definition that will be used in proofs throughout.  As we show below, the impossibility of building a fuzzy extractor with advice for a family $\mathcal{W}$ implies the impossibility of building a fuzzy extractor for some $W\in\mathcal{W}$.
+We now define fuzzy extractors and secure sketches with advice.  This is an intermediate definition that will be used in proofs throughout.  As we show in Lemma~\ref{lem:distributional advise suffices}, the impossibility of building a fuzzy extractor with advice for a family $\mathcal{W}$ implies the impossibility of building a fuzzy extractor for an average $W_Z\in\mathcal{W}$.
 
 \begin{definition}[Secure Sketch with distributional advice]
 \label{def:ss distributional}
@@ -181,11 +132,11 @@ Let $\mathcal{W}$ be a family of distributions indexed by $z$.  That is, denote 
 For metric space $(\{0,1\}^n, \dis)$, a $(\{0,1\}^n, \mathcal{W}, \tilde{m}, t, \epsilon, \delta, \ell)$-\emph{secure sketch with distributional advice} is a triple of algorithms $(\gen, \rep, \aux)$ with the following properties:
 \begin{enumerate} 
 \itemsep0em
-\item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, let \[\Pr_{(r, p) \leftarrow \sketch(w)}[\rec(w', p) = w]\ge 1-\delta.\]
+\item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, let $\Pr_{ss \leftarrow \sketch(w)}[\rec(w', ss) = w]\ge 1-\delta.$
 \item \textbf{Security} Let $\aux$ be a deterministic function with output in $\zo^\ell$.  For all distributions $W_Z \in \mathcal{W}$, define $\advise_Z:= \aux(Z)$ and let $ss \leftarrow \sketch(W_Z, \advise_Z)$. Then,
-\[
+$
 \expe_{Z} [\Haveps(W_Z| ss)] \ge \tilde{m}.
-\]
+$
 \end{enumerate}
 \end{definition}
 
@@ -196,15 +147,14 @@ Let $\mathcal{W}$ be a family of distributions indexed by $z$.  That is, denote 
 For metric space $(\{0,1\}^n, \dis)$, a $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon, \ell)$-\emph{fuzzy extractor with distributional advice} is a triple of algorithms $(\gen, \rep, \aux)$ with the following properties:
 \begin{enumerate} 
 \itemsep0em
-\item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, let \[\Pr_{(r, p) \leftarrow \gen(w)}[\rep(w', p) = r]=1.\]
-\item \textbf{Security} Let $\aux$ be a deterministic function with output in $\zo^\ell$.  For a distribution $W_Z \in \mathcal{W}$, define $\advise_Z:= \aux(Z)$, let $(R, P) \leftarrow \gen(W, \advise_Z)$ and $U_\kappa$ be a uniformly distributed random variable over $\zo^\kappa$ it holds that \[\Delta((R, P, Z), (U_\kappa, P, Z))\le \epsilon.\]
+\item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, let $\Pr_{(r, p) \leftarrow \gen(w)}[\rep(w', p) = r]=1.$
+\item \textbf{Security} Let $\aux$ be a deterministic function with output in $\zo^\ell$.  For a distribution $W_Z \in \mathcal{W}$, define $\advise_Z:= \aux(Z)$, let $(R, P) \leftarrow \gen(W, \advise_Z)$ and $U_\kappa$ be a uniformly distributed random variable over $\zo^\kappa$ it holds that $\Delta((R, P, Z), (U_\kappa, P, Z))\le \epsilon.$
 \end{enumerate}
 \end{definition}
 
-\subsubsection{Converting between advice and the distribution sensitive setting}
 \begin{lemma}
 
-Let $\mathcal{W}$ be a distribution family indexed by the random family $Z$ and suppose that no $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, \ell)$-fuzzy extractor with distributional advice exists.  For all families $\mathcal{W}'\subseteq \mathcal{W}$ with probability mass functions $Z'\subseteq Z$ where $\Pr[Z\in Z']\ge 1-\zeta$ there is some $Z'$ there is no  $(\{0,1\}^n,\kappa, t, (\epsilon-\zeta))/(1-\zeta), \ell)$ fuzzy extractor $(\gen_Z, \rep_Z)$.
+Let $\mathcal{W}$ be a distribution family indexed by the set $Z$ and suppose that no $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, \ell)$-fuzzy extractor with distributional advice exists.  For all families $\mathcal{W}'\subseteq \mathcal{W}$ indexed by $Z'\subseteq Z$ where \[\frac{|Z'\cap Z|}{|Z|} = \frac{|Z'|}{|Z|}\le 1-\zeta\] there is some $Z'$ there is no  $(\{0,1\}^n,\kappa, t, (\epsilon-\zeta))/(1-\zeta), \ell)$ fuzzy extractor $(\gen_Z, \rep_Z)$.
 \label{lem:distributional advise suffices}
 \end{lemma}
 \begin{proof}[Proof of Lemma~\ref{lem:distributional advise suffices}]
@@ -230,13 +180,13 @@ In the setting when $\epsilon = \Theta(1)$ then setting $\zeta = \epsilon/2$ imp
 
 
 \begin{lemma}
-Let $\mathcal{W}$ be a distribution family indexed by the random family $Z$ and suppose that no $(\zo^n, \mathcal{W}, \tilde{m}, t, \epsilon, \delta, \ell)$-secure sketch with distributional advice exists.  For all families $\mathcal{W}'\subseteq \mathcal{W}$ with probability mass functions $Z'\subseteq Z$ where $\Pr[Z\in Z']\ge 1-2^{-\zeta}$ 
+Let $\mathcal{W}$ be a distribution family indexed by $Z$ and suppose that no $(\zo^n, \mathcal{W}, \tilde{m}, t, \epsilon, \delta, \ell)$-secure sketch with distributional advice exists.  For all families $\mathcal{W}'\subseteq \mathcal{W}$ indexed by $Z'\subseteq Z$ where\[\frac{|Z\cap Z'|}{|Z|} = \frac{|Z'|}{|Z|}\ge 1-2^{-\zeta}\]
 there is some $Z'$ for which no  $(\zo^n, \min\{\tilde{m}, \zeta\}, t, \epsilon, \delta, \ell)$ fuzzy extractor $(\sketch_{Z'}, \rec_{Z'})$  exists.
 \label{lem:distributional advise suffices ss}
 \end{lemma}
 
 \begin{proof}
-The proof of Lemma~\ref{lem:distributional advise suffices ss} follows the structure of the proof of Lemma~\ref{lem:distributional advise suffices} with the following equation for computing the residual smooth conditional min-entropy.
+The proof of Lemma~\ref{lem:distributional advise suffices ss} follows the structure of the proof of Lemma~\ref{lem:distributional advise suffices} with the following equation for computing the remaining smooth conditional min-entropy.
 \begin{align*}
 \expe_{Z} [\Haveps(W_Z| \sketch(W_Z), Z)] &= -\log{\Pr[Z\in Z']\expe_{Z} 2^{-\Haveps(W_Z| ss, Z\in Z')}+ \Pr[Z\not\in Z']\expe_{Z} 2^{-\Haveps(W_Z| ss, Z\not\in Z'] }}\\
 &\ge -\log{1 \cdot 2^{-\tilde{m}}+ 2^{-\zeta}\cdot 1}\\
@@ -245,7 +195,7 @@ The proof of Lemma~\ref{lem:distributional advise suffices ss} follows the struc
 \end{proof}
 
 \paragraph{Interpretation}
-The natural parameter setting of the above is setting $\zeta = \max\{\tilde{m},1\} $ which shows that half of the distributions have no secure sketch extractor.  In the setting considered later in this work where $\tilde{m} = \Theta(1)$ which suffices to show that at least half of the  distributions have no secure sketch.
+The natural parameter setting of the above is setting $\zeta = \max\{\tilde{m},1\} $ which shows that at least half of the distributions have no secure sketch.  Later in this work, we consider $\tilde{m} = \Theta(1)$ which suffices to that show that  $|Z'|/|Z|\ge 1/2$.
 
 
 

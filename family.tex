@@ -1,13 +1,13 @@
 %!TEX root = main.tex
 
 \label{sec:family}
-Our main results show the impossibility of constructing fuzzy extractors for the family of distributions $\mathcal{W}$ of $2^k$ random points sampled from $\zo^n$ (without replacement).  Unfortunately, there are distributions $W_Z$ for some values $Z$ that do not have fuzzy min-entropy so there is no reason to expect a fuzzy extractor to be able to secure these distributions.  However, below we show a closely related family of distributions where all $W_Z$ have fuzzy min-entropy that is statistically close to $k$ random points.
+Our main theorem considers the following family of distributions:
 
 \begin{description}
-    \item[$U_{n,k}$] Picking $2^k$ points from $\zeroone{n}$ without replacement uniformly results in a distribution we will denote $U_{n,k}$. Note that there are ${2^{n}\choose 2^k}$ outcomes each occuring with probability $1/{2^{n}\choose 2^k}$.
-
 %    \item[$U_{n,k,t}^{-}$] Another distribution of interest is picking $k$ points uniformly from $\zeroone{n}$ and then removing points that are within distance $t$ of one another, we denote this $U_{n,k,t}^{-}$. 
 %    \item[$\mathtt{Code}_{n,k,t}$] The set of all $2^k$ points where all points are distance $t$ from one another.  Note for all outcomes $X$ from this distribution $\Hfuzz(X) = \log k$.
     
     \item[$\mathtt{PCode}_{n, k, t, \gamma}$] The uniform distribution over all sets $X = \{x_i\}$ of size $2^k$ with the additional condition that $\Hfuzz(X) \ge \gamma$.  Some points are allowed to lie within distance $t$ as long as fewer than $2^{k-\gamma}$ lie within a single ball of radius $t$.
 \end{description}
+
+%Our proofs show the impossibility of constructing fuzzy extractors for the family of distributions $\mathcal{W}$ of $2^k$ random points sampled from $\zo^n$ (without replacement).  Unfortunately, there are distributions $W_Z$ for some values $Z$ that do not have fuzzy min-entropy so first show this family is statistically close to a family with fuzzy min-entropy.  We set notation to describe the two families of distributions:
