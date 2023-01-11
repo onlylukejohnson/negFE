@@ -151,7 +151,7 @@ Finally, the theorem follows by application of Lemma~\ref{lem:distributional adv
 
 \subsection{Analysis of parameters}
 \label{ssec:analysis params}
-We separately consider $\epsilon_1, \epsilon_2$ and $\epsilon_3$. We refer to these three terms as average points, free points, and distributional closeness respectively. This is because $\epsilon_1$ describes how much information the $\advise$ has about average points in $W_Z$, $\epsilon_2$ considers a small number of points that are more thoroughly described by $\advise$, and $\epsilon_3$ controls the statistical distance between $U_{n, k}$ and $\mathtt{PCode}_{n, k, t, \alpha}$.
+We separately consider $\epsilon_1, \epsilon_2$ and $\epsilon_3$. We refer to these three terms as average points, free points, and distributional closeness respectively. This is because $\epsilon_1$ describes how much information the $\advise$ has about average points in $W_Z$, $\epsilon_2$ considers a small number of points that are more thoroughly described by $\advise$, and $\epsilon_3$ controls the statistical distance between $U_{n, k}$ and $\mathtt{PCode}_{n, k, t, \alpha}$.  We consider parameters in order of simplicity (rather than index ordering).
 
 
 
@@ -168,7 +168,7 @@ This yields
 Recall that $\epsilon_3:=\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n$.  Consider the following settings:
 \begin{description}
 \item[Condition 2] That $\gamma\le \beta-\log{2e}$, which implies $2^{\gamma - \beta} \le \frac{1}{2e}$, and 
-\item[Condition 3] That $k\ge \gamma + \log{n+ \omega(\log{n})}$ which implies $2^{k-\gamma}\ge n+\omega(\log{n})$. 
+\item[Condition 3] For some constant $0<c_{|k|} < 1$, we set $k = \gamma + c_{|k|}n$ which implies $2^{k-\gamma}\ge n+\omega(\log{n})$. 
 \end{description}
 Together, these settings imply that 
 \begin{align*}
@@ -183,8 +183,8 @@ By Lemma~\ref{lem:max fuzz ent} for any $W$ in $\zo^n$ it is true that $\Hfuzz(W
 \le n(1-h_2(t/n)) - \log{2e}\] imposes an additive $\log{2e}$ impact on the maximal fuzzy min-entropy that can be supported. 
 
 
-\subsubsection{Average Points $\epsilon_1$} 
-We now turn to our analysis of $\epsilon_1$.  Recall that \[\log{\epsilon_1}:= -\left(\kappa+\frac{\alpha -\ell}{2^k} - \mu -2k+\log{\nu}\right).\]
+\subsubsection{Average Points - $\epsilon_1$} 
+We now turn to our analysis of $\epsilon_1$.  Recall that $\log{\epsilon_1}:= -\left(\kappa+\frac{\alpha -\ell}{2^k} - \mu -2k+\log{\nu}\right).$
 Recall that 
 \begin{align*}
 (n/k)^k &\le {n\choose k} < ((ne)/k)^k\\
@@ -200,58 +200,55 @@ This implies that
 &\ge  (1+c_{\kappa})\kappa+\frac{(n-k)2^k-2k2^{k}-\ell}{2^k} - nh_2(1/2-t/n)\\
 &>  (1+c_{\kappa})\kappa+\frac{(n-3k)2^k-\ell}{2^k} - nh_2(1/2-t/n) .
 \end{align*}
-
-Below we consider two different parameter settings when one is trying to derive a nontrivial key $\kappa = \omega(\log n)$ and when one is deriving a maximal length key where $\kappa = \Theta(n)$. In both settings, we assume that
+\noindent
+We now focus on showing a parameter setting when $\psi:=\frac{(n-3k)2^k-\ell}{2^k} - nh_2(1/2-t/n)\ge 0$.
 \begin{description}
-\item[Condition 4] For some constant $0<c_{k,1} < 1$, we set $k = \gamma + c_{k,1}n$. 
-\end{description}
-\paragraph{Setting of $\kappa =\omega(\log n)$} 
-\begin{description}
-\item[Condition 5a]
-Let $c_{k,2}$ be some constant such that $c_{k,2}<c_{k,1}$ and assume that 
-\[
-\ell\le 3(c_{k,1}-c_{k,2}) n2^k= 3(c_{k,1}-c_{k,2})n2^{\gamma+c_{k,1}n},
-%n\ge \frac{\ell+k}{2^k(c_{k,1}-c_{k,2})}.
-\]
-\item[Condition 6a] 
+\item[Condition 4]
+Let $0< c_\ell<1$ be a parameter such that 
+$
+\ell\le 3c_{\ell} n2^k,$
+\item[Condition 5] 
 and 
 \[
-\gamma \le \frac{n(1-3c_{k,2} - h_2(1/2-t/n))}{3}.
+\gamma \le \frac{n(1-3c_{|k|} -c_{\ell}- h_2(1/2-t/n))}{3}.
 \]
 \end{description}
 \noindent
 Then it holds that 
 \begin{align*}
-\frac{(n-3k)2^k-\ell}{2^k} - nh_2(1/2-t/n) 
-\ge n(1-3c_{k,2}) - 3\gamma - nh_2(1/2-t/n) \ge 0
+\psi:&=\frac{(n-3k)2^k-\ell}{2^k} - nh_2(1/2-t/n) \\
+&\ge   \frac{(n-3k)2^k-c_{\ell}n2^k}{2^k} - nh_2(1/2-t/n)\\
+&\ge   \frac{(1-3(\gamma/n+c_{|k|}) -c_{\ell}n2^k}{2^k} - nh_2(1/2-t/n)\\
+&\ge n(1-3c_{|k|}-c_{\ell}) - 3\gamma - nh_2(1/2-t/n) \ge 0
 \end{align*}
 which suffices to ensure that 
 \[
-\log{\epsilon_1} \le  -\left((1+c_{\kappa})\kappa+\frac{(n-3k)2^k-\ell}{2^k} - nh_2(1/2-t/n) \right) \le  -(1+c_{\kappa})\kappa = -\omega(\log{n}).
+\log{\epsilon_1} \le  -\left((1+c_{\kappa})\kappa+\psi \right) \le  -(1+c_{\kappa})\kappa = -\omega(\log{n}).
 \]
-\noindent
-Adding the constraint from \textbf{Distributional Closeness}
-this means that 
-\[
-\frac{\gamma}{n} \le \min\left\{(1-h_2(t/n)) - \frac{\log{2e}}{n}, \frac{(1-3c_{k,2} - h_2(1/2-t/n))}{3}\right\}.
-\]
-as long as $\ell\le 3(c_{k,1}-c_{k,2})n2^{\gamma+c_{k,1}n}.$
-
-\paragraph{Setting of $\kappa = \Theta(n)$}
-
-In this setting,
-\begin{description}
-\item[Condition 5b] Set 
+\subsubsection{Overall Parameters}
+Combining Conditions 2 and 5 one obtains a negligible statistical distance as long as for constants $c_\kappa, c_{|k|}, c_{\ell}\in (0,1)$ one has:
 \begin{align*}
-\ell&\le  3(c_{k,1}-c_{k,2})n2^{\gamma+c_{k,1}n}
+\nu &= 2^{c_{\kappa}\kappa},\\
+k &=\gamma + c_{|k|}n,\\
+\ell&\le 3c_{\ell}n2^k,\\
+0\le \frac{\gamma}{n} &\le \min\left\{(1-h_2(t/n)) - \frac{\log{2e}}{n}, \frac{1-3c_{|k|} - c_{\ell}-h_2(1/2-t/n)}{3}\right\}.\\
 \end{align*}
-\item[Condition 6b] Let $c_{\kappa^*} n = \kappa+\log{\nu}$ and 
-\begin{align*}
-\gamma&\le \frac{n}{3}\left(1+c_{\kappa^*} -3c_{k,2}-h_2(1/2-t/n)\right) - \omega(\log{n})
-\end{align*}
-\todo{this needs to be fixed}
-\end{description}
-Together these conditions yield  \[ (1+c_{\kappa})\kappa+\frac{(n-3k)2^k-\ell}{2^k} - nh_2(1/2-t/n) = \omega(\log n)\] 
+%
+%\paragraph{Setting of $\kappa = \Theta(n)$}
+%
+%In this setting,
+%\begin{description}
+%\item[Condition 4b] Set 
+%\begin{align*}
+%\ell&\le  3(c_{k,1}-c_{k,2})n2^{\gamma+c_{k,1}n}
+%\end{align*}
+%\item[Condition 5b] Let $c_{\kappa^*} n = \kappa+\log{\nu}$ and 
+%\begin{align*}
+%\gamma&\le \frac{n}{3}\left(1+c_{\kappa^*} -3c_{k,2}-h_2(1/2-t/n)\right) - \omega(\log{n})
+%\end{align*}
+%\todo{this needs to be fixed}
+%\end{description}
+%Together these conditions yield  \[ (1+c_{\kappa})\kappa+\frac{(n-3k)2^k-\ell}{2^k} - nh_2(1/2-t/n) = \omega(\log n)\] 
 
 \subsection{Proof of Technical Lemmas}
 \label{sec:tech lemmas}
@@ -407,19 +404,20 @@ where $\epsilon' = \epsilon+\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.$
 
 \subsection{Analysis of parameters}
 We assume that $\epsilon\le 1/4$ and $\delta<1/4$.  As before for  
-\[
-\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n = \ngl(n)\]  it suffices 
-\begin{align*}
- \gamma &\le \beta -\log{2e}.\\
-k &\ge \gamma + \log{n+ \omega(\log{n})}.
-\end{align*}
-These two conditions imply that $\epsilon'\le 1/2$ and $-\log{1-\epsilon'}\le 1$.
-We assume that $\nu = 1$.
-As in Section~\ref{ssec:analysis params} the additional constraint that 
-\[
+$
+\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n$ to be negligible it suffices that
+\begin{description}
+\item[Condition 1] That $\gamma \le \beta-\log{2e}.$\footnote{As in Section~\ref{ssec:analysis params} the additional constraint that 
+$
 \gamma \le \beta - \log{2e}
-\le n(1-h_2(t/n)) - \log{2e}\] imposes an additive $\log{2e}$ impact on the maximal fuzzy min-entropy that can be supported. 
-For some arbitrary constant $0<c_1 < 1$ We set $k = \gamma + c_1n$. 
+\le n(1-h_2(t/n)) - \log{2e}$ imposes an additive $\log{2e}$ impact on the maximal fuzzy min-entropy that can be supported. 
+}
+\item[Condition 2] Let $0<c_k<1$ be some arbitrary constant and suppose that $k= \gamma+c_kn$ which implies that $k\ge \gamma + \log{n+\omega(\log{n})}$.
+\end{description}
+These two conditions imply that $\epsilon'\le 1/2$ and $-\log{1-\epsilon'}\le 1$.
+\begin{description}
+\item[Condition 3] That  $\nu = 1$.
+\end{description}
 Define \[\chi: =-\frac{\alpha-|\advise|}{2^k}+1+\mu+2k-\log{\nu}=-\frac{\alpha-|\advise|}{2^k}+1+\mu+2k\]
 We now turn to our analysis of $\chi$.  Recall that $(n/k)^k \le {n\choose k} < ((ne)/k)^k$.  Recalling parameters: 
 \begin{align*}
@@ -433,40 +431,33 @@ This implies that
 &\le - \frac{(n-k)2^k +\log{\nu}-\ell-k}{2^k} +\frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta} + 2k+1,\\
 &\le  -\frac{(n-3k)2^k-\ell-k}{2^k} + \frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta}+1.
 \end{align*}
-Let $0<c_2<c_1$ be an arbitrary constant. We consider two settings for $\delta$ one when $\delta<1/4$ and another when $\delta=0$.
+We consider two settings for $\delta$ one when $\delta<1/4$ and another when $\delta=0$.
 
 \paragraph{Constant error, $\delta<1/4$} 
-As long as 
+As long as for constants $c_k, c_\ell$ one has
 \begin{align*}
-\ell&\le 3(c_1-c_2) n2^k = 3(c_1-c_2)n2^{\gamma+c_1n},\\
+\ell&\le 3c_\ell n2^k,\\
 \delta &< 1/4,\\
-\gamma &\le \frac{n(2h_2(t/n)-1-3c_2 )-2}{3}.
+0\le\frac{\gamma}{n} &\le \min\left\{(1-h_2(t/n)) - \frac{\log{2e}}{n}, \frac{2}{3}h_2(t/n)-\frac{1}{3}-\frac{4c_k+c_\ell}{3}-\frac{2}{3n}\right\}.
 \end{align*} then 
 \begin{align*}
--&\frac{(n-3k)2^k-\ell-k}{2^k} + \frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta}+1\\
+\chi\le-&\frac{(n-3k)2^k-\ell-k}{2^k} + \frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta}+1\\
 &\le -\frac{(n-3k)2^k-\ell-k}{2^k} + \frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta}+1 \\
 &\le -\frac{(n-3k)2^k-\ell-k}{2^k} + 2n(1-h_2(t/n)) +2\\
- &\le -(n-3c_2n - 3\gamma) + 2n(1-h_2(t/n)) +2\\
-&\le -n+3c_2n+3\gamma + 2n(1-h_2(t/n))+2 \\\
-&\le n+3c_2n+3\gamma -2nh_2(t/n))+2 \le 0\\
+ &\le -(n-(4c_k+c_\ell)n - 3\gamma) + 2n(1-h_2(t/n)) +2\\
+&\le -n+(4c_k+c_\ell)n+3\gamma + 2n(1-h_2(t/n))+2 \\\
+&\le n+(4c_k+c_\ell)n+3\gamma -2nh_2(t/n))+2 \le 0\\
 \end{align*}
-Adding the constraint from \textbf{Distributional Closeness}
-this means that 
-\[
-\frac{\gamma}{n} \le \min\left\{(1-h_2(t/n)) - \frac{\log{2e}}{n}, \frac{2}{3}h_2(t/n)-\frac{1}{3}-c_2-\frac{2}{3}n\right\}.
-\]
-suffices to ensure $\tilde{m} \le 4$ if $\ell\le 3(c_1-c_2)n2^{\gamma+c_1n}$ .
+then $\tilde{m} \le 2+2\max\{\chi, \log{2}\} \le 4$.
 
 \paragraph{No error, $\delta=0$}
 When $\delta = 0$ one has
-\[
-\gamma \le \frac{n( h_2(t/n)-3c_2)-1}{3}.\]
-yielding
-\[
-\frac{\gamma}{n} \le \min\left\{(1-h_2(t/n)) - \frac{\log{2e}}{n}, \frac{1}{3}h_2(t/n)-c_2-\frac{1}{3n}\right\}.
-\]
-if $\ell\le 3(c_1-c_2)n2^{\gamma+c_1n}$.
-
+\begin{align*}
+\ell&\le 3c_\ell n2^k,\\
+\delta &< 1/4,\\
+0\le\frac{\gamma}{n} &\le \min\left\{(1-h_2(t/n)) - \frac{\log{2e}}{n}, \frac{1}{3}h_2(t/n)-\frac{4c_k+c_\ell}{3}-\frac{2}{3n}\right\}.
+\end{align*} 
+yielding $\tilde{m}\le 4$.
 \subsection{Proof Overview}
 \begin{proof}[Proof of Theorem~\ref{thm:main theorem ss}]
 
