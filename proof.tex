@@ -155,33 +155,43 @@ We separately consider $\epsilon_1, \epsilon_2$ and $\epsilon_3$. We refer to th
 
 
 
-\subsubsection{Free Points}
-For $\epsilon_2$ to be negligible it suffices that $\nu/2^\kappa$ is negligible.  Note that for the fuzzy extractor to have meaningful security requires $\kappa = \omega(\log{n})$.  We set $\nu = 2^{c_{\kappa}\kappa}$ for some constant $0 < c_{\kappa}<1$ which yields 
+\subsubsection{Free Points - $\epsilon_2$}
+For $\epsilon_2$ to be negligible it suffices that $\nu/2^\kappa$ is negligible.  Note that for the fuzzy extractor to have meaningful security requires $\kappa = \omega(\log{n})$.  We set
+\begin{description}
+\item[Condition 1] $\nu = 2^{c_{\kappa}\kappa}$ for some constant $0 < c_{\kappa}<1$.
+\end{description} 
+This yields 
 \[
-\frac{\nu+1}{2^\kappa} = 2^{(c_{\kappa}-1)\kappa}+ 2^{-\kappa} = \ngl(n).
+\epsilon_2= \frac{\nu+1}{2^\kappa} = 2^{(c_{\kappa}-1)\kappa}+ 2^{-\kappa} = \ngl(n).
 \]
-\subsubsection{Distributional Closeness}
- Lemma~\ref{lem:close family} yields a negligible statistical distance as long as 
+\subsubsection{Distributional Closeness - $\epsilon_3$}
+Recall that $\epsilon_3:=\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n$.  Consider the following settings:
+\begin{description}
+\item[Condition 2] That $\gamma\le \beta-\log{2e}$, which implies $2^{\gamma - \beta} \le \frac{1}{2e}$, and 
+\item[Condition 3] That $k\ge \gamma + \log{n+ \omega(\log{n})}$ which implies $2^{k-\gamma}\ge n+\omega(\log{n})$. 
+\end{description}
+Together, these settings imply that 
 \begin{align*}
-2^{\gamma - \beta} &\le \frac{1}{2e},\\
- \gamma &\le \beta -\log{2e}.\\
-2^{k-\gamma}&\ge n+\omega(\log n)\\
-k &\ge \gamma + \log{n+ \omega(\log{n})}.
+\epsilon_3&=\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n\\
+&\le\left(\frac{1}{2}\right)^{n+\omega(\log{n})}2^n= 2^{-\omega(\log{n})} = \ngl(n).
 \end{align*}
 
-
+\paragraph{Discussion}
 By Lemma~\ref{lem:max fuzz ent} for any $W$ in $\zo^n$ it is true that $\Hfuzz(W) \le n -\log{|B_t|} \le n(1-h_2(t/n))$.  Thus, the additional constraint that 
 \[
-\gamma \le \beta - \log{2e}
+\Hfuzz(W):=\gamma \le \beta - \log{2e}
 \le n(1-h_2(t/n)) - \log{2e}\] imposes an additive $\log{2e}$ impact on the maximal fuzzy min-entropy that can be supported. 
-For some constant $0<c_{k,1} < 1$, we set $k = \gamma + c_{k,1}n$. 
 
-\subsubsection{Average Points} 
-We now turn to our analysis of $\epsilon_1$.  Recall that $(n/k)^k \le {n\choose k} < ((ne)/k)^k$.  Recalling parameters: 
+
+\subsubsection{Average Points $\epsilon_1$} 
+We now turn to our analysis of $\epsilon_1$.  Recall that \[\log{\epsilon_1}:= -\left(\kappa+\frac{\alpha -\ell}{2^k} - \mu -2k+\log{\nu}\right).\]
+Recall that 
 \begin{align*}
+(n/k)^k &\le {n\choose k} < ((ne)/k)^k\\
 \mu&\le nh_2(1/2-t/n),\\
 \alpha &= \log{2^n\choose 2^k} \ge \log{2^{n2^k} /2^{k2^k}} = (n-k)2^k,\\
 \end{align*}
+Recall that $\nu = 2^{c_\kappa \kappa}$.
 This implies that 
 \begin{align*}
 -\log{\epsilon_1}&= \kappa+\frac{\alpha-\ell}{2^k} - \mu -2k+\log{\nu}\\
@@ -191,25 +201,33 @@ This implies that
 &>  (1+c_{\kappa})\kappa+\frac{(n-3k)2^k-\ell}{2^k} - nh_2(1/2-t/n) .
 \end{align*}
 
-Below we consider two different parameter settings when one is trying to derive a nontrivial key $\kappa = \omega(\log n)$ and when one is deriving a maximal length key where $\kappa = \Theta(n)$.
+Below we consider two different parameter settings when one is trying to derive a nontrivial key $\kappa = \omega(\log n)$ and when one is deriving a maximal length key where $\kappa = \Theta(n)$. In both settings, we assume that
+\begin{description}
+\item[Condition 4] For some constant $0<c_{k,1} < 1$, we set $k = \gamma + c_{k,1}n$. 
+\end{description}
 \paragraph{Setting of $\kappa =\omega(\log n)$} 
-Recall that $k = \gamma+c_{k,1}n$. let $c_{k,2}$ be some constant such that $c_{k,2}<c_{k,1}$. Then as long as
+\begin{description}
+\item[Condition 5a]
+Let $c_{k,2}$ be some constant such that $c_{k,2}<c_{k,1}$ and assume that 
 \[
-\ell\le 3(c_{k,1}-c_{k,2}) n2^k= 3(c_{k,1}-c_{k,2})n2^{\gamma+c_{k,1}n}
+\ell\le 3(c_{k,1}-c_{k,2}) n2^k= 3(c_{k,1}-c_{k,2})n2^{\gamma+c_{k,1}n},
 %n\ge \frac{\ell+k}{2^k(c_{k,1}-c_{k,2})}.
 \]
+\item[Condition 6a] 
 and 
 \[
 \gamma \le \frac{n(1-3c_{k,2} - h_2(1/2-t/n))}{3}.
 \]
- then it holds that 
+\end{description}
+\noindent
+Then it holds that 
 \begin{align*}
 \frac{(n-3k)2^k-\ell}{2^k} - nh_2(1/2-t/n) 
 \ge n(1-3c_{k,2}) - 3\gamma - nh_2(1/2-t/n) \ge 0
 \end{align*}
 which suffices to ensure that 
 \[
-\epsilon_1 \le   2^{-\left((1+c_{\kappa})\kappa+\frac{(n-3k)2^k-\ell}{2^k} - nh_2(1/2-t/n) \right)} \le  2^{-(1+c_{\kappa})\kappa} = \ngl(n).
+\log{\epsilon_1} \le  -\left((1+c_{\kappa})\kappa+\frac{(n-3k)2^k-\ell}{2^k} - nh_2(1/2-t/n) \right) \le  -(1+c_{\kappa})\kappa = -\omega(\log{n}).
 \]
 \noindent
 Adding the constraint from \textbf{Distributional Closeness}
@@ -220,12 +238,20 @@ this means that
 as long as $\ell\le 3(c_{k,1}-c_{k,2})n2^{\gamma+c_{k,1}n}.$
 
 \paragraph{Setting of $\kappa = \Theta(n)$}
-In this setting let $c_{\kappa^*} n = \kappa+\log{\nu}$.  Setting 
+
+In this setting,
+\begin{description}
+\item[Condition 5b] Set 
 \begin{align*}
-\ell&\le  3(c_{k,1}-c_{k,2})n2^{\gamma+c_{k,1}n}\\
+\ell&\le  3(c_{k,1}-c_{k,2})n2^{\gamma+c_{k,1}n}
+\end{align*}
+\item[Condition 6b] Let $c_{\kappa^*} n = \kappa+\log{\nu}$ and 
+\begin{align*}
 \gamma&\le \frac{n}{3}\left(1+c_{\kappa^*} -3c_{k,2}-h_2(1/2-t/n)\right) - \omega(\log{n})
 \end{align*}
-yields that \[ (1+c_{\kappa})\kappa+\frac{(n-3k)2^k-\ell}{2^k} - nh_2(1/2-t/n) = \omega(\log n)\] 
+\todo{this needs to be fixed}
+\end{description}
+Together these conditions yield  \[ (1+c_{\kappa})\kappa+\frac{(n-3k)2^k-\ell}{2^k} - nh_2(1/2-t/n) = \omega(\log n)\] 
 
 \subsection{Proof of Technical Lemmas}
 \label{sec:tech lemmas}
