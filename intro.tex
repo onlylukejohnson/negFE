@@ -2,12 +2,21 @@
 
 % Introduction for negFE
 \section{Introduction}
-Infromation reconciliation and privacy amplification are the two fundamental tasks for key derivation from noisy sources.  Applications areas include quantum key agreement, biometrics, and physically uncloneable functions~\cite{bennett1988privacy,dodis2008fuzzy}. Secure sketches perform information reconciliation non-interactively.  They consist of a pair of algorithms sketch or $\sketch$ where $\sketch(w) = ss$ should reveal as little information as possible about $w$ while still allowing one to reconstruct $w$ from a nearby $w'$. That is, it should be the case that for all nearby $w', \rec(w', ss) = w$.  These two properties are in tension because allowing recovery of $w$ requires information about $w$.  Upper bounds on the unpredictability of $w | ss$ are related to the size of the best error-correcting codes~\cite{dodis2008fuzzy,fuller2020computational}. 
+Information reconciliation and privacy amplification are the two fundamental tasks for key derivation from noisy sources.  Applications areas include quantum key agreement, biometrics, and physically uncloneable functions~\cite{bennett1988privacy,dodis2008fuzzy}. \anote{Reader may be confused since they will not know what information reconciliation is.} Secure sketches perform information reconciliation non-interactively.  A Secure Sketch consists of a pair of algorithms \emph{sketch} or $\sketch$ where $\sketch(w) = ss$ should reveal as little information as possible about $w$ while still allowing one to reconstruct $w$ from a nearby $w'$. That is, it should be the case that for all nearby $w', \rec(w', ss) = w$.  These two properties are in tension because allowing recovery of $w$ requires information about $w$.  Upper bounds on the unpredictability of $w | ss$ are related to the size of the best error-correcting codes~\cite{dodis2008fuzzy,fuller2020computational}. \anote{This feels like a very technical introduction. Maybe we can be higher level for the first paragraph?}
 
   Fuzzy extractors additionally perform privacy amplification, converting $w$ into a uniform value.  They consist of a pair $(\gen, \rep$) where $(r, p)\leftarrow \gen(w)$ is indistinguishable from $(u, p)$ and $\rep(w', p) =r$.
 
-Throughout the Introduction, we use the notation of fuzzy extractors and note when there are material differences for secure sketches.
-Since noisy sources come from the physical world the goal is to be able to support as many distributions $W$ as possible.  Fuller, Reyzin, and Smith~\cite{fuller2016fuzzy,fuller2020fuzzy} identified the notion of fuzzy min-entropy $\Hfuzz(W)$ which measures the adversary's success when given oracle access to $\rep(\cdot, p)$ but is unable to learn anything from the value  $p$.  Mathematically, for a distance $t$, specifying which points are nearby, fuzzy min-entropy quantifies the weight of the heaviest ball in the probability mass function of $W$.  That is, 
+  Throughout the Introduction, we use the notation of fuzzy extractors
+  and note when there are material differences for secure sketches.
+  Since noisy sources come from the physical world, an important goal
+  is to be able to support as many distributions $W$ as possible.
+  Fuller, Reyzin, and Smith~\cite{fuller2016fuzzy,fuller2020fuzzy}
+  identified the notion of fuzzy min-entropy $\Hfuzz(W)$ which
+  measures the adversary's success when given oracle access to
+  $\rep(\cdot, p)$ but is unable to learn anything from the value $p$.
+  Mathematically, for a distance $t$, specifying which points are
+  nearby, fuzzy min-entropy quantifies the weight of the heaviest ball
+  in the probability mass function of $W$.  That is,
 \[
 \Hfuzz(W):= -\log{\max_{w'} \sum_{w | \dis(w, w')\le t} \Pr[W=w]}.
 \]A primary goal of fuzzy extractors is to build a single fuzzy extractor that works for the family of all distributions $\Wallfuzz = \{ W | \Hfuzz(W) = \omega(\log \lambda)\}$ for some security parameter $\lambda$.  We call such a fuzzy extractor \emph{universal} as it simultaneously works for any secureable distribution $W$. 
@@ -19,8 +28,8 @@ The situation for information-theoretic security is more complicated.\footnote{F
 
 On the positive side, multiple works~\cite{hayashi2014secret,hayashi2016secret,fuller2016fuzzy,woodage2017new,tyagi2017universal,TVW18,LA18,fuller2019continuous,fuller2020fuzzy} presented a construction that works for each $W_Z\in \Wallfuzz$.  This is called the \emph{distribution-sensitive} setting as $\gen$ also knows the entire probability mass function $Z$ of the chosen $W_Z$, denoted as $\gen_{W_Z}, \rec_{W_Z}$.  All constructions in this line are computationally inefficient; for an input point $w$ they look up the probability that $\Pr[W_Z=w]$ and the probability of points $w'$ where $\dis(w, w')\le t$.  
 %Thus, there is a large gap between the state of affairs with computational and information-theoretic security.  With computational security, universal fuzzy extractors are possible.  With information-theoretic security universal fuzzy extractors are impossible.  Furthermore, known distribution-sensitive fuzzy extractors require information about $W$ proportional to its description.  
-We show this inefficiency is inherent:
 
+We show this inefficiency is unavoidable:
 \begin{displayquote}
 \textbf{Any distribution-sensitive information-theoretic fuzzy extractor requires an exponential amount of information about the distribution $W$.  For most distributions $W \in \Wallfuzz$, a distribution-sensitive fuzzy extractor cannot be efficiently implemented.} 
 \end{displayquote} 
@@ -39,12 +48,18 @@ There are (at least) two natural interpretations of the above result: 1) that fu
 One of the principal components of a fuzzy extractor is privacy amplification where smooth conditional min-entropy is a necessary and sufficient condition.  This places efficient privacy amplification as an information-theoretic object.  However, the gap between necessary and sufficient conditions for efficient primitives that perform information reconciliation appears much wider. The only known \emph{efficient} constructions for information reconciliation fall into one of two categories:
 \begin{description}
 \item[High entropy] If the source $W$ has high entropy $\Hoo(W)\ge \omega(\log n) + \log{|B_t|}|$ (where $|B_t|$ is the size of a Hamming ball of radius $t$) then one can build a good secure sketch by writing down the syndrome of an error correcting code which corrects $t$ errors.  This syndrome construction  leaks at least $\log{|B_t|}$ bits of information about $W$.\footnote{A construction that leaks only $\log{|B_t|}$ bits about $W$ requires a perfect code which are rarely achievable.}  Unfortunately, this construction provides no guarantee when $\Hoo(W)< \log{|B_t|}$ which is the case for biometrics, see \cite[Proposition 1]{canetti2021reusable} and \cite[Introduction]{simhadri2019cryptographic}.
-\item[Highly structured] Sources where each bit is i.i.d.\,can be analyzed using Shannon entropy.  In this setting, key rate asymptotically approaches $\Hfuzz(W)$ if one assumes the second reading $w'$ will be uniformly distributed in the ball around the first reading~\cite[Theorem 2]{tuyls2004capacity}.  Unfortunately, dimensions of real-physical sources are rarely i.i.d.~\cite{daugman2004}.
+\item[Highly structured] Sources where each bit is i.i.d.\ can be analyzed using Shannon entropy.  In this setting, key rate asymptotically approaches $\Hfuzz(W)$ if one assumes the second reading $w'$ will be uniformly distributed in the ball around the first reading~\cite[Theorem 2]{tuyls2004capacity}.  Unfortunately, coordinates of real-physical sources are rarely i.i.d.~\cite{daugman2004}.
 \end{description}
 
-There isn't an obvious sufficient condition to use instead of fuzzy min-entropy.  Various weaker structured conditions have been used in the computational regime but with little evidence that physical sources have these properties~\cite[Figure 1]{demarest2021code} and \cite{simhadri2019cryptographic}. A desirable research direction is to find statistical properties found by physical sources that bypass our negative results. 
+Unfortunately, there isn't an obvious sufficient condition to adopt
+rather than fuzzy min-entropy.  Various weaker structured conditions
+have been used in the computational regime but with little evidence
+that physical sources have these properties~\cite[Figure
+1]{demarest2021code} and \cite{simhadri2019cryptographic}. A desirable
+research direction is to find statistical properties found by physical
+sources that bypass our negative results.
 
-\paragraph{Fuzzy extractors are computational objects} The other natural explanation of the result is that non-interactive information-reconciliation should be considered a computational object. This is our preferred interpretation since one can build universal (and efficient) fuzzy extractors if computational security suffices.  We note that the only known constructions assume either general obfuscation~\cite{BarakBCKPS13,BitanskyCKP14,bitansky2017virtual} or specific number-theoretic assumptions that are not well studied~\cite{galbraith2019obfuscated}. Thus, an important piece of research is to understand the required assumptions to build efficient, universal fuzzy extractors with computational security. 
+\paragraph{Fuzzy extractors are computational objects} The other natural explanation of the result is that non-interactive information-reconciliation should be considered a computational object. This is our preferred interpretation since one can build universal (and efficient) fuzzy extractors if computational security suffices.  We note that the only known constructions assume either general obfuscation~\cite{BarakBCKPS13,BitanskyCKP14,bitansky2017virtual} or specific number-theoretic assumptions that are not well studied~\cite{galbraith2019obfuscated}. Thus, an important direction of research is to understand the required assumptions to build efficient, universal fuzzy extractors with computational security. 
 
 \begin{figure}[t]
 \centering
@@ -54,7 +69,7 @@ There isn't an obvious sufficient condition to use instead of fuzzy min-entropy.
 \end{figure}
 
 \subsection{Proof Techniques}
-Our results are information-theoretic in nature. Recall that we consider a family of distributions $\mathcal{W}$ and use $W_Z$ to denote sampling a random distribution from $\mathcal{W}$ with $Z$ describing the distribution.  Lastly, we use $w\leftarrow W_Z$ to denote sampling a point from the distribution.  We show the impossibility of two types of fuzzy extractors:
+Our results are information-theoretic. Recall that we consider a family of distributions $\mathcal{W}$ and use $W_Z$ to denote sampling a random distribution from $\mathcal{W}$ with $Z$ describing the distribution.  Lastly, we use $w\leftarrow W_Z$ to denote sampling a point from the distribution.  We show the impossibility of two types of fuzzy extractors:
 \begin{description}
 \item[Def.~\ref{def:fe distributional}] (Universal) Fuzzy extractors with distributional advice.  This is triple of algorithms $(\advise, \gen, \rep)$ designed to work for all $W_Z \in \mathcal{W}$ where $\mathcal{W}$ consists of all distributions with a certain amount of fuzzy min-entropy for a fixed error tolerance $t$.  However, the fuzzy extractor is given information about $Z$.  Namely, there is a deterministic algorithm $\advise = \advise(Z)$. Then both $\gen$ and $\rep$ are given $\advise$. $\gen(w, \advise)$ has to produce a uniform key.  All information about $Z$ given to $\gen$ is contained in $\advise$ and the point $w$.
 \item[Def.~\ref{def:fe}] Space bounded fuzzy extractors for a specific distribution $W$ are required to have a bounded size description of $(\gen, \rep)$.
@@ -104,3 +119,9 @@ Our secure sketch result also considers an object that retains smooth conditiona
 
 
 \paragraph{Organization} The rest of this work is organized as follows, Section~\ref{sec:prelim} covers preliminaries including the relevant definitions of fuzzy extractors and secure sketches.  Section~\ref{sec:fe} presents the negative result for fuzzy extractors including a proof outline, and Section~\ref{sec:ss} presents the negative result for secure sketches.
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:
