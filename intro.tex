@@ -33,24 +33,24 @@ On the positive side, multiple works~\cite{hayashi2014secret,hayashi2016secret,f
 
 We show this inefficiency is unavoidable:
 \begin{displayquote}
-\textbf{Any distribution-sensitive information-theoretic fuzzy extractor requires an exponential amount of information about the distribution $W$.  For most distributions $W \in \Wallfuzz$, a distribution-sensitive fuzzy extractor cannot be efficiently implemented.} 
+\textbf{Any distribution-sensitive information-theoretic fuzzy extractor requires an exponential amount of information about the distribution $W$.  A distribution-sensitive fuzzy extractor cannot be efficiently implemented for most distributions $W \in \Wallfuzz$.} 
 \end{displayquote} 
 Our results are for the Hamming metric over $\zo^n$. Below we present the two informal theorems for fuzzy extractors (see Theorem~\ref{thm:main theorem}) and secure sketches (see Theorem~\ref{thm:main theorem ss}) respectively.  For a value $p\in [0,1]$ let $h_2$ be the binary entropy of $p$. 
 
 \begin{theorem}[Informal Theorem~\ref{thm:main theorem}]
-Consider $\zo^n$ and $t< n/2$ be a distance parameter.  Let $\mathcal{W}$ be the set of all distributions with fuzzy min-entropy $\gamma$ for distances $t$.  Let $c>0$ be a constant if \[
+Consider $\zo^n$ and $t< n/2$ be a distance parameter.  Let $\mathcal{W}$ be the set of all distributions with fuzzy min-entropy $\gamma$ for distances $t$.  Let $c>0$ be a constant and suppose that \[
 \gamma \le n\cdot\min\left\{(1-h_2(t/n)) - \Theta\left(\frac{1}{n}\right), \frac{1-\Theta(c)-h_2(1/2-t/n)}{3}\right\}.
 \]
- For a quarter of $W \in \mathcal{W}$ there is no fuzzy extractor with no error of size at most $2^{\gamma+cn}$ for $W$ with statistical distance less than $1/3-\ngl(n)$.
+ For a quarter of $W \in \mathcal{W}$ there is no fuzzy extractor that simultaneously has 1) no error 2) is of size at most $2^{\gamma+cn}$ 3) extracts keys of length $\omega(\log n)$ that are within statistical distance $1/3-\ngl(n)$ to a uniform key.
 \end{theorem}
 
 \begin{theorem}[Informal Theorem~\ref{thm:main theorem ss}]
-Consider $\zo^n$ and $t< n/2$ be a distance parameter.  Let $\mathcal{W}$ be the set of all distributions with fuzzy min-entropy $\gamma$ for distances $t$.  Let $\delta<1/4$ be the error of the secure sketch, let $c>0$ be a constant if \[
+Consider $\zo^n$ and $t< n/2$ be a distance parameter.  Let $\mathcal{W}$ be the set of all distributions with fuzzy min-entropy $\gamma$ for distances $t$.  Let $\delta<1/4$ be the error of the secure sketch, let $c>0$ be a constant and suppose that \[
 \gamma \le n\cdot\min\left\{(1-h_2(t/n)) - \Theta\left(\frac{1}{n}\right), \frac{c_\delta}{3}h_2(t/n)-\Theta(c)-\Theta(1/n)\right\}.
 \]
 where $1/3< c_\delta <2/3$ and depends on $h_2(\delta)$. 
  For a quarter of $W \in \mathcal{W}$ there is no secure sketch of
-size of at most $2^{\gamma+cn}$, and
+size of at most $2^{\gamma+cn}$ that
  retains unpredictability of $w|ss$ of at  least $4$.
 \end{theorem}
 
