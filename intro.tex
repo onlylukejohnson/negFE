@@ -4,14 +4,16 @@
 \section{Introduction}
 Information reconciliation and privacy amplification are the two fundamental tasks for key derivation from noisy sources.  Roughly information-reconciliation takes two correlated distributions $w$ and $w'$ and maps them to the same value while minimizing what is leaked about that value.  Privacy amplification converts the uncertainty in this mapped value to a uniform value suitable for cryptography.  Applications areas include quantum key agreement, biometrics, and physically uncloneable functions~\cite{bennett1988privacy,dodis2008fuzzy}. 
 
-Secure sketches perform information reconciliation non-interactively.  A Secure Sketch consists of a pair of algorithms \emph{sketch} or $\sketch$ where $\sketch(w) = ss$ should reveal as little information as possible about $w$ while still allowing one to reconstruct $w$ from a nearby $w'$. That is, it should be the case that for all nearby $w', \rec(w', ss) = w$.  These two properties are in tension because allowing recovery of $w$ requires information about $w$.  Upper bounds on the unpredictability of $w | ss$ are related to the size of the best error-correcting codes~\cite{dodis2008fuzzy,fuller2020computational}. \anote{This feels like a very technical introduction. Maybe we can be higher level for the first paragraph?}
+Secure sketches perform information reconciliation non-interactively.  A Secure Sketch consists of a pair of algorithms \emph{sketch} or $\sketch$ where $\sketch(w) = ss$ should reveal as little information as possible about $w$ while still allowing one to reconstruct $w$ from a nearby $w'$. That is, it should be the case that for all nearby $w', \rec(w', ss) = w$.  These two properties are in tension because allowing recovery of $w$ requires information about $w$.  The most natural (inefficient) construction is for $ss$ to be a hash of $w$~\cite{skoric2009efficient,fuller2016fuzzy,woodage2017new,fuller2020fuzzy}. The hash should be long enough to identify which neighbor of $w'$ should be decoded and short enough to not allow full recovery of $w$. Constructions are known based on error-correcting codes.  In fact, upper bounds on the unpredictability of $w | ss$ are related to the size of the best error-correcting codes~\cite{dodis2008fuzzy,fuller2020computational}. 
 
-  Fuzzy extractors additionally perform privacy amplification, converting $w$ into a uniform value.  They consist of a pair $(\gen, \rep$) where $(r, p)\leftarrow \gen(w)$ is indistinguishable from $(u, p)$ and $\rep(w', p) =r$.
-
+Given a good information reconciliation, one can achieve privacy amplification using a randomness extractor~\cite{nisan1993randomness} to convert $w$ into a uniform value.
+  Fuzzy extractors perform both tasks simultaneously.  They consist of a pair $(\gen, \rep$) where $(r, p)\leftarrow \gen(w)$ is indistinguishable from $(u, p)$ and $\rep(w', p) =r$.
+  
+  
+Since noisy sources come from the physical world, an important goal
+  is to be able to support as many distributions $W$ as possible. This goal is the focus of this work. 
   Throughout the Introduction, we use the notation of fuzzy extractors
   and note when there are material differences for secure sketches.
-  Since noisy sources come from the physical world, an important goal
-  is to be able to support as many distributions $W$ as possible.
   Fuller, Reyzin, and Smith~\cite{fuller2016fuzzy,fuller2020fuzzy}
   identified the notion of fuzzy min-entropy $\Hfuzz(W)$ which
   measures the adversary's success when given oracle access to
@@ -26,14 +28,14 @@ If one desires computational security, a universal fuzzy extractor is achievable
 
 
 The situation for information-theoretic security is more complicated.\footnote{Fuzzy extractors were first designed as an information-theoretic primitive because of strong connections to randomness extraction and coding theory.  Many constructions consist of an information-theoretic secure sketch and a (computational) randomness extractor.  The secure sketch is analyzed using information-theoretic techniques.  Computational tools are used primarily to amplify privacy~\cite{wen2018robustly,wen2019generic}.  (Exceptions exist such as the universal constructions listed above and constructions for distributions with additional properties~\cite{apon2017efficient,alamelou2018pseudoentropic,fuller2020computational,canetti2021reusable}.)
-}  Fuller, Reyzin, and Smith~\cite{fuller2020fuzzy} showed that it is impossible to build a universal fuzzy extractor with information-theoretic security.  More precisely, they constructed a family of distributions $\mathcal{W}'$ and showed that any fuzzy extractor $(\gen, \rep)$ must be insecure for an average member of $\mathcal{W}'$. We use the notation $W_Z$ to indicate uniform sampling from the family $\mathcal{W}'$ with $Z$ describing the chosen distribution. \anote{The reader may misunderstand. I would actually say out load that there is an index set from which $Z$ is drawn uniformly.} Importantly, in the impossibility result, the adversary knows the entire description of the chosen distribution $Z$ but not the individual point $w$ that was input to $\gen$.
+}  Fuller, Reyzin, and Smith~\cite{fuller2020fuzzy} showed that it is impossible to build a universal fuzzy extractor with information-theoretic security.  More precisely, they constructed a family of distributions $\mathcal{W}'$ and showed that any fuzzy extractor $(\gen, \rep)$ must be insecure for an average member of $\mathcal{W}'$. Let $Z$ describe a uniformly chosen index in $\mathcal{W'}$, we use the notation $W_Z$ to indicate uniform sampling from the family $\mathcal{W}'$ with $Z$ describing the particular outcome. Importantly, in the impossibility result, the adversary knows the entire description of the chosen distribution $Z$ but not the individual point $w$ that was input to $\gen$.
 
 On the positive side, multiple works~\cite{hayashi2014secret,hayashi2016secret,fuller2016fuzzy,woodage2017new,tyagi2017universal,TVW18,LA18,fuller2019continuous,fuller2020fuzzy} presented a construction that works for each $W_Z\in \Wallfuzz$.  This is called the \emph{distribution-sensitive} setting as $\gen$ also knows the entire probability mass function $Z$ of the chosen $W_Z$, denoted as $\gen_{W_Z}, \rec_{W_Z}$.  All constructions in this line are computationally inefficient; for an input point $w$ they look up the probability that $\Pr[W_Z=w]$ and the probability of points $w'$ where $\dis(w, w')\le t$.  
 %Thus, there is a large gap between the state of affairs with computational and information-theoretic security.  With computational security, universal fuzzy extractors are possible.  With information-theoretic security universal fuzzy extractors are impossible.  Furthermore, known distribution-sensitive fuzzy extractors require information about $W$ proportional to its description.  
 
 We show this inefficiency is unavoidable:
 \begin{displayquote}
-\textbf{Any distribution-sensitive information-theoretic fuzzy extractor requires an exponential amount of information about the distribution $W$.  A distribution-sensitive fuzzy extractor cannot be efficiently implemented for most distributions $W \in \Wallfuzz$.} 
+\textbf{Any distribution-sensitive information-theoretic fuzzy extractor requires an exponential amount of information about the distribution $W$.} 
 \end{displayquote} 
 Our results are for the Hamming metric over $\zo^n$. Below we present the two informal theorems for fuzzy extractors (see Theorem~\ref{thm:main theorem}) and secure sketches (see Theorem~\ref{thm:main theorem ss}) respectively.  For a value $p\in [0,1]$ let $h_2$ be the binary entropy of $p$. 
 
@@ -70,9 +72,9 @@ In spirit, our result rules out constructions that do not have a full descriptio
 There are (at least) two natural interpretations of the above result: 1) that fuzzy min-entropy does not measure the suitability of distributions for key derivation or 2) that efficient fuzzy extractors are an inherently computational object.
 
 \paragraph{The notion of fuzzy min-entropy}
-One of the principal components of a fuzzy extractor is privacy amplification where smooth conditional min-entropy is a necessary and sufficient condition.  This places efficient privacy amplification as an information-theoretic object. \anote{Alternate: This rather precisely characterizes the regime
+One of the principal components of a fuzzy extractor is privacy amplification where smooth conditional min-entropy is a necessary and sufficient condition.  This rather precisely characterizes the regime
 of feasibility for efficient privacy amplification as an
-information-theoretic task.}  However, the gap between necessary and sufficient conditions for \emph{efficient} primitives that perform information reconciliation appears much wider. The only known efficient constructions for information reconciliation fall into one of two categories:
+information-theoretic task.  However, the gap between necessary and sufficient conditions for \emph{efficient} primitives that perform information reconciliation appears much wider. The only known efficient constructions for information reconciliation fall into one of two categories:
 \begin{description}
 \item[High entropy] If the source $W$ has high entropy $\Hoo(W)\ge \omega(\log n) + \log{|B_t|}|$ (where $|B_t|$ is the size of a Hamming ball of radius $t$) then one can build a good secure sketch by writing down the syndrome of an error correcting code which corrects $t$ errors.  This syndrome construction  leaks at least $\log{|B_t|}$ bits of information about $W$.\footnote{A construction that leaks only $\log{|B_t|}$ bits about $W$ requires a perfect code which are rarely achievable.}  Unfortunately, this construction provides no guarantee when $\Hoo(W)< \log{|B_t|}$ which is the case for biometrics, see \cite[Proposition 1]{canetti2021reusable} and \cite[Introduction]{simhadri2019cryptographic}.
 \item[Highly structured] Sources where each bit is i.i.d.\ can be analyzed using Shannon entropy.  In this setting, key rate asymptotically approaches $\Hfuzz(W)$ if one assumes the second reading $w'$ will be uniformly distributed in the ball around the first reading~\cite[Theorem 2]{tuyls2004capacity}.  Unfortunately, coordinates of real-physical sources are rarely i.i.d.~\cite{daugman2004}.
@@ -97,7 +99,11 @@ describing the distribution. \anote{I am confused by this, is $W_Z$ a distributi
 denote sampling a point from the distribution.  We show the
 impossibility of two types of fuzzy extractors:
 \begin{description}
-\item[Def.~\ref{def:fe distributional}] (Universal) Fuzzy extractors with distributional advice.  This is triple of algorithms $(\advise, \gen, \rep)$ designed to work for all $W_Z \in \mathcal{W}$ where $\mathcal{W}$ consists of all distributions with a certain amount of fuzzy min-entropy for a fixed error tolerance $t$.  However, the fuzzy extractor is given information about $Z$.  Namely, there is a deterministic algorithm $\advise = \advise(Z)$. Then both $\gen$ and $\rep$ are given $\advise$. $\gen(w, \advise)$ has to produce a uniform key.  All information about $Z$ given to $\gen$ is contained in $\advise$ and the point $w$. \anote{This confused me. If the result has to be uniform, then it's the support that is changing? And...I think it maybe more confusing than explanatory to say that it doesn't have a back channel that gives it more information about $Z$.}
+\item[Def.~\ref{def:fe distributional}] (Universal) Fuzzy extractors with distributional advice.  This is triple of algorithms $(\advise, \gen, \rep)$ designed to work for all $W_Z \in \mathcal{W}$ where $\mathcal{W}$ consists of all distributions with a certain amount of fuzzy min-entropy for a fixed error tolerance $t$.  However, the fuzzy extractor is given information about $Z$.  Namely, there is a deterministic algorithm $\advise = \advise(Z)$. Then both $\gen$ and $\rep$ are given $\advise$. Define $w\leftarrow W_Z$ and $(r, p) \leftarrow \gen(w, \advise)$, it should be true that 
+\[
+(r, p, Z) \approx (U, p, Z).
+\]
+Note that $\gen$ All information about $Z$ given to $\gen$ is contained in $\advise$ and the point $w$.
 \item[Def.~\ref{def:fe}] Space bounded fuzzy extractors for a specific distribution $W$ are required to have a bounded size description of $(\gen, \rep)$.
 \end{description}
 
