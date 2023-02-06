@@ -396,7 +396,7 @@ Let $\gamma \in\mathbb{R}^+, n, \kappa, t, \ell, \gamma \in\mathbb{Z}^+$ be para
 \end{enumerate}
 For half of the distributions $W\in \mathtt{PCode}_{n, k, t, \gamma}^{*}$ there is no $(\{0,1\}^n, W, \tilde{m}, t, \epsilon,\delta, \ell)$-secure sketch for 
 \[
-\tilde{m}\ge  -\log{1-\epsilon'} +1 + 2\max\left\{-\frac{\alpha-|\advise|}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.
+\tilde{m}\ge  -\log{1-\epsilon'} +1 + 2\max\left\{-\frac{\alpha-\ell}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.
 \]
 where $\epsilon' = \epsilon+\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.$
 \label{thm:main theorem ss}
@@ -418,7 +418,7 @@ These two conditions imply that $\epsilon'\le 1/2$ and $-\log{1-\epsilon'}\le 1$
 \begin{description}
 \item[Condition 3] That  $\nu = 1$.
 \end{description}
-Define \[\chi: =-\frac{\alpha-|\advise|}{2^k}+1+\mu+2k-\log{\nu}=-\frac{\alpha-|\advise|}{2^k}+1+\mu+2k\]
+Define \[\chi: =-\frac{\alpha-\ell}{2^k}+1+\mu+2k-\log{\nu}=-\frac{\alpha-|\advise|}{2^k}+1+\mu+2k\]
 We now turn to our analysis of $\chi$.  Recall that $(n/k)^k \le {n\choose k} < ((ne)/k)^k$.  Recalling parameters: 
 \begin{align*}
 \mu&\le \frac{(n(1-h_2(t/n)) +h_2(2\delta))}{(2\delta)},\\

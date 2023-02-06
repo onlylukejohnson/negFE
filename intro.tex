@@ -2,7 +2,9 @@
 
 % Introduction for negFE
 \section{Introduction}
-Information reconciliation and privacy amplification are the two fundamental tasks for key derivation from noisy sources.  Applications areas include quantum key agreement, biometrics, and physically uncloneable functions~\cite{bennett1988privacy,dodis2008fuzzy}. \anote{Reader may be confused since they will not know what information reconciliation is.} Secure sketches perform information reconciliation non-interactively.  A Secure Sketch consists of a pair of algorithms \emph{sketch} or $\sketch$ where $\sketch(w) = ss$ should reveal as little information as possible about $w$ while still allowing one to reconstruct $w$ from a nearby $w'$. That is, it should be the case that for all nearby $w', \rec(w', ss) = w$.  These two properties are in tension because allowing recovery of $w$ requires information about $w$.  Upper bounds on the unpredictability of $w | ss$ are related to the size of the best error-correcting codes~\cite{dodis2008fuzzy,fuller2020computational}. \anote{This feels like a very technical introduction. Maybe we can be higher level for the first paragraph?}
+Information reconciliation and privacy amplification are the two fundamental tasks for key derivation from noisy sources.  Roughly information-reconciliation takes two correlated distributions $w$ and $w'$ and maps them to the same value while minimizing what is leaked about that value.  Privacy amplification converts the uncertainty in this mapped value to a uniform value suitable for cryptography.  Applications areas include quantum key agreement, biometrics, and physically uncloneable functions~\cite{bennett1988privacy,dodis2008fuzzy}. 
+
+Secure sketches perform information reconciliation non-interactively.  A Secure Sketch consists of a pair of algorithms \emph{sketch} or $\sketch$ where $\sketch(w) = ss$ should reveal as little information as possible about $w$ while still allowing one to reconstruct $w$ from a nearby $w'$. That is, it should be the case that for all nearby $w', \rec(w', ss) = w$.  These two properties are in tension because allowing recovery of $w$ requires information about $w$.  Upper bounds on the unpredictability of $w | ss$ are related to the size of the best error-correcting codes~\cite{dodis2008fuzzy,fuller2020computational}. \anote{This feels like a very technical introduction. Maybe we can be higher level for the first paragraph?}
 
   Fuzzy extractors additionally perform privacy amplification, converting $w$ into a uniform value.  They consist of a pair $(\gen, \rep$) where $(r, p)\leftarrow \gen(w)$ is indistinguishable from $(u, p)$ and $\rep(w', p) =r$.
 
@@ -33,9 +35,32 @@ We show this inefficiency is unavoidable:
 \begin{displayquote}
 \textbf{Any distribution-sensitive information-theoretic fuzzy extractor requires an exponential amount of information about the distribution $W$.  For most distributions $W \in \Wallfuzz$, a distribution-sensitive fuzzy extractor cannot be efficiently implemented.} 
 \end{displayquote} 
-Our results are for the Hamming metric over $\zo^n$. We show that for most distributions $W$ where $\Hfuzz(W) := \gamma$ building a good fuzzy extractor requires having approximately $\gamma 2^\gamma$ bits of information about the distribution.\footnote{To be more precise,  we consider distributions that have $2^k$ points where $k = \gamma + c n$ for an arbitrary constant $c>0$.}
-\anote{I think that our level of approximation doesn't make the leading factor of $\gamma$ relevant--does it?} The relevant parameter regimes of impossibility are shown in Figure~\ref{fig:param regime}.  The two most important parameters are the noise rate $t/n$ and the fuzzy entropy rate $\gamma/n$. The area under the curves represents parameters where the construction is impossible for an average distribution with those parameters unless one has an exponential amount of information about the distribution.  All results hold for a constant fraction of the distributions with the presented parameters.
+Our results are for the Hamming metric over $\zo^n$. Below we present the two informal theorems for fuzzy extractors (see Theorem~\ref{thm:main theorem}) and secure sketches (see Theorem~\ref{thm:main theorem ss}) respectively.  For a value $p\in [0,1]$ let $h_2$ be the binary entropy of $p$. 
 
+\begin{theorem}[Informal Theorem~\ref{thm:main theorem}]
+Consider $\zo^n$ and $t< n/2$ be a distance parameter.  Let $\mathcal{W}$ be the set of all distributions with fuzzy min-entropy $\gamma$ for distances $t$.  Let $c>0$ be a constant if \[
+\gamma \le n\cdot\min\left\{(1-h_2(t/n)) - \Theta\left(\frac{1}{n}\right), \frac{1-\Theta(c)-h_2(1/2-t/n)}{3}\right\}.
+\]
+ For a quarter of $W \in \mathcal{W}$ there is no fuzzy extractor with no error of size at most $2^{\gamma+cn}$ for $W$ with statistical distance less than $1/3-\ngl(n)$.
+\end{theorem}
+
+\begin{theorem}[Informal Theorem~\ref{thm:main theorem ss}]
+Consider $\zo^n$ and $t< n/2$ be a distance parameter.  Let $\mathcal{W}$ be the set of all distributions with fuzzy min-entropy $\gamma$ for distances $t$.  Let $\delta<1/4$ be the error of the secure sketch, let $c>0$ be a constant if \[
+\gamma \le n\cdot\min\left\{(1-h_2(t/n)) - \Theta\left(\frac{1}{n}\right), \frac{c_\delta}{3}h_2(t/n)-\Theta(c)-\Theta(1/n)\right\}.
+\]
+where $1/3< c_\delta <2/3$ and depends on $h_2(\delta)$. 
+ For a quarter of $W \in \mathcal{W}$ there is no secure sketch of
+size of at most $2^{\gamma+cn}$, and
+ retains unpredictability of $w|ss$ of at  least $4$.
+\end{theorem}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=.9\textwidth]{EntropyvsError.jpg}
+\caption{The region of error rate $t/n$ ($x$-axis) and fuzzy entropy rate $\gamma/n$ (y-axis) pairs for which the two negative results apply.  The six curves are maximum fuzzy min-entropy $\gamma/n = (1-h_2(t/n))$, Theorem~\ref{thm:main theorem}, Theorem~\ref{thm:main theorem ss} with $\delta=.25$,  Theorem~\ref{thm:main theorem ss} with $\delta =0$, \cite[Theorem 5.1]{fuller2020fuzzy} and \cite[Theorem 7.2]{fuller2020fuzzy}. The parameter $\delta$ is how frequently the secure sketch is allowed to be incorrect.  We consider fuzzy extractors with perfect correctness where $\delta=0$.}
+\label{fig:param regime}
+\end{figure}
+ The relevant parameter regimes of impossibility are shown in Figure~\ref{fig:param regime}.  The two most important parameters are the noise rate $t/n$ and the fuzzy entropy rate $\gamma/n$. The area under the curves represents parameters where the construction is impossible for an average distribution with those parameters unless one has an exponential amount of information about the distribution.  All results hold for a constant fraction of the distributions with the presented parameters.
 In spirit, our result rules out constructions that do not have a full description of the probability mass function written in their description.  Our results do not restrict the running time or size of the fuzzy extractor algorithms, only how much information is known about the distribution $W$ being secured.  
 
 
@@ -63,12 +88,6 @@ sources that bypass our negative results.
 
 \paragraph{Fuzzy extractors are computational objects} The other natural explanation of the result is that non-interactive information-reconciliation should be considered a computational object. This is our preferred interpretation since one can build universal (and efficient) fuzzy extractors if computational security suffices.  We note that the only known constructions assume either general obfuscation~\cite{BarakBCKPS13,BitanskyCKP14,bitansky2017virtual} or specific number-theoretic assumptions that are not well studied~\cite{galbraith2019obfuscated}. Thus, an important direction of research is to understand the required assumptions to build efficient, universal fuzzy extractors with computational security. 
 
-\begin{figure}[t]
-\centering
-\includegraphics[width=.9\textwidth]{EntropyvsError.jpg}
-\caption{The region of error rate $t/n$ ($x$-axis) and fuzzy entropy rate $\gamma/n$ (y-axis) pairs for which the two negative results apply.  The six curves are maximum fuzzy min-entropy $\gamma/n = (1-h_2(t/n))$, Theorem~\ref{thm:main theorem}, Theorem~\ref{thm:main theorem ss} with $\delta=.25$,  Theorem~\ref{thm:main theorem ss} with $\delta =0$, \cite[Theorem 5.1]{fuller2020fuzzy} and \cite[Theorem 7.2]{fuller2020fuzzy}. The parameter $\delta$ is how frequently the secure sketch is allowed to be incorrect.  We consider fuzzy extractors with perfect correctness where $\delta=0$.}
-\label{fig:param regime}
-\end{figure}
 
 \subsection{Proof Techniques}
 Our results are information-theoretic. As discussed above, we shall
