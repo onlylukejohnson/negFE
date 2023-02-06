@@ -133,7 +133,7 @@ For metric space $(\{0,1\}^n, \dis)$, a $(\{0,1\}^n, \mathcal{W}, \tilde{m}, t, 
 \begin{enumerate} 
 \itemsep0em
 \item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, let $\Pr_{ss \leftarrow \sketch(w)}[\rec(w', ss) = w]\ge 1-\delta.$
-\item \textbf{Security} Let $\aux$ be a deterministic function with output in $\zo^\ell$.  For all distributions $W_Z \in \mathcal{W}$, define $\advise_Z:= \aux(Z)$ and let $ss \leftarrow \sketch(W_Z, \advise_Z)$. Then,
+\item \textbf{Security} Let $\aux$ be a deterministic function with output in $\zo^\ell$.  For all distributions $W_Z \in \mathcal{W}$, define $\advice_Z:= \aux(Z)$ and let $ss \leftarrow \sketch(W_Z, \advice_Z)$. Then,
 $
 \expe_{Z} [\Haveps(W_Z| ss)] \ge \tilde{m}.
 $
@@ -148,7 +148,7 @@ For metric space $(\{0,1\}^n, \dis)$, a $(\{0,1\}^n, \mathcal{W}, \kappa, t, \ep
 \begin{enumerate} 
 \itemsep0em
 \item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, let $\Pr_{(r, p) \leftarrow \gen(w)}[\rep(w', p) = r]=1.$
-\item \textbf{Security} Let $\aux$ be a deterministic function with output in $\zo^\ell$.  For a distribution $W_Z \in \mathcal{W}$, define $\advise_Z:= \aux(Z)$, let $(R, P) \leftarrow \gen(W, \advise_Z)$ and $U_\kappa$ be a uniformly distributed random variable over $\zo^\kappa$ it holds that $\Delta((R, P, Z), (U_\kappa, P, Z))\le \epsilon.$
+\item \textbf{Security} Let $\aux$ be a deterministic function with output in $\zo^\ell$.  For a distribution $W_Z \in \mathcal{W}$, define $\advice_Z:= \aux(Z)$, let $(R, P) \leftarrow \gen(W, \advice_Z)$ and $U_\kappa$ be a uniformly distributed random variable over $\zo^\kappa$ it holds that $\Delta((R, P, Z), (U_\kappa, P, Z))\le \epsilon.$
 \end{enumerate}
 \end{definition}
 
@@ -158,17 +158,17 @@ Let $\mathcal{W}$ be a distribution family indexed by the set $Z$ and suppose th
 \label{lem:distributional advise suffices}
 \end{lemma}
 \begin{proof}[Proof of Lemma~\ref{lem:distributional advise suffices}]
-We proceed by contrapositive.  Let $\mathcal{W}'$ be some subset of $\mathcal{W}$ with relative size at least $1-\zeta$ where  for every $W_Z\in\mathcal{W}'$ there exists an $(\{0,1\}^n,\kappa, t, (\epsilon-\zeta)/(1-\zeta), \ell)$-fuzzy extractor.  We denote these algorithms by $(\gen_Z, \rep_Z)$ respectively.  We now describe how to build the fuzzy extractor $(\gen, \rep, \advise)$ with distributional advice.  Let 
+We proceed by contrapositive.  Let $\mathcal{W}'$ be some subset of $\mathcal{W}$ with relative size at least $1-\zeta$ where  for every $W_Z\in\mathcal{W}'$ there exists an $(\{0,1\}^n,\kappa, t, (\epsilon-\zeta)/(1-\zeta), \ell)$-fuzzy extractor.  We denote these algorithms by $(\gen_Z, \rep_Z)$ respectively.  We now describe how to build the fuzzy extractor $(\gen, \rep, \advice)$ with distributional advice.  Let 
 \[
-\advise(Z) = \begin{cases} (\gen_Z, \rep_Z)& Z\in Z'\\\perp&\text{otherwise.}\end{cases}
+\advice(Z) = \begin{cases} (\gen_Z, \rep_Z)& Z\in Z'\\\perp&\text{otherwise.}\end{cases}
 \]
-In both cases, $\advise(Z)$ has length at most $\ell$. Then define $\gen(x, C)$ as follows:  if $C = \perp$ sample a random key $r$ output $(r, r)$, otherwise interpret $C$ as two circuits $\gen', \rep'$ and output $\gen'(x)$.  Define $\rep(x, p, C)$ interpret $C$ if $C = \perp$ output $p$, otherwise parse $C$ as two circuits $\gen', \rep'$ and output $\rep'(x', p)$.  
+In both cases, $\advice(Z)$ has length at most $\ell$. Then define $\gen(x, C)$ as follows:  if $C = \perp$ sample a random key $r$ output $(r, r)$, otherwise interpret $C$ as two circuits $\gen', \rep'$ and output $\gen'(x)$.  Define $\rep(x, p, C)$ interpret $C$ if $C = \perp$ output $p$, otherwise parse $C$ as two circuits $\gen', \rep'$ and output $\rep'(x', p)$.  
 Then 
 \begin{align*}
 \Delta((R, P, Z), (U_\kappa, P, Z)) &= \Delta((R, P, Z), (U_\kappa, P, Z) | Z\in Z')+\Delta((R, P, Z), (U_\kappa, P, Z) | Z\not\in Z')\\
 &\le \frac{\epsilon-\zeta}{1-\zeta} * (1-\zeta) + 1* \zeta = \epsilon.
 \end{align*}
-It is clear that $(\gen, \rep, \advise)$ is a $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, \ell)$ fuzzy extractor with distributional advise.
+It is clear that $(\gen, \rep, \advice)$ is a $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, \ell)$ fuzzy extractor with distributional advise.
 \end{proof}
 
 \paragraph{Interpretation} 

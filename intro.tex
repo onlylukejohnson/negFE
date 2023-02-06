@@ -99,21 +99,21 @@ describing the distribution. \anote{I am confused by this, is $W_Z$ a distributi
 denote sampling a point from the distribution.  We show the
 impossibility of two types of fuzzy extractors:
 \begin{description}
-\item[Def.~\ref{def:fe distributional}] (Universal) Fuzzy extractors with distributional advice.  This is triple of algorithms $(\advise, \gen, \rep)$ designed to work for all $W_Z \in \mathcal{W}$ where $\mathcal{W}$ consists of all distributions with a certain amount of fuzzy min-entropy for a fixed error tolerance $t$.  However, the fuzzy extractor is given information about $Z$.  Namely, there is a deterministic algorithm $\advise = \advise(Z)$. Then both $\gen$ and $\rep$ are given $\advise$. Define $w\leftarrow W_Z$ and $(r, p) \leftarrow \gen(w, \advise)$, it should be true that 
+\item[Def.~\ref{def:fe distributional}] (Universal) Fuzzy extractors with distributional advice.  This is triple of algorithms $(\advice, \gen, \rep)$ designed to work for all $W_Z \in \mathcal{W}$ where $\mathcal{W}$ consists of all distributions with a certain amount of fuzzy min-entropy for a fixed error tolerance $t$.  However, the fuzzy extractor is given information about $Z$.  Namely, there is a deterministic algorithm $\advice = \advice(Z)$. Then both $\gen$ and $\rep$ are given $\advice$. Define $w\leftarrow W_Z$ and $(r, p) \leftarrow \gen(w, \advice)$, it should be true that 
 \[
 (r, p, Z) \approx (U, p, Z).
 \]
-Note that $\gen$ All information about $Z$ given to $\gen$ is contained in $\advise$ and the point $w$.
+Note that $\gen$ All information about $Z$ given to $\gen$ is contained in $\advice$ and the point $w$.
 \item[Def.~\ref{def:fe}] Space bounded fuzzy extractors for a specific distribution $W$ are required to have a bounded size description of $(\gen, \rep)$.
 \end{description}
 
 We show impossibility of building a fuzzy extractor with distributional advice of length $\ell$ for $\mathcal{W}$ implies impossibility of building a space bounded fuzzy extractor for length $\ell$ (Lemma~\ref{lem:distributional advise suffices}). 
-The core of our negative results is to show impossibility of building fuzzy extractors with distributional advice.   Before introducing our proof techniques we perform a brief overview of Fuller, Reyzin, and Smith's~\cite{fuller2020fuzzy} impossibility result.
+The core of our negative results is to show the impossibility of building fuzzy extractors with distributional advice.   Before introducing our proof techniques we perform a brief overview of Fuller, Reyzin, and Smith's~\cite{fuller2020fuzzy} impossibility result.
 
 \paragraph{Review of Fuller, Reyzin, and Smith~\cite{fuller2020fuzzy}}
 The correctness constraint of a fuzzy extractor says that for $(r, p)\leftarrow \gen(w)$ for all $w'$ close to $w$ the correct key is reproduced, i.e., $\rep(w', p)=r$.  As such, one can partition the input space $\zo^n$ by what value of $r$ the point  $v\in \zo^n$ produces.  Values $v$ that could have produced  $r$ will be at least distance $t$ from the boundary of this partition, we call the set of such $v$, $\viable_{r,p}$.  $\viable_{r,p}$ can be bounded geometrically using the isoperimetric inequality~\cite{harper1966optimal}.  This bound applies for any distribution over the inputs $w$.
 
-Consider the following simple distinguisher for a triple $r, p, z$.  One computes the key partition described above and the set $\viable_{r,p}$. If $\viable_{r,p} \cap W_Z =\emptyset$ output the key is random, otherwise output key is real. \anote{$z = Z$ right?}
+Consider the following simple distinguisher for a triple $r, p, z$.  One computes the key partition described above and the set $\viable_{r,p}$. If $\viable_{r,p} \cap W_z =\emptyset$ output the key is random, otherwise output key is real. 
 The core of Fuller, Reyzin, and Smith's impossibility was to build a family $\mathcal{W}^{FRS}$ with three properties:
 \begin{enumerate}
 \item The distribution was $2$-universal~\cite{carter1977universal}, so the remainder of the distribution was unknown conditioned on the input $w$. 
@@ -124,19 +124,19 @@ Together these three properties meant that for any partition most distributions 
 The family is as follows: let $\mathbf{C}$ be a linear error-correcting code with distance $t$, let $\mathbf{H}$ be its syndrome, let $c$ be a coset.  Then each $Z = (\mathbf{H}, c)$ is the set of all points $\{w \mid \mathbf{H} w = c\}$.
 
 \paragraph{Moving to the distributional advice setting}
-To set notation for the distributional advise game, we consider the following game for a tuple of algorithms $(\advise, \gen, \rep)$:
+To set notation for the distributional advice game, we consider the following game for a tuple of algorithms $(\advice, \gen, \rep)$:
 \begin{enumerate}
 \itemsep0em
-\item A uniform sample from $W_Z \leftarrow \mathcal{W}$ where $Z$ describes the distribution. \anote{I changed $z$ to $Z$.}
-\item A bounded length $\advise = \advise(Z)$ is computed.
+\item A uniform sample from $W_Z \leftarrow \mathcal{W}$ where $Z$ describes the distribution. 
+\item A bounded length $\advice = \advice(Z)$ is computed.
 \item One computes $w\leftarrow W_Z$.
-\item The algorithm computes $(r, p)\leftarrow \gen(w, \advise)$.
-\item The adversary is given either $(r, p, Z)$ or $(u, p, Z)$ for a uniform $u$. \anote{I changed $z$ to $Z$ here too.}
+\item The algorithm computes $(r, p)\leftarrow \gen(w, \advice)$.
+\item The adversary is given either $(r, p, Z)$ or $(u, p, Z)$ for a uniform $u$. 
 \end{enumerate}
 
-In \cite{fuller2020fuzzy}, the only information that $\gen$ had about $Z$ was the input point $w$.  In our setting, $\gen$ gets $\advise$.  Fuller, Reyzin, and Smith's family had a short description so $\advise$ could completely write $Z$, allowing $\gen$ to align the interior of the parts with points in $W_Z$.  Thus, it is clear that the distributional advise \anote{``Advice'' ?} setting requires a distribution with no short description.  It also requires showing that aligning the interior of the parts is difficult given an arbitrary bounded length advise.  Both problems can be approached by removing the structure from the family and considering the set of all distributions $W_Z\in\mathcal{W}$ with fuzzy min-entropy at least $\gamma$. 
+In \cite{fuller2020fuzzy}, the only information that $\gen$ had about $Z$ was the input point $w$.  In our setting, $\gen$ gets $\advice$.  Fuller, Reyzin, and Smith's family had a short description so $\advice$ could completely write $Z$, allowing $\gen$ to align the interior of the parts with points in $W_Z$.  Thus, it is clear that the distributional advice setting requires a distribution with no short description.  It also requires showing that aligning the interior of the parts is difficult given an arbitrary bounded length advice.  Both problems can be approached by removing the structure from the family and considering the set of all distributions $W_Z\in\mathcal{W}$ with fuzzy min-entropy at least $\gamma$. 
 
-This distribution is statistically close to the set of all distributions with $2^k$ points chosen uniformly without replacement where $k = \gamma +cn$ for an arbitrary constant $c>0$. \anote{I am confused about this. As a distribution on the set of distributions, I do not think this is close to the set of distributions with particular fuzzy entropy. What exactly do we mean?}  We call this set of distributions $U_{n,k}$ and let $w_1,...., w_{2^k}$ be the points with nonzero probability.  The key to the proof is showing that as long as $|\advise|$ is shorter than $k2^k$, most points $w_i | \advise$ are unpredictable.  This argument must account for the fact that $\advise$ can choose to completely determine some points or provide equal information about all points. 
+We show there are few distributions with $2^k$ points chosen uniformly without replacement that do not have fuzzy min-entropy $\gamma$ where $k = \gamma +cn$ for some $c>0$.  We call this set of distributions $U_{n,k}$ and use this set of distributions throughout most of our proofs. Let $w_1,...., w_{2^k}$ be the points with nonzero probability.  The key to the proof is showing that as long as $|\advice|$ is shorter than $k2^k$, most points $w_i | \advice$ are unpredictable.  This argument must account for the fact that $\advice$ can choose to completely determine some points or provide equal information about all points. 
 
 The techniques for the secure sketch setting are similar, however, there are stronger geometric bounds on the number of viable points because secure sketches imply Shannon error correcting codes.  Our result considers a secure sketch that retains smooth min-entropy instead of min-entropy.  This is so we can use $U_{n,k}$ throughout the proof and show this implies the hardness of building a secure sketch for all distributions with sufficient fuzzy min-entropy.  
 
@@ -144,9 +144,9 @@ Importantly, both results operate generically in the size of the maximum number 
 
 
 \paragraph{Comparing with Fuller, Reyzin, and Smith~\cite{fuller2020computational}}
-Our fuzzy extractor result requires the $|r| = \omega(\log n)$.  This is in contrast to Fuller, Reyzin, and Smith~\cite{fuller2020computational} who showed an impossibility for a key length of $3$.\footnote{Similarly, our result for secure sketches requires them to retain at least $\omega(\log n)$ bits of min-entropy about the input in comparison with \cite{fuller2020computational} which required the sketch to maintain $3$ bits of entropy.} This change comes because $\advise$ can supply a lot of information about a small number of points in $W_Z$, allowing $\gen$ to ensure that some $\viable_{r,p}$ are nonempty. Furthermore, all bounds are weaker than those of Fuller, Reyzin, and Smith.  The core of the difference is that since $\mathcal{W}^{FRS}$ the adversary received entirely new information by the leftover hash lemma~\cite{haastad1993construction,barak2011leftover}. In our setting, we argue about the expected number of points in $W_Z$ that are included in the $\viable$ region. 
+Our fuzzy extractor result requires the $|r| = \omega(\log n)$.  This is in contrast to Fuller, Reyzin, and Smith~\cite{fuller2020computational} who showed an impossibility for a key length of $3$.\footnote{Similarly, our result for secure sketches requires them to retain at least $\omega(\log n)$ bits of min-entropy about the input in comparison with \cite{fuller2020computational} which required the sketch to maintain $3$ bits of entropy.} This change comes because $\advice$ can supply a lot of information about a small number of points in $W_Z$, allowing $\gen$ to ensure that some $\viable_{r,p}$ are nonempty. Furthermore, all bounds are weaker than those of Fuller, Reyzin, and Smith.  The core of the difference is that since $\mathcal{W}^{FRS}$ the adversary received entirely new information by the leftover hash lemma~\cite{haastad1993construction,barak2011leftover}. In our setting, we argue about the expected number of points in $W_Z$ that are included in the $\viable$ region. 
 
-Our secure sketch result also considers an object that retains smooth conditional min-entropy~\cite{renner2005simple} which is a weaker object than traditional min-entropy. \anote{I wasn't sure what ``weaker'' meant here...} This is so we can conduct the argument using $U_{n,k}$ and ``smooth'' to a family with fuzzy min-entropy. Smooth conditional min-entropy is the necessary condition for conversion to uniform randomness using a randomness extractor. 
+Our secure sketch result also considers an object that retains smooth conditional min-entropy~\cite{renner2005simple}.  Smooth conditional min-entropy means that one is statistically close to a distribution with min-entropy.  Setting the closeness parameter to $0$ gives traditional conditional min-entropy.  This is so we can conduct the argument using $U_{n,k}$ and ``smooth'' to the family where all distributions have fuzzy min-entropy. Smooth conditional min-entropy is the necessary condition for conversion to uniform randomness using a randomness extractor. 
 
 
 

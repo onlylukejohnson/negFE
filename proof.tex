@@ -60,26 +60,26 @@ We restate the stronger version of \cite[Lemma 5.2]{fuller2020fuzzy}.
     \label{lem:smallgeneralviable}
     Suppose $\mathcal{M}$ is $\zeroone{n}$ with the Hamming Metric, $\kappa \geq 2$, $0 \leq t \leq n/2$, and $\epsilon > 0$. 
     Suppose $(\mathsf{Gen, Rep})$ is a $(\mathcal{M,W},\kappa, t, \ell, \epsilon)$-fuzzy extractor with distributional advice for some distribution family $\mathcal{W}$ over $\mathcal{M}$. 
-    For any fixed $p$, for any value $\advise \in \zo^\ell$, there is a set $\mathsf{GoodKey}_p \subseteq \zeroone{\kappa}$ of size at least $2^{\kappa - 1}$ such that for every $\mathsf{key} \in \goodkey_p$,
+    For any fixed $p$, for any value $\advice \in \zo^\ell$, there is a set $\mathsf{GoodKey}_p \subseteq \zeroone{\kappa}$ of size at least $2^{\kappa - 1}$ such that for every $\mathsf{key} \in \goodkey_p$,
     \[
-      \mu:= \sum_{\mathsf{key} \in \goodkey_p} \left( \log{|\sbr{v \in \mathcal{M}|\prns{\mathsf{key}, p} \in \mathsf{supp}\prns{\mathsf{Gen}(v, \advise)}}|}\right) \leq n \cdot h_2\prns{\frac{1}{2} - \frac{t}{n}}.
+      \mu:= \sum_{\mathsf{key} \in \goodkey_p} \left( \log{|\sbr{v \in \mathcal{M}|\prns{\mathsf{key}, p} \in \mathsf{supp}\prns{\mathsf{Gen}(v, \advice)}}|}\right) \leq n \cdot h_2\prns{\frac{1}{2} - \frac{t}{n}}.
     \]   
 \end{lemma}
 
 We consider the following family $Z$ which chooses $2^k$ points without replacement from the space $\{0,1\}^n$.  That is, if one samples $Z$ uniformly then one obtains the distribution $U_{n,k}$. 
 For convenience we use $W_{z, 1},..., W_{z,2^k}$ to describe the $2^k$ points with nonzero probability in $W_z$ for some value $z$.  We assume no ordering over these points.  
 
-Lemma~\ref{lem:entr of members} bounds how much information $\advise$ contains about the points in the distribution.  Let $Z$ describe a uniform sample of $U_{n,k}$.  Let $(\gen, \rep, \aux)$ be an auxiliary input fuzzy extractor.  Let $\advise = \aux(Z)$ be of length $\ell$.  For a tuple $(v, p, r, \advise)$ define 
+Lemma~\ref{lem:entr of members} bounds how much information $\advice$ contains about the points in the distribution.  Let $Z$ describe a uniform sample of $U_{n,k}$.  Let $(\gen, \rep, \aux)$ be an auxiliary input fuzzy extractor.  Let $\advice = \aux(Z)$ be of length $\ell$.  For a tuple $(v, p, r, \advice)$ define 
 \[
-\viable(v, p, r, \advise) = \begin{cases} 1& \Pr[\gen(v, \advise) = (r, p)]>0\\0&\text{otherwise}\end{cases}.\]
+\viable(v, p, r, \advice) = \begin{cases} 1& \Pr[\gen(v, \advice) = (r, p)]>0\\0&\text{otherwise}\end{cases}.\]
 Fix some $p$ and let $\mathtt{GoodKey}_p$ be defined as in Lemma~\ref{lem:smallgeneralviable}. 
 
 \begin{lemma}
-Let $Z$ describe a uniform sample of $U_{n,k}$.  Let $\advise = \aux(Z)$ be of length $\ell$.
+Let $Z$ describe a uniform sample of $U_{n,k}$.  Let $\advice = \aux(Z)$ be of length $\ell$.
  For a particular $Z=z$ let $w_{z,1},..., w_{z,2^k}$ denote the points in $W_Z$. Let $\alpha:= \log {2^n\choose 2^k}$.  Let $\mu$ be defined as in Lemma~\ref{lem:smallgeneralviable}.  
-For each value $\advise$ there is some set $\mathcal{I}_{\advise}$ of size at most $\nu+1$, it is true for each $i\not \in \mathcal{I}_\advise$ that
+For each value $\advice$ there is some set $\mathcal{I}_{\advice}$ of size at most $\nu+1$, it is true for each $i\not \in \mathcal{I}_\advice$ that
 \[
-\log{\Pr\left[\viable(w_{z,i}, p, \mathsf{key}, \advise) = 1 \right]}\le -\frac{\alpha -|\advise| }{2^k}+1+\mu+k-\log{\nu}.
+\log{\Pr\left[\viable(w_{z,i}, p, \mathsf{key}, \advice) = 1 \right]}\le -\frac{\alpha -|\advice| }{2^k}+1+\mu+k-\log{\nu}.
 \]
 \label{lem:entr of members}
 \end{lemma}
@@ -91,17 +91,17 @@ Suppose that
    \sum_{\mathsf{key}\in \mathtt{GoodKey}_p} \left( \log{|\sbr{v \in \mathcal{M}|\prns{\mathsf{key}, p} \in \mathsf{supp}\prns{\mathsf{Gen}(v)}}|}\right) \le 2^\mu 
  \]
  For a particular $Z=z$ let $w_{z,1},..., w_{z,2^k}$ denote the points in $W_Z$. Let $\alpha:= \log {2^n\choose 2^k}$.  
- Then for each value $\advise$ there is some set $\mathcal{I}_{\advise}$ of size at most $\nu+1$, then it is true for each $i\not \in \mathcal{I}_\advise$ that
+ Then for each value $\advice$ there is some set $\mathcal{I}_{\advice}$ of size at most $\nu+1$, then it is true for each $i\not \in \mathcal{I}_\advice$ that
 \[
-\Pr\left[\left(\sum_{\mathsf{key} \in \mathtt{Goodkey}_p} \viable(w_{z,i}, p, \mathsf{key}, \advise, z)\right) = 1\middle| \begin{aligned} z\leftarrow Z\\ \advise= \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advise) \end{aligned} \right]< 2^{-\frac{\alpha-|\advise|}{2^k}+1+\mu+k-\log{\nu} }.
+\Pr\left[\left(\sum_{\mathsf{key} \in \mathtt{Goodkey}_p} \viable(w_{z,i}, p, \mathsf{key}, \advice, z)\right) = 1\middle| \begin{aligned} z\leftarrow Z\\ \advice= \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advice) \end{aligned} \right]< 2^{-\frac{\alpha-|\advice|}{2^k}+1+\mu+k-\log{\nu} }.
 \]
-And thus, for on average across $Z$, the expected number of points outside of $\mathcal{I}_\advise$ that are included in $\viable$ is at most 
+And thus, for on average across $Z$, the expected number of points outside of $\mathcal{I}_\advice$ that are included in $\viable$ is at most 
 \begin{align*}
-\expe_{Z} \left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p}\sum_{i | w_{z,i}\not\in\mathcal{I}_\advise} \viable(w_{z,i}, p, \mathsf{key}, \advise) \middle| \begin{aligned} z\leftarrow Z\\ \advise\leftarrow \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advise)\end{aligned} \right]< 2^{-\frac{\alpha - |\advise|}{2^k}+1+\mu+2k-\log{\nu}}.
+\expe_{Z} \left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p}\sum_{i | w_{z,i}\not\in\mathcal{I}_\advice} \viable(w_{z,i}, p, \mathsf{key}, \advice) \middle| \begin{aligned} z\leftarrow Z\\ \advice\leftarrow \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advice)\end{aligned} \right]< 2^{-\frac{\alpha - |\advice|}{2^k}+1+\mu+2k-\log{\nu}}.
 \end{align*}
 And finally, 
 \begin{align*}
-\expe_{Z} \left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p}\sum_{i }  \viable(w_{z,i}, p, \mathsf{key}, \advise) \middle| \begin{aligned} z\leftarrow Z\\ \advise\leftarrow \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advise)\end{aligned} \right]< 2^{-\frac{\alpha-|\advise|}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1.
+\expe_{Z} \left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p}\sum_{i }  \viable(w_{z,i}, p, \mathsf{key}, \advice) \middle| \begin{aligned} z\leftarrow Z\\ \advice\leftarrow \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advice)\end{aligned} \right]< 2^{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1.
 \end{align*}
 
 \end{corollary}
@@ -114,7 +114,7 @@ Let all parameters be as in Corollary~\ref{corollary:info loss} with $\nu \in\ma
 \]
 where 
 \begin{align*}
-\epsilon_1&= 2^{-\kappa-\frac{\alpha-|\advise|}{2^k}+1+\mu+2k-\log{\nu}},\\
+\epsilon_1&= 2^{-\kappa-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}},\\
 \epsilon_2&=\frac{\nu+1}{2^{\kappa}}.
 \end{align*}
 Furthermore, there exists an algorithm $\mathcal{D}$ that always outputs $1$ when given samples of the form $r, p, z$ that are correctly generated by the fuzzy extractor.
@@ -123,7 +123,7 @@ Furthermore, there exists an algorithm $\mathcal{D}$ that always outputs $1$ whe
 
 \subsection{Proof of Theorem~\ref{thm:main theorem}}
 \begin{proof}[Proof of Theorem~\ref{thm:main theorem}]
-Restating Lemma~\ref{lem:convert distinguisher} one has that for $(R_{U_{n,k}},P_{U_{n,k}}) \leftarrow \gen(U_{n,k}, \advise(Z_{U_{n,k}}))$
+Restating Lemma~\ref{lem:convert distinguisher} one has that for $(R_{U_{n,k}},P_{U_{n,k}}) \leftarrow \gen(U_{n,k}, \advice(Z_{U_{n,k}}))$
 \[
 \Delta((R_{U_{n,k}}, P_{U_{n,k}}, Z_{U_{n,k}}), (U_n, P_{U_{n,k}}, Z_{U_{n,k}}))\ge \epsilon_1+\epsilon_2.
 \]
@@ -132,7 +132,7 @@ Let $\mathcal{D}$ be one distinguisher that always outputs $1$ on any value $\ma
 \Pr[\mathcal{D}((R_{U_{n,k}}, P_{U_{n,k}}, Z_{U_{n,k}}))=1] &=1\\
 \Pr[\mathcal{D}(U_n, P_{U_{n,k}}, Z_{U_{n,k}})=1]&\le 1-(\epsilon_1+\epsilon_2).
 \end{align*}
-Recall that $\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \alpha}^{*}) \le \epsilon_3$ by Lemma~\ref{lem:close family} .  Define \[(R_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})\leftarrow \gen(\mathtt{PCode}_{n, k, t, \alpha}^{*}, \advise(Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})).\]
+Recall that $\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \alpha}^{*}) \le \epsilon_3$ by Lemma~\ref{lem:close family} .  Define \[(R_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})\leftarrow \gen(\mathtt{PCode}_{n, k, t, \alpha}^{*}, \advice(Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})).\]
 it is thus true that 
 \begin{align*}
 \Pr[\mathcal{D}(R_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})=1]&=1\\
@@ -151,7 +151,7 @@ Finally, the theorem follows by application of Lemma~\ref{lem:distributional adv
 
 \subsection{Analysis of parameters}
 \label{ssec:analysis params}
-We separately consider $\epsilon_1, \epsilon_2$ and $\epsilon_3$. We refer to these three terms as average points, free points, and distributional closeness respectively. This is because $\epsilon_1$ describes how much information the $\advise$ has about average points in $W_Z$, $\epsilon_2$ considers a small number of points that are more thoroughly described by $\advise$, and $\epsilon_3$ controls the statistical distance between $U_{n, k}$ and $\mathtt{PCode}_{n, k, t, \alpha}$.  We consider parameters in order of simplicity (rather than index ordering).
+We separately consider $\epsilon_1, \epsilon_2$ and $\epsilon_3$. We refer to these three terms as average points, free points, and distributional closeness respectively. This is because $\epsilon_1$ describes how much information the $\advice$ has about average points in $W_Z$, $\epsilon_2$ considers a small number of points that are more thoroughly described by $\advice$, and $\epsilon_3$ controls the statistical distance between $U_{n, k}$ and $\mathtt{PCode}_{n, k, t, \alpha}$.  We consider parameters in order of simplicity (rather than index ordering).
 
 
 
@@ -259,13 +259,13 @@ k &=\gamma + c_{|k|}n,\\
 \subsubsection{Proof of Lemma~\ref{lem:entr of members}}
 
 \begin{proof}[Proof of Lemma~\ref{lem:entr of members}]
-Let $Z$ and $\advise$ be defined as above. We begin by noting that 
+Let $Z$ and $\advice$ be defined as above. We begin by noting that 
 \[
 \Hoo(W_{z, 1},..., W_{z, 2^k})=\alpha.
 \]
  It is thus, the case that 
 \[
-\Hav(W_{z, 1},..., W_{z, 2^ k} | \advise) \ge \alpha - |\advise|.
+\Hav(W_{z, 1},..., W_{z, 2^ k} | \advice) \ge \alpha - |\advice|.
 \]
 For all values $x, y$, 
 \[
@@ -274,31 +274,31 @@ For all values $x, y$,
 \begin{claim}
 One has that 
 \begin{align*}
-\expe_{i=1}^{2^k} \left[\Hav(W_{z, i} | \advise)\right] \ge \frac{\alpha - |\advise|}{2^k}.
+\expe_{i=1}^{2^k} \left[\Hav(W_{z, i} | \advice)\right] \ge \frac{\alpha - |\advice|}{2^k}.
 \end{align*}
 \label{clm:entropy distributes}
 \end{claim}
 \begin{proof}
 It is true that $\forall w_{z,1},..., w_{z,i-1}$ that 
 \[
-\Hav(W_{z,i} | \advise, W_{z, 1}=w_{z,1},..., W_{z,i-1}=w_{z,i-1}) \le \Hav(W_{z,i} | \advise).
+\Hav(W_{z,i} | \advice, W_{z, 1}=w_{z,1},..., W_{z,i-1}=w_{z,i-1}) \le \Hav(W_{z,i} | \advice).
 \]
 This is because conditioned on $W_{z, j} =w_{z,j}$ only removes the outcome $w_{z,j}$ from the support of $W_{z,i}$ increasing all other outcomes proportionally.  
 We now proceed to the proof of the claim. 
 
-Suppose not, then there exists the following predictor $\mathcal{P}$ for the joint distribution $W_{z, 1},..., W_{z, k} | \advise$:
+Suppose not, then there exists the following predictor $\mathcal{P}$ for the joint distribution $W_{z, 1},..., W_{z, k} | \advice$:
 \begin{enumerate}
-\item For $i=1$ to $k$ predict $w_{z,i}\leftarrow W_{z, i}| \advise, W_{z,1}=w_{z,1},..., W_{z,i-1}=w_{z,i-1}$
+\item For $i=1$ to $k$ predict $w_{z,i}\leftarrow W_{z, i}| \advice, W_{z,1}=w_{z,1},..., W_{z,i-1}=w_{z,i-1}$
 \item Output the joint prediction $w_{z,1},..., w_{z, k}$.  
 \end{enumerate}
-Let $\alpha_i$ denote the values $\Hav(W_{z,i}| \advise) = \alpha_i$ for $i=1$ to $k$. 
+Let $\alpha_i$ denote the values $\Hav(W_{z,i}| \advice) = \alpha_i$ for $i=1$ to $k$. 
 The probability that $\mathcal{P}$ issues a correct prediction is
 \begin{align*}
-\prod_{i=1}^{2^k} 2^{-\Hav(W_i | \advise,  W_{z,1}=w_{z,1},..., W_{z,i-1}=w_{z,i-1})} \ge \prod_{i=1}^{2^k} 2^{-\Hav(W_i | \advise)} = \prod_{i=1}^{2^k} 2^{-\alpha_i}  = 2^{-\sum_{i=1}^{2^k} \alpha_i}.
+\prod_{i=1}^{2^k} 2^{-\Hav(W_i | \advice,  W_{z,1}=w_{z,1},..., W_{z,i-1}=w_{z,i-1})} \ge \prod_{i=1}^{2^k} 2^{-\Hav(W_i | \advice)} = \prod_{i=1}^{2^k} 2^{-\alpha_i}  = 2^{-\sum_{i=1}^{2^k} \alpha_i}.
 \end{align*}
 
 \noindent
-Suppose that $\sum_{i=1}^{2^k} \alpha_i < \alpha-\advise$ then $\mathcal{P}$ correctly predicts with probability greater than $2^{-(\alpha-\advise)}$, a contradiction.  Thus, $\expe_{1\le i\le k} \alpha_i \ge (\alpha-\advise)/2^k$. 
+Suppose that $\sum_{i=1}^{2^k} \alpha_i < \alpha-\advice$ then $\mathcal{P}$ correctly predicts with probability greater than $2^{-(\alpha-\advice)}$, a contradiction.  Thus, $\expe_{1\le i\le k} \alpha_i \ge (\alpha-\advice)/2^k$. 
 This completes the proof of Claim~\ref{clm:entropy distributes}.
 \end{proof}
 
@@ -329,19 +329,19 @@ The statement of the lemma follows by setting $\alpha = 2^k/\nu$.
 \end{proof}
 By Lemma~\ref{lem:markovpred} it is true that there exists a set $\mathcal{I}\subseteq \{1,...,2^k\}$ of size $\nu$ where  such that for all $i\not \in \{1,...,2^k\} \setminus\mathcal{I}$ is true that 
 \[
-\eta:=\Hav(W_{z,i} | \advise) \ge \frac{\alpha -|\advise|}{2^k} -\left(k-\log{\nu}\right).
+\eta:=\Hav(W_{z,i} | \advice) \ge \frac{\alpha -|\advice|}{2^k} -\left(k-\log{\nu}\right).
 \]
-Let $i^*$ denote the index of the point that will be given to $\gen$ that is $p\leftarrow (w_{z,i^*}, \advise)$.  We define the set $\mathcal{I}_\advise = \mathcal{I} \cup \{w_{z,i^*}\}$ where $w$ is the point given to $\gen(w, \advise)$.  
-Then for $i\not\in \mathcal{I}_{\advise}$ it is true that 
+Let $i^*$ denote the index of the point that will be given to $\gen$ that is $p\leftarrow (w_{z,i^*}, \advice)$.  We define the set $\mathcal{I}_\advice = \mathcal{I} \cup \{w_{z,i^*}\}$ where $w$ is the point given to $\gen(w, \advice)$.  
+Then for $i\not\in \mathcal{I}_{\advice}$ it is true that 
 \begin{align*}
 \Hav(W_{z,i} | \mathsf{key} \in \mathtt{GoodKey}, p)&\ge \\
-\Hav(W_{z,i} | \advise, W_{z,i^*}= w_{z,i^*}) &\ge -\log{\frac{1}{2^{\eta}-1}} \ge \eta-1.
+\Hav(W_{z,i} | \advice, W_{z,i^*}= w_{z,i^*}) &\ge -\log{\frac{1}{2^{\eta}-1}} \ge \eta-1.
 \end{align*}
-We now proceed to bounding $\viable(w_i, p, \mathsf{key})$.  By assumption, By Lemma~\ref{lem:smallgeneralviable} we know that there are at most $2^\mu$ points in $\viable(w_i, p, \mathsf{key})$.  Thus, for all $i\not \in\mathcal{I}_{\advise}$ 
+We now proceed to bounding $\viable(w_i, p, \mathsf{key})$.  By assumption, By Lemma~\ref{lem:smallgeneralviable} we know that there are at most $2^\mu$ points in $\viable(w_i, p, \mathsf{key})$.  Thus, for all $i\not \in\mathcal{I}_{\advice}$ 
 
 \begin{align*}
-\log{\Pr\left[\viable(w_{z,i}, p, \mathsf{key}, \advise) = 1 \right]}&\le - (\eta-1 -\mu) \\
-&=-\left(\frac{\alpha -|\advise| }{2^k}-1-\mu-\left(k-\log{\nu}\right)\right).
+\log{\Pr\left[\viable(w_{z,i}, p, \mathsf{key}, \advice) = 1 \right]}&\le - (\eta-1 -\mu) \\
+&=-\left(\frac{\alpha -|\advice| }{2^k}-1-\mu-\left(k-\log{\nu}\right)\right).
 \end{align*}
 This completes the proof of Lemma~\ref{lem:entr of members}.
 \end{proof}
@@ -354,28 +354,28 @@ We prove the result for an average member of $Z$.
 Consider the following distinguisher $\mathcal{D}$ for triples of the form $r, p, z$:
 \begin{enumerate}
 \item If $r \not\in \mathsf{GoodKey}_p$ output $1$,
-\item If $\sum_{i} \viable(w_{z, i}, r, p, \advise(z)) =0 $ output $0$,
+\item If $\sum_{i} \viable(w_{z, i}, r, p, \advice(z)) =0 $ output $0$,
 \item Else output $1$.
 \end{enumerate}
 First note that by perfect correctness it is always the case that when given $\mathsf{key}, p$ that $\mathcal{D}$ outputs $1$.  We proceed to bound the probability that $\mathcal{D}$ outputs $1$ when given $U_\kappa, p$.  Note that the probability that $\Pr[U_\kappa \in \mathtt{GoodKey}_p] \ge 1/2$ by the definition of $\mathtt{GoodKey}_p$. 
 
 We bound the number of parts with at least one point in viable.  We begin by assuming that all points in viable are in different  values $r$ so the bound on the size of 
 \[
-\left\{w_{z, i} \middle|\sum_{\mathsf{key}\in\mathtt{Goodkey}_p} \viable(w_{z,i}, p, \mathsf{key}, \advise)>0\right\}_{i=1}^k 
+\left\{w_{z, i} \middle|\sum_{\mathsf{key}\in\mathtt{Goodkey}_p} \viable(w_{z,i}, p, \mathsf{key}, \advice)>0\right\}_{i=1}^k 
 \] 
 gives a bound on the number of nonempty parts. By Corollary~\ref{corollary:info loss} 
 \[
-\expe_{Z} \left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p}\sum_{i }  \viable(w_{z,i}, p, \mathsf{key}, \advise) \middle| \begin{aligned} z\leftarrow Z\\ \advise\leftarrow \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advise)\end{aligned} \right]< 2^{-\frac{\alpha-|\advise|}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1.
+\expe_{Z} \left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p}\sum_{i }  \viable(w_{z,i}, p, \mathsf{key}, \advice) \middle| \begin{aligned} z\leftarrow Z\\ \advice\leftarrow \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advice)\end{aligned} \right]< 2^{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1.
 \]
 Thus the fraction of non-empty parts in $\mathsf{Goodkey}_p$ on average is at most 
 \[
-2^{-\kappa-\frac{\alpha-|\advise|}{2^k}+1+\mu+2k-\log{\nu}}+\frac{\nu+1}{2^\kappa}.
+2^{-\kappa-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}}+\frac{\nu+1}{2^\kappa}.
 \]
 Thus, the probability that $\mathcal{D}$ outputs $0$ when given $U_\kappa, p, z$ is at least 
 $1/2-(\epsilon_1+\epsilon_2)$
 where 
 \begin{align*}
-\epsilon_1:&=2^{-\kappa-\frac{\alpha-|\advise|}{2^k}+1+\mu+2k-\log{\nu}},\\
+\epsilon_1:&=2^{-\kappa-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}},\\
 \epsilon_2:&=\frac{\nu+1}{2^{\kappa}}.
 \end{align*}
 \noindent
@@ -418,7 +418,7 @@ These two conditions imply that $\epsilon'\le 1/2$ and $-\log{1-\epsilon'}\le 1$
 \begin{description}
 \item[Condition 3] That  $\nu = 1$.
 \end{description}
-Define \[\chi: =-\frac{\alpha-\ell}{2^k}+1+\mu+2k-\log{\nu}=-\frac{\alpha-|\advise|}{2^k}+1+\mu+2k\]
+Define \[\chi: =-\frac{\alpha-\ell}{2^k}+1+\mu+2k-\log{\nu}=-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k\]
 We now turn to our analysis of $\chi$.  Recall that $(n/k)^k \le {n\choose k} < ((ne)/k)^k$.  Recalling parameters: 
 \begin{align*}
 \mu&\le \frac{(n(1-h_2(t/n)) +h_2(2\delta))}{(2\delta)},\\
@@ -478,7 +478,7 @@ Fuller, Reyzin, and Smith~\cite[Lemma 7.3]{fuller2020fuzzy} showed that good sec
 We present an analog of Lemma~\ref{lem:entr of members} adapted to the secure sketch setting. Let $\goodsketch_v$ be defined as in Lemma~\ref{lem:smallgeneralviable ss}. For a triple $(v, ss, z)$ define $\viable(v, ss, z)=1$ if
 \begin{enumerate}
 \itemsep0em
-\item $\Pr[\gen(v, \advise(z)) = ss]>0$,
+\item $\Pr[\gen(v, \advice(z)) = ss]>0$,
 \item $ss\in\goodsketch_v$, and
 \item $\Pr[W_z = v]>0$.
 \end{enumerate}
@@ -486,11 +486,11 @@ and set $\viable(v, ss, z)=0$ otherwise.
 
 \begin{lemma}
 \label{lem:ent members ss}
-Let $Z$ describe a uniform sample of $U_{n,k}$.  Let $\advise = \aux(Z)$ be of length $\ell$.
+Let $Z$ describe a uniform sample of $U_{n,k}$.  Let $\advice = \aux(Z)$ be of length $\ell$.
  For a particular $Z=z$ let $w_{z,1},..., w_{z,2^k}$ denote the points in $W_Z$. Let $\alpha:= \log {2^n\choose 2^k}$.  Let $\mu$ be defined as in Lemma~\ref{lem:smallgeneralviable ss}. 
-For each value $\advise$ there is some set $\mathcal{I}_{\advise}$ of size at most $\nu+1$, it is true for each $i\not \in \mathcal{I}_\advise$ that
+For each value $\advice$ there is some set $\mathcal{I}_{\advice}$ of size at most $\nu+1$, it is true for each $i\not \in \mathcal{I}_\advice$ that
 \[
-\log{\Pr\left[\viable(w_{z,i}, ss, \advise) = 1 \right]}\le -\frac{\alpha -|\advise| }{2^k}+1+\mu+k-\log{\nu}.
+\log{\Pr\left[\viable(w_{z,i}, ss, \advice) = 1 \right]}\le -\frac{\alpha -|\advice| }{2^k}+1+\mu+k-\log{\nu}.
 \]
 \end{lemma}
 
@@ -500,7 +500,7 @@ Lemma~\ref{lem:ent members ss} suffices to bound how many points are ``viable'' 
 
 \begin{corollary}
 \label{corollary:info loss ss}
-Let $Z$ describe a uniform sample of $U_{n,k}$.  Let $(\gen, \rep, \aux)$ be an auxiliary input fuzzy extractor.  Let $\advise = \aux(Z)$ be of length $\ell$.       For every $v\in \mathcal{M}$ there exists a set $\goodsketch_v$ where $\Pr[\sketch(v)\in \goodsketch_v] \ge 1/2$ and for any fixed $\sketch$,
+Let $Z$ describe a uniform sample of $U_{n,k}$.  Let $(\gen, \rep, \aux)$ be an auxiliary input fuzzy extractor.  Let $\advice = \aux(Z)$ be of length $\ell$.       For every $v\in \mathcal{M}$ there exists a set $\goodsketch_v$ where $\Pr[\sketch(v)\in \goodsketch_v] \ge 1/2$ and for any fixed $\sketch$,
     
     \[
     \mu:=\log{|\{v \in \mathcal{M} | \sketch \in \goodsketch_v\}|} \le \frac{n - \log{|B_t|} +h_2(2\delta)}{1-2\delta} \le \frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta}.
@@ -508,23 +508,23 @@ Let $Z$ describe a uniform sample of $U_{n,k}$.  Let $(\gen, \rep, \aux)$ be an 
 For a triple $(v, ss, z)$ define $\viable(v, ss, z)=1$ if
 \begin{enumerate}
 \itemsep0em
-\item $\Pr[\gen(v, \advise(z)) = ss]>0$,
+\item $\Pr[\gen(v, \advice(z)) = ss]>0$,
 \item $ss\in\goodsketch_v$, and
 \item $\Pr[W_z = v]>0$.
 \end{enumerate}
 and set $\viable(v, ss, z)=0$ otherwise. 
  For a particular $Z=z$ let $w_{z,1},..., w_{z,2^k}$ denote the points in $W_Z$. Let $\alpha:= \log {2^n\choose 2^k}$.  
- Then for each value $\advise$ there is some set $\mathcal{I}_{\advise}$ of size at most $\nu+1$, then it is true for each $\forall i\not \in \mathcal{I}_\advise, \forall ss$
+ Then for each value $\advice$ there is some set $\mathcal{I}_{\advice}$ of size at most $\nu+1$, then it is true for each $\forall i\not \in \mathcal{I}_\advice, \forall ss$
 \[
-\Pr_{z\leftarrow Z}\left[\viable(w_{z,i},ss,z) =1\right]< 2^{-\frac{\alpha-|\advise|}{2^k}+1+\mu + k-\log{\nu}}.
+\Pr_{z\leftarrow Z}\left[\viable(w_{z,i},ss,z) =1\right]< 2^{-\frac{\alpha-|\advice|}{2^k}+1+\mu + k-\log{\nu}}.
 \]
-And thus, for on average across $Z$, for all $ss$ the expected number of points outside of $\mathcal{I}_\advise$ that are included in $\viable$ is at most 
+And thus, for on average across $Z$, for all $ss$ the expected number of points outside of $\mathcal{I}_\advice$ that are included in $\viable$ is at most 
 \begin{align*}
-\expe_{z\leftarrow Z} \left[\sum_{i | w_{z,i}\not\in\mathcal{I}_\advise} \viable(w_{z,i}, ss, z) \right]< 2^{-\frac{\alpha- |\advise|}{2^k}+1+\mu+2k-\log{\nu}}.
+\expe_{z\leftarrow Z} \left[\sum_{i | w_{z,i}\not\in\mathcal{I}_\advice} \viable(w_{z,i}, ss, z) \right]< 2^{-\frac{\alpha- |\advice|}{2^k}+1+\mu+2k-\log{\nu}}.
 \end{align*}
 And finally, for all $ss$
 \begin{align*}
-\expe_{z\leftarrow Z} \left[\sum_{i }  \viable(w_{z,i}, ss, \advise)  \right]< 2^{-\frac{\alpha-|\advise|}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1.
+\expe_{z\leftarrow Z} \left[\sum_{i }  \viable(w_{z,i}, ss, \advice)  \right]< 2^{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1.
 \end{align*}
 \end{corollary}
 \noindent
@@ -534,7 +534,7 @@ The above corollary follows by combination of Lemma~\ref{lem:smallgeneralviable 
 \label{lem:convert distinguisher ss}
 Let all parameters be as in Corollary~\ref{corollary:info loss ss} with $\nu \in\mathbb{Z}^+$.  Then there is no $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon_\sketch, \delta, \ell)$-secure sketch with distributional advise (see Definition~\ref{def:ss distributional}) if
 \[
-\tilde{m}> -\log{1-\epsilon_\sketch} +1 + 2\max\left\{-\frac{\alpha-|\advise|}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.
+\tilde{m}> -\log{1-\epsilon_\sketch} +1 + 2\max\left\{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.
 \]
 
 Furthermore, there exists an algorithm $\mathcal{D}$ that always outputs $1$ when given samples of the form $w, ss, z$ that are correctly generated by the secure sketch.
@@ -579,7 +579,7 @@ Thus, it must be the case that
 \]
 By the definition of $\viable$, the support of $X'$ must be drawn from points in $W_Z$.  For any fixed value of $y\in Y$ by Corollary~\ref{corollary:info loss ss}, it is true that 
 \begin{align*}
-\expe_{z\leftarrow Z} \left[\sum_{i }  \viable(w_{z,i}, y', \advise)  \right]< 2^{-\frac{\alpha-|\advise|}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1.
+\expe_{z\leftarrow Z} \left[\sum_{i }  \viable(w_{z,i}, y', \advice)  \right]< 2^{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1.
 \end{align*}
 One has, 
 \begin{align*}
@@ -591,22 +591,22 @@ And thus,
 \Hav(X'|Y') \le  -\log{1-\epsilon_\sketch} +\Hav(X'|Y', X'\in W_Z).
 \]
 The min-entropy of $X' |Y'$ is maximized by considering the uniform distribution over such points. \begin{align*}
-\Hav(X'|Y' , X'\in W_Z) &\le \log {2^{-\frac{\alpha-|\advise|}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1}\\
-&\le 2\max\left\{-\frac{\alpha-|\advise|}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.
+\Hav(X'|Y' , X'\in W_Z) &\le \log {2^{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1}\\
+&\le 2\max\left\{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.
 \end{align*}
 This implies that 
 \[
-\Haveps(W| \sketch(W)) \le -\log{1-\epsilon_\sketch} +1 + 2\max\left\{-\frac{\alpha-|\advise|}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.
+\Haveps(W| \sketch(W)) \le -\log{1-\epsilon_\sketch} +1 + 2\max\left\{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.
 \]
 This completes the Proof of Lemma~\ref{lem:convert distinguisher ss}.
 \end{proof}
 
 \subsubsection{Proof of Theorem~\ref{thm:main theorem ss}}
-We now proceed to the proof of Theorem~\ref{thm:main theorem ss}.   Let \[\chi:= -\log{1-\epsilon_\sketch} +1 + 2\max\left\{-\frac{\alpha+-|\advise|}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.\]  Restating Lemma~\ref{lem:convert distinguisher ss} one has that 
+We now proceed to the proof of Theorem~\ref{thm:main theorem ss}.   Let \[\chi:= -\log{1-\epsilon_\sketch} +1 + 2\max\left\{-\frac{\alpha+-|\advice|}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.\]  Restating Lemma~\ref{lem:convert distinguisher ss} one has that 
 \[
 \Hav^{\epsilon_\sketch}(U_{n,k} | \sketch(U_{n,k}), Z_{U_{n,k}})) \le \chi.
 \]
-That is, for all $A, B, C$ such that $\Delta((A, B, C), (U_{n,k},\sketch(U_{n,k}), Z_{U_{n,k}}))\le \epsilon_{\sketch}$ it is true that $\Hav(A|B, C) \le \tilde{m}$.  Define \[P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}\leftarrow \sketch(\mathtt{PCode}_{n, k, t, \alpha}^{*}, \advise(Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})).\]
+That is, for all $A, B, C$ such that $\Delta((A, B, C), (U_{n,k},\sketch(U_{n,k}), Z_{U_{n,k}}))\le \epsilon_{\sketch}$ it is true that $\Hav(A|B, C) \le \tilde{m}$.  Define \[P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}\leftarrow \sketch(\mathtt{PCode}_{n, k, t, \alpha}^{*}, \advice(Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})).\]
 Recall that $\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \alpha}^{*}) \le \epsilon_{\mathtt{PCode}}$ by Lemma~\ref{lem:close family} .  
 It is thus true that 
 \[
@@ -628,11 +628,11 @@ Finally, Theorem~\ref{thm:main theorem ss} follows by application of Lemma~\ref{
 
 
 %\begin{align*}
-%2^{(n-k)2^k}+2^{2k}-|\advise|-k - 2^knh_2(1/2-t/n) \ge 0\\
+%2^{(n-k)2^k}+2^{2k}-|\advice|-k - 2^knh_2(1/2-t/n) \ge 0\\
 %\end{align*}
 %Or equivalently that, 
 %\begin{align*}
-%|\advise| &\le 2^{(n-k)2^k+2k} -k - 2^knh_2(1/2-t/n)\\
+%|\advice| &\le 2^{(n-k)2^k+2k} -k - 2^knh_2(1/2-t/n)\\
 %&\le 2^{\Theta(n)2^{\Theta(n)}}.
 %\end{align*}
 
