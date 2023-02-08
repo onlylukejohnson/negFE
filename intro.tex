@@ -2,11 +2,19 @@
 
 % Introduction for negFE
 \section{Introduction}
-Information reconciliation and privacy amplification are the two fundamental tasks for key derivation from noisy sources.  Roughly information-reconciliation takes two correlated distributions $w$ and $w'$ and maps them to the same value while minimizing what is leaked about that value.  Privacy amplification converts the uncertainty in this mapped value to a uniform value suitable for cryptography.  Applications areas include quantum key agreement, biometrics, and physically uncloneable functions~\cite{bennett1988privacy,dodis2008fuzzy}. 
+Information reconciliation and privacy amplification are the two
+fundamental tasks for key derivation from noisy sources.  Roughly
+speaking, information reconciliation takes two correlated
+distributions $w$ and $w'$ and maps them to the same value while
+minimizing what is leaked about that value.  Privacy amplification
+converts the uncertainty in this mapped value to a uniform value
+suitable for cryptography.  Applications areas include quantum key
+agreement, biometrics, and physically uncloneable
+functions~\cite{bennett1988privacy,dodis2008fuzzy}.
 
-We focus on non-interactive versions of these problems~\cite{dodis2008fuzzy} as defined by secure sketches, which perform information-reconciliation, and fuzzy extractors, which perform both information-reconciliation and privacy amplification. A Secure Sketch consists of a pair of algorithms \emph{sketch} or $\sketch$ where:
+We focus on non-interactive versions of these problems~\cite{dodis2008fuzzy} as defined by secure sketches, which perform information-recon\-ciliation, and fuzzy extractors, which perform both information-recon\-ciliation and privacy amplification. A Secure Sketch consists of a pair of algorithms \emph{sketch} or $\sketch$ where:
 \begin{enumerate}
-\item $\sketch(w) = ss$ should reveal as little information as possible about $w$.
+\item $\sketch(w) = ss$ should reveal as little information as possible about $w$; and
 \item $\sketch(w) =ss$ should allow one to reconstruct $w$ from a nearby $w'$. That is, it should be the case that for all nearby $w', \rec(w', ss) = w$.  
 \end{enumerate}
 These two properties are in tension because allowing recovery of $w$ requires information about $w$.  The most natural (inefficient) construction is for $ss$ to be a pairwise independent~\cite{carter1977universal} hash $h$ of $w$~\cite{skoric2009efficient,fuller2016fuzzy,woodage2017new,fuller2020fuzzy}. The hash $h$ should be long enough so that $\{w | h(w) = y \wedge \dis(w, w')\le t\} =1$ and short enough so $\{w| h(w) = y\}$ is large. Constructions are known based on error-correcting codes.  In fact, upper bounds on the unpredictability of $w | ss$ are related to the size of the best error-correcting codes~\cite{dodis2008fuzzy,fuller2020computational}. 
@@ -27,12 +35,30 @@ Since noisy sources come from the physical world, an important goal
   in the probability mass function of $W$.  That is,
 \[
 \Hfuzz(W):= -\log{\max_{w'} \sum_{w | \dis(w, w')\le t} \Pr[W=w]}.
-\]A primary goal of fuzzy extractors is to build a single fuzzy extractor that works for the family of all distributions $\Wallfuzz = \{ W | \Hfuzz(W) = \omega(\log \lambda)\}$ for some security parameter $\lambda$.  We call such a fuzzy extractor \emph{universal} as it simultaneously works for any secureable distribution $W$. 
+\]A primary goal of fuzzy extractor research is to build a single fuzzy extractor that works for the family of all distributions $\Wallfuzz = \{ W | \Hfuzz(W) = \omega(\log \lambda)\}$ for some security parameter $\lambda$.  We call such a fuzzy extractor \emph{universal} as it simultaneously works for any secureable distribution $W$. 
 If one desires computational security, a universal fuzzy extractor is achievable using general obfuscation~\cite{BarakBCKPS13,BitanskyCKP14,bitansky2017virtual} or specific number-theoretic assumptions~\cite{galbraith2019obfuscated}. 
 
 
-The situation for information-theoretic security is more complicated.\footnote{Fuzzy extractors were first designed as an information-theoretic primitive because of strong connections to randomness extraction and coding theory.  Many computational constructions use an information-theoretic secure sketch~\cite{wen2018robustly,wen2019generic}.  (Exceptions exist such as the universal constructions listed above and constructions for distributions with additional properties~\cite{apon2017efficient,alamelou2018pseudoentropic,fuller2020computational,canetti2021reusable}.)
-}  Fuller, Reyzin, and Smith~\cite{fuller2020fuzzy} showed that it is impossible to build a universal fuzzy extractor with information-theoretic security.  More precisely, they constructed a family of distributions $\mathcal{W}'$ and showed that any fuzzy extractor $(\gen, \rep)$ must be insecure for an average member of $\mathcal{W}'$. Let $Z$ describe a uniformly chosen index in $\mathcal{W'}$, we use the notation $W_Z$ to indicate uniform sampling from the family $\mathcal{W}'$ with $Z$ describing the particular outcome. Importantly, in the impossibility result, the adversary knows the entire description of the chosen distribution $Z$ but not the individual point $w$ that was input to $\gen$.
+The situation for information-theoretic security is more
+complicated.\footnote{Fuzzy extractors were first designed as an
+  information-theoretic primitive because of strong connections to
+  randomness extraction and coding theory.  Many computational
+  constructions use an information-theoretic secure
+  sketch~\cite{wen2018robustly,wen2019generic}.  (Exceptions exist
+  such as the universal constructions listed above and constructions
+  for distributions with additional
+  properties~\cite{apon2017efficient,alamelou2018pseudoentropic,fuller2020computational,canetti2021reusable}.)
+}  Fuller, Reyzin, and Smith~\cite{fuller2020fuzzy} showed that it is
+impossible to build a universal fuzzy extractor with
+information-theoretic security.  More precisely, they constructed a
+family of distributions $\mathcal{W}' = \{ W_Z \}$ and showed that any
+fuzzy extractor $(\gen, \rep)$ must be insecure for an average member
+of $\mathcal{W}'$. We let $Z$ describe a uniformly chosen index for
+the family $\mathcal{W'}$, and use the notation $W_Z$ to indicate the
+distribution arising from this uniform sampling of $Z$. Importantly,
+in the impossibility result the adversary knows the entire
+description of the chosen distribution (that is, $Z$) but not the
+individual point $w$ that was input to $\gen$.
 
 On the positive side, multiple works~\cite{hayashi2014secret,hayashi2016secret,fuller2016fuzzy,woodage2017new,tyagi2017universal,TVW18,LA18,fuller2019continuous,fuller2020fuzzy} presented a construction that works for each $W_Z\in \Wallfuzz$.  This is called the \emph{distribution-sensitive} setting as $\gen$ also knows the entire probability mass function $Z$ of the chosen $W_Z$, denoted as $\gen_{W_Z}, \rec_{W_Z}$.  All constructions in this line are computationally inefficient; for an input point $w$ they look up the probability that $\Pr[W_Z=w]$ and the probability of points $w'$ where $\dis(w, w')\le t$.  
 %Thus, there is a large gap between the state of affairs with computational and information-theoretic security.  With computational security, universal fuzzy extractors are possible.  With information-theoretic security universal fuzzy extractors are impossible.  Furthermore, known distribution-sensitive fuzzy extractors require information about $W$ proportional to its description.  
@@ -92,14 +118,26 @@ that physical sources have these properties~\cite[Figure
 research goal is to identify statistical properties possessed by physical
 sources that bypass our negative results.
 
-\paragraph{Fuzzy extractors are computational objects} The other natural explanation of the result is that non-interactive information-reconciliation should be considered a computational object. This is our preferred interpretation since one can build universal (and efficient) fuzzy extractors if computational security suffices.  We note that the only known constructions assume either general obfuscation~\cite{BarakBCKPS13,BitanskyCKP14,bitansky2017virtual} or specific number-theoretic assumptions that are not well studied~\cite{galbraith2019obfuscated}. Thus, an important direction of research is to understand the required assumptions to build efficient, universal fuzzy extractors with computational security. 
+\paragraph{Fuzzy extractors are computational objects} The other
+natural explanation of the result is that non-interactive information
+reconciliation should be considered a computational object. This is
+our preferred interpretation since one can build universal (and
+efficient) fuzzy extractors if computational security suffices.  We
+note that the only known constructions assume either general
+obfuscation~\cite{BarakBCKPS13,BitanskyCKP14,bitansky2017virtual} or
+specific number-theoretic assumptions that are not well
+studied~\cite{galbraith2019obfuscated}. Thus, an important direction
+of research is to understand the required assumptions to build
+efficient, universal fuzzy extractors with computational security.
 
 
 \subsection{Proof Techniques}
 Our results are information-theoretic. As discussed above, we shall
 consider a family of distributions $\mathcal{W} = \{ W_Z \}$ and use $W_Z$ to
 denote sampling a random distribution from $\mathcal{W}$ with $Z$
-describing the distribution. \anote{I am confused by this, is $W_Z$ a distribution or a random variable? It looks from the next sentence as though it is a distribution, in which case the language should be changed.} Lastly, we use $w\leftarrow W_Z$ to
+describing the distribution.
+% \anote{I am confused by this, is $W_Z$ a distribution or a random variable? It looks from the next sentence as though it is a distribution, in which case the language should be changed.}
+Lastly, we use $w\leftarrow W_Z$ to
 denote sampling a point from the distribution.  We show the
 impossibility of two types of fuzzy extractors:
 \begin{description}
