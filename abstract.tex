@@ -27,23 +27,25 @@ parameter is required for a noisy distribution to be suitable for key
 derivation.
  
 There is a wide gap between what is possible with respect to
-computational and information-theoretic adversaries.  A good
-obfuscator derives keys from all distributions with superlogarithmic
-entropy.
+computational and information-theoretic adversaries.  Under the
+assumption of general-purpose obfuscation, keys can be securely
+derived from all distributions with superlogarithmic entropy.
 %% I am confused about "obfuscator" here.
+Against information-theoretic adversaries, however, it is impossible
+to build a single fuzzy extractor that works for all distributions
+(Fuller, Reyzin, and Smith, IEEE Transactions on Information Theory
+2020).
 
-Against information-theoretic adversaries, it is impossible to build a
-single fuzzy extractor that works for all distributions (Fuller,
-Reyzin, and Smith, IEEE Transactions on Information Theory 2020). A
-weaker goal is to build a fuzzy extractor for each probability
-distribution.  This is the approach taken by Woodage et al. (Crypto
-2017).  Prior approaches use the full description of the probability
-mass function and are inefficient.  We show this is inherent:
-\textbf{for a quarter of distributions with fuzzy min-entropy and $2^k$ points
-  there is no secure fuzzy extractor that uses less $2^{\Theta(k)}$
-  bits of information about the distribution.}  This result rules out
-the possibility of efficient, information-theoretic fuzzy extractors
-for most distributions with fuzzy min-entropy.
+A weaker information-theoretic goal is to build a fuzzy extractor for
+each particular probability distribution.  This is the approach taken
+by Woodage et al. (Crypto 2017).  Prior approaches use the full
+description of the probability mass function and are inefficient.  We
+show this is inherent: \textbf{for a quarter of distributions with
+  fuzzy min-entropy and $2^k$ points there is no secure fuzzy
+  extractor that uses less $2^{\Theta(k)}$ bits of information about
+  the distribution.}  This result rules out the possibility of
+efficient, information-theoretic fuzzy extractors for most
+distributions with fuzzy min-entropy.
 
 We show an analogous result with stronger parameters for information-theoretic secure sketches. Secure sketches are frequently used to construct fuzzy extractors. 
 }
