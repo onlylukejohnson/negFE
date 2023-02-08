@@ -51,13 +51,13 @@ complicated.\footnote{Fuzzy extractors were first designed as an
 }  Fuller, Reyzin, and Smith~\cite{fuller2020fuzzy} showed that it is
 impossible to build a universal fuzzy extractor with
 information-theoretic security.  More precisely, they constructed a
-family of distributions $\mathcal{W}' = \{ W_Z \}$ and showed that any
+family of distributions $\mathcal{W}' = \{ W_z \}$ and showed that any
 fuzzy extractor $(\gen, \rep)$ must be insecure for an average member
 of $\mathcal{W}'$. We let $Z$ describe a uniformly chosen index for
 the family $\mathcal{W'}$, and use the notation $W_Z$ to indicate the
-distribution arising from this uniform sampling of $Z$. Importantly,
-in the impossibility result the adversary knows the entire
-description of the chosen distribution (that is, $Z$) but not the
+distribution arising from this choice of $Z$. Importantly, in the
+impossibility result the adversary knows the entire description of the
+chosen distribution (that is, $W_Z$) but not the
 individual point $w$ that was input to $\gen$.
 
 On the positive side, multiple works~\cite{hayashi2014secret,hayashi2016secret,fuller2016fuzzy,woodage2017new,tyagi2017universal,TVW18,LA18,fuller2019continuous,fuller2020fuzzy} presented a construction that works for each $W_Z\in \Wallfuzz$.  This is called the \emph{distribution-sensitive} setting as $\gen$ also knows the entire probability mass function $Z$ of the chosen $W_Z$, denoted as $\gen_{W_Z}, \rec_{W_Z}$.  All constructions in this line are computationally inefficient; for an input point $w$ they look up the probability that $\Pr[W_Z=w]$ and the probability of points $w'$ where $\dis(w, w')\le t$.  
@@ -133,9 +133,9 @@ efficient, universal fuzzy extractors with computational security.
 
 \subsection{Proof Techniques}
 Our results are information-theoretic. As discussed above, we shall
-consider a family of distributions $\mathcal{W} = \{ W_Z \}$ and use $W_Z$ to
-denote sampling a random distribution from $\mathcal{W}$ with $Z$
-describing the distribution.
+consider a family of distributions $\mathcal{W} = \{ W_z \}$, let $Z$
+denote a uniformly random index for $\mathcal{W}$, and let $W_Z$
+denote the distribution determined by this choice of $Z$.
 % \anote{I am confused by this, is $W_Z$ a distribution or a random variable? It looks from the next sentence as though it is a distribution, in which case the language should be changed.}
 Lastly, we use $w\leftarrow W_Z$ to
 denote sampling a point from the distribution.  We show the
