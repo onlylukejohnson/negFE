@@ -186,7 +186,7 @@ there is some $Z'$ for which no  $(\zo^n, \min\{\tilde{m}, \zeta\}, t, \epsilon,
 \end{lemma}
 
 \begin{proof}
-The proof of Lemma~\ref{lem:distributional advise suffices ss} follows the structure of the proof of Lemma~\ref{lem:distributional advise suffices} with the following equation for computing the remaining smooth conditional min-entropy.
+The proof of Lemma~\ref{lem:distributional advise suffices ss} follows the structure of the proof of Lemma~\ref{lem:distributional advise suffices}.  With $ss=w$ and with the following equation for computing the remaining smooth conditional min-entropy.
 \begin{align*}
 \expe_{Z} [\Haveps(W_Z| \sketch(W_Z), Z)] &= -\log{\Pr[Z\in Z']\expe_{Z} 2^{-\Haveps(W_Z| ss, Z\in Z')}+ \Pr[Z\not\in Z']\expe_{Z} 2^{-\Haveps(W_Z| ss, Z\not\in Z'] }}\\
 &\ge -\log{1 \cdot 2^{-\tilde{m}}+ 2^{-\zeta}\cdot 1}\\
@@ -195,7 +195,7 @@ The proof of Lemma~\ref{lem:distributional advise suffices ss} follows the struc
 \end{proof}
 
 \paragraph{Interpretation}
-The natural parameter setting of the above is setting $\zeta = \max\{\tilde{m},1\} $ which shows that at least half of the distributions have no secure sketch.  Later in this work, we consider $\tilde{m} = \Theta(1)$ which suffices to that show that  $|Z'|/|Z|\ge 1/2$.
+The natural parameter setting of the above is setting $\zeta = \max\{\tilde{m},1\} $ which shows that at least $2^{-\tilde{m}}$ of the distributions have no secure sketch.  Later in this work, we consider $\tilde{m} = \Theta(1)$ which suffices to that show that a constant fraction of distributions have no secure sketch.
 
 
 

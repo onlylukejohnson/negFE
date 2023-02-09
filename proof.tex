@@ -16,7 +16,7 @@ Let $\gamma \in\mathbb{R}^+, n, \kappa, t, \ell, \gamma \in\mathbb{Z}^+$ be para
 \end{enumerate}
 For a quarter of the distributions $W\in \mathtt{PCode}_{n, k, t, \gamma}$ there is no $(\{0,1\}^n, W, \kappa, t, \epsilon, \ell)$-fuzzy extractor for 
 \[
-\epsilon< \frac{1}{3} - \frac{4(\epsilon_1+\epsilon_2+\epsilon_3)}{3}.
+\epsilon< \frac{1}{3} - \frac{2(\epsilon_1+\epsilon_2+\epsilon_3)}{3}.
 \]
 For 
 \begin{align*}\log{\epsilon_1}&:= -\left(\kappa+\frac{\alpha -\ell}{2^k} - \mu -2k+\log{\nu}\right),\\
@@ -125,22 +125,22 @@ Furthermore, there exists an algorithm $\mathcal{D}$ that always outputs $1$ whe
 \begin{proof}[Proof of Theorem~\ref{thm:main theorem}]
 Restating Lemma~\ref{lem:convert distinguisher} one has that for $(R_{U_{n,k}},P_{U_{n,k}}) \leftarrow \gen(U_{n,k}, \advice(Z_{U_{n,k}}))$
 \[
-\Delta((R_{U_{n,k}}, P_{U_{n,k}}, Z_{U_{n,k}}), (U_n, P_{U_{n,k}}, Z_{U_{n,k}}))\ge \epsilon_1+\epsilon_2.
+\Delta((R_{U_{n,k}}, P_{U_{n,k}}, Z_{U_{n,k}}), (U_n, P_{U_{n,k}}, Z_{U_{n,k}}))\ge 1/2-(\epsilon_1+\epsilon_2).
 \]
 Let $\mathcal{D}$ be one distinguisher that always outputs $1$ on any value $\mathsf{key}, p, z$ for any distribution $z$, then
 \begin{align*}
 \Pr[\mathcal{D}((R_{U_{n,k}}, P_{U_{n,k}}, Z_{U_{n,k}}))=1] &=1\\
-\Pr[\mathcal{D}(U_n, P_{U_{n,k}}, Z_{U_{n,k}})=1]&\le 1-(\epsilon_1+\epsilon_2).
+\Pr[\mathcal{D}(U_n, P_{U_{n,k}}, Z_{U_{n,k}})=1]&\le 1/2-(\epsilon_1+\epsilon_2).
 \end{align*}
 Recall that $\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \alpha}^{*}) \le \epsilon_3$ by Lemma~\ref{lem:close family} .  Define \[(R_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})\leftarrow \gen(\mathtt{PCode}_{n, k, t, \alpha}^{*}, \advice(Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})).\]
 it is thus true that 
 \begin{align*}
 \Pr[\mathcal{D}(R_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})=1]&=1\\
-\Pr[\mathcal{D}(U_n, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})=1]&\le 1-(\epsilon_1-\epsilon_2).
+\Pr[\mathcal{D}(U_n, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})=1]&\le 1/2+(\epsilon_1+\epsilon_2+\epsilon_3).
 \end{align*}
 and thus that 
 \[
-\Delta((R_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}), (U_n, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}))\ge \epsilon_1-\epsilon_2.
+\Delta((R_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}), (U_n, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}))\ge 1/2-(\epsilon_1+\epsilon_2+\epsilon_3).
 \]
 
 \noindent
@@ -394,7 +394,7 @@ Let $\gamma \in\mathbb{R}^+, n, \kappa, t, \ell, \gamma \in\mathbb{Z}^+$ be para
 \item Let $\nu \in \mathbb{Z}^+$ be a free parameter, and
 \item Let $\mu =(n(1-h_2(t/n)) +h_2(2\delta))/(1-2\delta)$.
 \end{enumerate}
-For half of the distributions $W\in \mathtt{PCode}_{n, k, t, \gamma}^{*}$ there is no $(\{0,1\}^n, W, \tilde{m}, t, \epsilon,\delta, \ell)$-secure sketch for 
+For $2^{-\tilde{m}}$ of the distributions $W\in \mathtt{PCode}_{n, k, t, \gamma}^{*}$ there is no $(\{0,1\}^n, W, \tilde{m}, t, \epsilon,\delta, \ell)$-secure sketch for 
 \[
 \tilde{m}\ge  -\log{1-\epsilon'} +1 + 2\max\left\{-\frac{\alpha-\ell}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.
 \]
@@ -448,7 +448,7 @@ As long as for constants $c_k, c_\ell$ one has
 &\le -n+(4c_k+c_\ell)n+3\gamma + 2n(1-h_2(t/n))+2 \\\
 &\le n+(4c_k+c_\ell)n+3\gamma -2nh_2(t/n))+2 \le 0\\
 \end{align*}
-then $\tilde{m} \le 2+2\max\{\chi, \log{2}\} \le 4$.
+then $\tilde{m} \le 2+2\max\{\chi, \log{2}\} \le 4$ which implies that $1/16$ of the distributions have no secure sketch.
 
 \paragraph{No error, $\delta=0$}
 When $\delta = 0$ one has
@@ -457,7 +457,7 @@ When $\delta = 0$ one has
 \delta &< 1/4,\\
 0\le\frac{\gamma}{n} &\le \min\left\{(1-h_2(t/n)) - \frac{\log{2e}}{n}, \frac{1}{3}h_2(t/n)-\frac{4c_k+c_\ell}{3}-\frac{2}{3n}\right\}.
 \end{align*} 
-yielding $\tilde{m}\le 4$.
+yielding $\tilde{m}\le 4$ which implies that $1/16$ of the distributions have no secure sketch.
 \subsection{Proof Overview}
 \begin{proof}[Proof of Theorem~\ref{thm:main theorem ss}]
 

@@ -17,7 +17,7 @@ We focus on non-interactive versions of these problems~\cite{dodis2008fuzzy} as 
 \item $\sketch(w) = ss$ should reveal as little information as possible about $w$; and
 \item $\sketch(w) =ss$ should allow one to reconstruct $w$ from a nearby $w'$. That is, it should be the case that for all nearby $w', \rec(w', ss) = w$.  
 \end{enumerate}
-These two properties are in tension because allowing recovery of $w$ requires information about $w$.  The most natural (inefficient) construction is for $ss$ to be a pairwise independent~\cite{carter1977universal} hash $h$ of $w$~\cite{skoric2009efficient,fuller2016fuzzy,woodage2017new,fuller2020fuzzy}. The hash $h$ should be long enough so that $\{w | h(w) = y \wedge \dis(w, w')\le t\} =1$ and short enough so $\{w| h(w) = y\}$ is large. Constructions are known based on error-correcting codes.  In fact, upper bounds on the unpredictability of $w | ss$ are related to the size of the best error-correcting codes~\cite{dodis2008fuzzy,fuller2020computational}. 
+These two properties are in tension because allowing recovery of $w$ requires information about $w$.  The most natural (inefficient) construction is for $ss$ to be a pairwise independent~\cite{carter1977universal} hash $h$ of $w$~\cite{skoric2009efficient,fuller2016fuzzy,woodage2017new,fuller2020fuzzy}. The hash $h$ should be long enough so that $\{w | h(w) = y \wedge \dis(w, w')\le t\} =1$ and short enough so $\{w| h(w) = y\}$ is large. Constructions are also known based on error-correcting codes.  In fact, upper bounds on the unpredictability of $w | ss$ are related to the size of the best error-correcting codes~\cite{dodis2008fuzzy,fuller2020computational}. 
 Given a good information reconciliation, one can achieve privacy amplification using an average-case randomness extractor~\cite{nisan1993randomness} to convert $w$ into a uniform value.
   Fuzzy extractors perform both tasks simultaneously.  They consist of a pair $(\gen, \rep$) where $(r, p)\leftarrow \gen(w)$ is indistinguishable from $(u, p)$ and $\rep(w', p) =r$.  Both $\sketch$ and $\gen$ are allowed to have private internal randomness.
   
@@ -81,7 +81,7 @@ Consider $\zo^n$ and $t< n/2$ be a distance parameter.  Let $\mathcal{W}$ be the
 \gamma \le n\cdot\min\left\{(1-h_2(t/n)) - \Theta\left(\frac{1}{n}\right), \frac{c_\delta}{3}h_2(t/n)-\Theta(c)-\Theta(1/n)\right\}.
 \]
 where $1/3< c_\delta <2/3$ and depends on $h_2(\delta)$. 
- For a quarter of $W \in \mathcal{W}$ there is no secure sketch of
+ For $2^{-4}$ fraction of $W \in \mathcal{W}$ there is no secure sketch of
 size of at most $2^{\gamma+cn}$ that
  retains unpredictability of $w|ss$ of at  least $4$.
 \end{theorem}
