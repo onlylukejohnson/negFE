@@ -19,9 +19,9 @@ The distribution $W_Z$ can then be sampled, and we denote a sample of $w\leftarr
     For a random variable $X$ whose outcomes are in $\{0,1\}$, let $\Pr[X=1] = p$. The \textbf{binary entropy} of $X$ is  $h_2(X) :=H(X)=-p\cdot\log{p} - (1-p)\cdot\log{1-p}.$ 
 For a discrete random variable $X$, 
     \textbf{min-entropy} is $\minent{X} \defined -\log{\max_{x_i} \Pr(X=x_i)}$.  
-For a discrete random variable $X$ \textbf{Hartley entropy}, denoted $\hart{X}$ is 
-$  \hart{X} = | \sbr{x \in X\,|\, \Prob{X = x} > 0}|.
-  $
+%For a discrete random variable $X$ \textbf{Hartley entropy}, denoted $\hart{X}$ is 
+%$  \hart{X} = | \sbr{x \in X\,|\, \Prob{X = x} > 0}|.
+%  $
 \begin{definition}[Average Min Entropy]
 Let $X$ be a discrete random variable and let $Y$ be a random variable.  The \emph{average min-entropy} of $X|Y$ is  \[ \acminent{X}{Y} \defined -\log{\Exlim{y \leftarrow Y}{\max\limits_{x} \Prob{X = x\ |\ Y = y}}}.\] 
 \end{definition}
@@ -109,7 +109,7 @@ For metric space $(\mathcal{M}, \dis)$ and distribution $W$ with probability mas
 \end{enumerate}
 \end{definition}
 
-\paragraph{The use of smooth min-entropy} In the above, the secure sketch is required to retain smooth conditional min-entropy of $W$ conditioned on the sketch.  Many definitions consider $\epsilon=0$ or average min-entropy.  However, smooth min-entropy is the necessary condition for privacy amplification through the use of an average-case randomness extractor~\cite{renner2005simple} so it captures whether the non-interactive information-reconciliation task is possible. 
+\paragraph{The use of smooth min-entropy} In the above, the secure sketch is required to retain smooth conditional min-entropy of $W$ conditioned on the sketch.  Many definitions consider $\epsilon=0$ or average min-entropy.  However, smooth min-entropy is the necessary and sufficient condition for privacy amplification through the use of an average-case randomness extractor~\cite{renner2005simple}.
 
 \begin{definition}[Fuzzy Extractor~\cite{dodis2008fuzzy}]
 For metric space $(\mathcal{M}, \dis)$ and probability distribution $W$ with probability mass function $z$, a $(\mathcal{M}, \kappa, t, \epsilon)$-\emph{fuzzy extractor} is a pair of algorithms $(\gen_z, \rep_z)$ with the following properties 
@@ -124,7 +124,7 @@ $\Pr_{r, p \leftarrow \gen(w)}[\rep(w', p) = r]=1.$
 \end{definition}
 
 \noindent
-We now define fuzzy extractors and secure sketches with advice.  This is an intermediate definition that will be used in proofs throughout.  As we show in Lemma~\ref{lem:distributional advise suffices}, the impossibility of building a fuzzy extractor with advice for a family $\mathcal{W}$ implies the impossibility of building a fuzzy extractor for an average $W_Z\in\mathcal{W}$.
+We now define fuzzy extractors and secure sketches with advice.  This is an intermediate definition that will be used in proofs throughout.  As we show in Lemmas~\ref{lem:distributional advise suffices} and \ref{lem:distributional advise suffices ss}, the impossibility of building a fuzzy extractor (resp. secure sketch) with advice for a family $\mathcal{W}$ implies the impossibility of building a fuzzy extractor (resp. secure sketch) for many $W_Z\in\mathcal{W}$.
 
 \begin{definition}[Secure Sketch with distributional advice]
 \label{def:ss distributional}
@@ -172,10 +172,9 @@ It is clear that $(\gen, \rep, \advice)$ is a $(\mathcal{M}, \mathcal{W}, \kappa
 \end{proof}
 
 \paragraph{Interpretation} 
-We consider two natural settings where $\epsilon = \ngl(n)$ and when $\epsilon = \Theta(1)$.
-
-For the setting when $\epsilon = \ngl(n)$  if one sets $\zeta = \sqrt{\epsilon}$ this implies that for all subsets $\mathcal{W}' \subseteq \mathcal{W}$ where $\Pr[Z\in Z']\ge 1-\sqrt{\epsilon}.$ there is no $(\{0,1\}^n,\kappa, t, \sqrt{\epsilon}, \ell)$-fuzzy extractor for some element of $\mathcal{W}'$.  This shows that at least $1-\sqrt{\epsilon}$ fraction of elements in $\mathcal{W}$ do not have $(\{0,1\}^n,\kappa, t, \sqrt{\epsilon}, \ell)$-fuzzy extractors.
-
+%We consider two natural settings where $\epsilon = \ngl(n)$ and when $\epsilon = \Theta(1)$.
+%
+%For the setting when $\epsilon = \ngl(n)$  if one sets $\zeta = \sqrt{\epsilon}$ this implies that for all subsets $\mathcal{W}' \subseteq \mathcal{W}$ where $\Pr[Z\in Z']\ge 1-\sqrt{\epsilon}.$ there is no $(\{0,1\}^n,\kappa, t, \sqrt{\epsilon}, \ell)$-fuzzy extractor for some element of $\mathcal{W}'$.  This shows that at least $\sqrt{\epsilon}$ fraction of elements in $\mathcal{W}$ do not have $(\{0,1\}^n,\kappa, t, \sqrt{\epsilon}, \ell)$-fuzzy extractors.
 In the setting when $\epsilon = \Theta(1)$ then setting $\zeta = \epsilon/2$ implies that for all subsets $\mathcal{W}' \subseteq \mathcal{W}$ where $\Pr[Z\in Z']\ge 1-\epsilon/2 = 1-\Theta(1)$ there is no $(\{0,1\}^n,\kappa, t, \epsilon/(2-\epsilon), \ell)$-fuzzy extractor for some element of $\mathcal{W}'$.  This shows that at least $\epsilon/2=\Theta(1)$ fraction of elements in $\mathcal{W}$ do not have $(\{0,1\}^n,\kappa, t, \epsilon/(2-\epsilon), \ell)$-fuzzy extractors. This is the setting considered in Section~\ref{sec:fe}.
 
 
