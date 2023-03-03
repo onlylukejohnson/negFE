@@ -71,14 +71,14 @@ Our results are for the Hamming metric over $\zo^n$. Below we present the two in
 
 \begin{theorem}[Informal Theorem~\ref{thm:main theorem}]
 Consider $\zo^n$ and $t< n/2$ be a distance parameter.  Let $\mathcal{W}_\gamma=\{W | \Hfuzz(W) = \gamma\}$.  Let $c>0$ be a constant and suppose that \[
-\gamma \le n\cdot\min\left\{(1-h_2(t/n)) - \Theta\left(\frac{1}{n}\right), \frac{1-\Theta(c)-h_2(1/2-t/n)}{3}\right\}.
+\gamma \le n\cdot\min\left\{(1-h_2(t/n)) +o(1), \frac{1-\Theta(c)-h_2(1/2-t/n)}{3}\right\}.
 \]
  For a quarter of $W \in \mathcal{W}_\gamma$ there is no fuzzy extractor that simultaneously has 1) no error 2) is of size at most $2^{\gamma+cn}$ 3) extracts keys of length $\omega(\log n)$ that are within statistical distance $1/3-\ngl(n)$ to a uniform key.
 \end{theorem}
 
 \begin{theorem}[Informal Theorem~\ref{thm:main theorem ss}]
 Consider $\zo^n$ and $t< n/2$ be a distance parameter.  Let $\mathcal{W}_\gamma=\{W | \Hfuzz(W) = \gamma\}$.  Let $\delta<1/4$ be the error of the secure sketch, let $c>0$ be a constant and suppose that \[
-\gamma \le n\cdot\min\left\{(1-h_2(t/n)) - \Theta\left(\frac{1}{n}\right), \frac{c_\delta}{3}h_2(t/n)-\Theta(c)-\Theta(1/n)\right\}.
+\gamma \le n\cdot\min\left\{(1-h_2(t/n)) +o(1), \frac{c_\delta}{3}h_2(t/n)-\Theta(c)-\Theta(1/n)\right\}.
 \]
 where $1/3< c_\delta <2/3$ and depends on $h_2(\delta)$. 
  For $2^{-4}$ fraction of $W \in \mathcal{W}_\gamma$ there is no secure sketch of
