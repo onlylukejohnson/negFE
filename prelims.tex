@@ -84,7 +84,7 @@ Let $(\mathcal{M}, \dis)$ be a metric space where the size of balls is center in
 \begin{claim} 
 For the binary Hamming metric over $\zo^n$ for $t<n/2$
 \[
-n\left(1-h_2\left(\frac{t}{n}\right)\right)+\frac{\log{n}}{2}+\frac{1}{2} \ge \beta \ge n\left(1-h_2\left(\frac{t}{n}\right)\right).
+n\left(1-h_2\left(\frac{t}{n}\right)\right)-1 \le \beta \le n\left(1-h_2\left(\frac{t}{n}\right)\right)+\frac{\log{n}}{2}+\frac{1}{2}.
 \]
 
 \end{claim}
@@ -93,7 +93,7 @@ n\left(1-h_2\left(\frac{t}{n}\right)\right)+\frac{\log{n}}{2}+\frac{1}{2} \ge \b
 By Equation~\ref{eq:size of balls} one has: 
 \begin{align*}
 \beta & = \log{\frac{2^n}{|B_t|} -1} \le \log{2^{n\left(1-h_2\left(\frac{t}{n}\right)\right) + 1/2 \log{n}+1/2} -1} \le n\left(1-h_2\left(\frac{t}{n}\right)\right) + \frac{1}{2}\log{n}+ \frac{1}{2}\\
-\beta&\ge \log{2^{n\left(1-h_2\left(\frac{t}{n}\right)\right)} -1} \ge n(1-h_2(t/n)).
+\beta&\ge \log{2^{n\left(1-h_2\left(\frac{t}{n}\right)\right)} -1} \ge \log{2^{n\left(1-h_2\left(\frac{t}{n}\right)\right)-1} } \ge n(1-h_2(t/n))-1.
 \end{align*}
 \end{proof}
 
