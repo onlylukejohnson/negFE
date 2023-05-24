@@ -22,7 +22,7 @@
   \renewcommand{\vec}[1]{\vect{#1}}      % activate for lncs style vectors
 
 \else
-  \documentclass[a4paper,UKenglish,cleveref, autoref, thm-restate]{lipics-v2021}
+  \documentclass{llncs}
   \newtheorem{construction}{Construction}
   \renewcommand{\paragraph}[1]{\subsubsection{#1}}
 \fi
@@ -168,7 +168,9 @@
 \newcommand{\anote}[1]{\textcolor{blue}{[ACR: #1]}}
 
 \title{Impossibility of Efficient Information-Theoretic Fuzzy Extraction}
+\ifnum\lncs=0
 \author{Luke Demarest\\University of Connecticut\\luke.h.demarest@gmail.com \and Benjamin Fuller\\University of Connecticut\\benjamin.fuller@uconn.edu\and Alexander Russell\\University of Connecticut\\acr@uconn.edu}
+\fi
 \date{\today}
 
 % Document
