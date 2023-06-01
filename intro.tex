@@ -20,7 +20,8 @@ We focus on non-interactive versions of these problems~\cite{dodis2008fuzzy} as 
 These two properties are in tension because allowing recovery of $w$ requires information about $w$.  The most natural (inefficient) construction is for $ss$ to be a pairwise independent~\cite{carter1977universal} hash $h$ of $w$~\cite{skoric2009efficient,fuller2016fuzzy,woodage2017new,fuller2020fuzzy}. The hash $h$ should be long enough so that $\{w | h(w) = y \wedge w' s.t.\,\dis(w, w')\le t\} =1$ and short enough so $\{w| h(w) = y\}$ is large. Constructions are also known based on error-correcting codes.  In fact, upper bounds on the unpredictability of $w | ss$ are related to the size of the best error-correcting codes~\cite{dodis2008fuzzy,fuller2020computational}. 
 
 Given a good information reconciliation, one can achieve privacy amplification using an average-case randomness extractor~\cite{nisan1993randomness} to convert $w$ into a uniform value.
-  Fuzzy extractors perform both tasks simultaneously.  They consist of a pair $(\gen, \rep$) where $(r, p)\leftarrow \gen(w)$ is indistinguishable from $(u, p)$ and $\rep(w', p) =r$.  Both $\sketch$ and $\gen$ are allowed to have private internal randomness.
+  Fuzzy extractors perform both information reconciliation and privacy amplification.  They consist of a pair $(\gen, \rep$).  Intuitively, $\gen$ converts a value $w$ into a uniform value and $\rep$ reproduces that value for any nearby $w'$.  Notationally, $(r, p)\leftarrow \gen(w)$ should be indistinguishable from $(u, p)$ where $u$ is a truly random value.  On the correctness side, it should be the case that for all $w'$ such that $\dis(w, w')\le t$ then $\rep(w', p) =r$.  
+  Both $\sketch$ and $\gen$ are allowed to have private internal randomness.  
   
   
 Since noisy sources come from the physical world, an important goal
@@ -76,6 +77,7 @@ Consider $\zo^n$ and $t< n/2$ be a distance parameter.  Let $\mathcal{W}_\gamma=
  For a quarter of $W \in \mathcal{W}_\gamma$ there is no fuzzy extractor that simultaneously has 1) no error 2) is of size at most $2^{\gamma+cn}$ 3) extracts keys of length $\omega(\log n)$ that are within statistical distance $1/3-\ngl(n)$ to a uniform key.
 \end{theorem}
 
+For the setting of secure sketches, we allow the secure sketch to have some bounded probability $\delta$ that the output of $\rec(ss, w') \neq w$.  We state the informal theorem below.  
 \begin{theorem}[Informal Theorem~\ref{thm:main theorem ss}]
 Consider $\zo^n$ and $t< n/2$ be a distance parameter.  Let $\mathcal{W}_\gamma=\{W | \Hfuzz(W) = \gamma\}$.  Let $\delta<1/4$ be the error of the secure sketch, let $c>0$ be a constant and suppose that \[
 \gamma \le n\cdot\min\left\{(1-h_2(t/n)) +o(1), c_\delta h_2(t/n)-\Theta(c)-\Theta(1/n)\right\}.

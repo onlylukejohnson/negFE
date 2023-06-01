@@ -26,7 +26,7 @@ For
 \label{thm:main theorem}
 \end{theorem}
 
-Recall that Lemma~\ref{lem:distributional advise suffices} states that to show the hardness of building a fuzzy extractor with distributional advise for $\mathtt{PCode}_{n, k, t, \gamma}$ it suffices to show the hardness of building an auxiliary input fuzzy extractor for the family $\mathtt{PCode}_{n, k, t, \gamma}$. 
+Recall that Lemma~\ref{lem:distributional advice suffices} states that to show the hardness of building a fuzzy extractor with distributional advice for $\mathtt{PCode}_{n, k, t, \gamma}$ it suffices to show the hardness of building an auxiliary input fuzzy extractor for the family $\mathtt{PCode}_{n, k, t, \gamma}$. 
 
 Our proof uses the following structure:
 \begin{enumerate}
@@ -115,7 +115,7 @@ And finally,
 
 \begin{lemma}
 \label{lem:convert distinguisher}
-Let all parameters be as in Corollary~\ref{corollary:info loss} with $\nu \in\mathbb{Z}^+$.  Then there is no $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon, \ell)$-fuzzy extractor with distributional advise (see Definition~\ref{def:fe distributional}) if
+Let all parameters be as in Corollary~\ref{corollary:info loss} with $\nu \in\mathbb{Z}^+$.  Then there is no $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon, \ell)$-fuzzy extractor with distributional advice (see Definition~\ref{def:fe distributional}) if
 \[
 \epsilon<1/2-\left(\epsilon_1+\epsilon_2\right)\\
 \]
@@ -153,7 +153,7 @@ and thus that
 \]
 
 \noindent
-Finally, the theorem follows by application of Lemma~\ref{lem:distributional advise suffices} with the setting of $\zeta = 1/4$.
+Finally, the theorem follows by application of Lemma~\ref{lem:distributional advice suffices} with the setting of $\zeta = 1/4$.
 \end{proof} 
 
 
@@ -485,7 +485,7 @@ The above corollary follows by combination of Lemma~\ref{lem:smallgeneralviable 
 \end{proof}
 \begin{lemma}
 \label{lem:convert distinguisher ss}
-Let all parameters be as in Corollary~\ref{corollary:info loss ss} with $\nu \in\mathbb{Z}^+$.  Then there is no $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon_\sketch, \delta, \ell)$-secure sketch with distributional advise (see Definition~\ref{def:ss distributional}) if
+Let all parameters be as in Corollary~\ref{corollary:info loss ss} with $\nu \in\mathbb{Z}^+$.  Then there is no $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon_\sketch, \delta, \ell)$-secure sketch with distributional advice (see Definition~\ref{def:ss distributional}) if
 \[
 \tilde{m}> -\log{1-\epsilon_\sketch} +1 + 2\max\left\{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.
 \]
@@ -518,7 +518,7 @@ Thus,
 &\le \epsilon_{\sketch}-\epsilon_{\mathtt{PCode}}+ \epsilon_{\mathtt{PCode}} = \epsilon_{\sketch}.
 \end{align*}
 This contradicts the fact that $\Hav^{\epsilon_\sketch}(U_{n,k} | \sketch(U_{n,k}), Z_{U_{n,k}})) \le \chi.$
-Finally, Theorem~\ref{thm:main theorem ss} follows by application of Lemma~\ref{lem:distributional advise suffices ss} with setting $\zeta = \chi$ and noting that $\chi\ge 1$.
+Finally, Theorem~\ref{thm:main theorem ss} follows by application of Lemma~\ref{lem:distributional advice suffices ss} with setting $\zeta = \chi$ and noting that $\chi\ge 1$.
 
 
 \subsection{Proof of Lemma~\ref{lem:convert distinguisher ss}}

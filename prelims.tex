@@ -124,7 +124,7 @@ $\Pr_{r, p \leftarrow \gen(w)}[\rep(w', p) = r]=1.$
 \end{definition}
 
 \noindent
-We now define fuzzy extractors and secure sketches with advice.  This is an intermediate definition that will be used in proofs throughout.  As we show in Lemmas~\ref{lem:distributional advise suffices} and \ref{lem:distributional advise suffices ss}, the impossibility of building a fuzzy extractor (resp. secure sketch) with advice for a family $\mathcal{W}$ implies the impossibility of building a fuzzy extractor (resp. secure sketch) for many $W_Z\in\mathcal{W}$.
+We now define fuzzy extractors and secure sketches with advice.  This is an intermediate definition that will be used in proofs throughout.  As we show in Lemmas~\ref{lem:distributional advice suffices} and \ref{lem:distributional advice suffices ss}, the impossibility of building a fuzzy extractor (resp. secure sketch) with advice for a family $\mathcal{W}$ implies the impossibility of building a fuzzy extractor (resp. secure sketch) for many $W_Z\in\mathcal{W}$.
 
 \begin{definition}[Secure Sketch with distributional advice]
 \label{def:ss distributional}
@@ -155,9 +155,9 @@ For metric space $(\{0,1\}^n, \dis)$, a $(\{0,1\}^n, \mathcal{W}, \kappa, t, \ep
 \begin{lemma}
 
 Let $\mathcal{W}$ be a distribution family indexed by the set $Z$ and suppose that no $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, \ell)$-fuzzy extractor with distributional advice exists.  For all families $\mathcal{W}'\subseteq \mathcal{W}$ indexed by $Z'\subseteq Z$ where \[\frac{|Z'\cap Z|}{|Z|} = \frac{|Z'|}{|Z|}\le 1-\zeta\] there is some $Z'$ there is no  $(\{0,1\}^n,\kappa, t, (\epsilon-\zeta))/(1-\zeta), \ell)$ fuzzy extractor $(\gen_Z, \rep_Z)$.
-\label{lem:distributional advise suffices}
+\label{lem:distributional advice suffices}
 \end{lemma}
-\begin{proof}[Proof of Lemma~\ref{lem:distributional advise suffices}]
+\begin{proof}[Proof of Lemma~\ref{lem:distributional advice suffices}]
 We proceed by contrapositive.  Let $\mathcal{W}'$ be some subset of $\mathcal{W}$ with relative size at least $1-\zeta$ where  for every $W_Z\in\mathcal{W}'$ there exists an $(\{0,1\}^n,\kappa, t, (\epsilon-\zeta)/(1-\zeta), \ell)$-fuzzy extractor.  We denote these algorithms by $(\gen_Z, \rep_Z)$ respectively.  We now describe how to build the fuzzy extractor $(\gen, \rep, \advice)$ with distributional advice.  Let 
 \[
 \advice(Z) = \begin{cases} (\gen_Z, \rep_Z)& Z\in Z'\\\perp&\text{otherwise.}\end{cases}
@@ -168,7 +168,7 @@ Then
 \Delta((R, P, Z), (U_\kappa, P, Z)) &= \Delta((R, P, Z), (U_\kappa, P, Z) | Z\in Z')+\Delta((R, P, Z), (U_\kappa, P, Z) | Z\not\in Z')\\
 &\le \frac{\epsilon-\zeta}{1-\zeta} * (1-\zeta) + 1* \zeta = \epsilon.
 \end{align*}
-It is clear that $(\gen, \rep, \advice)$ is a $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, \ell)$ fuzzy extractor with distributional advise.
+It is clear that $(\gen, \rep, \advice)$ is a $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, \ell)$ fuzzy extractor with distributional advice.
 \end{proof}
 
 \paragraph{Interpretation} 
@@ -181,11 +181,11 @@ In the setting when $\epsilon = \Theta(1)$ then setting $\zeta = \epsilon/2$ imp
 \begin{lemma}
 Let $\mathcal{W}$ be a distribution family indexed by $Z$ and suppose that no $(\zo^n, \mathcal{W}, \tilde{m}, t, \epsilon, \delta, \ell)$-secure sketch with distributional advice exists.  For all families $\mathcal{W}'\subseteq \mathcal{W}$ indexed by $Z'\subseteq Z$ where\[\frac{|Z\cap Z'|}{|Z|} = \frac{|Z'|}{|Z|}\ge 1-2^{-\zeta}\]
 there is some $Z'$ for which no  $(\zo^n, \min\{\tilde{m}, \zeta\}, t, \epsilon, \delta, \ell)$ fuzzy extractor $(\sketch_{Z'}, \rec_{Z'})$  exists.
-\label{lem:distributional advise suffices ss}
+\label{lem:distributional advice suffices ss}
 \end{lemma}
 
 \begin{proof}
-The proof of Lemma~\ref{lem:distributional advise suffices ss} follows the structure of the proof of Lemma~\ref{lem:distributional advise suffices}.  With $ss=w$ and with the following equation for computing the remaining smooth conditional min-entropy.
+The proof of Lemma~\ref{lem:distributional advice suffices ss} follows the structure of the proof of Lemma~\ref{lem:distributional advice suffices}.  With $ss=w$ and with the following equation for computing the remaining smooth conditional min-entropy.
 \begin{align*}
 \expe_{Z} [\Haveps(W_Z| \sketch(W_Z), Z)] &= -\log{\Pr[Z\in Z']\expe_{Z} 2^{-\Haveps(W_Z| ss, Z\in Z')}+ \Pr[Z\not\in Z']\expe_{Z} 2^{-\Haveps(W_Z| ss, Z\not\in Z'] }}\\
 &\ge -\log{1 \cdot 2^{-\tilde{m}}+ 2^{-\zeta}\cdot 1}\\
