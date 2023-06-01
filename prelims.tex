@@ -3,9 +3,9 @@
 
 \section{Preliminaries}
 \label{sec:prelim}
-For distributions $X, Y$ over the same discrete domain,
+For distributions $X, Y$ over the same discrete domain $\chi$,
 \[
-\Delta(X, Y)\overset{def}= \frac{1}{2}\sum_{x \in X} \left| \Pr[X=x] - \Pr[Y=y]\right|.
+\Delta(X, Y)\overset{def}= \frac{1}{2}\sum_{x \in \chi} \left| \Pr[X=x] - \Pr[Y=y]\right|.
 \]
 For a metric space $(\mathcal{M}, \dis)$ let $B_t(x) = \{y | \dis(x, y)\le t\}$. If the size of $B_t(x)$ is the same for all points $x$ we use $|B_t|$ to denote this quantity and say that the \emph{size of balls is center independent}.  All logarithms are base $2$.
 
@@ -112,7 +112,7 @@ For metric space $(\mathcal{M}, \dis)$ and distribution $W$ with probability mas
 \paragraph{The use of smooth min-entropy} In the above, the secure sketch is required to retain smooth conditional min-entropy of $W$ conditioned on the sketch.  Many definitions consider $\epsilon=0$ or average min-entropy.  However, smooth min-entropy is the necessary and sufficient condition for privacy amplification through the use of an average-case randomness extractor~\cite{renner2005simple}.
 
 \begin{definition}[Fuzzy Extractor~\cite{dodis2008fuzzy}]
-For metric space $(\mathcal{M}, \dis)$ and probability distribution $W$ with probability mass function $z$, a $(\mathcal{M}, \kappa, t, \epsilon)$-\emph{fuzzy extractor} is a pair of algorithms $(\gen_z, \rep_z)$ with the following properties 
+For metric space $(\mathcal{M}, \dis)$ and probability distribution $W$ with probability mass function $z$, a $(\mathcal{M}, \kappa, t, \epsilon, \ell)$-\emph{fuzzy extractor} is a pair of algorithms $(\gen_z, \rep_z)$ with the following properties 
 \begin{enumerate} 
 \itemsep0em
 \item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')\le t$, then 
@@ -165,7 +165,7 @@ We proceed by contrapositive.  Let $\mathcal{W}'$ be some subset of $\mathcal{W}
 In both cases, $\advice(Z)$ has length at most $\ell$. Then define $\gen(x, C)$ as follows:  if $C = \perp$ sample a random key $r$ output $(r, r)$, otherwise interpret $C$ as two circuits $\gen', \rep'$ and output $\gen'(x)$.  Define $\rep(x, p, C)$ interpret $C$ if $C = \perp$ output $p$, otherwise parse $C$ as two circuits $\gen', \rep'$ and output $\rep'(x', p)$.  
 Then 
 \begin{align*}
-\Delta((R, P, Z), (U_\kappa, P, Z)) &= \Delta((R, P, Z), (U_\kappa, P, Z) | Z\in Z')+\Delta((R, P, Z), (U_\kappa, P, Z) | Z\not\in Z')\\
+\Delta((R, P, Z), (U_\kappa, P, Z)) &= \Delta((R, P, Z), (U_\kappa, P, Z) | Z\in Z')\Pr[Z\in Z']\\&+\Delta((R, P, Z), (U_\kappa, P, Z) | Z\not\in Z')\Pr[Z\not \in Z']\\
 &\le \frac{\epsilon-\zeta}{1-\zeta} * (1-\zeta) + 1* \zeta = \epsilon.
 \end{align*}
 It is clear that $(\gen, \rep, \advice)$ is a $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, \ell)$ fuzzy extractor with distributional advice.
