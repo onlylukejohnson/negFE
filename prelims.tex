@@ -14,6 +14,7 @@ Throughout, we will need the ability to describe a particular value in this fami
 We let $Z$ be an index for the distributions in the family and we denote a distribution as $W_Z$. 
 The distribution $W_Z$ can then be sampled, and we denote a sample of $w\leftarrow W_Z$ where  $w \in \zeroone{n}$.
 
+
 \subsection{Notions of Entropy}
     \textbf{Entropy}, denoted $\ent{X}$, for some discrete random variable $X$ is $\ent{X} \defined \expe_x\left[-\log{\Pr[X=x]}\right]$. 
     For a random variable $X$ whose outcomes are in $\{0,1\}$, let $\Pr[X=1] = p$. The \textbf{binary entropy} of $X$ is  $h_2(X) :=H(X)=-p\cdot\log{p} - (1-p)\cdot\log{1-p}.$ 
@@ -195,7 +196,6 @@ The proof of Lemma~\ref{lem:distributional advice suffices ss} follows the struc
 
 \paragraph{Interpretation}
 The natural parameter setting of the above is setting $\zeta = \max\{\tilde{m},1\} $ which shows that at least $2^{-\tilde{m}}$ of the distributions have no secure sketch.  Later in this work, we consider $\tilde{m} = \Theta(1)$ which suffices to that show that a constant fraction of distributions have no secure sketch.
-
 
 
 

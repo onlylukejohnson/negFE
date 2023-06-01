@@ -6,11 +6,44 @@
 \label{sec:fe}
 \input{family}
 
+\noindent
+Before formally stating our main theorem, we summarize notation in Table~\ref{tab:notation}.
+
+\begin{table}
+\centering
+\begin{tabular}{r | l}
+Notation & Meaning\\\hline
+$k$ & log size support of input distribution\\
+$\ell$ & Length of $\advice$ and circuit size of fuzzy extractor\\
+$\tilde{m}$ & Residual min-entropy of fuzzy extractor conditioned on helper\\
+$n$ & Dimension of input points\\
+$P/p$ & Public Helper value of fuzzy extractor\\
+$R/r$ & Key of fuzzy extractor\\
+$\sketch/ss$ & Public Helper value of secure sketch\\
+$t$ & Distance for correction\\
+$B_t$ & Hamming Ball of radius $t$\\
+$U$ & Uniform distribution\\
+$\epsilon$ & Statistical Distance Parameter for fuzzy extractor,\\
+& Smoothness parameter for min-entropy of secure sketch\\
+$\alpha = \log{{2^n\choose 2^k}}$ & Log size of number of distributions with $2^k$ points\\
+$\beta$ & Ratio of Metric Space Size to Size of Hamming Ball (Def~\ref{def:b density})\\
+$\gamma$ & lower bound on fuzzy min-entropy of distributions \\
+$\kappa$ & key length of fuzzy extractor\\
+$\nu$ & Number of points that adversary fully describes in advice\\
+$\mu =  n \cdot h_2\prns{\frac{1}{2} - \frac{t}{n}}$ & Log of maximum number of viable points (Lem~\ref{lem:smallgeneralviable})\\
+$\mathtt{PCode}$ & Uniform Distribution over a set of points\\& (whose uniform distribution) has a bounded fuzzy min-entropy
+\end{tabular}
+\caption{Summary of notation}
+\label{tab:notation}
+\end{table}
+
+
 \begin{theorem}
 Let $\gamma \in\mathbb{R}^+, n, \kappa, t, \ell, \gamma \in\mathbb{Z}^+$ be parameters. 
 \begin{enumerate}
 \itemsep0em
-\item The $\beta$-density is at least $1$ which is  satisfied as long as $t< n/2 $ (see Definition~\ref{def:b density}),
+\item Let $\alpha = \log{{2^n\choose 2^k}}$,
+\item That $t<n/2$ which implies $\beta$-density is at least $1$,
 \item Let $\nu \in \mathbb{Z}^+$ be a free parameter, and
 \item Let $\mu =  n \cdot h_2\prns{\frac{1}{2} - \frac{t}{n}}$.
 \end{enumerate}
@@ -104,11 +137,11 @@ Suppose that
 \]
 And thus, for on average across $Z$, the expected number of points outside of $\mathcal{I}_\advice$ that are included in $\viable$ is at most 
 \begin{align*}
-\expe_{Z} \left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p}\sum_{i | w_{z,i}\not\in\mathcal{I}_\advice} \viable(w_{z,i}, p, \mathsf{key}, \advice) \middle| \begin{aligned} z\leftarrow Z\\ \advice\leftarrow \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advice)\end{aligned} \right]< 2^{-\frac{\alpha - |\advice|}{2^k}+1+\mu+2k-\log{\nu}}.
+\expe_{Z} \left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p}\sum_{w_{z,i}\not\in\mathcal{I}_\advice} \viable(w_{z,i}, p, \mathsf{key}, \advice) \middle| \begin{aligned} z\leftarrow Z\\ \advice\leftarrow \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advice)\end{aligned} \right]< 2^{-\frac{\alpha - |\advice|}{2^k}+1+\mu+2k-\log{\nu}}.
 \end{align*}
 And finally, 
 \begin{align*}
-\expe_{Z} \left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p}\sum_{i }  \viable(w_{z,i}, p, \mathsf{key}, \advice) \middle| \begin{aligned} z\leftarrow Z\\ \advice\leftarrow \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advice)\end{aligned} \right]< 2^{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1.
+\expe_{Z} \left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p}\sum_{w_{z,i}}  \viable(w_{z,i}, p, \mathsf{key}, \advice) \middle| \begin{aligned} z\leftarrow Z\\ \advice\leftarrow \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advice)\end{aligned} \right]< 2^{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1.
 \end{align*}
 
 \end{corollary}
