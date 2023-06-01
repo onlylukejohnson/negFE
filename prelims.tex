@@ -58,7 +58,7 @@ For a distribution $W$ and a distance parameter $t$, the fuzzy min-entropy of $W
 \]
 \end{definition}
 
-\begin{proposition} \label{lem:max fuzz ent}
+\begin{proposition} \label{prop:max fuzz ent}
 For all distributions $W$ over a metric space $(\mathcal{M}, \dis)$, 
 \[\Hfuzz(W) \le \log{|\mathcal{M}|} - \log{|B_t|}.
 \]
@@ -115,7 +115,7 @@ For metric space $(\mathcal{M}, \dis)$ and distribution $W$ with probability mas
 For metric space $(\mathcal{M}, \dis)$ and probability distribution $W$ with probability mass function $z$, a $(\mathcal{M}, \kappa, t, \epsilon)$-\emph{fuzzy extractor} is a pair of algorithms $(\gen_z, \rep_z)$ with the following properties 
 \begin{enumerate} 
 \itemsep0em
-\item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, then 
+\item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')\le t$, then 
 $\Pr_{r, p \leftarrow \gen(w)}[\rep(w', p) = r]=1.$ 
 \item \textbf{Security} Let $R, P \leftarrow \gen_z(W)$ and $U_\kappa$ be a uniformly distributed random variable over $\zo^\kappa$, $\Delta((R, P), (U_\kappa, P))\le \epsilon.$
 \item  \textbf{Space Bounded} The circuits $\gen_z$ and $\rep_z$ require $\ell$ bits to describe.  That is, $|\gen| +|\rec|\le \ell$.
@@ -129,7 +129,7 @@ We now define fuzzy extractors and secure sketches with advice.  This is an inte
 \begin{definition}[Secure Sketch with distributional advice]
 \label{def:ss distributional}
 Let $\mathcal{W}$ be a family of distributions indexed by $z$.  That is, denote each distribution in $\mathcal{W}$ as $W_Z$ with $Z$ describing the probability mass function of $W$.  
-For metric space $(\{0,1\}^n, \dis)$, a $(\{0,1\}^n, \mathcal{W}, \tilde{m}, t, \epsilon, \delta, \ell)$-\emph{secure sketch with distributional advice} is a triple of algorithms $(\gen, \rep, \aux)$ with the following properties:
+For metric space $(\{0,1\}^n, \dis)$, a $(\{0,1\}^n, \mathcal{W}, \tilde{m}, t, \epsilon, \delta, \ell)$-\emph{secure sketch with distributional advice} is a triplet of algorithms $(\gen, \rep, \aux)$ with the following properties:
 \begin{enumerate} 
 \itemsep0em
 \item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, let $\Pr_{ss \leftarrow \sketch(w)}[\rec(w', ss) = w]\ge 1-\delta.$
@@ -144,7 +144,7 @@ $
 \begin{definition}[Fuzzy Extractor with distributional advice]
 \label{def:fe distributional}
 Let $\mathcal{W}$ be a family of distributions indexed by $z$.  That is, denote each distribution in $\mathcal{W}$ as $W_Z$ with $Z$ describing the probability mass function of $W$.  
-For metric space $(\{0,1\}^n, \dis)$, a $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon, \ell)$-\emph{fuzzy extractor with distributional advice} is a triple of algorithms $(\gen, \rep, \aux)$ with the following properties:
+For metric space $(\{0,1\}^n, \dis)$, a $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon, \ell)$-\emph{fuzzy extractor with distributional advice} is a triplet of algorithms $(\gen, \rep, \aux)$ with the following properties:
 \begin{enumerate} 
 \itemsep0em
 \item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, let $\Pr_{(r, p) \leftarrow \gen(w)}[\rep(w', p) = r]=1.$
@@ -187,7 +187,7 @@ there is some $Z'$ for which no  $(\zo^n, \min\{\tilde{m}, \zeta\}, t, \epsilon,
 \begin{proof}
 The proof of Lemma~\ref{lem:distributional advice suffices ss} follows the structure of the proof of Lemma~\ref{lem:distributional advice suffices}.  With $ss=w$ and with the following equation for computing the remaining smooth conditional min-entropy.
 \begin{align*}
-\expe_{Z} [\Haveps(W_Z| \sketch(W_Z), Z)] &= -\log{\Pr[Z\in Z']\expe_{Z} 2^{-\Haveps(W_Z| ss, Z\in Z')}+ \Pr[Z\not\in Z']\expe_{Z} 2^{-\Haveps(W_Z| ss, Z\not\in Z'] }}\\
+\expe_{Z} [\Haveps(W_Z| \sketch(W_Z), Z)] &= -\log{\Pr[Z\in Z']\expe_{Z} 2^{-\Haveps(W_Z| ss, Z\in Z')}+ \Pr[Z\not\in Z']\expe_{Z}\left[ 2^{-\Haveps(W_Z| ss, Z\not\in Z'] )}\right]}\\
 &\ge -\log{1 \cdot 2^{-\tilde{m}}+ 2^{-\zeta}\cdot 1}\\
 &\ge -\log{2^{-\tilde{m}}+2^{-\zeta}}  \ge \min\{\tilde{m},\zeta\}.
 \end{align*}

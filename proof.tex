@@ -56,7 +56,7 @@ Lemma~\ref{lem:close family} shows that $\mathtt{PCode}_{n, k, t, \gamma}$ is st
 
 \begin{lemma}
  \label{lem:close family}
-Let $n, k, t, \gamma$ be parameters such that the $\beta$ density is at least $0$ (which is satisfied as long as $t< n/2 $). Then one has that 
+Fix some $n\in \mathbb{Z}^+$ and let $t<n/2$.  Let $k, \gamma  \in \mathbb{Z}^+$.  Then one has that 
 \[\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \gamma}) \le \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.\]
 \end{lemma}
 
@@ -186,7 +186,7 @@ Together, these settings imply that
 \end{align*}
 
 \paragraph{Discussion}
-By Lemma~\ref{lem:max fuzz ent} for any $W$ in $\zo^n$ it is true that \[
+By Proposition~\ref{prop:max fuzz ent} for any $W$ in $\zo^n$ it is true that \[
 \Hfuzz(W)\le n\left(1-h_2\left(\frac{t}{n}\right)\right)+ \frac{\log{n}}{2} +1/2.\]  Thus, the additional constraint that 
 \[
 \Hfuzz(W):=\gamma \le \beta - \log{2e}
