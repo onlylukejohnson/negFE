@@ -11,8 +11,7 @@ For a metric space $(\mathcal{M}, \dis)$ let $B_t(x) = \{y | \dis(x, y)\le t\}$.
 
 This work considers the possibility of constructing fuzzy extractors from a finite family of distributions that we will call $\mathcal{W}$. 
 Throughout, we will need the ability to describe a particular value in this family.  
-We let $Z$ be an index for the distributions in the family and we denote a distribution as $W_Z$. 
-The distribution $W_Z$ can then be sampled, and we denote a sample of $w\leftarrow W_Z$ where  $w \in \zeroone{n}$.
+We let $\mathcal{Z}$ be an index for the family $\mathcal{W}$. Each string $z\in\mathcal{Z}$ describes a distribution as $W_z \in \mathcal{W}$. We use $Z$ to describe the uniform distribution $U_{\mathcal{Z}}$, that is $W_Z \overset{d}= U_{\mathcal{W}}$.  Note for each $w$ that $W_z$ is a distribution.  We use $w\leftarrow W_z$ to denote a sample from $W_z$ where  $w \in \zeroone{n}$.  Where appropriate we use $w\leftarrow W_Z$ to denote the two-stage process of sampling $z\leftarrow Z$ and then sampling $w\leftarrow W_z$.
 
 
 \subsection{Notions of Entropy}
