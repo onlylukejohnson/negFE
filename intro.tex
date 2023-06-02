@@ -125,26 +125,24 @@ impossibility of two types of fuzzy extractors:
 (r, p, z) \approx (u, p, z).
 \] 
 where $u$ is uniformly and independently sampled.  
-All information about $z$ given to $\gen$ is contained in $\advice$ and the point $w$.
-\item[Def.~\ref{def:fe}] Fuzzy extractors for a specific distribution $W$ that are required to have a bounded size description of $(\gen, \rep)$.
+\item[Def.~\ref{def:fe}] Fuzzy extractors for a specific distribution $W_z \in \mathcal{W}$ that are required to have a bounded size description of $(\gen, \rep)$.
 \end{description}
 
-We show impossibility of building a fuzzy extractor with distributional advice of length $\ell$ for $\mathcal{W}$ implies impossibility of building a space bounded fuzzy extractor for length $\ell$ (Lemma~\ref{lem:distributional advise suffices}). 
+We show impossibility of building a fuzzy extractor with distributional advice of length $\ell$ for $\mathcal{W}$ implies impossibility of building a space bounded fuzzy extractor for length $\ell$ (Lemma~\ref{lem:distributional advice suffices}). 
 The core of our negative results is to show the impossibility of building fuzzy extractors with distributional advice.   
 
 We perform a brief overview of Fuller, Reyzin, and Smith's~\cite{fuller2020fuzzy} impossibility result.
 %\paragraph{Review of Fuller, Reyzin, and Smith~\cite{fuller2020fuzzy}}
-The correctness constraint of a fuzzy extractor says that for $(r, p)\leftarrow \gen(w)$ for all $w'$ close to $w$ the correct key is reproduced, i.e., $\rep(w', p)=r$.  As such, one can partition the input space $\zo^n$ by what value of $r$ the point  $v\in \zo^n$ produces.  Values $v$ that could have produced  $r$ will be at least distance $t$ from the boundary of this partition, we call the set of such $v$, $\viable_{r,p}$.  $\viable_{r,p}$ can be bounded geometrically using the isoperimetric inequality~\cite{harper1966optimal}.  This bound applies for any distribution over the inputs $w$.
+The correctness constraint of a fuzzy extractor says that for $(r, p)\leftarrow \gen(w)$ for all $w'$ close to $w$ the correct key is reproduced, i.e., $\rep(w', p)=r$.  As such, for each value of $p$, one can partition the input space $\zo^n$ by what value of $r$ the point  $v\in \zo^n$ produces.  Values $v$ that could have produced  $r$ will be at least distance $t$ from the boundary of this partition, we call the set of such $v$, $\viable_{r,p}$.  $\viable_{r,p}$ can be bounded geometrically using the isoperimetric inequality~\cite{harper1966optimal}.  This bound applies for any distribution over the inputs $w$.
 
 Consider the following simple distinguisher for a triple $r, p, z$.  One computes the key partition described above and the set $\viable_{r,p}$. If $\viable_{r,p} \cap W_z $ is empty output the key is random, otherwise output key is real. 
 The core of Fuller, Reyzin, and Smith's impossibility was to build a family $\mathcal{W}^{FRS}$ with three properties:
 \begin{enumerate}
 \item The distribution was $2$-universal~\cite{carter1977universal}, so the remainder of the distribution was unknown conditioned on the input $w$. 
-\item Distributions $W_Z \in \mathcal{W}^{FRS}$ shared few points, and 
-\item Each distribution $\mathcal{W}^{FRS}$ had fuzzy min-entropy.
+\item Distributions $W_z \in \mathcal{W}^{FRS}$ shared few points and had fuzzy min-entropy.
 \end{enumerate}
-Together these three properties meant that for any partition most distributions $W_Z$ would have few nonempty interiors and the real key could be distinguished from a uniform key.  
-The family is as follows: let $\mathbf{C}$ be a linear error-correcting code with distance $t$, let $\mathbf{H}$ be its syndrome, let $c$ be a coset.  Then each $Z = (\mathbf{H}, c)$ is the set of all points $\{w \mid \mathbf{H} w = c\}$.
+Together these three properties meant that for any partition most distributions $W_z$ would have few nonempty interiors and the real key could be distinguished from a uniform key.  
+The family is as follows: let $\mathbf{C}$ be a linear error-correcting code with distance $t$, let $\mathbf{H}$ be its syndrome, let $c$ be a coset.  Then each $z = (\mathbf{H}, c)$ and a distribution $W_{z=(\mathbf{H}, c)}$ is the uniform distribution over  the set of all points $\{w \mid \mathbf{H} w = c\}$.
 
 \paragraph{Moving to the distributional advice setting}
 To set notation for the distributional advice game, we consider the following game for a tuple of algorithms $(\advice, \gen, \rep)$:
