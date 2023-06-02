@@ -7,7 +7,7 @@ For distributions $X, Y$ over the same discrete domain $\chi$,
 \[
 \Delta(X, Y)\overset{def}= \frac{1}{2}\sum_{x \in \chi} \left| \Pr[X=x] - \Pr[Y=y]\right|.
 \]
-For a metric space $(\mathcal{M}, \dis)$ let $B_t(x) = \{y | \dis(x, y)\le t\}$. If the size of $B_t(x)$ is the same for all points $x$ we use $|B_t|$ to denote this quantity and say that the \emph{size of balls is center independent}.  All logarithms are base $2$.
+For a metric space $(\mathcal{M}, \dis)$ let $B_t(x) = \{y | \dis(x, y)\le t\}$. If the size of $B_t(x)$ is the same for all points $x$ we use $|B_t|$ to denote this quantity and say that the \emph{size of balls is center independent}.  This is true for the Hamming metric.  All logarithms are base $2$.
 
 \paragraph{Indexing and sampling from a family of distributions}
 This work considers the possibility of constructing fuzzy extractors from a finite family of distributions that we will call $\mathcal{W}$. 
@@ -16,7 +16,7 @@ We let $\mathcal{Z}$ be an index for the family $\mathcal{W}$. Each string $z\in
 
 
 \subsection{Notions of Entropy}
-    \textbf{Entropy}, denoted $\ent{X}$, for some discrete random variable $X$ is $\ent{X} \defined \expe_x\left[-\log{\Pr[X=x]}\right]$. 
+    \textbf{Binary Entropy}, %denoted $\ent{X}$, for some discrete random variable $X$ is $\ent{X} \defined \expe_x\left[-\log{\Pr[X=x]}\right]$. 
     For a random variable $X$ whose outcomes are in $\{0,1\}$, let $\Pr[X=1] = p$. The \textbf{binary entropy} of $X$ is  $h_2(X) :=H(X)=-p\cdot\log{p} - (1-p)\cdot\log{1-p}.$ 
 For a discrete random variable $X$, 
     \textbf{min-entropy} is $\minent{X} \defined -\log{\max_{x_i} \Pr(X=x_i)}$.  
@@ -83,9 +83,10 @@ Let $(\mathcal{M}, \dis)$ be a metric space where the size of balls is center in
 \label{def:b density}
 \end{definition}
 \begin{claim} 
-For the binary Hamming metric over $\zo^n$ for $t<n/2$
+For $n, t\mathbb{Z}^+$ with $t<n/2$ for the Hamming metric over $\zo^n$
 \[
-n\left(1-h_2\left(\frac{t}{n}\right)\right)-1 \le \beta \le n\left(1-h_2\left(\frac{t}{n}\right)\right)+\frac{\log{n}}{2}+\frac{1}{2}.
+%n\left(1-h_2\left(\frac{t}{n}\right)\right)-1 \le \beta \le n\left(1-h_2\left(\frac{t}{n}\right)\right)+\frac{\log{n}}{2}+\frac{1}{2}.
+\beta \ge n\left(1-h_2\left(\frac{t}{n}\right)\right)-1.
 \]
 
 \end{claim}
@@ -93,7 +94,7 @@ n\left(1-h_2\left(\frac{t}{n}\right)\right)-1 \le \beta \le n\left(1-h_2\left(\f
 \begin{proof}
 By Equation~\ref{eq:size of balls} one has: 
 \begin{align*}
-\beta & = \log{\frac{2^n}{|B_t|} -1} \le \log{2^{n\left(1-h_2\left(\frac{t}{n}\right)\right) + 1/2 \log{n}+1/2} -1} \le n\left(1-h_2\left(\frac{t}{n}\right)\right) + \frac{1}{2}\log{n}+ \frac{1}{2}\\
+%\beta & = \log{\frac{2^n}{|B_t|} -1} \le \log{2^{n\left(1-h_2\left(\frac{t}{n}\right)\right) + 1/2 \log{n}+1/2} -1} \le n\left(1-h_2\left(\frac{t}{n}\right)\right) + \frac{1}{2}\log{n}+ \frac{1}{2}\\
 \beta&\ge \log{2^{n\left(1-h_2\left(\frac{t}{n}\right)\right)} -1} \ge \log{2^{n\left(1-h_2\left(\frac{t}{n}\right)\right)-1} } \ge n(1-h_2(t/n))-1.
 \end{align*}
 \end{proof}
@@ -101,42 +102,42 @@ By Equation~\ref{eq:size of balls} one has:
 
     \subsection{Fuzzy Extractors and Secure Sketches}
 \begin{definition}[Secure Sketch~\cite{dodis2008fuzzy}]
-For metric space $(\mathcal{M}, \dis)$ and distribution $W$ with probability mass function $z$, a $(\mathcal{M}, \tilde{m}, t, \epsilon, \delta, \ell)$-\emph{secure sketch} is a pair of algorithms $(\sketch_z, \rec_z)$ with the following properties 
+For metric space $(\mathcal{M}, \dis)$ and distribution $W_z$ with probability mass function, a $(\mathcal{M}, \tilde{m}, t, \epsilon, \ell, \delta)$-\emph{secure sketch} is a pair of algorithms $(\sketch_z, \rec_z)$ with the following properties 
 \begin{enumerate} 
 \itemsep0em
-\item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, then $\Pr_{ss \leftarrow \sketch(w)}[\rec_z(w', ss) = w]\ge 1-\delta.$
-\item \textbf{Security}  $\Haveps(W | \sketch_z(W)) \ge \tilde{m}$.
+\item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')\le t$, then $\Pr_{ss \leftarrow \sketch(w)}[\rec_z(w', ss) = w]\ge 1-\delta.$
+\item \textbf{Security}  $\Haveps(W_z | \sketch_z(W_z)) \ge \tilde{m}$.
 \item \textbf{Space Bounded} The circuits $\sketch_z$ and $\rec_z$ require at most $\ell$ bits to describe.  That is, $|\sketch_z| +|\rec_z|\le \ell$.
 \end{enumerate}
 \end{definition}
 
-\paragraph{The use of smooth min-entropy} In the above, the secure sketch is required to retain smooth conditional min-entropy of $W$ conditioned on the sketch.  Many definitions consider $\epsilon=0$ or average min-entropy.  However, smooth min-entropy is the necessary and sufficient condition for privacy amplification through the use of an average-case randomness extractor~\cite{renner2005simple}.
+\paragraph{The use of smooth min-entropy} In the above, the secure sketch is required to retain smooth conditional min-entropy of $W_z$ conditioned on the sketch.  Many definitions consider $\epsilon=0$ or average min-entropy.  However, smooth min-entropy is the necessary and sufficient condition for privacy amplification through the use of an average-case randomness extractor~\cite{renner2005simple}.
 
 \begin{definition}[Fuzzy Extractor~\cite{dodis2008fuzzy}]
-For metric space $(\mathcal{M}, \dis)$ and probability distribution $W$ with probability mass function $z$, a $(\mathcal{M}, \kappa, t, \epsilon, \ell)$-\emph{fuzzy extractor} is a pair of algorithms $(\gen_z, \rep_z)$ with the following properties 
+For metric space $(\mathcal{M}, \dis)$ and probability distribution $W_z$, a $(\mathcal{M}, \kappa, t, \epsilon, \ell)$-\emph{fuzzy extractor} is a pair of algorithms $(\gen_z, \rep_z)$ with the following properties 
 \begin{enumerate} 
 \itemsep0em
 \item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')\le t$, then 
 $\Pr_{r, p \leftarrow \gen(w)}[\rep(w', p) = r]=1.$ 
-\item \textbf{Security} Let $R, P \leftarrow \gen_z(W)$ and $U_\kappa$ be a uniformly distributed random variable over $\zo^\kappa$, $\Delta((R, P), (U_\kappa, P))\le \epsilon.$
+\item \textbf{Security} Let $R, P \leftarrow \gen_z(W_z)$ and $U_\kappa$ be a uniformly distributed random variable over $\zo^\kappa$, $\Delta((R, P), (U_\kappa, P))\le \epsilon.$
 \item  \textbf{Space Bounded} The circuits $\gen_z$ and $\rep_z$ require $\ell$ bits to describe.  That is, $|\gen| +|\rec|\le \ell$.
 \end{enumerate}
 \label{def:fe}
 \end{definition}
 
 \noindent
-We now define fuzzy extractors and secure sketches with advice.  This is an intermediate definition that will be used in proofs throughout.  As we show in Lemmas~\ref{lem:distributional advice suffices} and \ref{lem:distributional advice suffices ss}, the impossibility of building a fuzzy extractor (resp. secure sketch) with advice for a family $\mathcal{W}$ implies the impossibility of building a fuzzy extractor (resp. secure sketch) for many $W_Z\in\mathcal{W}$.
+We now define fuzzy extractors and secure sketches with advice.  This is an intermediate definition that will be used in proofs throughout.  As we show in Lemmas~\ref{lem:distributional advice suffices} and \ref{lem:distributional advice suffices ss}, the impossibility of building a fuzzy extractor (resp. secure sketch) with advice for the uniform distribution of distributions $W_Z$ from $\mathcal{W}$ implies the impossibility of building a fuzzy extractor (resp. secure sketch) for a constant fraction of $W_z\in\mathcal{W}$.
 
 \begin{definition}[Secure Sketch with distributional advice]
 \label{def:ss distributional}
-Let $\mathcal{W}$ be a family of distributions indexed by $z$.  That is, denote each distribution in $\mathcal{W}$ as $W_Z$ with $Z$ describing the probability mass function of $W$.  
-For metric space $(\{0,1\}^n, \dis)$, a $(\{0,1\}^n, \mathcal{W}, \tilde{m}, t, \epsilon, \delta, \ell)$-\emph{secure sketch with distributional advice} is a triplet of algorithms $(\gen, \rep, \aux)$ with the following properties:
+Let $\mathcal{W}$ be a family of distributions indexed by $z$.  That is, denote each distribution in $\mathcal{W}$ as $W_z$.  Let $Z$ be a random variable describing the uniform selection of such a $W_z$.
+For metric space $(\{0,1\}^n, \dis)$, a $(\{0,1\}^n, \mathcal{W}, \tilde{m}, t, \epsilon, \ell, \delta)$-\emph{secure sketch with distributional advice} is a triplet of algorithms $(\gen, \rep, \aux)$ with the following properties:
 \begin{enumerate} 
 \itemsep0em
-\item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, let $\Pr_{ss \leftarrow \sketch(w)}[\rec(w', ss) = w]\ge 1-\delta.$
-\item \textbf{Security} Let $\aux$ be a deterministic function with output in $\zo^\ell$.  For all distributions $W_Z \in \mathcal{W}$, define $\advice_Z:= \aux(Z)$ and let $ss \leftarrow \sketch(W_Z, \advice_Z)$. Then,
+\item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')\le t$, let $\Pr_{ss \leftarrow \sketch(w)}[\rec(w', ss) = w]\ge 1-\delta.$
+\item \textbf{Security} Let $\aux$ be a function with output in $\zo^\ell$.  For all distributions $W_z \in \mathcal{W}$, define $\advice_z:= \aux(z)$ and let $SS \leftarrow \sketch(W_z, \advice_z)$. Then,
 $
-\expe_{Z} [\Haveps(W_Z| ss)] \ge \tilde{m}.
+\expe_{z\leftarrow Z} [\Haveps(W_z| SS)] \ge \tilde{m}.
 $
 \end{enumerate}
 \end{definition}
@@ -144,18 +145,19 @@ $
 
 \begin{definition}[Fuzzy Extractor with distributional advice]
 \label{def:fe distributional}
-Let $\mathcal{W}$ be a family of distributions indexed by $z$.  That is, denote each distribution in $\mathcal{W}$ as $W_Z$ with $Z$ describing the probability mass function of $W$.  
+Let $\mathcal{W}$ be a family of distributions indexed by $z$.  That is, denote each distribution in $\mathcal{W}$ as $W_z$.  Let $Z$ be a random variable describing the uniform selection of such a $W_z$.
 For metric space $(\{0,1\}^n, \dis)$, a $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon, \ell)$-\emph{fuzzy extractor with distributional advice} is a triplet of algorithms $(\gen, \rep, \aux)$ with the following properties:
 \begin{enumerate} 
 \itemsep0em
-\item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')$, let $\Pr_{(r, p) \leftarrow \gen(w)}[\rep(w', p) = r]=1.$
-\item \textbf{Security} Let $\aux$ be a deterministic function with output in $\zo^\ell$.  For a distribution $W_Z \in \mathcal{W}$, define $\advice_Z:= \aux(Z)$, let $(R, P) \leftarrow \gen(W, \advice_Z)$ and $U_\kappa$ be a uniformly distributed random variable over $\zo^\kappa$ it holds that $\Delta((R, P, Z), (U_\kappa, P, Z))\le \epsilon.$
+\item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')\le t$, $\Pr_{(r, p) \leftarrow \gen(w)}[\rep(w', p) = r]=1.$
+\item \textbf{Security} Let $\aux$ be a function with output in $\zo^\ell$.  For a distribution $W_z \in \mathcal{W}$, define $\advice_z:= \aux(z)$, let $(R_z, P_z) \leftarrow \gen(W, \advice_z)$ and $U_\kappa$ be a uniformly distributed random variable over $\zo^\kappa$ it holds that \[
+\Delta((R_Z, P_Z, Z), (U_\kappa, P_Z, Z)) = \expe_{z\leftarrow Z} \Delta((R_z, P_z, z), (U_\kappa, P_z, z)\le \epsilon.\]
 \end{enumerate}
 \end{definition}
 
 \begin{lemma}
 
-Let $\mathcal{W}$ be a distribution family indexed by the set $Z$ and suppose that no $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, \ell)$-fuzzy extractor with distributional advice exists.  For all families $\mathcal{W}'\subseteq \mathcal{W}$ indexed by $Z'\subseteq Z$ where \[\frac{|Z'\cap Z|}{|Z|} = \frac{|Z'|}{|Z|}\le 1-\zeta\] there is some $Z'$ there is no  $(\{0,1\}^n,\kappa, t, (\epsilon-\zeta))/(1-\zeta), \ell)$ fuzzy extractor $(\gen_Z, \rep_Z)$.
+Let $\mathcal{W}$ be a distribution family indexed by set $\mathcal{Z}$. Suppose that no $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, \ell)$-fuzzy extractor with distributional advice exists.  For all families $\mathcal{W}'\subseteq \mathcal{W}$ indexed by $\mathcal{Z}'\subseteq \mathcal{Z}$ where $|\mathcal{Z}'|/|\mathcal{Z}|\le 1-\zeta$.  There is some $z\in\mathcal{Z}'$ such that there is no  $(\{0,1\}^n,\kappa, t, (\epsilon-\zeta))/(1-\zeta), \ell)$ fuzzy extractor $(\gen_z, \rep_z)$.
 \label{lem:distributional advice suffices}
 \end{lemma}
 \begin{proof}[Proof of Lemma~\ref{lem:distributional advice suffices}]

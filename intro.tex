@@ -126,13 +126,13 @@ Lastly, we use $w\leftarrow W_z$ to
 denote sampling a point from the distribution indexed by $z$.  We show the
 impossibility of two types of fuzzy extractors:
 \begin{description}
-\item[Def.~\ref{def:fe distributional}] (Universal) Fuzzy extractors with distributional advice.  This is a triplet of algorithms $(\advice, \gen, \rep)$ designed to work for all $W_z \in \mathcal{W}_\gamma$ for a fixed error tolerance $t$.  The fuzzy extractor is given information about $z$ through a deterministic algorithm $\advice = \advice(z)$ which is input to both $\gen$ and $\rep$ are given $\advice$. The value of $\advice$ \emph{specializes} $(\gen, \rep)$ to the distribution described by $z$. 
+\item[Def.~\ref{def:fe distributional}] (Universal) Fuzzy extractors with distributional advice.  This is a triplet of algorithms $(\advice, \gen, \rep)$ designed to work for all $W_z \in \mathcal{W}_\gamma$ for a fixed error tolerance $t$.  The fuzzy extractor is given information about $z$ through a function $\advice = \advice(z)$ which is input to both $\gen$ and $\rep$ are given $\advice$. The value of $\advice$ \emph{specializes} $(\gen, \rep)$ to the distribution described by $z$. 
 
 Define $w\leftarrow W_z$ and $(r, p) \leftarrow \gen(w, \advice)$, it should be true that 
 \[
 (r, p, z) \approx (u, p, z).
 \] 
-where $u$ is uniformly and independently sampled.  Since $\advice(\cdot)$ is deterministic, $\advice$ is available to the adversary. 
+where $u$ is uniformly and independently sampled.  Since $\advice(\cdot)$ is a function, $\advice$ is available to the adversary. 
 \item[Def.~\ref{def:fe}] Fuzzy extractors for a specific distribution $W_z \in \mathcal{W}$ that are required to have a bounded size description of $(\gen, \rep)$.
 \end{description}
 
