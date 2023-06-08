@@ -130,7 +130,7 @@ We now define fuzzy extractors and secure sketches with advice.  This is an inte
 
 \begin{definition}[Secure Sketch with distributional advice]
 \label{def:ss distributional}
-Let $\mathcal{W}$ be a family of distributions indexed by $z$.  That is, denote each distribution in $\mathcal{W}$ as $W_z$.  Let $Z$ be a random variable describing the uniform selection of such a $W_z$.
+Let $\mathcal{W}$ be a family of distributions indexed by $z$ and let $\mathcal{Z}$ denote the set of such $z$.  That is, denote each distribution in $\mathcal{W}$ as $W_z$.  Let $Z$ be a random variable describing the uniform selection of such a $W_z$.
 For metric space $(\{0,1\}^n, \dis)$, a $(\{0,1\}^n, \mathcal{W}, \tilde{m}, t, \epsilon, \ell, \delta)$-\emph{secure sketch with distributional advice} is a triplet of algorithms $(\gen, \rep, \aux)$ with the following properties:
 \begin{enumerate} 
 \itemsep0em
@@ -161,17 +161,18 @@ Let $\mathcal{W}$ be a distribution family indexed by set $\mathcal{Z}$. Suppose
 \label{lem:distributional advice suffices}
 \end{lemma}
 \begin{proof}[Proof of Lemma~\ref{lem:distributional advice suffices}]
-We proceed by contrapositive.  Let $\mathcal{W}'$ be some subset of $\mathcal{W}$ with relative size at least $1-\zeta$ where  for every $W_Z\in\mathcal{W}'$ there exists an $(\{0,1\}^n,\kappa, t, (\epsilon-\zeta)/(1-\zeta), \ell)$-fuzzy extractor.  We denote these algorithms by $(\gen_Z, \rep_Z)$ respectively.  We now describe how to build the fuzzy extractor $(\gen, \rep, \advice)$ with distributional advice.  Let 
+We proceed by contrapositive.  Let $\mathcal{W}'$ be some subset of $\mathcal{W}$ with relative size at least $1-\zeta$ where  for every $W_z\in\mathcal{W}'$ there exists an $(\{0,1\}^n,\kappa, t, (\epsilon-\zeta)/(1-\zeta), \ell)$-fuzzy extractor.  We denote these algorithms by $(\gen_z, \rep_z)$ respectively.  We now describe how to build the fuzzy extractor $(\gen, \rep, \advice)$ with distributional advice.  Let 
 \[
-\advice(Z) = \begin{cases} (\gen_Z, \rep_Z)& Z\in Z'\\\perp&\text{otherwise.}\end{cases}
+\advice(z) = \begin{cases} (\gen_z, \rep_z)& z\in \mathcal{Z}'\\\perp&\text{otherwise.}\end{cases}
 \]
-In both cases, $\advice(Z)$ has length at most $\ell$. Then define $\gen(x, C)$ as follows:  if $C = \perp$ sample a random key $r$ output $(r, r)$, otherwise interpret $C$ as two circuits $\gen', \rep'$ and output $\gen'(x)$.  Define $\rep(x, p, C)$ interpret $C$ if $C = \perp$ output $p$, otherwise parse $C$ as two circuits $\gen', \rep'$ and output $\rep'(x', p)$.  
+In both cases, $\advice(z)$ has length at most $\ell$. Then define $\gen(x, C)$ as follows:  if $C = \perp$ sample a random key $r$ output $(r, r)$, otherwise interpret $C$ as two circuits $\gen', \rep'$ and output $\gen'(x)$.  Define $\rep(x, p, C)$ interpret $C$ if $C = \perp$ output $p$, otherwise parse $C$ as two circuits $\gen', \rep'$ and output $\rep'(x', p)$.  
 Then 
 \begin{align*}
-\Delta((R, P, Z), (U_\kappa, P, Z)) &= \Delta((R, P, Z), (U_\kappa, P, Z) | Z\in Z')\Pr[Z\in Z']\\&+\Delta((R, P, Z), (U_\kappa, P, Z) | Z\not\in Z')\Pr[Z\not \in Z']\\
+\Delta((R_Z, P_Z, Z), (U_\kappa, P_Z, Z)) &= \Delta((R_Z, P_Z, Z), (U_\kappa, P_Z, Z) | Z\in \mathcal{Z}')\Pr[Z\in \mathcal{Z}']\\&+\Delta((R_Z, P_Z, Z), (U_\kappa, P_Z, Z) | Z\not\in \mathcal{Z}')\Pr[Z\not \in \mathcal{Z}']\\
 &\le \frac{\epsilon-\zeta}{1-\zeta} * (1-\zeta) + 1* \zeta = \epsilon.
 \end{align*}
-It is clear that $(\gen, \rep, \advice)$ is a $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, \ell)$ fuzzy extractor with distributional advice.
+Recall that $Z$ denotes the uniform random variable over the set $\mathcal{Z}$.
+$(\gen, \rep, \advice)$ is a $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, \ell)$ fuzzy extractor with distributional advice.
 \end{proof}
 
 \paragraph{Interpretation} 
@@ -182,18 +183,27 @@ In the setting when $\epsilon = \Theta(1)$ then setting $\zeta = \epsilon/2$ imp
 
 
 \begin{lemma}
-Let $\mathcal{W}$ be a distribution family indexed by $Z$ and suppose that no $(\zo^n, \mathcal{W}, \tilde{m}, t, \epsilon, \delta, \ell)$-secure sketch with distributional advice exists.  For all families $\mathcal{W}'\subseteq \mathcal{W}$ indexed by $Z'\subseteq Z$ where\[\frac{|Z\cap Z'|}{|Z|} = \frac{|Z'|}{|Z|}\ge 1-2^{-\zeta}\]
-there is some $Z'$ for which no  $(\zo^n, \min\{\tilde{m}, \zeta\}, t, \epsilon, \delta, \ell)$ fuzzy extractor $(\sketch_{Z'}, \rec_{Z'})$  exists.
+Let $\mathcal{W}$ be a distribution family indexed by $\mathcal{Z}$ and suppose that no $(\zo^n, \mathcal{W}, \tilde{m}, t, \epsilon, \delta, \ell)$-secure sketch with distributional advice exists.  For all families $\mathcal{W}'\subseteq \mathcal{W}$ indexed by $\mathcal{Z}'\subseteq \mathcal{Z}$ where\[\frac{|\mathcal{Z}\cap \mathcal{Z}'|}{|\mathcal{Z}|} = \frac{|\mathcal{Z}'|}{|\mathcal{Z}|}\ge 1-2^{-\zeta}\]
+there is some $z'\in \mathcal{Z}'$ for which no  $(\zo^n, \min\{\tilde{m}, \zeta\}, t, \epsilon, \delta, \ell)$-secure sketch $(\sketch_{z'}, \rec_{z'})$  exists.
 \label{lem:distributional advice suffices ss}
 \end{lemma}
 
 \begin{proof}
-The proof of Lemma~\ref{lem:distributional advice suffices ss} follows the structure of the proof of Lemma~\ref{lem:distributional advice suffices}.  With $ss=w$ and with the following equation for computing the remaining smooth conditional min-entropy.
+The proof of Lemma~\ref{lem:distributional advice suffices ss} follows the structure of the proof of Lemma~\ref{lem:distributional advice suffices}. That is, 
 \begin{align*}
-\expe_{Z} [\Haveps(W_Z| \sketch(W_Z), Z)] &= -\log{\Pr[Z\in Z']\expe_{Z} 2^{-\Haveps(W_Z| ss, Z\in Z')}+ \Pr[Z\not\in Z']\expe_{Z}\left[ 2^{-\Haveps(W_Z| ss, Z\not\in Z'] )}\right]}\\
+\advice(z) &= \begin{cases} (\gen_z, \rep_z)& z\in \mathcal{Z}'\\\perp&\text{otherwise.}\end{cases}\\
+\sketch(w, C) &= \begin{cases} (w, w) & C = \perp\\
+\sketch'(w) & C = \sketch', \rec'.\end{cases}\\
+\rec(w', p, C) &= \begin{cases} p & C = \perp\\
+\rec'(w',p) & C = \sketch', \rec'.\end{cases}\\
+\end{align*}
+Then consider the following equation for computing the remaining smooth conditional min-entropy.
+\begin{align*}
+\expe_{z\leftarrow Z} [\Haveps(W_z| \sketch(W_z), z)] &= -\log{\Pr[Z\in \mathcal{Z}']\expe_{Z} 2^{-\Haveps(W_Z| ss, Z\in \mathcal{Z}')}+ \Pr[Z\not\in \mathcal{Z}']\expe_{Z}\left[ 2^{-\Haveps(W_Z| ss, Z\not\in \mathcal{Z}'] )}\right]}\\
 &\ge -\log{1 \cdot 2^{-\tilde{m}}+ 2^{-\zeta}\cdot 1}\\
 &\ge -\log{2^{-\tilde{m}}+2^{-\zeta}}  \ge \min\{\tilde{m},\zeta\}.
 \end{align*}
+Recall in the above $Z$ is the uniform distribution over values in $\mathcal{Z}$.
 \end{proof}
 
 \paragraph{Interpretation}
