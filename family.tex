@@ -1,13 +1,16 @@
 %!TEX root = main.tex
 
 \label{sec:family}
-Our main theorem considers the following distribution of distributions:
-
-\begin{description}
-%    \item[$U_{n,k,t}^{-}$] Another distribution of interest is picking $k$ points uniformly from $\zeroone{n}$ and then removing points that are within distance $t$ of one another, we denote this $U_{n,k,t}^{-}$. 
-%    \item[$\mathtt{Code}_{n,k,t}$] The set of all $2^k$ points where all points are distance $t$ from one another.  Note for all outcomes $X$ from this distribution $\Hfuzz(X) = \log k$.
-    
-    \item[$\mathtt{PCode}_{n, k, t, \gamma}$] The uniform distribution over all sets $X = \{x_i\}$ of size $2^k$ with the additional condition that $\Hfuzz(X) \ge \gamma$.  Some points are allowed to lie within distance $t$ as long as fewer than $2^{k-\gamma}$ lie within a single ball of radius $t$.
-\end{description}
-
-%Our proofs show the impossibility of constructing fuzzy extractors for the family of distributions $\mathcal{W}$ of $2^k$ random points sampled from $\zo^n$ (without replacement).  Unfortunately, there are distributions $W_Z$ for some values $Z$ that do not have fuzzy min-entropy so first show this family is statistically close to a family with fuzzy min-entropy.  We set notation to describe the two families of distributions:
+Before introducing our main theorem we introduce two families of distributions that are used for our negative results
+\begin{align*}
+\znk &=\left\{z \subseteq \zo^n\middle|  |z| = 2^k\right\},\\
+\pcode &= \left\{z \subseteq \zo^n\middle| |z| = 2^k,\Hfuzz(U_X) \ge \gamma\right\}.
+\end{align*}
+That is, $\pcode$ and $\znk$ are sets of sets $z$. To specify the particular choice of $z$ it suffices to describe the $2^k$ points. We use the notation $z = z_{1},..., z_{2^k}$ as an index either $\znk$ or $\pcode$.
+We use the notation 
+\begin{align*}
+\wnk &=\{W_z | z \in \znk  \wedge \forall w \in W_z, \Pr[W_z=w]=1/2^k\},\\
+\pcodeu &= \{W_z | z\in \pcode \wedge \forall w \in W_z, \Pr[W_z=w]=1/2^k\}.
+\end{align*}
+$\wnk$ is the family of uniform distributions $W_z$ over a set $z, |z|=2^k$.
+$\pcodeu$ adds the requirement that $\Hfuzz(W_z)\ge\gamma$.  
