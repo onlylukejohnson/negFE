@@ -84,7 +84,7 @@ $\Delta(\wnkz, \pcodeuz) \le \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.$
 \end{lemma}
 
 Fuller, Reyzin, and Smith~\cite{fuller2016fuzzy,fuller2020fuzzy} bound the number of points that could have produced the output of a fuzzy extractor.  Such points are called viable.  We present a stronger version of their lemma that is contained in their proof.  The difference is we bound the union of viable points across different values of $\mathsf{key}$ while they only bound the size of a single $\mathsf{key}$ corresponding to the true point.  Their argument is purely geometric, so it also applies to fuzzy extractors with distributional advice. 
-We restate the stronger version of \cite[Lemma 5.2]{fuller2020fuzzy}.
+We state the stronger version of \cite[Lemma 5.2]{fuller2020fuzzy}.
 
 \begin{lemma}
     \label{lem:smallgeneralviable}
@@ -96,18 +96,17 @@ We restate the stronger version of \cite[Lemma 5.2]{fuller2020fuzzy}.
     \]   
 \end{lemma}
 
-We consider the following family $Z$ which chooses $2^k$ points without replacement from the space $\{0,1\}^n$.  That is, if one samples $Z$ uniformly then one obtains the distribution $U_{n,k}$. 
-For convenience we use $W_{z, 1},..., W_{z,2^k}$ to describe the $2^k$ points with nonzero probability in $W_z$ for some value $z$.  We assume no ordering over these points.  
+%We consider the following family $Z$ which chooses $2^k$ points without replacement from the space $\{0,1\}^n$.  That is, if one samples $Z$ uniformly then one obtains the distribution $U_{n,k}$. 
+%For convenience we use $W_{z, 1},..., W_{z,2^k}$ to describe the $2^k$ points with nonzero probability in $W_z$ for some value $z$.  We assume no ordering over these points.  
 
-Lemma~\ref{lem:entr of members} bounds how much information $\advice$ contains about the points in the distribution.  Let $Z$ describe a uniform sample of $U_{n,k}$.  Let $(\gen, \rep, \aux)$ be a fuzzy extractor with distributional advice. Suppose, without of generali Let $\advice = \aux(Z)$ be of length $\ell$.  For a tuple $(v, p, r, \advice)$ define 
+Lemma~\ref{lem:entr of members} bounds how much information $\advice$ contains about the points in the distribution.  Let $(\gen, \rep, \aux)$ be a fuzzy extractor with distributional advice. Let $\advice$ be some string.  For a tuple $(v, p, r, \advice)$ define 
 \[
 \viable(v, p, r, \advice) = \begin{cases} 1& \Pr[\gen(v, \advice) = (r, p)]>0\\0&\text{otherwise}\end{cases}.\]
 Fix some $p$ and let $\mathtt{GoodKey}_p$ be defined as in Lemma~\ref{lem:smallgeneralviable}. 
 
 \begin{lemma}
-Let $Z$ describe a uniform sample of $U_{n,k}$.  Let $\advice = \aux(Z)$ be of length $\ell$.
- For a particular $Z=z$ let $w_{z,1},..., w_{z,2^k}$ denote the points in $W_Z$. Let $\alpha:= \log {2^n\choose 2^k}$.  Let $\mu$ be defined as in Lemma~\ref{lem:smallgeneralviable}.  
-For each value $\advice$ there is some set $\mathcal{I}_{\advice}$ of size at most $\nu+1$, it is true for each $i\not \in \mathcal{I}_\advice$ that
+$\mu$ be defined as in Lemma~\ref{lem:smallgeneralviable}.  
+For $\znk$ define the random variable $\advice\leftarrow \aux(\znk)$.  For each value $a$ in the support of  there is some set $\mathcal{I}_{\advice}$ of size at most $\nu+1$, it is true for each $i\not \in \mathcal{I}_\advice$ that
 \[
 \log{\Pr\left[\viable(w_{z,i}, p, \mathsf{key}, \advice) = 1 \right]}\le -\frac{\alpha -|\advice| }{2^k}+1+\mu+k-\log{\nu}.
 \]
@@ -292,17 +291,15 @@ k &=\gamma + c_{|k|}n,\\
 \subsubsection{Proof of Lemma~\ref{lem:entr of members}}
 
 \begin{proof}[Proof of Lemma~\ref{lem:entr of members}]
-Let $Z$ and $\advice$ be defined as above. We begin by noting that 
-\[
-\Hoo(W_{z, 1},..., W_{z, 2^k})=\alpha.
-\]
- It is thus, the case that 
-\[
-\Hav(W_{z, 1},..., W_{z, 2^ k} | \advice) \ge \alpha - |\advice|.
-\]
+Let $\advice\leftarrow \aux(\znk)$ be defined as above. We begin by recalling that $|\znk| = 2^\alpha = {2^n\choose 2^k}$.  Thus,  
+\begin{align*}
+\Hoo(\wnkz)&=\alpha,\\
+\Hav(\wnkz|\advice(\znk))&\ge \alpha - \ell.
+\end{align*}
+\noindent
 For all values $x, y$, 
 \[
-\Pr[W_{z, i} =x | W_{z, j} = y] = \begin{cases} \frac{1}{2^n-1} &x\neq y\\0&x=y.\end{cases}
+\Pr_{z\leftarrow \znk}[x\in \supp(W_z) | y\in \supp(W_z)] = \begin{cases} \frac{1}{2^n-1} &x\neq y\\0&x=y.\end{cases}
 \]
 \begin{claim}
 One has that 
@@ -312,7 +309,11 @@ One has that
 \label{clm:entropy distributes}
 \end{claim}
 \begin{proof}
-It is true that $\forall w_{z,1},..., w_{z,i-1}$ that 
+For a sequence of distinct  $w_1,..., w_i$ it holds that 
+\[
+\left[ \Pr[w_i\in \supp(W_Z) | \advice(Z), w_1,..., w_{i_1} \in \supp(W_Z)\right]\ge \left[ \Pr[w_i\in \supp(W_Z) | \advice(Z)\right].
+\]
+It is true that for all distinct $w_{z,1},..., w_{z,i}$ that 
 \[
 \Hav(W_{z,i} | \advice, W_{z, 1}=w_{z,1},..., W_{z,i-1}=w_{z,i-1}) \le \Hav(W_{z,i} | \advice).
 \]
