@@ -42,14 +42,12 @@ $B_t$ & Hamming Ball of radius $t$\\
 $U$ & Uniform distribution\\
 \multirow{2}{*}{$\epsilon$} & Statistical Distance Parameter for fuzzy extractor,\\
 & Smoothness parameter for min-entropy of secure sketch\\
-\multirow{2}{*}{$\alpha = \log{{2^n\choose 2^k}}$} & Log size of number of distributions with $2^k$ points.  \\
-&Number of distributions in $U_{n,k}$\\
+$\alpha = \log{{2^n\choose 2^k}}$ & Log size of number of uniform distributions with $2^k$ points.  \\
 $\beta$ & Ratio of Metric Space Size to Size of Hamming Ball (Def~\ref{def:b density})\\
 $\gamma$ & lower bound on fuzzy min-entropy of distributions \\
 $\kappa$ & key length of fuzzy extractor\\
 $\nu$ & Number of points that adversary fully describes in advice\\
 $\mu =  n \cdot h_2\prns{\frac{1}{2} - \frac{t}{n}}$ & Log of maximum number of viable points (Lem~\ref{lem:smallgeneralviable})\\
-$\pcodeset$ & $\{ X | |X|=2^k \wedge \Hfuzz(U_X) \ge \gamma\}$.
 \end{tabular}
 \caption{Summary of notation}
 \label{tab:notation}
@@ -58,12 +56,12 @@ Lemma~\ref{lem:distributional advice suffices} states that to show the hardness 
 Our proof uses the following structure:
 \begin{enumerate}
 
-\item $\pcodeu$ is complicated to work with, as a first step, we show that few elements in $\znkset$ that are not in $\pcodeset$. it is statistically close to the family that picks $k$ points without replacement, which we denote as $U_{n,k}$.\footnote{For $U_{n,k}$, there are ${2^{n}\choose 2^k}$ outcomes each occurring with probability $1/{2^{n}\choose 2^k}$.}  Lemma~\ref{lem:close family} shows that the distribution $\mathtt{PCode}_{n, k, t, \gamma}$ is statistically close to the distribution $U_{n,k}$.  For the remainder of the proof we consider $U_{n,k}$.
+\item $\pcodeu$ is complicated to work with, as a first step, we show that few elements in $\znkset$ that are not in $\pcodeset$. Lemma~\ref{lem:close family} shows that the statistical distance between $\wnkz$ and $\pcodeuz$ is small.  This allows us to show that hardness of building a fuzzy extractor with distributional advice for the family $\wnk$ implies hardness for $\pcodeu$. For the remainder of the proof, we consider $\wnk$.
 \item Lemma~\ref{lem:smallgeneralviable} which bounds the number of ``viable'' points for most public values $p$.  Note that this Lemma bounds the total number of points and holds even if $\gen, \rep$ have access to an arbitrary advice string. 
 
-\item Lemma~\ref{lem:entr of members} for the distribution, $U_{n,k}$ the advice string can only reduce the entropy of almost all viable points by a small amount. We call such points \textbf{Average Points}.  There are some points that the adversary has a large amount of information on that we call \textbf{Free Points}.
+\item Lemma~\ref{lem:entr of members} for input $z \in \znk$ the advice string can only reduce the entropy of almost all viable points by a small amount. We call such points \textbf{Average Points}.  There are some points that the adversary has a large amount of information on that we call \textbf{Free Points}.
 
-\item Corollary~\ref{corollary:info loss} puts together the above two Lemmas to show that the adversary includes a small number of points from the distribution in the viable set.
+\item Corollary~\ref{corollary:info loss} puts together the above two Lemmas to show that the adversary includes a small number of points from the particular distribution $W_z$ in the viable set.
 
 \item Lemma~\ref{lem:convert distinguisher} shows that since the construction cannot align the viable points with the distribution there exists a distinguisher that can distinguish a uniform triple from a key triple. 
 \end{enumerate}
@@ -72,19 +70,17 @@ Our proof uses the following structure:
 The rest of this section is organized as follows:
 \begin{description}
 \item[Section~\ref{ssec:proof overview}] We present the formal versions of the above statements,
-\item[Section~\ref{ssec:proof main theorem}] We present the proof of Theorem~\ref{thm:main theorem}, 
+\item[Section~\ref{ssec:proof main theorem}] We present the proof of Theorem~\ref{thm:main theorem} based on the above lemmas and corollary, 
 \item[Section~\ref{ssec:analysis params}] We present our preferred setting of parameters, and
 \item[Section~\ref{sec:tech lemmas}] We prove the above statements.
 \end{description}
 
 \subsection{Proof Overview}
 \label{ssec:proof overview}
-Lemma~\ref{lem:close family} shows that $\mathtt{PCode}_{n, k, t, \gamma}$ is statistically close to $U_{n,k}$.
-
 \begin{lemma}
  \label{lem:close family}
-Fix some $n\in \mathbb{Z}^+$ and let $t<n/2$.  Let $k, \gamma  \in \mathbb{Z}^+$.  Then one has that 
-\[\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \gamma}) \le \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.\]
+Fix $n\in \mathbb{Z}^+, t<n/2, k, \gamma  \in \mathbb{Z}^+$, then
+$\Delta(\wnkz, \pcodeuz) \le \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.$
 \end{lemma}
 
 Fuller, Reyzin, and Smith~\cite{fuller2016fuzzy,fuller2020fuzzy} bound the number of points that could have produced the output of a fuzzy extractor.  Such points are called viable.  We present a stronger version of their lemma that is contained in their proof.  The difference is we bound the union of viable points across different values of $\mathsf{key}$ while they only bound the size of a single $\mathsf{key}$ corresponding to the true point.  Their argument is purely geometric, so it also applies to fuzzy extractors with distributional advice. 
