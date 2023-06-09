@@ -7,8 +7,6 @@
 \input{family}
 We also summarize notation in Table~\ref{tab:notation}.
 
-
-
 \begin{theorem}
 Let $\gamma \in\mathbb{R}^+, n, \kappa, t, \ell, \gamma \in\mathbb{Z}^+$ be parameters. 
 \begin{enumerate}
@@ -51,7 +49,7 @@ $\gamma$ & lower bound on fuzzy min-entropy of distributions \\
 $\kappa$ & key length of fuzzy extractor\\
 $\nu$ & Number of points that adversary fully describes in advice\\
 $\mu =  n \cdot h_2\prns{\frac{1}{2} - \frac{t}{n}}$ & Log of maximum number of viable points (Lem~\ref{lem:smallgeneralviable})\\
-$\pcode$ & $\{ X | |X|=2^k \wedge \Hfuzz(U_X) \ge \gamma\}$.
+$\pcodeset$ & $\{ X | |X|=2^k \wedge \Hfuzz(U_X) \ge \gamma\}$.
 \end{tabular}
 \caption{Summary of notation}
 \label{tab:notation}
@@ -60,7 +58,7 @@ Lemma~\ref{lem:distributional advice suffices} states that to show the hardness 
 Our proof uses the following structure:
 \begin{enumerate}
 
-\item $\pcodeu$ is complicated to work with, as a first step, we show that few elements in $\znk$ that are not in $\pcode$. it is statistically close to the family that picks $k$ points without replacement, which we denote as $U_{n,k}$.\footnote{For $U_{n,k}$, there are ${2^{n}\choose 2^k}$ outcomes each occurring with probability $1/{2^{n}\choose 2^k}$.}  Lemma~\ref{lem:close family} shows that the distribution $\mathtt{PCode}_{n, k, t, \gamma}$ is statistically close to the distribution $U_{n,k}$.  For the remainder of the proof we consider $U_{n,k}$.
+\item $\pcodeu$ is complicated to work with, as a first step, we show that few elements in $\znkset$ that are not in $\pcodeset$. it is statistically close to the family that picks $k$ points without replacement, which we denote as $U_{n,k}$.\footnote{For $U_{n,k}$, there are ${2^{n}\choose 2^k}$ outcomes each occurring with probability $1/{2^{n}\choose 2^k}$.}  Lemma~\ref{lem:close family} shows that the distribution $\mathtt{PCode}_{n, k, t, \gamma}$ is statistically close to the distribution $U_{n,k}$.  For the remainder of the proof we consider $U_{n,k}$.
 \item Lemma~\ref{lem:smallgeneralviable} which bounds the number of ``viable'' points for most public values $p$.  Note that this Lemma bounds the total number of points and holds even if $\gen, \rep$ have access to an arbitrary advice string. 
 
 \item Lemma~\ref{lem:entr of members} for the distribution, $U_{n,k}$ the advice string can only reduce the entropy of almost all viable points by a small amount. We call such points \textbf{Average Points}.  There are some points that the adversary has a large amount of information on that we call \textbf{Free Points}.

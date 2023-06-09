@@ -3,14 +3,14 @@
 \label{sec:family}
 Before introducing our main theorem we introduce two families of distributions that are used for our negative results
 \begin{align*}
-\znk &=\left\{z \subseteq \zo^n\middle|  |z| = 2^k\right\},\\
-\pcode &= \left\{z \subseteq \zo^n\middle| |z| = 2^k,\Hfuzz(U_X) \ge \gamma\right\}.
+\znkset &=\left\{z \subseteq \zo^n\middle|  |z| = 2^k\right\},\\
+\pcodeset &= \left\{z \subseteq \zo^n\middle| |z| = 2^k,\Hfuzz(U_X) \ge \gamma\right\}.
 \end{align*}
-That is, $\pcode$ and $\znk$ are sets of sets $z$. To specify the particular choice of $z$ it suffices to describe the $2^k$ points. We use the notation $z = z_{1},..., z_{2^k}$ as an index either $\znk$ or $\pcode$.
+That is, $\pcodeset$ and $\znkset$ are sets of sets $z$. To specify the particular choice of $z$ it suffices to describe the $2^k$ points. We use the notation $z = z_{1},..., z_{2^k}$ as an index either $\znkset$ or $\pcodeset$.
 We use the notation 
 \begin{align*}
-\wnk &=\{W_z | z \in \znk  \wedge \forall w \in W_z, \Pr[W_z=w]=1/2^k\},\\
-\pcodeu &= \{W_z | z\in \pcode \wedge \forall w \in W_z, \Pr[W_z=w]=1/2^k\}.
+\wnk &=\{W_z | z \in \znkset  \wedge \forall w \in W_z, \Pr[W_z=w]=1/2^k\},\\
+\pcodeu &= \{W_z | z\in \pcodeset \wedge \forall w \in W_z, \Pr[W_z=w]=1/2^k\}.
 \end{align*}
 $\wnk$ is the family of uniform distributions $W_z$ over a set $z, |z|=2^k$.
-$\pcodeu$ adds the requirement that $\Hfuzz(W_z)\ge\gamma$.  
+$\pcodeu$ adds the requirement that $\Hfuzz(W_z)\ge\gamma$. We use $\znk$ to denote the uniform distribution over $\znkset$ and $\wnkz$ to denote the uniform choice of some $W_z\in \wnk$, similarly, we use $\pcodeset$ to denote the uniform distribution over $\pcode$ and $\pcodeuz$ to denote the uniform choice of some $W_z \in \pcodeu$.
