@@ -4,19 +4,16 @@
 
  
 \begin{proof}[Proof of Lemma~\ref{lem:close family}]
-We begin by showing the fraction of items in the support of $U_{n,k}$ that are not in the support of $\mathtt{PCode}_{n, k, t, \gamma}$ is at most $\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n$.  That is, 
-\[\Pr\left[U_{n,k} \not \in \mathtt{PCode}_{n, k, t, \alpha}\right] \le \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n
-\]
-A distribution is not in $\mathtt{PCode}_{n, k, t, \gamma}$ if there exists some center $y$ such that there are at least $2^{-\gamma}2^k = 2^{k-\gamma}$ points within distance $t$ of $y$.  Fix some arbitrary $y^*$. The point $y^*$ defines a set $A_{y^*}$ of all points within distance $t$ and note that $|A_{y^*}| = |B_t|$.  We now show that the probability that values in $U_{n,k}$ has a large intersection with $A_{y^*}$ is small.  
+We first show the fraction of items in $\znkset$ that are not in $\pcode$ is at most $\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n$.  
+A string $z\in \znk\setminus \pcode$ if and only if there exists some point $y$ such that there are at least $2^{-\gamma}2^k = 2^{k-\gamma}$ points within distance $t$ of $y$.  Fix some arbitrary $y^*$. The point $y^*$ defines a set $A_{y^*}$ of all points within distance $t$ and note that $|A_{y^*}| = |B_t|$.  We now show that the probability that values in $z\leftarrow \znk$ has a large intersection with $A_{y^*}$ is small.  
 
   \begin{lemma}
   \label{lem:chernoff independence}
-  Let $n,k,a$ be positive integers for which $\log a < k$.  Let $a^* = a/(1 - a2^{-k})$. Let $K$
-  be a random variable uniform among all subsets of $\{0,1\}^n$ of
-  size $2^k$. Let $A$ be a fixed subset of size $a \cdot 2^{n-k}$. Then
-  $\Exp[|K \cap A|] = a$ and any $\zeta > 0$,
+  Let $n,k,a\in\mathbb{Z}^+$ where $\log a < k$.  Let $a^* = a/(1 - a2^{-k})$. Let $\znk$
+  be the uniform distribution over $\znkset$. Let $A$ be a fixed subset of size $a \cdot 2^{n-k}$. Then
+  $\Exp[|\znk \cap A|] = a$ and any $\zeta > 0$,
   \[
-    \Pr[|K \cap A| \geq a^*(1 + \zeta)] \leq \left[\frac{e^\zeta}{(1+\zeta)^{1+\zeta}}\right]^{a^*}\,.
+    \Pr[|\znk \cap A| \geq a^*(1 + \zeta)] \leq \left[\frac{e^\zeta}{(1+\zeta)^{1+\zeta}}\right]^{a^*}\,.
   \]
 \end{lemma}
 \begin{proof}
@@ -26,7 +23,7 @@ A distribution is not in $\mathtt{PCode}_{n, k, t, \gamma}$ if there exists some
     X_1, \ldots, X_{a2^{n-k}}
   \]
   be indicator random variables so that $X_i = 1$ if and only if the
-  $i$th element of $A$ lies in $K$.  Note that for any individual $i$, $\Pr[X_i =1] =a2^{n-k}/2^n = a2^{-k}$ and thus $\expe[|K\cap A|] =\sum_i \expe[X_i] = 2^k \expe[X_i] =2^k (a2^{-k})= a$ by linearity of expectation.  Observe that under any conditioning on the
+  $i$th element of $A$ lies in $\znk$.  Note that for any individual $i$, $\Pr[X_i =1] =a2^{n-k}/2^n = a2^{-k}$ and thus $\expe[|\znk\cap A|] =\sum_i \expe[X_i] = 2^k \expe[X_i] =2^k (a2^{-k})= a$ by linearity of expectation.  Observe that under any conditioning on the
   variables $X_1, \ldots, X_t$,
   \[
     \Pr[X_{t+1} = 1] \leq \frac{2^k}{2^n - a2^{n-k}} = \frac{2^k}{2^n(1 - a2^{-k})}\,.
@@ -48,19 +45,19 @@ a^* =\frac{2^k|B_t|}{2^n - |B_t|}=2^{k-\beta}.
 \]
 Fix the value of $\zeta$ such that 
 \[1+\zeta = \frac{2^{-\gamma}(2^n - |B_t|)}{|B_t|} \ge 2^{\beta-\gamma}. \]
-then the probability that an entry in $U_{n,k}$ intersects with $A_{y^*}$ in at least $2^{k-\gamma}$ places is at most 
+then the probability $z\leftarrow \znk$ intersects with $A_{y^*}$ in at least $2^{k-\gamma}$ places is at most 
 \begin{align*}
-\Pr[|U_{n,k} \cap A_{y^*}| \ge a^*(1+\zeta)] &\le \\
-\Pr[| U_{n,k} \cap A_{y^*} | \ge 2^{k-\gamma}] &\le \left(\left(e2^{\gamma-\beta}\right)^{2^{\beta-\gamma}}\right)^{2^{k-\beta}} \\&= \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}
+\Pr[|\znk \cap A_{y^*}| \ge a^*(1+\zeta)] &\le \\
+\Pr[| \znk \cap A_{y^*} | \ge 2^{k-\gamma}] &\le \left(\left(e2^{\gamma-\beta}\right)^{2^{\beta-\gamma}}\right)^{2^{k-\beta}} \\&= \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}
 \end{align*}
-Now we consider a union bound across all $y^*$ which is equivalent to asking the probability that $U_{n,k}$ has fuzzy min-entropy $\gamma$.  That is
+Now we consider a union bound across all $y^*$.  That is
 \[
-\Pr_{U\leftarrow U_{n,k}}[\Hfuzz(U)\ge \gamma] = \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.
+\Pr_{z\leftarrow\znk }[\Hfuzz(W_z)\ge \gamma] = \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.
 \]
 
-The difference between $U_{n,k}$ and $\mathtt{PCode}_{n, k, t, \gamma}$ is exactly the above probability mass which is removed from the entries of $U_{n,k}$ that are not in $\mathtt{PCode}_{n, k, t, \gamma}$ and uniformly distributed to the entries in $\mathtt{PCode}_{n, k, t, \gamma}$.  This means that 
+The difference between $\wnkz$ and $\pcodeuz$ is exactly the set of $z\in\znkset$ that are not present in $\pcode$.  This probability mass is uniformly distributed in both cases, thus 
 \[
-\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \gamma}^{*}) \le \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n,
+\Delta(\wnkz, \pcodeuz) \le \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.
 \]
 completing the proof of Lemma~\ref{lem:close family}.
 \end{proof}
