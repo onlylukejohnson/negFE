@@ -61,9 +61,9 @@ Our proof uses the following structure:
 \begin{enumerate}
 \item Lemma~\ref{lem:smallgeneralviable} which bounds the number of ``viable'' points for most public values $p$.  Note that this Lemma bounds the total number of points and holds even if $\gen, \rep$ have access to an arbitrary advice string. We switch to considering a fixed value of $\advice$.  At the end of the proof we average across the distribution of $\advice$.
 
-\item Lemma~\ref{lem:entr of members} the majority of the support of $\znk | \aux = \advice$ is difficult to predict and thus unlikely to be included in the set of viable points by a small amount. We call such points \textbf{Hard Points}.  There are some points that the adversary has a large amount of information on that we call \textbf{Free Points}.
+\item Claim~\ref{clm:entr of members} the majority of the support of $\znk | \aux = \advice$ is difficult to predict and thus unlikely to be included in the set of viable points by a small amount. We call such points \textbf{Hard Points}.  There are some points that the adversary has a large amount of information on that we call \textbf{Free Points}.
 
-\item Corollary~\ref{corollary:info loss} puts together the above two Lemmas to show that the adversary includes a small number of points from the particular distribution $W_z$ in the viable set. 
+\item Corollary~\ref{corollary:info loss} puts together the above two steps to show that the adversary includes a small number of points from the particular distribution $W_z$ in the viable set. 
 
 \end{enumerate}
 
@@ -136,10 +136,10 @@ Define
 \end{align*}  
  Note that \[\expe_{a\leftarrow A} \left(2^{-\alpha_a} \right) =\Hav(\znk|A)\ge 2^{-(\alpha-\ell)}.\] 
 
-Lemma~\ref{lem:entr of members} bounds how much information $a$ contains about the points in the distribution.  Note that we consider a fixed $a$, considering the expectation across $a\in A$ after Corollary~\ref{corollary:info loss}.
+Claim~\ref{clm:entr of members} bounds how much information $a$ contains about the points in the distribution.  Note that we consider a fixed $a$, considering the expectation across $a\in A$ after Corollary~\ref{corollary:info loss}.
 
-\begin{lemma}
-Let $\mu$ be defined as in Lemma~\ref{lem:smallgeneralviable}.  Define the notation
+\begin{claim}
+Let $\mu$ and $\goodkey$ be defined as in Lemma~\ref{lem:smallgeneralviable}.  Define the notation
 $\hviable(w, p, \key, a, \easy)$
 \begin{enumerate}
 \item 
@@ -152,10 +152,10 @@ Let $A$ be a distribution and let $a$ be a fixed value such that $\Hoo(\wnk|A=a)
 \log{\hviable(w, p, \key, a, \easy)}\le -\frac{\alpha_a}{2^k}+1+\mu+k-\log{\nu}.
 \end{align*}
 
-\label{lem:entr of members}
-\end{lemma}
+\label{clm:entr of members}
+\end{claim}
 
-\begin{proof}[Proof of Lemma~\ref{lem:entr of members}]
+\begin{proof}[Proof of Claim~\ref{clm:entr of members}]
 Let $A$ be an random variable over $\zo^\ell$.
 Fix some value $a$.  Let $w_{1, a},...,w_{2^k, a}$ denote an arbitrary subset of $\zo^n$ of  size $2^k$. Then 
 \[
@@ -249,16 +249,12 @@ Then,
 This is because conditioning on a single bit that $w^*\in \supp(W_z)$ increases the predictability of an random variable by at most a factor of $2$. 
 We now proceed to bounding $\hviable(w, p, \key, a, \easy_{a,w^*})$.  By assumption, By Lemma~\ref{lem:smallgeneralviable} we know that there are at most $2^\mu$ points in $\viable(w, p, \key, a)$.  Thus, by union bound over the set of viable points,
 \[
-\hviable(w, p, \key, a, \easy_{a,w^*}) \le 2^{-\frac{\alpha -\ell }{2^k}+1+\mu+k-\log{\nu}}.
+\hviable(w, p, \key, a, \easy_{a,w^*}) \le 2^{-\frac{\alpha_a}{2^k}+1+\mu+k-\log{\nu}}.
 \]
 \noindent
 This completes the proof of Lemma~\ref{lem:entr of members}.
 \end{proof}
 
-Then 
-\begin{align*}
--\log{\expe_{a\leftarrow A}\left[\Pr_{z\leftarrow \znk| A=a}[w\in \supp(W_z) | w\not \in W_a']\right]} &\ge -\log{\expe_{a\leftarrow A} \left(\max_{w\not\in W_a^*}\left(2^{-\alpha_{a,w}} \right) \right)} \\&\ge -\log{\expe_{a\leftarrow A}\left(   2^{-\alpha_a/2^k+k-\log{\nu}} \right)}\\&= \frac{\alpha-\ell}{2^k}-k+\log{\nu}.
-\end{align*}\todo{save this for later}
 
 \begin{corollary}
 \label{corollary:info loss}
@@ -281,6 +277,11 @@ And finally,
 \end{align*}
 
 \end{corollary}
+Then 
+\begin{align*}
+-\log{\expe_{a\leftarrow A}\left[\Pr_{z\leftarrow \znk| A=a}[w\in \supp(W_z) | w\not \in W_a']\right]} &\ge -\log{\expe_{a\leftarrow A} \left(\max_{w\not\in W_a^*}\left(2^{-\alpha_{a,w}} \right) \right)} \\&\ge -\log{\expe_{a\leftarrow A}\left(   2^{-\alpha_a/2^k+k-\log{\nu}} \right)}\\&= \frac{\alpha-\ell}{2^k}-k+\log{\nu}.
+\end{align*}\todo{save this for later}
+
 
 With Corollary~\ref{corollary:info loss} in hand we are ready to prove Lemma~\ref{lem:convert distinguisher} in earnest.
 We prove the result for an average member of $Z$.
