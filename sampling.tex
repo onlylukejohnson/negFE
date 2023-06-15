@@ -2,20 +2,25 @@
 
 % Sampling Section of negFE
 
- 
+ \begin{lemma}
+ \label{lem:close family}
+Fix $n\in \mathbb{Z}^+, t<n/2, k, \gamma  \in \mathbb{Z}^+$, then
+$\Delta(\wnkz, \pcodeuz) \le \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.$
+\end{lemma}
+
 \begin{proof}[Proof of Lemma~\ref{lem:close family}]
 We first show the fraction of items in $\znkset$ that are not in $\pcode$ is at most $\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n$.  
 A string $z\in \znk\setminus \pcode$ if and only if there exists some point $y$ such that there are at least $2^{-\gamma}2^k = 2^{k-\gamma}$ points within distance $t$ of $y$.  Fix some arbitrary $y^*$. The point $y^*$ defines a set $A_{y^*}$ of all points within distance $t$ and note that $|A_{y^*}| = |B_t|$.  We now show that the probability that values in $z\leftarrow \znk$ has a large intersection with $A_{y^*}$ is small.  
 
-  \begin{lemma}
-  \label{lem:chernoff independence}
+  \begin{claim}
+  \label{clm:chernoff independence}
   Let $n,k,a\in\mathbb{Z}^+$ where $\log a < k$.  Let $a^* = a/(1 - a2^{-k})$. Let $\znk$
   be the uniform distribution over $\znkset$. Let $A$ be a fixed subset of size $a \cdot 2^{n-k}$. Then
   $\Exp[|\znk \cap A|] = a$ and any $\zeta > 0$,
   \[
     \Pr[|\znk \cap A| \geq a^*(1 + \zeta)] \leq \left[\frac{e^\zeta}{(1+\zeta)^{1+\zeta}}\right]^{a^*}\,.
   \]
-\end{lemma}
+\end{claim}
 \begin{proof}
   For the purposes of bookkeeping, arrange the elements of $A$ in an
   arbitrary order and note that $|A| = a2^{n-k} < 2^k2^{n-k} = 2^n$ so $A\subset \{0,1\}^n$, and let
@@ -35,11 +40,11 @@ A string $z\in \znk\setminus \pcode$ if and only if there exists some point $y$ 
   \]It follows that the random variable $\sum_i X_i$ is stochastically
   dominated by the random variable $\sum_i Y_i$. Observe that
   $\Exp[\sum Y_i] = a^*$. Applying a standard Chernoff upper tail
-  bound to the $Y_i$ then yields the result. This completes the proof of Lemma~\ref{lem:chernoff independence}.
+  bound to the $Y_i$ then yields the result. This completes the proof of Claim~\ref{clm:chernoff independence}.
 \end{proof}
 
 \noindent
-We now continue using the notation of Lemma~\ref{lem:chernoff independence}, let 
+We now continue using the notation of Claim~\ref{clm:chernoff independence}, let 
 \[
 a^* =\frac{2^k|B_t|}{2^n - |B_t|}=2^{k-\beta}.
 \]
