@@ -16,12 +16,12 @@ Let $\gamma \in\mathbb{R}^+, n, \kappa, t, \ell, \gamma \in\mathbb{Z}^+$ be para
 \item Let $\nu \in \mathbb{Z}^+$ be a free parameter, and
 \item Let $\mu =  n \cdot h_2\prns{\frac{1}{2} - \frac{t}{n}}$.
 \end{enumerate}
-For a $(1/4-(\epsilon_1+\epsilon_2+\epsilon_3)/2)$-fraction of the distributions $W_z\in\pcodeu$ there is no $(\{0,1\}^n, W_z, \kappa, t, \epsilon, \ell)$-fuzzy extractor for 
-$\epsilon<1/3 - 2(\epsilon_1+\epsilon_2+\epsilon_3)/3.$ 
+For a $1/4$ of the values $z\in\pcodeset$ there is no $(\{0,1\}^n, W_z, \kappa, t, \epsilon, \ell)$-fuzzy extractor for 
+$\epsilon<1/3 - (\epsilon_1+\epsilon_2+\epsilon_3)/3.$ 
 For 
 \begin{align*}\log{\epsilon_1}&:= -\left(\kappa+\frac{\alpha -\ell}{2^k} - \mu -2k+\log{\nu}\right),\\
-\epsilon_2&:=\frac{\nu+1}{2^{\kappa+1}}\\
-\epsilon_3&:=\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.
+\epsilon_2&:=\frac{\nu+1}{2^{\kappa-1}}\\
+\epsilon_3&:=\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^{n-1}.
 \end{align*}
 \label{thm:main theorem}
 \end{theorem}
@@ -92,7 +92,7 @@ We state the stronger version of \cite[Lemma 5.2]{fuller2020fuzzy}.
     \label{lem:smallgeneralviable}
     Suppose $\mathcal{M}$ is $\zeroone{n}$ with the Hamming Metric, $\kappa \geq 2$, $0 \leq t \leq n/2$, $\epsilon > 0, \ell\in\mathbb{Z}^+$. 
     Suppose $(\mathsf{Gen, Rep})$ is a $(\mathcal{M,W},\kappa, t, \ell, \epsilon)$-fuzzy extractor with distributional advice for some distribution family $\mathcal{W}$ over $\mathcal{M}$. 
-    For any fixed $p$, for any value $\advice \in \zo^\ell$, there is a set $\mathsf{GoodKey}_p \subseteq \zeroone{\kappa}$ of size at least $2^{\kappa - 1}$ such that for every $\mathsf{key} \in \goodkey_p$,
+    For any fixed $p$, for any value $\advice \in \zo^\ell$, there is a set $\mathsf{GoodKey}_p \subseteq \zeroone{\kappa}$ of size at least $2^{\kappa - 1}$ such that,
     \[
       \mu:= \sum_{\mathsf{key} \in \goodkey_p} \left( \log{|\sbr{v \in \mathcal{M}|\prns{\mathsf{key}, p} \in \mathsf{supp}\prns{\mathsf{Gen}(v, \advice)}}|}\right) \leq n \cdot h_2\prns{\frac{1}{2} - \frac{t}{n}}.
     \]   
@@ -103,7 +103,7 @@ We now present our main technical lemma and its proof.
 \begin{lemma}
 \label{lem:convert distinguisher}
     Suppose $\mathcal{M}$ is $\zeroone{n}$ with the Hamming Metric, $\kappa \geq 2$, $0 \leq t \leq n/2$, $\epsilon > 0, \ell\in\mathbb{Z}^+$. For the family $\wnk$.
-    There is no $(\mathsf{Gen, Rep})$ that is a $(\mathcal{M},\wnk,\kappa, t, \ell, \epsilon)$-fuzzy extractor with distributional advice for  if
+    There is no $(\mathsf{Gen, Rep})$ that is a $(\mathcal{M},\wnk,\kappa, t, \ell, \epsilon)$-fuzzy extractor with distributional advice for
 \[
 \epsilon<1/2-\left(\epsilon_1+\epsilon_2\right)\\
 \]
@@ -118,9 +118,7 @@ Furthermore, there exists an algorithm $\mathcal{D}$ that always outputs $1$ whe
 \end{lemma}
 
 \begin{proof}[Proof of Lemma~\ref{lem:convert distinguisher}]
-
 Before proceeding we introduce some additional notation.
-
  Let $(\gen, \rep, \aux)$ be a fuzzy extractor with distributional advice. Let $a$ be some string.  For a tuple $(v, p, r, a)$ define 
 \[
 \viable(v, p, r,a) = \begin{cases} 1& \Pr[\gen(v, a) = (r, p)]>0\\0&\text{otherwise}\end{cases}.\]
@@ -134,12 +132,9 @@ Define
 2^{-\alpha_{a,w}}:&=\Pr_{z\leftarrow \znk | A=a}[w\in \supp(W_z)],\\
 \alpha_a:&=\Hav(\znk|A=a)=\max_{W\subseteq \zo^n | |W|=2^k}\left(\prod_{w\in W} 2^{-\alpha_{a,w}} \right).
 \end{align*}  
- Note that \[\expe_{a\leftarrow A} \left(2^{-\alpha_a} \right) =\Hav(\znk|A)\ge 2^{-(\alpha-\ell)}.\] 
+ Note that \[\expe_{a\leftarrow A} \left(2^{-\alpha_a} \right) =2^{-\Hav(\znk|A)}\le 2^{-(\alpha-\ell)}.\] 
 
-Claim~\ref{clm:entr of members} bounds how much information $a$ contains about the points in the distribution.  Note that we consider a fixed $a$, considering the expectation across $a\in A$ after Corollary~\ref{corollary:info loss}.
-
-\begin{claim}
-Let $\mu$ and $\goodkey$ be defined as in Lemma~\ref{lem:smallgeneralviable}.  Define the notation
+Claim~\ref{clm:entr of members} bounds how much information $a$ contains about the points in the distribution.  Note that we consider a fixed $a$, considering the expectation across $a\in A$ after Corollary~\ref{corollary:info loss}.   Define the notation
 $\hviable(w, p, \key, a, \easy)$
 \begin{enumerate}
 \item 
@@ -147,9 +142,12 @@ $0$ if $ w\not\in \easy$ or $\forall z\in\supp(\znk|A=a), w\not\in\supp(W_z)$,
 \item $
 \Pr_{z\leftarrow \znk |A =a}\left[\viable(w, p, \mathsf{key}, a) = 1\right]$ otherwise.
 \end{enumerate}
-Let $A$ be a distribution and let $a$ be a fixed value such that $\Hoo(\wnk|A=a) =\alpha_a$.  Fix some value $p$ and define $\goodkey_p$ as in Lemma~\ref{lem:smallgeneralviable}.  Each value $w^*\in\zo^n$ defines a set $\easy_{a, w^*}$ where $|\easy_{a,w^*}| \le \nu$ such that for all $\mathsf{key} \in \goodkey_p$
+
+\begin{claim}
+Let $\mu$ and $\goodkey$ be defined as in Lemma~\ref{lem:smallgeneralviable}.
+Let $A$ be a distribution and let $a$ be a fixed value such that $\Hoo(\wnk|A=a) =\alpha_a$.  Fix some value $p$ and define $\goodkey_p$ as in Lemma~\ref{lem:smallgeneralviable}.  Each value $w^*\in\zo^n$ defines a set $\easy_{a, w^*}$ where $|\easy_{a,w^*}| \le \nu$ such that
 \begin{align*}
-\log{\hviable(w, p, \key, a, \easy)}\le -\frac{\alpha_a}{2^k}+1+\mu+k-\log{\nu}.
+\log{\sum_{\key\in\goodkey_p}\hviable(w, p, \key, a, \easy_{a,w^*})}\le -\frac{\alpha_a}{2^k}+1+\mu+k-\log{\nu}.
 \end{align*}
 
 \label{clm:entr of members}
@@ -239,7 +237,7 @@ By Markov's inequality
 %The statement of the lemma follows by setting $\alpha = 2^k/\nu$.
 \end{proof}
 \noindent
-By Claim~\ref{lem:markovpred} it is true that there exists a set $\easy_a\subseteq \zo^n$ of size at most  $\nu$ where  such that for all $w\not \in \easy_a$ is true that $\alpha_{a, w}< \alpha_a/2^k+(k-\log{\nu}).$
+We know continue with the proof of Claim~\ref{clm:entropy distributes}. By Claim~\ref{lem:markovpred} it is true that there exists a set $\easy_a\subseteq \zo^n$ of size at most  $\nu$ where  such that for all $w\not \in \easy_a$ is true that $\alpha_{a, w}< \alpha_a/2^k+(k-\log{\nu}).$
 Let $w^*$ denote the point that will be given to $\gen$ that is $(\mathsf{key}, p)\leftarrow \gen(w^*, a)$.  We define the set $\easy_{a,w^*} = \easy_a \cup \{w^*\}$.
 Then,
 \begin{align*}
@@ -252,65 +250,59 @@ We now proceed to bounding $\hviable(w, p, \key, a, \easy_{a,w^*})$.  By assumpt
 \hviable(w, p, \key, a, \easy_{a,w^*}) \le 2^{-\frac{\alpha_a}{2^k}+1+\mu+k-\log{\nu}}.
 \]
 \noindent
-This completes the proof of Lemma~\ref{lem:entr of members}.
+This completes the proof of Claim~\ref{clm:entr of members}.
 \end{proof}
 
 
 \begin{corollary}
 \label{corollary:info loss}
-Suppose that 
-\[
-   \sum_{\mathsf{key}\in \mathtt{GoodKey}_p} \left( \log{|\sbr{v \in \mathcal{M}|\prns{\mathsf{key}, p} \in \mathsf{supp}\prns{\mathsf{Gen}(v)}}|}\right) \le 2^\mu 
- \]
- For a particular $Z=z$ let $w_{z,1},..., w_{z,2^k}$ denote the points in $W_Z$. Let $\alpha:= \log {2^n\choose 2^k}$.  
- Then for each value $\advice$ there is some set $\mathcal{I}_{\advice}$ of size at most $\nu+1$, then it is true for each $i\not \in \mathcal{I}_\advice$ that
-\[
-\Pr\left[\left(\sum_{\mathsf{key} \in \mathtt{Goodkey}_p} \viable(w_{z,i}, p, \mathsf{key}, \advice, z)\right) = 1\middle| \begin{aligned} z\leftarrow Z\\ \advice= \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advice) \end{aligned} \right]< 2^{-\frac{\alpha-|\advice|}{2^k}+1+\mu+k-\log{\nu} }.
-\]
-And thus, for on average across $Z$, the expected number of points outside of $\mathcal{I}_\advice$ that are included in $\viable$ is at most 
+Let $\mu$ and $\goodkey$ be defined as in Lemma~\ref{lem:smallgeneralviable}.  Fix an arbitrary point $w^*\in \zo^n$ and some $a$ and define $\easy_{a,w^*}$ as in Claim~\ref{clm:entr of members}.  By Claim~\ref{clm:entr of members} on average across $z\leftarrow \znk| A=a$ (by union bound across the points in $W_z$) one has that:
 \begin{align*}
-\expe_{Z} \left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p}\sum_{w_{z,i}\not\in\mathcal{I}_\advice} \viable(w_{z,i}, p, \mathsf{key}, \advice) \middle| \begin{aligned} z\leftarrow Z\\ \advice\leftarrow \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advice)\end{aligned} \right]< 2^{-\frac{\alpha - |\advice|}{2^k}+1+\mu+2k-\log{\nu}}.
+\expe_{z\leftarrow \znk| A=a} \left|\left\{ 
+w\middle| \begin{aligned}w\in \supp(W_z)\\w\not\in \easy_{a,w^*} \\\exists \key\in\goodkey_p, \viable(w,p,\key,a)\end{aligned} \right\} \right| \le 2^{-\frac{\alpha_a}{2^k}+1+\mu+2k-\log{\nu}}.
+\end{align*}
+Then on average across $a\in A$ (using the fact that $\expe_{a\leftarrow A} \left(2^{-\alpha_a} \right) \le 2^{-(\alpha-\ell)}.$) one has 
+\begin{align*}
+\expe_{a\leftarrow A}\left(\expe_{z\leftarrow \znk| A=a} \left|\left\{ 
+w\middle| \begin{aligned}w\in \supp(W_z)\\w\not\in \easy_{a,w^*} \\\exists \key\in\goodkey_p, \viable(w,p,\key,a)\end{aligned} \right\} \right| \right)\le 2^{-\frac{\alpha-\ell}{2^k}+1+\mu+2k-\log{\nu}}.
 \end{align*}
 And finally, 
 \begin{align*}
-\expe_{Z} \left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p}\sum_{w_{z,i}}  \viable(w_{z,i}, p, \mathsf{key}, \advice) \middle| \begin{aligned} z\leftarrow Z\\ \advice\leftarrow \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advice)\end{aligned} \right]< 2^{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1.
+\expe_{a\leftarrow A}\left(\expe_{z\leftarrow \znk| A=a} \left|\left\{ 
+w\middle| \begin{aligned}w\in \supp(W_z)\\\exists \key\in\goodkey_p, \viable(w,p,\key,a)\end{aligned} \right\} \right| \right)\le 2^{-\frac{\alpha-\ell}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1.
 \end{align*}
-
 \end{corollary}
-Then 
-\begin{align*}
--\log{\expe_{a\leftarrow A}\left[\Pr_{z\leftarrow \znk| A=a}[w\in \supp(W_z) | w\not \in W_a']\right]} &\ge -\log{\expe_{a\leftarrow A} \left(\max_{w\not\in W_a^*}\left(2^{-\alpha_{a,w}} \right) \right)} \\&\ge -\log{\expe_{a\leftarrow A}\left(   2^{-\alpha_a/2^k+k-\log{\nu}} \right)}\\&= \frac{\alpha-\ell}{2^k}-k+\log{\nu}.
-\end{align*}\todo{save this for later}
 
-
-With Corollary~\ref{corollary:info loss} in hand we are ready to prove Lemma~\ref{lem:convert distinguisher} in earnest.
+\noindent
+With Corollary~\ref{corollary:info loss} in hand we are ready to prove Lemma~\ref{lem:convert distinguisher}.
 We prove the result for an average member of $Z$.
 Consider the following distinguisher $\mathcal{D}$ for triples of the form $r, p, z$:
 \begin{enumerate}
 \item If $r \not\in \mathsf{GoodKey}_p$ output $1$,
-\item If $\sum_{i} \viable(w_{z, i}, r, p, \advice(z)) =0 $ output $0$,
+\item If $\sum_{w\in\supp(W_z)} \viable(w, r, p, \advice(z)) =0 $ output $0$,
 \item Else output $1$.
 \end{enumerate}
 First note that by perfect correctness it is always the case that when given $\mathsf{key}, p$ that $\mathcal{D}$ outputs $1$.  We proceed to bound the probability that $\mathcal{D}$ outputs $1$ when given $U_\kappa, p$.  Note that the probability that $\Pr[U_\kappa \in \mathtt{GoodKey}_p] \ge 1/2$ by the definition of $\mathtt{GoodKey}_p$. 
 
 We bound the number of parts with at least one point in viable.  We begin by assuming that all points in viable are in different  values $r$ so the bound on the size of 
 \[
-\left\{w_{z, i} \middle|\sum_{\mathsf{key}\in\mathtt{Goodkey}_p} \viable(w_{z,i}, p, \mathsf{key}, \advice)>0 \wedge 1\le i \le k\right\}
-\] 
-gives a bound on the number of nonempty parts. By Corollary~\ref{corollary:info loss} 
+\left\{ 
+w\middle| \begin{aligned}w\in \supp(W_z)\\\exists \key\in\goodkey_p, \viable(w,p,\key,a)\end{aligned} \right\}\]
+gives a bound on the number of keys for which $\mathcal{D}$ could output $1$. By Corollary~\ref{corollary:info loss} 
 \[
-\expe_{Z} \left[\sum_{\mathsf{key} \in \mathtt{Goodkey}_p}\sum_{i }  \viable(w_{z,i}, p, \mathsf{key}, \advice) \middle| \begin{aligned} z\leftarrow Z\\ \advice\leftarrow \aux(z)\\w\leftarrow W_Z\\(r, p)\leftarrow \gen(w, \advice)\end{aligned} \right]< 2^{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1.
+\expe_{a\leftarrow A}\left(\expe_{z\leftarrow \znk| A=a} \left|\left\{ 
+w\middle| \begin{aligned}w\in \supp(W_z)\\\exists \key\in\goodkey_p, \viable(w,p,\key,a)\end{aligned} \right\} \right| \right)\le 2^{-\frac{\alpha-\ell}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1.
 \]
 Thus the fraction of non-empty parts in $\mathsf{Goodkey}_p$ on average is at most 
 \[
-2^{-\kappa-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}}+\frac{\nu+1}{2^\kappa}.
+2^{-\frac{\alpha-\ell}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1.
 \]
 Thus, the probability that $\mathcal{D}$ outputs $0$ when given $U_\kappa, p, z$ is at least 
 $1/2-(\epsilon_1+\epsilon_2)$
 where 
 \begin{align*}
-\epsilon_1:&=2^{-\kappa-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}},\\
-\epsilon_2:&=\frac{\nu+1}{2^{\kappa}}.
+\epsilon_1:&=2^{-\kappa-\frac{\alpha-\ell}{2^k}+2+\mu+2k-\log{\nu}},\\
+\epsilon_2:&=\frac{\nu+1}{2^{\kappa-1}}.
 \end{align*}
 \noindent
 This completes the Proof of Lemma~\ref{lem:convert distinguisher}.
@@ -319,28 +311,22 @@ This completes the Proof of Lemma~\ref{lem:convert distinguisher}.
 \subsection{Proof of Theorem~\ref{thm:main theorem}}
 \label{ssec:proof main theorem}
 \begin{proof}[Proof of Theorem~\ref{thm:main theorem}]
-Restating Lemma~\ref{lem:convert distinguisher} one has that for $(R_{U_{n,k}},P_{U_{n,k}}) \leftarrow \gen(U_{n,k}, \advice(Z_{U_{n,k}}))$
+Define the pair of random variables $(R_{\znk},P_{\znk}) \leftarrow \gen(\wnkz, \advice(\znk))$.
+Restating Lemma~\ref{lem:convert distinguisher} one has that 
 \[
-\Delta((R_{U_{n,k}}, P_{U_{n,k}}, Z_{U_{n,k}}), (U_n, P_{U_{n,k}}, Z_{U_{n,k}}))\ge 1/2-(\epsilon_1+\epsilon_2).
+\Delta((R_{\znk}, P_{\znk}, \znk, (U_\kappa, P_{\znk}, \znk))\ge 1/2-(\epsilon_1+\epsilon_2).
 \]
-Let $\mathcal{D}$ be one distinguisher that always outputs $1$ on any value $\mathsf{key}, p, z$ for any distribution $z$, then
+Let $\mathcal{D}$ be one distinguisher that always outputs $1$ on any value $\mathsf{key}, p, z$ for any distribution $W_z$, then
 \begin{align*}
-\Pr[\mathcal{D}((R_{U_{n,k}}, P_{U_{n,k}}, Z_{U_{n,k}}))=1] &=1\\
-\Pr[\mathcal{D}(U_n, P_{U_{n,k}}, Z_{U_{n,k}})=1]&\le 1/2+(\epsilon_1+\epsilon_2).
+\Pr[\mathcal{D}((R_{\znk}, P_{\znk}, \znk))=1] &=1\\
+\Pr[\mathcal{D}(U_\kappa, P_{\znk}, \znk)=1]&\le 1/2+(\epsilon_1+\epsilon_2).
 \end{align*}
-Recall that $\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \alpha}^{*}) \le \epsilon_3$ by Lemma~\ref{lem:close family} .  Define \[(R_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})\leftarrow \gen(\mathtt{PCode}_{n, k, t, \alpha}^{*}, \advice(Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})).\]
-it is thus true that 
+Recall that $\Delta(\wnkz, \pcodeuz) \le \epsilon_3$ by Lemma~\ref{lem:close family} .  Define the pair of random variables \[(R_{\pcode}, P_{\pcode})\leftarrow \gen(\pcodeuz, \advice(\pcode)).\]
+by the information processing lemma it is thus true that 
 \begin{align*}
-\Pr[\mathcal{D}(R_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})=1]&=1,\\
-\Pr[\mathcal{D}(U_n, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})=1]&\le 1/2+(\epsilon_1+\epsilon_2+\epsilon_3).
+\Pr[\mathcal{D}(R_{\pcode}, P_{\pcode}, \pcode)=1]&=1,\\
+\Pr[\mathcal{D}(U_n, P_{\pcode}, \pcode)=1]&\le 1/2+(\epsilon_1+\epsilon_2+\epsilon_3).
 \end{align*}
-Where the second 
-and thus that 
-\[
-\Delta((R_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}), (U_n, P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}, Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}))\ge 1/2-(\epsilon_1+\epsilon_2+\epsilon_3).
-\]
-
-\noindent
 Finally, the theorem follows by application of Lemma~\ref{lem:distributional advice suffices} with the setting of $\zeta = 1/4$.
 \end{proof} 
 

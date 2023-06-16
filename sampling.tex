@@ -9,8 +9,8 @@ $\Delta(\wnkz, \pcodeuz) \le \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.$
 \end{lemma}
 
 \begin{proof}[Proof of Lemma~\ref{lem:close family}]
-We first show the fraction of items in $\znkset$ that are not in $\pcode$ is at most $\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n$.  
-A string $z\in \znk\setminus \pcode$ if and only if there exists some point $y$ such that there are at least $2^{-\gamma}2^k = 2^{k-\gamma}$ points within distance $t$ of $y$.  Fix some arbitrary $y^*$. The point $y^*$ defines a set $A_{y^*}$ of all points within distance $t$ and note that $|A_{y^*}| = |B_t|$.  We now show that the probability that values in $z\leftarrow \znk$ has a large intersection with $A_{y^*}$ is small.  
+We first show the fraction of items in $\znkset$ that are not in $\pcodeset$ is at most $\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n$.  
+A string $z\in \znkset\setminus \pcodeset$ if and only if there exists some point $y$ such that there are at least $2^{-\gamma}2^k = 2^{k-\gamma}$ points within distance $t$ of $y$.  Fix some arbitrary $y^*$. The point $y^*$ defines a set $A_{y^*}$ of all points within distance $t$ and note that $|A_{y^*}| = |B_t|$.  We now show that the probability that a value in $z\leftarrow \znk$ has a large intersection with $A_{y^*}$ is small.  
 
   \begin{claim}
   \label{clm:chernoff independence}
@@ -60,7 +60,7 @@ Now we consider a union bound across all $y^*$.  That is
 \Pr_{z\leftarrow\znk }[\Hfuzz(W_z)\ge \gamma] = \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.
 \]
 
-The difference between $\wnkz$ and $\pcodeuz$ is exactly the set of $z\in\znkset$ that are not present in $\pcode$.  This probability mass is uniformly distributed in both cases, thus 
+The difference between $\wnkz$ and $\pcodeuz$ is exactly the set of $z\in\znkset$ that are not present in $\pcodeset$.  This probability mass is uniformly distributed in both cases, thus 
 \[
 \Delta(\wnkz, \pcodeuz) \le \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.
 \]
