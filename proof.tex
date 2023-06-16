@@ -345,18 +345,18 @@ For $\epsilon_2$ to be negligible it suffices that $\nu/2^\kappa$ is negligible.
 \end{description} 
 This yields 
 \[
-\epsilon_2= \frac{\nu+1}{2^\kappa} = 2^{(c_{\kappa}-1)\kappa}+ 2^{-\kappa} = \ngl(n).
+\epsilon_2= \frac{\nu+1}{2^{\kappa-1}} = 2^{(c_{\kappa}-1)\kappa-\kappa+1} = \ngl(n).
 \]
 \subsubsection{Distributional Closeness - $\epsilon_3$}
-Recall that $\epsilon_3:=\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n$.  Consider the following settings:
+Recall that $\epsilon_3:=\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^{n+1}$.  Consider the following settings:
 \begin{description}
 \item[Condition 2] That $\gamma\le \beta-\log{2e}$, which implies $2^{\gamma - \beta} \le \frac{1}{2e}$, and 
-\item[Condition 3] For some constant $0<c_{|k|} < 1$, we set $k = \gamma + c_{|k|}n$ which implies $2^{k-\gamma}\ge n+\omega(\log{n})$. 
+\item[Condition 3] For constant $0<c_{|k|} < 1$, we set $k = \gamma + c_{|k|}n$ which implies $2^{k-\gamma}\ge n+1+\omega(\log{n})$. 
 \end{description}
 Together, these settings imply that 
 \begin{align*}
-\epsilon_3&=\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n\\
-&\le\left(\frac{1}{2}\right)^{n+\omega(\log{n})}2^n= 2^{-\omega(\log{n})} = \ngl(n).
+\epsilon_3&=\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^{n+1}\\
+&\le\left(\frac{1}{2}\right)^{n+\omega(\log{n})+1}2^{n+1}= 2^{-\omega(\log{n})} = \ngl(n).
 \end{align*}
 
 \paragraph{Discussion}
