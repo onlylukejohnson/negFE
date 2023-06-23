@@ -140,14 +140,14 @@ $\hviable(w, p, \key, a, \easy)$
 \item 
 $0$ if $ w\not\in \easy$ or $\forall z\in\supp(\znk|A=a), w\not\in\supp(W_z)$,
 \item $
-\Pr_{z\leftarrow \znk |A =a}\left[\viable(w, p, \mathsf{key}, a) = 1\right]$ otherwise.
+\Pr_{z\leftarrow \znk |A =a}\left[\viable(w, p, \mathsf{key}, a) = 1 \wedge w\in \supp(W_z)\right]$ otherwise.
 \end{enumerate}
 
 \begin{claim}
 Let $\mu$ and $\goodkey$ be defined as in Lemma~\ref{lem:smallgeneralviable}.
-Let $A$ be a distribution and let $a$ be a fixed value such that $\Hoo(\wnk|A=a) =\alpha_a$.  Fix some value $p$ and define $\goodkey_p$ as in Lemma~\ref{lem:smallgeneralviable}.  Each value $w^*\in\zo^n$ defines a set $\easy_{a, w^*}$ where $|\easy_{a,w^*}| \le \nu$ such that
+Let $A$ be a distribution and let $a$ be a fixed value such that $\Hoo(\wnk|A=a) =\alpha_a$.  Fix some value $w$ and some value $p$. Define $\goodkey_p$ as in Lemma~\ref{lem:smallgeneralviable}.  Each value $w^*\in\zo^n$ defines a set $\easy_{a, w^*}$ where $|\easy_{a,w^*}| \le \nu+1$ such that
 \begin{align*}
-\log{\sum_{\key\in\goodkey_p}\hviable(w, p, \key, a, \easy_{a,w^*})}\le -\frac{\alpha_a}{2^k}+1+\mu+k-\log{\nu}.
+\log{\sum_{\key\in\goodkey_p}\hviable(w, p, \key,a, \easy_{a,w^*})}\le -\frac{\alpha_a}{2^k}+1+\mu+k-\log{\nu}.
 \end{align*}
 
 \label{clm:entr of members}
@@ -447,7 +447,7 @@ Let $\gamma \in\mathbb{R}^+, n, \kappa, t, \ell, \gamma \in\mathbb{Z}^+$ be para
 \item Let $\nu \in \mathbb{Z}^+$ be a free parameter, and
 \item Let $\mu =(n(1-h_2(t/n)) +h_2(2\delta))/(1-2\delta)$.
 \end{enumerate}
-For $2^{-\tilde{m}}$ of the distributions $W\in \mathtt{PCode}_{n, k, t, \gamma}^{*}$ there is no $(\{0,1\}^n, W, \tilde{m}, t, \epsilon,\delta, \ell)$-secure sketch for 
+For $2^{-\tilde{m}}$ of the distributions in the family $\pcodeu$ (denoted as $z\in\pcodeset$) there is no $(\{0,1\}^n, W_z, \tilde{m}, t, \epsilon,\delta, \ell)$-secure sketch for 
 \[
 \tilde{m}\ge  -\log{1-\epsilon'} +1 + 2\max\left\{-\frac{\alpha-\ell}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.
 \]
@@ -461,85 +461,134 @@ Fuller, Reyzin, and Smith~\cite[Lemma 7.3]{fuller2020fuzzy} showed that good sec
 
 \begin{lemma}
 \label{lem:smallgeneralviable ss}
-    Suppose $\mathcal{M}$ is $\zeroone{n}$ with the Hamming Metric. Suppose $(\sketch, \rec)$ is a $(\zo^n, \mathcal{W}, \tilde{m}, t, \epsilon_\sketch, \delta)$-secure sketch, for some family $\mathcal{W}$. 
-    
-%    Let $W\in \mathcal{W}$, and let $W', SS'$ be a distribution such that $\Delta((W, \sketch(W)), (W', SS'))\le \epsilon$ and $\Hav(W' |SS')\ge \tilde{m}$.
-   For every $v\in \mathcal{M}$ there exists a set $\goodsketch_v$ where $\Pr[\sketch(v)\in \goodsketch_v] \ge 1/2$ and for any fixed $\sketch$,
+    Suppose $\mathcal{M}$ is $\zeroone{n}$ with the Hamming Metric. Let $\wnk$ be a family indexed by set $\znkset$ and let $\znk$ denote the uniform distribution over $\znk$.  Suppose $(\sketch, \rec, \aux)$ is a $(\zo^n, \mathcal{W}, \tilde{m}, t, \epsilon_\sketch, \ell, \delta)$-secure sketch with distribution advice. 
+   For every $v\in \zo^n$ and any value $a \in \zo^\ell$ there exists a set $\goodsketch_{v,a}$ where $\Pr[\sketch(v, a)\in \goodsketch_{v,a}] \ge 1/2$ and for any fixed $ss$,
     
     \[
-   \mu:= \log{|\{v \in \mathcal{M} | \sketch \in \goodsketch_v\}|} \le \frac{n - \log{|B_t|} +h_2(2\delta)}{1-2\delta} \le \frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta}.
+   \mu:= \log{|\{v \in \zo^n | ss \in \goodsketch_{v,a}\}|} \le \frac{n - \log{|B_t|} +h_2(2\delta)}{1-2\delta} \le \frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta}.
     \]
 \end{lemma}
 
-We present an analog of Lemma~\ref{lem:entr of members} adapted to the secure sketch setting. Let $\goodsketch_v$ be defined as in Lemma~\ref{lem:smallgeneralviable ss}. For a triple $(v, ss, z)$ define $\viable(v, ss, z)=1$ if
+\noindent
+Define $\alpha :=\Hoo(\znk)$ and note that $\Hav(\znk|A)\ge \alpha-\ell$ and define $\alpha_a:=\Hav(\znk|A=a)$.
+ Note that \[\expe_{a\leftarrow A} \left(2^{-\alpha_a} \right) =2^{-\Hav(\znk|A)}\le 2^{-(\alpha-\ell)}.\] 
+For a triplet $(v, ss, a)$ define $\viable(v, ss, a, z)=1$ if 
 \begin{enumerate}
-\itemsep0em
-\item $\Pr[\gen(v, \advice(z)) = ss]>0$,
-\item $ss\in\goodsketch_v$, and
-\item $\Pr[W_z = v]>0$.
-\end{enumerate}
-and set $\viable(v, ss, z)=0$ otherwise. 
+\item $\Pr[\sketch(v, a) = ss]>0$,
+\item $ss\in\goodsketch_{v,a}$, and 
+\item $v\in\supp(W_z)$.
+\end{enumerate} Otherwise set $\viable(v, ss, a, z)=0$.  Define $\viable(v, ss, a) = \Pr_{z\leftarrow \znk|A=a}[\viable(v,ss,a,z)=1]$. Define $\hviable(v, ss, a, \easy) = \viable(v,ss, a)$ if $v\not\in \easy$ and $0$ otherwise.
+We present an analog of Claim~\ref{clm:entr of members} adapted to the secure sketch setting. 
 
-\begin{lemma}
-\label{lem:ent members ss}
-Let $Z$ describe a uniform sample of $U_{n,k}$.  Let $\advice = \aux(Z)$ be of length $\ell$.
- For a particular $Z=z$ let $w_{z,1},..., w_{z,2^k}$ denote the points in $W_Z$. Let $\alpha:= \log {2^n\choose 2^k}$.  Let $\mu$ be defined as in Lemma~\ref{lem:smallgeneralviable ss}. 
-For each value $\advice$ there is some set $\mathcal{I}_{\advice}$ of size at most $\nu+1$, it is true for each $i\not \in \mathcal{I}_\advice$ that
-\[
-\log{\Pr\left[\viable(w_{z,i}, ss, \advice) = 1 \right]}\le -\frac{\alpha -|\advice| }{2^k}+1+\mu+k-\log{\nu}.
-\]
-\end{lemma}
+\begin{claim}
+Let $\mu$ and $\goodsketch$ be defined as in Lemma~\ref{lem:smallgeneralviable ss}.
+Let $A$ be a distribution and let $a$ be a fixed value such that $\Hoo(\wnk|A=a) =\alpha_a$.  Fix some value $v$.  Each value $w^*\in\zo^n$ defines a set $\easy_{a, w^*}$ where $|\easy_{a,w^*}| \le \nu+1$ such that
+\begin{align*}
+\log{\sum_{ss}\hviable(v,ss, a, \easy_{a,w^*})}\le -\frac{\alpha_a}{2^k}+1+\mu+k-\log{\nu}.
+\end{align*}
 
-The proof of Lemma~\ref{lem:ent members ss} is identical to the proof of Lemma~\ref{lem:entr of members} and is omitted. 
-Lemma~\ref{lem:ent members ss} suffices to bound how many points are ``viable'' from the output of the secure sketch.
-
+\label{clm:ent members ss}
+\end{claim}
+The proof of Claim~\ref{clm:ent members ss} follows the structure of the proof of Claim~\ref{clm:entr of members} and is omitted. 
+Claim~\ref{clm:ent members ss} suffices to bound how many points are ``viable'' from the output of the secure sketch.
 
 \begin{corollary}
 \label{corollary:info loss ss}
-Let $Z$ describe a uniform sample of $U_{n,k}$.  Let $(\gen, \rep, \aux)$ be an fuzzy extractor with distributional advice of length $\ell$.       For every $v\in \mathcal{M}$ there exists a set $\goodsketch_v$ where $\Pr[\sketch(v)\in \goodsketch_v] \ge 1/2$ and for any fixed $\sketch$,
-    
-    \[
-    \mu:=\log{|\{v \in \mathcal{M} | \sketch \in \goodsketch_v\}|} \le \frac{n - \log{|B_t|} +h_2(2\delta)}{1-2\delta} \le \frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta}.
-    \]
-For a triple $(v, ss, z)$ define $\viable(v, ss, z)=1$ if
-\begin{enumerate}
-\itemsep0em
-\item $\Pr[\gen(v, \advice(z)) = ss]>0$,
-\item $ss\in\goodsketch_v$, and
-\item $\Pr[W_z = v]>0$.
-\end{enumerate}
-and set $\viable(v, ss, z)=0$ otherwise. 
- For a particular $Z=z$ let $w_{z,1},..., w_{z,2^k}$ denote the points in $W_Z$. Let $\alpha:= \log {2^n\choose 2^k}$.  
- Then for each value $\advice$ there is some set $\mathcal{I}_{\advice}$ of size at most $\nu+1$, then it is true for each $\forall i\not \in \mathcal{I}_\advice, \forall ss$
-\[
-\Pr_{z\leftarrow Z}\left[\viable(w_{z,i},ss,z) =1\right]< 2^{-\frac{\alpha-|\advice|}{2^k}+1+\mu + k-\log{\nu}}.
-\]
-And thus, for on average across $Z$, for all $ss$ the expected number of points outside of $\mathcal{I}_\advice$ that are included in $\viable$ is at most 
+Let $\mu$ be defined as in Lemma~\ref{lem:smallgeneralviable ss}.  Fix an arbitrary point $w^*\in \zo^n$, some $ss$ and some $a$. Define $\easy_{a,w^*}$ as in Claim~\ref{clm:ent members ss}.  By Claim~\ref{clm:ent members ss} on average across $z\leftarrow \znk| A=a$ (by union bound across the points in $W_z$) one has that:
 \begin{align*}
-\expe_{z\leftarrow Z} \left[\sum_{i | w_{z,i}\not\in\mathcal{I}_\advice} \viable(w_{z,i}, ss, z) \right]< 2^{-\frac{\alpha- |\advice|}{2^k}+1+\mu+2k-\log{\nu}}.
+\log{\expe_{z\leftarrow \znk| A=a} \left|\left\{ 
+w\middle| \begin{aligned} w\not\in \easy_{a, w^*} \\\viable(w,ss, a, z)\end{aligned} \right\} \right|} \le -\frac{\alpha_a}{2^k}+1+\mu+2k-\log{\nu}.
 \end{align*}
-And finally, for all $ss$
+Then on average across $a\in A$ (using the fact that $\expe_{a\leftarrow A} \left(2^{-\alpha_a} \right) \le 2^{-(\alpha-\ell)}.$) one has 
 \begin{align*}
-\expe_{z\leftarrow Z} \left[\sum_{i }  \viable(w_{z,i}, ss, \advice)  \right]< 2^{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1.
+\log{\expe_{a\leftarrow A}\left(\expe_{z\leftarrow \znk| A=a} \left|\left\{ 
+w\middle| \begin{aligned} w\not\in \easy_{a, w^*} \\\viable(w,ss, a, z)\end{aligned} \right\} \right| \right)}\le -\frac{\alpha-\ell}{2^k}+1+\mu+2k-\log{\nu}.
+\end{align*}
+And finally, 
+\begin{align*}
+\expe_{a\leftarrow A}\left(\expe_{z\leftarrow \znk| A=a} \left|\left\{ 
+w\middle|\viable(w, ss, a, z)\right\} \right| \right)\le 2^{-\frac{\alpha-\ell}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1.
 \end{align*}
 \end{corollary}
-\noindent
-The above corollary follows by combination of Lemma~\ref{lem:smallgeneralviable ss} and \ref{lem:ent members ss}.
-\end{proof}
+
 \begin{lemma}
 \label{lem:convert distinguisher ss}
-Let all parameters be as in Corollary~\ref{corollary:info loss ss} with $\nu \in\mathbb{Z}^+$.  Then there is no $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon_\sketch, \delta, \ell)$-secure sketch with distributional advice (see Definition~\ref{def:ss distributional}) if
+Let all parameters be as in Corollary~\ref{corollary:info loss ss} with $\nu \in\mathbb{Z}^+$.  Then there is no $(\{0,1\}^n, \mathcal{W}, \tilde{m}, t, \epsilon_\sketch, \ell, \delta)$-secure sketch with distributional advice if
 \[
 \tilde{m}> -\log{1-\epsilon_\sketch} +1 + 2\max\left\{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.
 \]
-
-Furthermore, there exists an algorithm $\mathcal{D}$ that always outputs $1$ when given samples of the form $w, ss, z$ that are correctly generated by the secure sketch.
-\end{lemma}
-
 \noindent
-We defer the proof of Lemma~\ref{lem:convert distinguisher ss} to Section~\ref{ssec:ss proof} and proceed with the proof of Theorem~\ref{thm:main theorem ss}.
+Furthermore, there exists an algorithm $\mathcal{D}$ that always outputs $1$ when given samples of the form $w, ss, z$ that are correctly generated by the secure sketch. (This fact will be used to bound the statistical distance between triplets $w, ss, z$ and distributions with average min-entropy conditioned on $ss, z.$)
+\end{lemma}
+\begin{proof}[Proof of Lemma~\ref{lem:convert distinguisher ss}]
+First recall for every $v\in \zo^n$ and advice string $a$  there exists a set $\goodsketch_{v, a}$ where $\Pr[\sketch(v, a) \in\goodsketch_{v,a}]\ge 1/2$. 
+We first need an elementary claim which says that just predicting $w$ when the sketch is in good sketch implies a predictor for the full setting with only a single bit of loss. 
+\begin{claim}
+Let $(X, Y)$ be a pair of random variables and, $S(X, Y)$ be a set, let $f$ be a randomized function taking inputs on the domain of $(X, Y)$. Then \label{clm:smooth ent cond}
+\[
+\Haveps(X|Y, f(X, Y) \in S(X, Y))\ge \Haveps(X|Y) + \log{ \Pr[f(X, Y) \in S(X, Y)]}.
+\]
+\end{claim}
+\begin{proof}[Proof of Claim~\ref{clm:smooth ent cond}]
+Let $X', Y'$ be a distribution such that $\Delta((X, Y), (X', Y')) \le \epsilon$.  By \cite[Lemma 7.8]{fuller2020fuzzy} for any event $\eta$
+\begin{align*}
+\Hav(X'| Y', \eta) \ge \Hav(X' | Y') +\log{\Pr[\eta]}.
+\end{align*}
+Let $\eta$ denote the event that $f(X, Y) \in S(X, Y)$.
+The proof completes by noting that $\Delta((X, Y), (X', Y'))\le \epsilon$ implies that 
+\[
+\Delta((X, Y, f(X, Y) \overset{?}\in S(X, Y)), (X', Y,' f(X', Y')\overset{?}\in S(X', Y')))\le \epsilon\] by the information processing lemma. This is turn implies that 
+\[
+\Haveps(X|Y, f(X, Y) \in S(X, Y))\ge \Haveps(X|Y) +\Pr[f(X, Y) \in S(X, Y)].
+\]
+This completes the proof of Claim~\ref{clm:smooth ent cond}.
+\end{proof}
 
-\paragraph{The main proof}
+We now proceed with the proof of Lemma~\ref{lem:convert distinguisher ss}. Define $\mathcal{D}(v, ss, z) =1$ if $ss\not\in\goodsketch_v$ or $\viable(v, ss, \aux(z), z) =1$.  $\mathcal{D}$ outputs $0$ otherwise.  Note that for $w, ss, z$ correctly generated as the output of $\sketch$ $\mathcal{D}$ always outputs $1$. Denote 
+\begin{align*}
+A&:= \advice(\znk)\\
+X&:=\wnkz,\\
+Y&:=\sketch(\wnkz, A).
+\end{align*}
+ By Claim~\ref{clm:smooth ent cond}:
+\[
+\Haveps(X| Y, Z) \le \Haveps(X| Y,Z, X \in \goodsketch_{Y, A}) +1.
+\]
+In the above note that $A$ and thus $\goodsketch_{\wnk, A}$ are computable from the pair $\wnk, Z$ since $\aux$ is deterministic. 
+Let $X', Y', Z'$ be a triple of random variables where 
+\todo{stopped here}
+\begin{align*}
+\Delta((X, Y, Z, X\overset{?}\in \goodsketch_{Y, \aux(Z)}), (X', Y', Z', X'\overset{?}\in\goodsketch_{Y', \aux(Z')})) &\le \epsilon.
+\end{align*} Our goal is to bound the min-entropy of $X', Y', Z' | X'\in\goodsketch_{Y', \aux(Z')}$. Noting that by Claim~\ref{clm:smooth ent cond} the min-entropy without this second condition increases by at most $1$. % | X' \in \goodsketch_{Y', \advice(Z')}$.  Note that \[\Pr_{(x,y, z)\leftarrow (X', Y', Z')| \mathcal{I}'=1}[\mathcal{D}(x,y,z)=1]\ge 1-2\epsilon.\] Note that 
+\[
+\Pr[\viable(W, \sketch(W), Z) = 1| \sketch_W \in \goodsketch_W] \ge 1/2.
+\]
+Let $A':= \aux(Z')$.  Note that for By the definition of $\viable$, the support of $X'$ must be drawn from points in $W_Z'$.  For any fixed value of $y\in Y$ by Corollary~\ref{corollary:info loss ss}, it is true that 
+\begin{align*}
+\expe_{z\leftarrow Z} \left[\sum_{i }  \viable(w_{z,i}, y', \advice)  \right]< 2^{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1.
+\end{align*}
+One has, 
+\begin{align*}
+2^{-\Hav(X'|Y')} &\ge  \Pr[X' \in W_Z] 2^{-\Hav(X'|Y', X'\in W_Z) }+ \Pr[X'\not\in W_Z] 2^{-\Hav(X'|Y', X'\not\in W_Z)}\\
+ &\ge  (1-\epsilon)2^{-\Hav(X'|Y', X'\in W_Z) }
+\end{align*}
+And thus, 
+\[
+\Hav(X'|Y') \le  -\log{1-\epsilon_\sketch} +\Hav(X'|Y', X'\in W_Z).
+\]
+The min-entropy of $X' |Y'$ is maximized by considering the uniform distribution over such points. \begin{align*}
+\Hav(X'|Y' , X'\in W_Z) &\le \log {2^{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1}\\
+&\le 2\max\left\{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.
+\end{align*}
+This implies that 
+\[
+\Haveps(W| \sketch(W)) \le -\log{1-\epsilon_\sketch} +1 + 2\max\left\{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.
+\]
+Lastly, define $\mathcal{D}(v, ss, z) =1$ if $ss\not\in\goodsketch_v$ or $\viable(v, ss, \aux(z), z) =1$.  $\mathcal{D}$ outputs $0$ otherwise.  Note that for $w, ss, z$ correctly generated as the output of $\sketch$ $\mathcal{D}$ always outputs $1$. 
+This completes the Proof of Lemma~\ref{lem:convert distinguisher ss}.
+\end{proof}
+
+
 We now proceed to the proof of Theorem~\ref{thm:main theorem ss}.   Let \[\chi:= -\log{1-\epsilon_\sketch} +1 + 2\max\left\{-\frac{\alpha+-|\advice|}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.\]  Restating Lemma~\ref{lem:convert distinguisher ss} one has that 
 \[
 \Hav^{\epsilon_\sketch}(U_{n,k} | \sketch(U_{n,k}), Z_{U_{n,k}})) \le \chi.
@@ -563,70 +612,11 @@ Thus,
 This contradicts the fact that $\Hav^{\epsilon_\sketch}(U_{n,k} | \sketch(U_{n,k}), Z_{U_{n,k}})) \le \chi.$
 Finally, Theorem~\ref{thm:main theorem ss} follows by application of Lemma~\ref{lem:distributional advice suffices ss} with setting $\zeta = \chi$ and noting that $\chi\ge 1$.
 
+\end{proof}
+
 
 \subsection{Proof of Lemma~\ref{lem:convert distinguisher ss}}
 \label{ssec:ss proof}
-\begin{proof}[Proof of Lemma~\ref{lem:convert distinguisher ss}]
-We prove the result for an average member of $Z$.  First note that for every $v\in \mathcal{M}$ there exists a set $\goodsketch_v$ where $\Pr[\sketch(v)\in \goodsketch_v] \ge 1/2$.  We first need an elementary lemma: 
-\begin{lemma}
-Let $(X, Y)$ be a pair of random variables and, $S(X, Y)$ be a set, let $f$ be a randomized function taking inputs on the domain of $(X, Y)$. Then 
-\[
-\Haveps(X|Y, f(X, Y) \in S(X, Y))\ge \Haveps(X|Y) + \log{ \Pr[f(X, Y) \in S(X, Y)]}.
-\]
-\label{lem:smooth ent cond}
-\end{lemma}
-\begin{proof}[Proof of Lemma~\ref{lem:smooth ent cond}]
-Let $X', Y'$ be a distribution such that $\Delta((X, Y), (X', Y')) \le \epsilon$.  By \cite[Lemma 7.8]{fuller2020fuzzy} for any event $\eta$
-\begin{align*}
-\Hav(X'| Y', \eta) \ge \Hav(X' | Y') +\log{\Pr[\eta]}.
-\end{align*}
-Let $\eta$ denote the event that $f(X, Y) \in S(X, Y)$.
-The proof completes by noting that $\Delta((X, Y), (X', Y'))\le \epsilon$ implies that 
-\[
-\Delta((X, Y, f(X, Y) \in S(X, Y)), (X', Y,' f(X', Y')\in S(X', Y')))\le \epsilon\] by the information processing lemma. This is turn implies that 
-\[
-\Haveps(X|Y, f(X, Y) \in S(X, Y))\ge \Haveps(X|Y) +\Pr[f(X, Y) \in S(X, Y)].
-\]
-This completes the proof of Lemma~\ref{lem:smooth ent cond}.
-\end{proof}
-
-\noindent
-By Lemma~\ref{lem:smooth ent cond}
-\[
-\Haveps(W| \sketch(W)) \le \Haveps(W| \sketch(W), \sketch(W)\in \goodsketch_W) +1.
-\]
-We now restrict our attention to the case when $\sketch(w) \in \goodsketch_w$.   
-Let $X', Y'$ be distributions  be an event where $\Delta((W, \sketch(W)), (X', Y'))\le \epsilon$. Note that 
-\[
-\Pr[\viable(W, \sketch(W), Z) = 1| \sketch_W \in \goodsketch_W] = 1.
-\]
-Thus, it must be the case that 
-\[
-\Pr[\viable(X', Y', Z) = 1] \ge 1-\epsilon.
-\]
-By the definition of $\viable$, the support of $X'$ must be drawn from points in $W_Z$.  For any fixed value of $y\in Y$ by Corollary~\ref{corollary:info loss ss}, it is true that 
-\begin{align*}
-\expe_{z\leftarrow Z} \left[\sum_{i }  \viable(w_{z,i}, y', \advice)  \right]< 2^{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1.
-\end{align*}
-One has, 
-\begin{align*}
-2^{-\Hav(X'|Y')} &\ge  \Pr[X' \in W_Z] 2^{-\Hav(X'|Y', X'\in W_Z) }+ \Pr[X'\not\in W_Z] 2^{-\Hav(X'|Y', X'\not\in W_Z)}\\
- &\ge  (1-\epsilon)2^{-\Hav(X'|Y', X'\in W_Z) }
-\end{align*}
-And thus, 
-\[
-\Hav(X'|Y') \le  -\log{1-\epsilon_\sketch} +\Hav(X'|Y', X'\in W_Z).
-\]
-The min-entropy of $X' |Y'$ is maximized by considering the uniform distribution over such points. \begin{align*}
-\Hav(X'|Y' , X'\in W_Z) &\le \log {2^{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1}\\
-&\le 2\max\left\{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.
-\end{align*}
-This implies that 
-\[
-\Haveps(W| \sketch(W)) \le -\log{1-\epsilon_\sketch} +1 + 2\max\left\{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.
-\]
-This completes the Proof of Lemma~\ref{lem:convert distinguisher ss}.
-\end{proof}
 
 
 \subsection{Analysis of parameters}
