@@ -184,7 +184,7 @@ In the setting when $\epsilon = \Theta(1)$ then setting $\zeta = \epsilon/2$ imp
 
 \begin{lemma}
 Let $\mathcal{W}$ be a distribution family indexed by $\mathcal{Z}$ and suppose that no $(\zo^n, \mathcal{W}, \tilde{m}, t, \epsilon, \delta, \ell)$-secure sketch with distributional advice exists.  For all families $\mathcal{W}'\subseteq \mathcal{W}$ indexed by $\mathcal{Z}'\subseteq \mathcal{Z}$ where\[\frac{|\mathcal{Z}\cap \mathcal{Z}'|}{|\mathcal{Z}|} = \frac{|\mathcal{Z}'|}{|\mathcal{Z}|}\ge 1-2^{-\zeta}\]
-there is some $z'\in \mathcal{Z}'$ for which no  $(\zo^n, \min\{\tilde{m}, \zeta\}, t, \epsilon, \delta, \ell)$-secure sketch $(\sketch_{z'}, \rec_{z'})$  exists.
+there is some $z'\in \mathcal{Z}'$ for which no  $(\zo^n, \tilde{m}+1, t, \epsilon, \delta, \ell)$-secure sketch $(\sketch_{z'}, \rec_{z'})$  exists if $\zeta\ge \tilde{m}+1$.
 \label{lem:distributional advice suffices ss}
 \end{lemma}
 
@@ -200,8 +200,7 @@ The proof of Lemma~\ref{lem:distributional advice suffices ss} follows the struc
 Then consider the following equation for computing the remaining smooth conditional min-entropy.
 \begin{align*}
 \expe_{z\leftarrow Z} [\Haveps(W_z| \sketch(W_z), z)] &= -\log{\Pr[Z\in \mathcal{Z}']\expe_{Z} 2^{-\Haveps(W_Z| ss, Z\in \mathcal{Z}')}+ \Pr[Z\not\in \mathcal{Z}']\expe_{Z}\left[ 2^{-\Haveps(W_Z| ss, Z\not\in \mathcal{Z}'] )}\right]}\\
-&\ge -\log{1 \cdot 2^{-\tilde{m}}+ 2^{-\zeta}\cdot 1}\\
-&\ge -\log{2^{-\tilde{m}}+2^{-\zeta}}  \ge \min\{\tilde{m},\zeta\}.
+&\le -\log{1 \cdot 2^{-\tilde{m}}+ 2^{-\zeta}\cdot 1} \le \min\{\tilde{m}+1,\zeta\}-1\le \tilde{m}.
 \end{align*}
 Recall in the above $Z$ is the uniform distribution over values in $\mathcal{Z}$.
 \end{proof}

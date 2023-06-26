@@ -449,7 +449,7 @@ Let $\gamma \in\mathbb{R}^+, n, \kappa, t, \ell, \gamma \in\mathbb{Z}^+$ be para
 \end{enumerate}
 For a $2^{-\tilde{m}}$ fraction of the distributions in the family $\pcodeu$ (indexed by $z\in\pcodeset$) there is no $(\{0,1\}^n, W_z, \tilde{m}, t, \epsilon,\delta, \ell)$-secure sketch for 
 \[
-\tilde{m}\ge  -\log{1-2\epsilon'} +1 + 2\max\left\{-\frac{\alpha-\ell}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.
+\tilde{m}\ge  2-\log{1-2\epsilon'}  + 2\max\left\{-\frac{\alpha-\ell}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.
 \]
 where $\epsilon' = \epsilon+\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.$
 \label{thm:main theorem ss}
@@ -664,7 +664,7 @@ As long as for constants $c_k, c_\ell$ one has
 &\le -n+(4c_k+c_\ell)n+3\gamma + 2n(1-h_2(t/n))+2 \\\
 &\le n+(4c_k+c_\ell)n+3\gamma -2nh_2(t/n))+2 \le 0\\
 \end{align*}
-then $\tilde{m} \le 2+2\max\{\chi, \log{2}\} \le 4$ which implies that $1/16$ of the distributions have no secure sketch.
+then $\tilde{m} \le 3+2\max\{\chi, \log{2}\} \le 5$ which implies that $1/32$ of the distributions have no secure sketch.
 
 \paragraph{No error, $\delta=0$}
 When $\delta = 0$ one has
@@ -673,7 +673,7 @@ When $\delta = 0$ one has
 \delta &< 1/4,\\
 0\le\frac{\gamma}{n} &\le \min\left\{(1-h_2(t/n)) +\frac{\log{n}+1-2\log{2e}}{2n}, \frac{1}{3}h_2(t/n)-\frac{4c_k+c_\ell}{3}-\frac{2}{3n}\right\}.
 \end{align*} 
-yielding $\tilde{m}\le 4$ which implies that $1/16$ of the distributions have no secure sketch.
+yielding $\tilde{m}\le 5$ which implies that $1/32$ of the distributions have no secure sketch.
 
 
 %\begin{align*}
