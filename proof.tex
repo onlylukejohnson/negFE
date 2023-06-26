@@ -447,9 +447,9 @@ Let $\gamma \in\mathbb{R}^+, n, \kappa, t, \ell, \gamma \in\mathbb{Z}^+$ be para
 \item Let $\nu \in \mathbb{Z}^+$ be a free parameter, and
 \item Let $\mu =(n(1-h_2(t/n)) +h_2(2\delta))/(1-2\delta)$.
 \end{enumerate}
-For $2^{-\tilde{m}}$ of the distributions in the family $\pcodeu$ (denoted as $z\in\pcodeset$) there is no $(\{0,1\}^n, W_z, \tilde{m}, t, \epsilon,\delta, \ell)$-secure sketch for 
+For a $2^{-\tilde{m}}$ fraction of the distributions in the family $\pcodeu$ (indexed by $z\in\pcodeset$) there is no $(\{0,1\}^n, W_z, \tilde{m}, t, \epsilon,\delta, \ell)$-secure sketch for 
 \[
-\tilde{m}\ge  -\log{1-\epsilon'} +1 + 2\max\left\{-\frac{\alpha-\ell}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.
+\tilde{m}\ge  -\log{1-2\epsilon'} +1 + 2\max\left\{-\frac{\alpha-\ell}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.
 \]
 where $\epsilon' = \epsilon+\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.$
 \label{thm:main theorem ss}
@@ -562,7 +562,7 @@ Let $X', Y', Z'$ be a triple of random variables where
 \[
 \Pr[\viable(W, \sketch(W), Z) = 1| \sketch_W \in \goodsketch_W] \ge 1/2.
 \]
-First note that \[\Pr_{(x, y, z) \leftarrow X', Y', Z' | X'\in\goodsketch_{Y', \aux(Z')}}[\mathcal{D}(x,y,z)=1]\ge 1-2\epsilon.\]
+First note that \[\Pr_{(x, y, z) \leftarrow X', Y', Z' }[\mathcal{D}(x,y,z)=1| X'\in\goodsketch_{Y', \aux(Z')}]\ge 1-2\epsilon.\]
 Let $A':= \aux(Z')$.  When $X'\in\goodsketch_{Y', \aux(Z')}$ in order for $\mathcal{D}$ to output $1$ it must be the case that $\viable(x', y', \aux(z'), z') =1$. That is, the support of $x'$ must be drawn from points in $W_z'$.  For any fixed value of $y\in Y$ and arbitrary random variable $A'$ of length at most $\ell$ by Corollary~\ref{corollary:info loss ss} the number of such $x'$ is at most $2^{-\frac{\alpha-\ell}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1.$ For any fixed support the min-entropy is maximized by considering the uniform distribution over such points. \begin{align*}
 \Hav&(X'|Y' ,Z', X'\in\goodsketch_{Y', \aux(Z')}, \mathcal{D}(X', Y', Z')=1)\\ &\le \log {2^{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1}\\
 &\le 2\max\left\{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.
@@ -570,7 +570,7 @@ Let $A':= \aux(Z')$.  When $X'\in\goodsketch_{Y', \aux(Z')}$ in order for $\math
 
 One then has, 
 \begin{align*}
-&2^{-\Hav(X'|Y', Z',X'\in\goodsketch_{Y', \aux(Z')})} \\&\ge \Pr_{x, y, z\leftarrow (X', Y', Z') | X'\in\goodsketch_{Y', \aux(Z')}} [\mathcal{D}(x, y, z)=1] 2^{-\Hav(X'|Y', Z', X'\in\goodsketch_{Y', \aux(Z')}, \mathcal{D}(X', Y', Z')=1) }\\&+ \Pr_{x, y, z\leftarrow (X', Y', Z') | X'\in\goodsketch_{Y', \aux(Z')}} [\mathcal{D}(x, y, z)=0] 2^{-\Hav(X'|Y', Z', X'\in\goodsketch_{Y', \aux(Z')}, \mathcal{D}(X', Y', Z')=0) }\\
+&2^{-\Hav(X'|Y', Z',X'\in\goodsketch_{Y', \aux(Z')})} \\&\ge \Pr_{x, y, z\leftarrow (X', Y', Z')} [\mathcal{D}(x, y, z)= | X'\in\goodsketch_{Y', \aux(Z')}] 2^{-\Hav(X'|Y', Z', X'\in\goodsketch_{Y', \aux(Z')}, \mathcal{D}(X', Y', Z')=1) }\\&+ \Pr_{x, y, z\leftarrow (X', Y', Z') } [\mathcal{D}(x, y, z)=0| X'\in\goodsketch_{Y', \aux(Z')}] 2^{-\Hav(X'|Y', Z', X'\in\goodsketch_{Y', \aux(Z')}, \mathcal{D}(X', Y', Z')=0) }\\
  &\ge  (1-2\epsilon)2^{-\Hav(X'|Y',Z', X'\in\goodsketch_{Y', \aux(Z')},  \mathcal{D}(X', Y', Z')=1) }
 \end{align*}
 And thus, 
@@ -584,28 +584,31 @@ This implies that
 This completes the Proof of Lemma~\ref{lem:convert distinguisher ss}.
 \end{proof}
 
-\noindent\todo{stopped here}
-We now proceed to the proof of Theorem~\ref{thm:main theorem ss}.   Let \[\chi:= -\log{1-2\epsilon_\sketch} +1 + 2\max\left\{-\frac{\alpha+-|\advice|}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.\]  Restating Lemma~\ref{lem:convert distinguisher ss} one has that 
+\noindent
+We now proceed to the proof of Theorem~\ref{thm:main theorem ss}.   Let \[\tilde{m}:= -\log{1-2\epsilon_\sketch} +1 + 2\max\left\{-\frac{\alpha+-|\advice|}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.\]  Restating Lemma~\ref{lem:convert distinguisher ss} one has that 
 \[
-\Hav^{\epsilon_\sketch}(U_{n,k} | \sketch(U_{n,k}), Z_{U_{n,k}})) \le \chi.
+\Hav^{\epsilon_\sketch}(\wnkz |  \sketch(\wnkz, A), \znk) \le \tilde{m}.
 \]
-That is, for all $A, B, C$ such that $\Delta((A, B, C), (U_{n,k},\sketch(U_{n,k}), Z_{U_{n,k}}))\le \epsilon_{\sketch}$ it is true that $\Hav(A|B, C) \le \tilde{m}$.  Define \[P_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}\leftarrow \sketch(\mathtt{PCode}_{n, k, t, \alpha}^{*}, \advice(Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})).\]
-Recall that $\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \alpha}^{*}) \le \epsilon_{\mathtt{PCode}}$ by Lemma~\ref{lem:close family} .  
-It is thus true that 
+That is, for all $E, F,G$ such that $\Delta((E, F, G), (\wnkz,  \sketch(\wnkz, A), \znk)\le \epsilon_{\sketch}$ it is true that $\Hav(E|F,G) \le \tilde{m}$.  Define \begin{align*}A'&:=\aux(\pcode),\\
+SS'&:=\sketch(\pcodeuz, A'),\\
+\epsilon_{\wnkz}&:= \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.
+\end{align*}
+By Lemma~\ref{lem:close family} $\Delta(\wnkz, \pcodeuz) \le \epsilon_{\wnkz}$ and thus
+$
+\Hav^{\epsilon_{\sketch}-\epsilon_{\mathtt{PCode}}}(\pcode | SS', \pcodeuz)\le \tilde{m}.
+$
+Suppose not, then there exists some $E, F, G$ where 
 \[
-\Hav^{\epsilon_{\sketch}-\epsilon_{\mathtt{PCode}}}(\mathtt{PCode}_{n, k, t, \alpha}^{*} | \sketch(\mathtt{PCode}_{n, k, t, \alpha}^{*}), Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}})\le \tilde{m}.
+\Delta((E, F, G), (\mathtt{PCode}_{n, k, t, \alpha}^{*} , \sketch(\mathtt{PCode}_{n, k, t, \alpha}^{*}), Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}))\le \epsilon_{\sketch}-\epsilon_{\mathtt{PCode}}.
 \]
-Suppose not, then there exists some $A, B, C$ where 
-\[
-\Delta((A, B, C), (\mathtt{PCode}_{n, k, t, \alpha}^{*} , \sketch(\mathtt{PCode}_{n, k, t, \alpha}^{*}), Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}))\le \epsilon_{\sketch}-\epsilon_{\mathtt{PCode}}.
-\]
-and $\Hav(A|B, C)>\chi$.
+and $\Hav(E|F, G)>\tilde{m}$.
 Thus, 
 \begin{align*}
-\Delta&((A, B, C), (U_{n,k},\sketch(U_{n,k}), Z_{U_{n,k}}))\\&\le \Delta((A, B, C), ((\mathtt{PCode}_{n, k, t, \alpha}^{*} , \sketch(\mathtt{PCode}_{n, k, t, \alpha}^{*}), Z_{\mathtt{PCode}_{n, k, t, \alpha}^{*}}))+\Delta(U_{n,k}, \mathtt{PCode}_{n, k, t, \alpha}^{*})\\
+\Delta&((E, F, G), (\wnkz ,  \sketch(\wnkz, A), \znk))\\
+&\le \Delta((E, F, G), ((\pcode , SS', \pcodeuz))+\Delta(\znk, \pcode)\\
 &\le \epsilon_{\sketch}-\epsilon_{\mathtt{PCode}}+ \epsilon_{\mathtt{PCode}} = \epsilon_{\sketch}.
 \end{align*}
-This contradicts the fact that $\Hav^{\epsilon_\sketch}(U_{n,k} | \sketch(U_{n,k}), Z_{U_{n,k}})) \le \chi.$
+This contradicts the fact that $\Hav^{\epsilon_\sketch}(\wnkz | \sketch(\wnk), \znk)) \le \chi.$
 Finally, Theorem~\ref{thm:main theorem ss} follows by application of Lemma~\ref{lem:distributional advice suffices ss} with setting $\zeta = \chi$ and noting that $\chi\ge 1$.
 
 \end{proof}
@@ -616,7 +619,7 @@ Finally, Theorem~\ref{thm:main theorem ss} follows by application of Lemma~\ref{
 
 
 \subsection{Analysis of parameters}
-We assume that $\epsilon\le 1/4$ and $\delta<1/4$.  As before for  
+We assume that $\epsilon\le 1/8$ and $\delta<1/4$.  As before for  
 $
 \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n$ to be negligible it suffices that
 \begin{description}
