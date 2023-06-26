@@ -336,19 +336,18 @@ Finally, the theorem follows by application of Lemma~\ref{lem:distributional adv
 
 \subsection{Analysis of parameters}
 \label{ssec:analysis params}
-We separately consider $\epsilon_1, \epsilon_2$ and $\epsilon_3$. We refer to these three terms as hard points, free points, and distributional closeness respectively. This is because $\epsilon_1$ describes how much information the $\advice$ has about hard points in $W_Z$, $\epsilon_2$ considers a small number of points that are more thoroughly described by $\advice$, and $\epsilon_3$ controls the statistical distance between $U_{n, k}$ and $\mathtt{PCode}_{n, k, t, \alpha}$.  We consider parameters in order of simplicity (rather than index ordering).
+We separately consider $\epsilon_1, \epsilon_2$ and $\epsilon_3$. We refer to these three terms as hard points, free points, and distributional closeness respectively. This is because $\epsilon_1$ describes how much information the $\advice$ has about hard points in $W_z$, $\epsilon_2$ considers a small number of points that are more thoroughly described by $\advice$, and $\epsilon_3$ controls the statistical distance between $\wnk$ and $\pcodeu$.  We consider parameters in order of simplicity.
 
 
 
 \subsubsection{Free Points - $\epsilon_2$}
-For $\epsilon_2$ to be negligible it suffices that $\nu/2^\kappa$ is negligible.  Note that for the fuzzy extractor to have meaningful security requires $\kappa = \omega(\log{n})$.  We set
+For $\epsilon_2$ to be negligible it suffices that $\nu/2^\kappa = \ngl(\lambda)$.  Meaningful security requires $\kappa = \omega(\log{n})$.  We set
 \begin{description}
-\item[Condition 1] $\nu = 2^{c_{\kappa}\kappa}$ for some constant $0 < c_{\kappa}<1$.
-\end{description} 
-This yields 
+\item[Condition 1] $\nu = 2^{c_{\kappa}\kappa}$ for some constant $0 < c_{\kappa}<1$ yielding
 \[
 \epsilon_2= \frac{\nu+1}{2^{\kappa-1}} = 2^{(c_{\kappa}-1)\kappa-\kappa+1} = \ngl(n).
 \]
+\end{description} 
 \subsubsection{Distributional Closeness - $\epsilon_3$}
 Recall that $\epsilon_3:=\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^{n+1}$.  Consider the following settings:
 \begin{description}
@@ -357,8 +356,8 @@ Recall that $\epsilon_3:=\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^{n+1}$. 
 \end{description}
 Together, these settings imply that 
 \begin{align*}
-\epsilon_3&=\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^{n+1}\\
-&\le\left(\frac{1}{2}\right)^{n+\omega(\log{n})+1}2^{n+1}= 2^{-\omega(\log{n})} = \ngl(n).
+\epsilon_3&=\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^{n+1}
+\le\left(\frac{1}{2}\right)^{n+\omega(\log{n})+1}2^{n+1}= 2^{-\omega(\log{n})} = \ngl(n).
 \end{align*}
 
 \paragraph{Discussion}
@@ -439,31 +438,26 @@ k &=\gamma + c_{|k|}n,\\
 
 \section{Secure Sketches}
 \label{sec:ss}
-This section creates an upper bound on the quality of efficient secure sketches.  This bound considers has stronger parameters than Theorem~\ref{thm:main theorem} due largely to the difference between Lemmas~\ref{lem:smallgeneralviable} and~\ref{lem:smallgeneralviable ss}.
+This section creates an upper bound on the quality of efficient secure sketches.  This bound is stronger than Theorem~\ref{thm:main theorem} due to the stronger geometry established by the secure sketch correctness requirement.
 
 \begin{theorem}
-Let $\gamma \in\mathbb{R}^+, n, \kappa, t, \ell, \gamma \in\mathbb{Z}^+$ be parameters.
-\begin{enumerate}
-\itemsep0em
-\item The $\beta$-density is at least $1$ which is  satisfied as long as $t< n/2 $ (see Definition~\ref{def:b density}),
-\item Let $\nu \in \mathbb{Z}^+$ be a free parameter, and
-\item Let $\mu =(n(1-h_2(t/n)) +h_2(2\delta))/(1-2\delta)$.
-\end{enumerate}
-For a $2^{-\tilde{m}}$ fraction of the distributions in the family $\pcodeu$ (indexed by $z\in\pcodeset$) there is no $(\{0,1\}^n, W_z, \tilde{m}, t, \epsilon,\delta, \ell)$-secure sketch for 
+Let $ n, t, \ell, \gamma, \nu, \tilde{m}\in\mathbb{Z}^+, \epsilon, \delta\in[0,1]$ be parameters where $t<n/2$ and denote $\mu :=(n(1-h_2(t/n)) +h_2(2\delta))/(1-2\delta)$.
+ For a $2^{-\tilde{m}}$ fraction of the distributions in the family $\pcodeu$ (indexed by $z\in\pcodeset$) there is no $(\{0,1\}^n, W_z, \tilde{m}, t, \epsilon',\delta, \ell)$-secure sketch for 
 \[
-\tilde{m}\ge  2-\log{1-2\epsilon'}  + 2\max\left\{-\frac{\alpha-\ell}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.
+\tilde{m}\ge  2-\log{1-2\epsilon}  + 2\max\left\{-\frac{\alpha-\ell}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.
 \]
-where $\epsilon' = \epsilon+\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.$
+where $\epsilon' = \epsilon-\left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.$
 \label{thm:main theorem ss}
 \end{theorem}
 
 \begin{proof}[Proof of Theorem~\ref{thm:main theorem ss}]
 
-Fuller, Reyzin, and Smith~\cite[Lemma 7.3]{fuller2020fuzzy} showed that good secure sketches are bounded in size as they imply good Shannon error correcting codes.  This result holds true if one considers a secure sketch that retains smooth min-entropy with no loss in parameters because it only relies on the correctness of the secure sketch (not the security property).  
+Good secure sketches are bounded in size as they imply good Shannon error correcting codes~\cite[Lemma 7.3]{fuller2020fuzzy}.  This  is true if one considers a secure sketch that retains smooth min-entropy with no loss in parameters because it only relies on the correctness of the secure sketch (not the security property).  
 
 \begin{lemma}
 \label{lem:smallgeneralviable ss}
-    Suppose $\mathcal{M}$ is $\zeroone{n}$ with the Hamming Metric. Let $\wnk$ be a family indexed by set $\znkset$ and let $\znk$ denote the uniform distribution over $\znk$.  Suppose $(\sketch, \rec, \aux)$ is a $(\zo^n, \mathcal{W}, \tilde{m}, t, \epsilon_\sketch, \ell, \delta)$-secure sketch with distribution advice. 
+Let $ n, t,\tilde{m}\in\mathbb{Z}^+, \epsilon, \delta\in[0,1]$ be parameters where $t<n/2$ and denote $\mu :=(n(1-h_2(t/n)) +h_2(2\delta))/(1-2\delta)$.
+Let $\wnk$ be a family indexed by set $\znkset$ and let $\znk$ denote the uniform distribution over $\znk$.  Suppose $(\sketch, \rec, \aux)$ is a $(\zo^n, \wnk, \tilde{m}, t, \epsilon_\sketch, \ell, \delta)$-secure sketch with distribution advice. 
    For every $v\in \zo^n$ and any value $a \in \zo^\ell$ there exists a set $\goodsketch_{v,a}$ where $\Pr[\sketch(v, a)\in \goodsketch_{v,a}] \ge 1/2$ and for any fixed $ss$,
     
     \[
@@ -473,7 +467,7 @@ Fuller, Reyzin, and Smith~\cite[Lemma 7.3]{fuller2020fuzzy} showed that good sec
 
 \noindent
 Define $\alpha :=\Hoo(\znk)$ and note that $\Hav(\znk|A)\ge \alpha-\ell$ and define $\alpha_a:=\Hav(\znk|A=a)$.
- Note that \[\expe_{a\leftarrow A} \left(2^{-\alpha_a} \right) =2^{-\Hav(\znk|A)}\le 2^{-(\alpha-\ell)}.\] 
+ Note that \[\expe_{a\leftarrow A} \left(2^{-\alpha_a} \right) =2^{-\Hav(\znk|A)}\ge 2^{-(\alpha-\ell)}.\] 
 For a triplet $(v, ss, a)$ define $\viable(v, ss, a, z)=1$ if 
 \begin{enumerate}
 \item $\Pr[\sketch(v, a) = ss]>0$,
@@ -501,7 +495,7 @@ Let $\mu$ be defined as in Lemma~\ref{lem:smallgeneralviable ss}.  Fix an arbitr
 \log{\expe_{z\leftarrow \znk| A=a} \left|\left\{ 
 w\middle| \begin{aligned} w\not\in \easy_{a, w^*} \\\viable(w,ss, a, z)\end{aligned} \right\} \right|} \le -\frac{\alpha_a}{2^k}+1+\mu+2k-\log{\nu}.
 \end{align*}
-Then on average across $a\in A$ (using the fact that $\expe_{a\leftarrow A} \left(2^{-\alpha_a} \right) \le 2^{-(\alpha-\ell)}.$) one has 
+Then on average across $a\in A$ (using the fact that $\expe_{a\leftarrow A} \left(2^{-\alpha_a} \right) = 2^{-(\alpha-\ell)}$) one has 
 \begin{align*}
 \log{\expe_{a\leftarrow A}\left(\expe_{z\leftarrow \znk| A=a} \left|\left\{ 
 w\middle| \begin{aligned} w\not\in \easy_{a, w^*} \\\viable(w,ss, a, z)\end{aligned} \right\} \right| \right)}\le -\frac{\alpha-\ell}{2^k}+1+\mu+2k-\log{\nu}.
@@ -517,7 +511,7 @@ w\middle|\viable(w, ss, a, z)\right\} \right| \right)\le 2^{-\frac{\alpha-\ell}{
 \label{lem:convert distinguisher ss}
 Let all parameters be as in Corollary~\ref{corollary:info loss ss} with $\nu \in\mathbb{Z}^+$.  For the family $\wnkz$ there is no $(\{0,1\}^n, \wnkz, \tilde{m}, t, \epsilon, \ell, \delta)$-secure sketch with distributional advice if
 \[
-\tilde{m}> -\log{1-2\epsilon_\sketch} +1 + 2\max\left\{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.
+\tilde{m}> -\log{1-2\epsilon} +1 + 2\max\left\{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.
 \]
 \noindent
 Furthermore, there exists an algorithm $\mathcal{D}$ that always outputs $1$ when given samples of the form $w, ss, z$ that are correctly generated by the secure sketch. 
@@ -556,20 +550,19 @@ Y&:=\sketch(\wnkz, A).
 \[
 \Haveps(X| Y, Z) \le \Haveps(X| Y,Z, X \in \goodsketch_{Y, A}) +1.
 \]
-In the above note that $A$ and thus $\goodsketch_{\wnk, A}$ are computable from the pair $\wnk, Z$ since $\aux$ is deterministic. 
+In the above note that $A$ and thus $\goodsketch_{\wnk, A}$ are computable from the pair $\wnk, Z$ since $\aux$ is a function. 
 Let $X', Y', Z'$ be a triple of random variables where 
 \begin{align*}
 \Delta((X, Y, Z), (X', Y', Z')) &\le \epsilon.
-\end{align*} Our goal is to bound the min-entropy of $X', Y', Z' | X'\in\goodsketch_{Y', \aux(Z')}$. Noting that by Claim~\ref{clm:smooth ent cond} the smooth min-entropy without conditioning on this event increases by at most $1$.
-\[
-\Pr[\viable(W, \sketch(W), Z) = 1| \sketch_W \in \goodsketch_W] \ge 1/2.
-\]
+\end{align*} Our goal is to bound the min-entropy of $X', Y', Z' | X'\in\goodsketch_{Y', \aux(Z')}$ by Claim~\ref{clm:smooth ent cond} the smooth min-entropy without conditioning on this event increases by at most $1$.
+%\[
+%\Pr[\viable(W, \sketch(W), Z) = 1| \sketch_W \in \goodsketch_W] \ge 1/2.
+%\]
 First note that \[\Pr_{(x, y, z) \leftarrow X', Y', Z' }[\mathcal{D}(x,y,z)=1| X'\in\goodsketch_{Y', \aux(Z')}]\ge 1-2\epsilon.\]
 Let $A':= \aux(Z')$.  When $X'\in\goodsketch_{Y', \aux(Z')}$ in order for $\mathcal{D}$ to output $1$ it must be the case that $\viable(x', y', \aux(z'), z') =1$. That is, the support of $x'$ must be drawn from points in $W_z'$.  For any fixed value of $y\in Y$ and arbitrary random variable $A'$ of length at most $\ell$ by Corollary~\ref{corollary:info loss ss} the number of such $x'$ is at most $2^{-\frac{\alpha-\ell}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1.$ For any fixed support the min-entropy is maximized by considering the uniform distribution over such points. \begin{align*}
 \Hav&(X'|Y' ,Z', X'\in\goodsketch_{Y', \aux(Z')}, \mathcal{D}(X', Y', Z')=1)\\ &\le \log {2^{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1}\\
 &\le 2\max\left\{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.
 \end{align*}
-
 One then has, 
 \begin{align*}
 &2^{-\Hav(X'|Y', Z',X'\in\goodsketch_{Y', \aux(Z')})} \\&\ge \Pr_{x, y, z\leftarrow (X', Y', Z')} [\mathcal{D}(x, y, z)= | X'\in\goodsketch_{Y', \aux(Z')}] 2^{-\Hav(X'|Y', Z', X'\in\goodsketch_{Y', \aux(Z')}, \mathcal{D}(X', Y', Z')=1) }\\&+ \Pr_{x, y, z\leftarrow (X', Y', Z') } [\mathcal{D}(x, y, z)=0| X'\in\goodsketch_{Y', \aux(Z')}] 2^{-\Hav(X'|Y', Z', X'\in\goodsketch_{Y', \aux(Z')}, \mathcal{D}(X', Y', Z')=0) }\\
@@ -591,13 +584,14 @@ We now proceed to the proof of Theorem~\ref{thm:main theorem ss}.   Let \[\tilde
 \[
 \Hav^{\epsilon_\sketch}(\wnkz |  \sketch(\wnkz, A), \znk) \le \tilde{m}.
 \]
-That is, for all $E, F,G$ such that $\Delta((E, F, G), (\wnkz,  \sketch(\wnkz, A), \znk)\le \epsilon_{\sketch}$ it is true that $\Hav(E|F,G) \le \tilde{m}$.  Define \begin{align*}A'&:=\aux(\pcode),\\
+%That is, for all $E, F,G$ such that $\Delta((E, F, G), (\wnkz,  \sketch(\wnkz, A), \znk)\le \epsilon_{\sketch}$ it is true that $\Hav(E|F,G) \le \tilde{m}$.  
+Define \begin{align*}A'&:=\aux(\pcode),\\
 SS'&:=\sketch(\pcodeuz, A'),\\
 \epsilon_{\wnkz}&:= \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.
 \end{align*}
-By Lemma~\ref{lem:close family} $\Delta(\wnkz, \pcodeuz) \le \epsilon_{\wnkz}$ and thus
+By Lemma~\ref{lem:close family}, $\Delta(\wnkz, \pcodeuz) \le \epsilon_{\wnkz}$ and thus
 $
-\Hav^{\epsilon_{\sketch}-\epsilon_{\mathtt{PCode}}}(\pcode | SS', \pcodeuz)\le \tilde{m}.
+\Hav^{\epsilon_{\sketch}-\epsilon_{\mathtt{PCode}}}(\pcodeuz | SS', \pcode)\le \tilde{m}.
 $
 Suppose not, then there exists some $E, F, G$ where 
 \[
@@ -610,14 +604,10 @@ Thus,
 &\le \Delta((E, F, G), ((\pcode , SS', \pcodeuz))+\Delta(\znk, \pcode)\\
 &\le \epsilon_{\sketch}-\epsilon_{\mathtt{PCode}}+ \epsilon_{\mathtt{PCode}} = \epsilon_{\sketch}.
 \end{align*}
-This contradicts the fact that $\Hav^{\epsilon_\sketch}(\wnkz | \sketch(\wnk), \znk)) \le \chi.$
+This contradicts the fact that $\Hav^{\epsilon_\sketch}(\wnkz | \sketch(\wnk), \znk)) \le \tilde{m}.$
 Finally, Theorem~\ref{thm:main theorem ss} follows by application of Lemma~\ref{lem:distributional advice suffices ss} with setting $\zeta = \chi$ and noting that $\chi\ge 1$.
 
 \end{proof}
-
-
-\subsection{Proof of Lemma~\ref{lem:convert distinguisher ss}}
-\label{ssec:ss proof}
 
 
 \subsection{Analysis of parameters}
@@ -632,11 +622,11 @@ imposes an additive $\log{2e}$ impact on the maximal fuzzy min-entropy that can 
 }
 \item[Condition 2] Let $0<c_k<1$ be some arbitrary constant and suppose that $k= \gamma+c_kn$ which implies that $k\ge \gamma + \log{n+\omega(\log{n})}$.
 \end{description}
-These two conditions imply that $\epsilon'\le 1/2$ and $-\log{1-\epsilon'}\le 1$.
+These two conditions imply that $-\log{1-2\epsilon}\le 1$ and $\epsilon'\ge 1/8-\ngl(\lambda)$.
 \begin{description}
 \item[Condition 3] That  $\nu = 1$.
 \end{description}
-Define \[\chi: =-\frac{\alpha-\ell}{2^k}+1+\mu+2k-\log{\nu}=-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k\]
+Define \[\chi: =-\frac{\alpha-\ell}{2^k}+1+\mu+2k-\log{\nu}\]
 We now turn to our analysis of $\chi$.  Recall that $(n/k)^k \le {n\choose k} < ((ne)/k)^k$.  Recalling parameters: 
 \begin{align*}
 \mu&\le \frac{(n(1-h_2(t/n)) +h_2(2\delta))}{(2\delta)},\\
@@ -669,7 +659,7 @@ As long as for constants $c_k, c_\ell$ one has
 then $\tilde{m} \le 3+2\max\{\chi, \log{2}\} \le 5$ which implies that $1/32$ of the distributions have no secure sketch.
 
 \paragraph{No error, $\delta=0$}
-When $\delta = 0$ one has
+One has
 \begin{align*}
 \ell&\le 3c_\ell n2^k,\\
 \delta &< 1/4,\\
