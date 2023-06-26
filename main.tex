@@ -22,9 +22,43 @@
   \renewcommand{\vec}[1]{\vect{#1}}      % activate for lncs style vectors
 
 \else
-  \documentclass{llncs}
+\documentclass[sn-mathphys,Numbered]{sn-jnl}
+\usepackage{graphicx}%
+\usepackage{multirow}%
+\usepackage{amsmath,amssymb,amsfonts}%
+\usepackage{amsthm}%
+\usepackage{mathrsfs}%
+\usepackage[title]{appendix}%
+\usepackage[dvipsnames]{xcolor}
+\usepackage{textcomp}%
+\usepackage{manyfoot}%
+\usepackage{booktabs}%
+\usepackage{algorithm}%
+\usepackage{algorithmicx}%
+\usepackage{algpseudocode}%
+\usepackage{listings}%
+  \theoremstyle{thmstyleone}
+  \newtheorem{theorem}{Theorem}
+  \newtheorem{lemma}[theorem]{Lemma}
+  \newtheorem{proposition}[theorem]{Proposition}
+  \newtheorem{corollary}[theorem]{Corollary}
+  \newtheorem{conjecture}{Conjecture}
+    \theoremstyle{thmstyletwo}%
+\newtheorem{example}{Example}%
+\newtheorem{remark}{Remark}%
+
+  \theoremstyle{thmstylethree}%
+\newtheorem{definition}{Definition}
+  \newtheorem{assumption}{Assumption}
+  \newtheorem{claim}{Claim}
+  \newtheorem{problem}{Problem}
   \newtheorem{construction}{Construction}
   \renewcommand{\paragraph}[1]{\subsubsection{#1}}
+  
+\raggedbottom
+  
+
+
 \fi
 
 \usepackage[dvipsnames]{xcolor}
@@ -169,8 +203,6 @@
 \def\col{\mathrm{Col}}
 
 
-
-
 % Useful Notation
 \newcommand{\defined}{:=}
 \newcommand{\sbr}[1]{ \!\left\{ #1 \right\} }
@@ -179,19 +211,30 @@
 \renewcommand{\log}[1]{\mathsf{log}\prns{#1}}
 \newcommand{\zeroone}[1]{\sbr{0,1}^{#1}}
 
+\ifnum\lncs=0
 \title{Impossibility of Efficient Information-Theoretic Fuzzy Extraction\footnote{The author thanks the reviewers for their helpful feedback and Luke Demarest and Alexander Russell for their helpful discussions. B.F. is supported by National Science Foundation Grants \#2232813 and \#2141033 and the Office of Naval Research. 
 }}
-\ifnum\lncs=0
-\author{Benjamin Fuller\\University of Connecticut\\benjamin.fuller@uconn.edu}
-\fi
+\author{Benjamin Fuller\\University of Connecticut, Storrs, CT 06269, United States\\benjamin.fuller@uconn.edu}
 \date{\today}
+\fi
+%\title{Impossibility of Efficient Information-Theoretic Fuzzy Extraction\footnote{The author thanks the reviewers for their helpful feedback and Luke Demarest and Alexander Russell for their helpful discussions. B.F. is supported by National Science Foundation Grants \#2232813 and \#2141033 and the Office of Naval Research. 
+%}}
 
 % Document
 \begin{document}
-  
+  \ifnum\lncs=0
   \maketitle
+    \input{abstract.tex}
+  \else
+  \title[Impossibility of Efficient Information-Theoretic Fuzzy Extraction]{Impossibility of Efficient Information-Theoretic Fuzzy Extraction\footnote{The author thanks the reviewers for their helpful feedback and Luke Demarest and Alexander Russell for their helpful discussions. B.F. is supported by National Science Foundation Grants \#2232813 and \#2141033 and the Office of Naval Research. 
+}}
+\author[1]{\fnm{Benjamin} \sur{Fuller}}\email{benjamin.fuller@uconn.edu}
+\affil[1]{\orgdiv{Department of Computer Science and Engineering}, \orgname{University of Connecticut}, \orgaddress{\street{371 Fairfield Way}, \city{Storrs}, \postcode{06269}, \state{Connecticut}, \country{United States}}}
   \input{abstract.tex}
-  \pagebreak
+  \keywords{Fuzzy extractors, information-reconciliation}
+\maketitle
+\fi
+
   \input{intro.tex}
   \input{prelims.tex}
   \input{proof.tex}
