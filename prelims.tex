@@ -7,12 +7,12 @@ For distributions $X, Y$ over the same discrete domain $\chi$,
 \[
 \Delta(X, Y)\overset{def}= \frac{1}{2}\sum_{x \in \chi} \left| \Pr[X=x] - \Pr[Y=y]\right|.
 \]
-For a metric space $(\mathcal{M}, \dis)$ let $B_t(x) = \{y | \dis(x, y)\le t\}$. If the size of $B_t(x)$ is the same for all points $x$ we use $|B_t|$ to denote this quantity and say that the \emph{size of balls is center independent}.  This is true for the Hamming metric.  All logarithms are base $2$. For a set $X$ let $U_X$ denote the uniform distribution over that set.  For a distribution $W$ let $\supp(W)$ denote the support of the distribution.  We define use $-\infty$ to denote $\log{0}$.
+For a metric space $(\mathcal{M}, \dis)$ let $B_t(x) = \{y | \dis(x, y)\le t\}$. If the size of $B_t(x)$ is the same for all points $x$ we use $|B_t|$ to denote this quantity. This is the case for the Hamming metric.  All logarithms are base $2$. For a set $X$, let $U_X$ denote the uniform distribution over that set.  For a distribution $W$, let $\supp(W)$ denote the support of the distribution.  We define use $-\infty$ to denote $\log{0}$.
 
 \paragraph{Indexing and sampling from a family of distributions}
 This work considers the possibility of constructing fuzzy extractors from a finite family of distributions that we will call $\mathcal{W}$. 
 Throughout, we will need the ability to describe a particular value in this family.  
-We let $\mathcal{Z}$ be an index for the family $\mathcal{W}$. Each string $z\in\mathcal{Z}$ describes a distribution as $W_z \in \mathcal{W}$. We use $Z$ to describe the uniform distribution $U_{\mathcal{Z}}$, that is $W_Z \overset{d}= U_{\mathcal{W}}$.  We use $w\leftarrow W_z$ to denote a sample from $W_z$ where  $w \in \zeroone{n}$.  Where appropriate we use $w\leftarrow W_Z$ to denote the two-stage process of sampling $z\leftarrow Z$ and then sampling $w\leftarrow W_z$.
+We let $\mathcal{Z}$ be an index for the family $\mathcal{W}$. Each string $z\in\mathcal{Z}$ describes a distribution $W_z \in \mathcal{W}$. We use $Z$ to describe the uniform distribution $U_{\mathcal{Z}}$, that is $W_Z \overset{d}= U_{\mathcal{W}}$.  We use $w\leftarrow W_z$ to denote a sample from $W_z$ where  $w \in \zeroone{n}$.  Where appropriate we use $w\leftarrow W_Z$ to denote the two-stage process of sampling $z\leftarrow Z$ and then sampling $w\leftarrow W_z$.
 
 
 \subsection{Notions of Entropy}
@@ -27,12 +27,12 @@ For a discrete random variable $X$,
 Let $X$ be a discrete random variable and let $Y$ be a random variable.  The \emph{average min-entropy} of $X|Y$ is  \[ \acminent{X}{Y} \defined -\log{\Exlim{y \leftarrow Y}{\max\limits_{x} \Prob{X = x\ |\ Y = y}}}.\] 
 \end{definition}
 
-\begin{definition}[Smooth Conditional Min Entropy~\cite{renner2005simple}]
-    \emph{Smooth Conditional Min Entropy}, denoted $\Haveps(X|Y)$ for two random variables $X$ and $Y$ is \[\Haveps(X|Y):=\max_{(X',Y') | \Delta((X', Y'), (X, Y))\le \epsilon} \acminent{X'}{Y'}.
+\begin{definition}[Smooth Conditional Min Entropy]
+    The \emph{smooth conditional min entropy}, denoted $\Haveps(X|Y)$ for two random variables $X$ and $Y$ is \[\Haveps(X|Y):=\max_{(X',Y') | \Delta((X', Y'), (X, Y))\le \epsilon} \acminent{X'}{Y'}.
     \] 
 \end{definition}
 
-The above definition combines definitions from Renner and Wolf~\cite{renner2005simple}, Dodis et al.~\cite{dodis2008fuzzy}, and Reyzin~\cite{reyzin2011some}.  Renner and Wolf's definition considers the worst case $Y$.  We focus on the average case $Y$. We also replace the condition when considering statistical distance similar to Gentry and Wichs~\cite{gentry2011separating}.
+The above definition combines prior definitions~\cite{renner2005simple,dodis2008fuzzy,reyzin2011some,gentry2011separating}.  Renner and Wolf's definition considers the worst case $Y$.  We focus on the average case $Y$. We also replace the condition when considering statistical distance similar to Gentry and Wichs~\cite{gentry2011separating}.
 
 
 
@@ -55,14 +55,14 @@ The above definition combines definitions from Renner and Wolf~\cite{renner2005s
 
 For a distribution $W$ and a distance parameter $t$, the fuzzy min-entropy of $W$, denoted $\Hfuzz(W)$ is 
 \[
-\Hfuzz(W):= -\log{ \max_{w^*} \left(\sum_{w, \dis(w, w^*)\le t} \Pr[W=w] \right)}.
+\Hfuzz(W):= -\log{ \max_{w^*} \left(\sum_{w} \Pr[W=w|\dis(w, w^*)\le t] \right)}.
 \]
 \end{definition}
 
 \begin{proposition} \label{prop:max fuzz ent}
 For all distributions $W$ over a metric space $(\mathcal{M}, \dis)$, 
-\[\Hfuzz(W) \le \log{|\mathcal{M}|} - \log{|B_t|}.
-\]
+$\Hfuzz(W) \le \log{|\mathcal{M}|} - \log{|B_t|}.
+$
 \end{proposition}
 \noindent
 For $\mathcal{M} = \zo^n$ and the binary Hamming metric,
@@ -83,7 +83,7 @@ Let $(\mathcal{M}, \dis)$ be a metric space where the size of balls is center in
 \label{def:b density}
 \end{definition}
 \begin{claim} 
-For $n, t\mathbb{Z}^+$ with $t<n/2$ for the Hamming metric over $\zo^n$
+For $n, t\in \mathbb{Z}^+$ with $t<n/2$ for the Hamming metric over $\zo^n$
 \[
 %n\left(1-h_2\left(\frac{t}{n}\right)\right)-1 \le \beta \le n\left(1-h_2\left(\frac{t}{n}\right)\right)+\frac{\log{n}}{2}+\frac{1}{2}.
 \beta \ge n\left(1-h_2\left(\frac{t}{n}\right)\right)-1.
@@ -111,7 +111,7 @@ For metric space $(\mathcal{M}, \dis)$ and distribution $W_z$ with probability m
 \end{enumerate}
 \end{definition}
 
-\paragraph{The use of smooth min-entropy} In the above, the secure sketch is required to retain smooth conditional min-entropy of $W_z$ conditioned on the sketch.  Many definitions consider $\epsilon=0$ or average min-entropy.  However, smooth min-entropy is the necessary and sufficient condition for privacy amplification through the use of an average-case randomness extractor~\cite{renner2005simple}.
+\paragraph{The use of smooth min-entropy} In the above definition, the secure sketch retains smooth conditional min-entropy of $W_z$.  Many definitions consider $\epsilon=0$ or average min-entropy.  The $\epsilon$-smooth min-entropy can be used to bound the average min-entropy~\cite[Appendix B]{dodis2008fuzzy}. 
 
 \begin{definition}[Fuzzy Extractor~\cite{dodis2008fuzzy}]
 For metric space $(\mathcal{M}, \dis)$ and probability distribution $W_z$, a $(\mathcal{M}, \kappa, t, \epsilon, \ell)$-\emph{fuzzy extractor} is a pair of algorithms $(\gen_z, \rep_z)$ with the following properties 
@@ -126,11 +126,11 @@ $\Pr_{r, p \leftarrow \gen(w)}[\rep(w', p) = r]=1.$
 \end{definition}
 
 \noindent
-We now define fuzzy extractors and secure sketches with advice.  This is an intermediate definition that will be used in proofs throughout.  As we show in Lemmas~\ref{lem:distributional advice suffices} and \ref{lem:distributional advice suffices ss}, the impossibility of building a fuzzy extractor (resp. secure sketch) with advice for the uniform distribution of distributions $W_Z$ from $\mathcal{W}$ implies the impossibility of building a fuzzy extractor (resp. secure sketch) for a constant fraction of $W_z\in\mathcal{W}$.
+We now define fuzzy extractors and secure sketches with advice.  This is an intermediate definition that will be used in proofs throughout.  Let $\wnk$ be a family of distributions. As we show in Lemmas~\ref{lem:distributional advice suffices} and \ref{lem:distributional advice suffices ss}, the impossibility of building a fuzzy extractor (resp. secure sketch) with advice for the uniform distribution of $\wnkz$ from family $\wnk$ implies the impossibility of building a fuzzy extractor (resp. secure sketch) for a constant fraction of $W_z\in\wnk$.
 
 \begin{definition}[Secure Sketch with distributional advice]
 \label{def:ss distributional}
-Let $\mathcal{W}$ be a family of distributions indexed by $z$ and let $\mathcal{Z}$ denote the set of such $z$.  That is, denote each distribution in $\mathcal{W}$ as $W_z$.  Let $Z$ be a random variable describing the uniform selection of such a $W_z$.
+Let $\mathcal{W}$ be a family of distributions indexed by $z$ and let $\mathcal{Z}$ denote the set of such $z$.  Let $Z$ be a random variable describing the uniform selection of a $W_z \in \mathcal{W}$.
 For metric space $(\{0,1\}^n, \dis)$, a $(\{0,1\}^n, \mathcal{W}, \tilde{m}, t, \epsilon, \ell, \delta)$-\emph{secure sketch with distributional advice} is a triplet of algorithms $(\gen, \rep, \aux)$ with the following properties:
 \begin{enumerate} 
 \itemsep0em
@@ -145,7 +145,7 @@ $
 
 \begin{definition}[Fuzzy Extractor with distributional advice]
 \label{def:fe distributional}
-Let $\mathcal{W}$ be a family of distributions indexed by $z$.  That is, denote each distribution in $\mathcal{W}$ as $W_z$.  Let $Z$ be a random variable describing the uniform selection of such a $W_z$.
+Let $\mathcal{W}$ be a family of distributions indexed by $z$.  Let $Z$ be a random variable describing the uniform selection of a $W_z\in\mathcal{W}$.
 For metric space $(\{0,1\}^n, \dis)$, a $(\{0,1\}^n, \mathcal{W}, \kappa, t, \epsilon, \ell)$-\emph{fuzzy extractor with distributional advice} is a triplet of algorithms $(\gen, \rep, \aux)$ with the following properties:
 \begin{enumerate} 
 \itemsep0em
@@ -179,11 +179,11 @@ $(\gen, \rep, \advice)$ is a $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, \e
 %We consider two natural settings where $\epsilon = \ngl(n)$ and when $\epsilon = \Theta(1)$.
 %
 %For the setting when $\epsilon = \ngl(n)$  if one sets $\zeta = \sqrt{\epsilon}$ this implies that for all subsets $\mathcal{W}' \subseteq \mathcal{W}$ where $\Pr[Z\in Z']\ge 1-\sqrt{\epsilon}.$ there is no $(\{0,1\}^n,\kappa, t, \sqrt{\epsilon}, \ell)$-fuzzy extractor for some element of $\mathcal{W}'$.  This shows that at least $\sqrt{\epsilon}$ fraction of elements in $\mathcal{W}$ do not have $(\{0,1\}^n,\kappa, t, \sqrt{\epsilon}, \ell)$-fuzzy extractors.
-In the setting when $\epsilon = \Theta(1)$ then setting $\zeta = \epsilon/2$ implies that for all subsets $\mathcal{W}' \subseteq \mathcal{W}$ where $\Pr[Z\in Z']\ge 1-\epsilon/2 = 1-\Theta(1)$ there is no $(\{0,1\}^n,\kappa, t, \epsilon/(2-\epsilon), \ell)$-fuzzy extractor for some element of $\mathcal{W}'$.  This shows that at least $\epsilon/2=\Theta(1)$ fraction of elements in $\mathcal{W}$ do not have $(\{0,1\}^n,\kappa, t, \epsilon/(2-\epsilon), \ell)$-fuzzy extractors. This is the setting considered in Section~\ref{sec:fe}.
+In the setting when $\epsilon = \Theta(1)$ then setting $\zeta = \epsilon/2$ implies that for all subsets $\mathcal{W}' \subseteq \mathcal{W}$ where $\Pr[Z\in Z']\ge 1-\epsilon/2 = 1-\Theta(1)$ there is no $(\{0,1\}^n,\kappa, t, \epsilon/(2-\epsilon), \ell)$-fuzzy extractor for some element of $\mathcal{W}'$.  This shows that at least $\epsilon/2=\Theta(1)$ fraction of elements in $\mathcal{W}$ do not have $(\{0,1\}^n,\kappa, t, \epsilon/(2-\epsilon), \ell)$-fuzzy extractors. 
 
 
 \begin{lemma}
-Let $\mathcal{W}$ be a distribution family indexed by $\mathcal{Z}$ and suppose that no $(\zo^n, \mathcal{W}, \tilde{m}, t, \epsilon, \delta, \ell)$-secure sketch with distributional advice exists.  For all families $\mathcal{W}'\subseteq \mathcal{W}$ indexed by $\mathcal{Z}'\subseteq \mathcal{Z}$ where\[\frac{|\mathcal{Z}\cap \mathcal{Z}'|}{|\mathcal{Z}|} = \frac{|\mathcal{Z}'|}{|\mathcal{Z}|}\ge 1-2^{-\zeta}\]
+Let $\mathcal{W}$ be a distribution family indexed by $\mathcal{Z}$ and suppose that no $(\zo^n, \mathcal{W}, \tilde{m}, t, \epsilon, \delta, \ell)$-secure sketch with distributional advice exists.  For all families $\mathcal{W}'\subseteq \mathcal{W}$ indexed by $\mathcal{Z}'\subseteq \mathcal{Z}$ where $|\mathcal{Z}'|/|\mathcal{Z}|\ge 1-2^{-\zeta}$ 
 there is some $z'\in \mathcal{Z}'$ for which no  $(\zo^n, \tilde{m}+1, t, \epsilon, \delta, \ell)$-secure sketch $(\sketch_{z'}, \rec_{z'})$  exists if $\zeta\ge \tilde{m}+1$.
 \label{lem:distributional advice suffices ss}
 \end{lemma}
@@ -202,11 +202,10 @@ Then consider the following equation for computing the remaining smooth conditio
 \expe_{z\leftarrow Z} [\Haveps(W_z| \sketch(W_z), z)] &= -\log{\Pr[Z\in \mathcal{Z}']\expe_{Z} 2^{-\Haveps(W_Z| ss, Z\in \mathcal{Z}')}+ \Pr[Z\not\in \mathcal{Z}']\expe_{Z}\left[ 2^{-\Haveps(W_Z| ss, Z\not\in \mathcal{Z}'] )}\right]}\\
 &\le -\log{1 \cdot 2^{-\tilde{m}}+ 2^{-\zeta}\cdot 1} \le \min\{\tilde{m}+1,\zeta\}-1\le \tilde{m}.
 \end{align*}
-Recall in the above $Z$ is the uniform distribution over values in $\mathcal{Z}$.
 \end{proof}
 
 \paragraph{Interpretation}
-The natural parameter setting of the above is setting $\zeta = \max\{\tilde{m},1\} $ which shows that at least $2^{-\tilde{m}}$ of the distributions have no secure sketch.  Later in this work, we consider $\tilde{m} = \Theta(1)$ which suffices to that show that a constant fraction of distributions have no secure sketch.
+Setting $\zeta = \max\{\tilde{m},1\} $ shows that at least $2^{-\tilde{m}}$ of the distributions have no secure sketch.  Later in this work, we consider $\tilde{m} = \Theta(1)$ which suffices to that show that a constant fraction of distributions have no secure sketch.
 
 
 

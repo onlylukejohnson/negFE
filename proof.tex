@@ -34,22 +34,31 @@ $k$ & log size support of input distribution\\
 $\ell$ & Length of $\advice$ and circuit size of fuzzy extractor\\
 $\tilde{m}$ & Residual min-entropy of fuzzy extractor conditioned on helper\\
 $n$ & Dimension of input points\\
-$P/p$ & Public Helper value of fuzzy extractor\\
-$R/r$ & Key of fuzzy extractor\\
-$\sketch/ss$ & Public Helper value of secure sketch\\
+%$P/p$ & Public Helper value of fuzzy extractor\\
+%$R/r$ & Key of fuzzy extractor\\
+%$\sketch/ss$ & Public Helper value of secure sketch\\
 $t$ & Distance for correction\\
 $B_t$ & Hamming Ball of radius $t$\\
 $U$ & Uniform distribution\\
 \multirow{2}{*}{$\epsilon$} & Statistical Distance Parameter for fuzzy extractor,\\
 & Smoothness parameter for min-entropy of secure sketch\\
-$\alpha = \log{{2^n\choose 2^k}}$ & Log size of number of uniform distributions with $2^k$ points.  \\
+$\alpha = \log{{2^n\choose 2^k}}$ & Log size of number of distributions in $\wnk$.  \\
 $\beta$ & Ratio of Metric Space Size to Size of Hamming Ball (Def~\ref{def:b density})\\
 $\gamma$ & lower bound on fuzzy min-entropy of distributions \\
 $\kappa$ & key length of fuzzy extractor\\
-$\nu$ & Number of points that adversary fully describes in advice\\
-$\mu =  n \cdot h_2\prns{\frac{1}{2} - \frac{t}{n}}$ & Log of maximum number of viable points (Lem~\ref{lem:smallgeneralviable})\\
+$\nu$ & Number of points that adversary ``describes'' in advice\\
+$\mu =  n \cdot h_2\prns{\frac{1}{2} - \frac{t}{n}}$ & Bound on log of maximum number of viable points (Lem~\ref{lem:smallgeneralviable})\\\hline
+$\wnk$ & Set of all distributions with $k$ points\\
+$\znkset$ & Set of indices for $\wnk$\\
+$\znk$ & Uniform choice of $z\leftarrow \znkset$\\
+$\wnkz$ & Uniform choice of $W_z$ from $\wnk$\\
+$\pcodeu$ & Restriction of $\wnk$ to distributions $W_z$ with $\Hfuzz(W_z)\ge \gamma$\\
+$\pcodeset$ & Set of indices for $\pcodeu$\\
+$\pcode$ & Uniform choice of $z$ from $\pcodeset$\\
+$\pcodeuz$ & Uniform selection of $W_z$ from $\pcodeu$
+
 \end{tabular}
-\caption{Summary of notation}
+\caption{Summary of notation.}
 \label{tab:notation}
 \end{table}
 Lemma~\ref{lem:distributional advice suffices} states that to show the hardness of building an efficient fuzzy extractor (Definition~\ref{def:fe}) for a constant fraction of $W_z\in \pcodeu$ it suffices to show the hardness of building a fuzzy extractor with distributional advice (Definition~\ref{def:fe distributional}) for the family $\pcodeu$. Thus, the proof of Theorem~\ref{thm:main theorem} focuses on the distributional advice setting.
