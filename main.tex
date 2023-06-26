@@ -1,4 +1,4 @@
-\def\lncs{0}
+\def\lncs{1}
 
 
 \ifnum\lncs=0
@@ -54,12 +54,8 @@
   \newtheorem{problem}{Problem}
   \newtheorem{construction}{Construction}
   \renewcommand{\paragraph}[1]{\subsubsection{#1}}
-  
 \raggedbottom
-  
-
-
-\fi
+  \fi
 
 \usepackage[dvipsnames]{xcolor}
 
@@ -106,25 +102,18 @@
 % Commands
 \newcommand{\comment}[1]{\textcolor{Mulberry}{#1}}
 \newcommand{\todo}[1]{\textcolor{red}{TODO: #1}}
-%\newcommand{\todo}[1]{}
 \newcommand{\here}{\todo{Stopped here! }}
 
-%Probability
 \newcommand{\Ex}[1]{\Exp\left[#1\right]}
 \newcommand{\Exlim}[2]{\Exp\limits_{#1}\br{#2}}
 \newcommand{\Prob}[1]{\Pr\br{#1}}
 \newcommand{\Problim}[2]{\Pr\limits_{#1}\br{#2}}
 \newcommand{\p}[1]{p\prns{#1}}
-
-% Entropy
 \newcommand{\ent}[1]{\mathrm{H}\prns{#1}}
 \newcommand{\minent}[1]{\mathrm{H}_{\infty}\prns{#1}}
 \newcommand{\acminent}[2]{\tilde{\mathrm{H}}_{\infty}\prns{#1|#2}}
 \newcommand{\acminenteps}[2]{\tilde{\mathrm{H}}_{\infty}^\epsilon\prns{#1|#2}}
 \newcommand{\hart}[1]{\mathrm{H}_0\prns{#1}}
-
-
-%MACROS galore!!!
 \newcommand{\class}[1]{{\ensuremath{\mathsf{#1}}}}
 \newcommand{\gen}{\ensuremath{\class{Gen}}\xspace}
 \newcommand{\aux}{\ensuremath{\class{Advice}}\xspace}
@@ -152,31 +141,11 @@
 \newcommand{\guess}{\mathsf{guess}}
 \newcommand{\nullsp}{\mathtt{null}}
 \newcommand{\supp}{\mathtt{Supp}}
-
-
 \newcommand{\A}{\mathcal{A}}
 \newcommand{\F}{\mathbb{F}}
 
 
 \newcommand{\metric}{\ensuremath{\mathtt{Metric}}\xspace}
-\newcommand{\bdde}{\ensuremath{\mathtt{BDDE}}\xspace}
-\newcommand{\bdders}{\ensuremath{\mathtt{BDDE-RS}}\xspace}
-\newcommand{\bdderl}{\ensuremath{\mathtt{BDDE-RL}}\xspace}
-\newcommand{\findrep}{\ensuremath{\mathtt{FIND-REP}}\xspace}
-\newcommand{\hill}{\ensuremath{\mathtt{HILL}}\xspace}
-\newcommand{\hillrlx}{\ensuremath{\mathtt{HILL\mhyphen rlx}}\xspace}
-\newcommand{\yao}{\ensuremath{\mathtt{Yao}}\xspace}
-\newcommand{\unp}{\ensuremath{\mathtt{unp}}\xspace}
-\newcommand{\unprlx}{\ensuremath{\mathtt{unp\mhyphen rlx}}\xspace}
-\newcommand{\metricstar}{\ensuremath{\mathtt{Metric}^*}\xspace}
-\newcommand{\metricd}{\ensuremath{\mathtt{Metric}^*\mathtt{-d}}\xspace}
-\newcommand{\hillstar}{\ensuremath{\mathtt{HILL}^*}\xspace}
-\newcommand{\hillprime}{\ensuremath{\mathtt{HILL'}}\xspace}
-\newcommand{\metricprime}{\ensuremath{\mathtt{Metric'}}\xspace}
-\newcommand{\metricprimestar}{\ensuremath{\mathtt{Metric'}^*}\xspace}
-\newcommand{\hillprimestar}{\ensuremath{\mathtt{HILL'}^*}\xspace}
-\newcommand{\poly}{\ensuremath{\mathtt{poly}}\xspace}
-\newcommand{\rank}{\ensuremath{\mathtt{rank}}\xspace}
 \newcommand{\ngl}{\ensuremath{\mathtt{ngl}}\xspace}
 \newcommand{\Hoo}{\mathrm{H}_\infty}
 \newcommand{\Hav}{\tilde{\mathrm{H}}_\infty}
@@ -185,7 +154,6 @@
 \newcommand{\goodkey}{\ensuremath{\mathsf{GoodKey}}\xspace}
 \newcommand{\Hfuzz}{\mathrm{H}^{\mathtt{fuzz}}_{t,\infty}}
 \newcommand{\Wallfuzz}{\mathcal{W}_{\mathtt{fuzz}}^{\mathtt{all}}}
-\newcommand{\Huse}{\mathrm{H}_{\mathtt{usable}}}
 \newcommand{\Dom}{\mathsl{Dom}}
 \newcommand{\Range}{\mathsl{Rng}}
 \newcommand{\znkset}{\mathcal{Z}_{n,k}}
@@ -209,7 +177,6 @@
 \newcommand{\br}[1]{\!\left[#1\right]}
 \newcommand{\prns}[1]{\!\left(#1\right)}
 \renewcommand{\log}[1]{\mathsf{log}\prns{#1}}
-\newcommand{\zeroone}[1]{\sbr{0,1}^{#1}}
 
 \ifnum\lncs=0
 \title{Impossibility of Efficient Information-Theoretic Fuzzy Extraction\footnote{The author thanks the reviewers for their helpful feedback and Luke Demarest and Alexander Russell for their helpful discussions. B.F. is supported by National Science Foundation Grants \#2232813 and \#2141033 and the Office of Naval Research. 
@@ -226,7 +193,7 @@
   \maketitle
     \input{abstract.tex}
   \else
-  \title[Impossibility of Efficient Information-Theoretic Fuzzy Extraction]{Impossibility of Efficient Information-Theoretic Fuzzy Extraction\footnote{The author thanks the reviewers for their helpful feedback and Luke Demarest and Alexander Russell for their helpful discussions. B.F. is supported by National Science Foundation Grants \#2232813 and \#2141033 and the Office of Naval Research. 
+  \title[Impossibility of Efficient Information-Theoretic Fuzzy Extraction]{Impossibility of Efficient Information-Theoretic Fuzzy Extraction\footnote{The author thanks the reviewers for their helpful feedback and Luke Demarest and Alexander Russell for their helpful discussions. B.F. is supported by National Science Foundation Grants \#2232813 and \#2141033 and the Office of Naval Research. This manuscript has no associated data.
 }}
 \author[1]{\fnm{Benjamin} \sur{Fuller}}\email{benjamin.fuller@uconn.edu}
 \affil[1]{\orgdiv{Department of Computer Science and Engineering}, \orgname{University of Connecticut}, \orgaddress{\street{371 Fairfield Way}, \city{Storrs}, \postcode{06269}, \state{Connecticut}, \country{United States}}}
@@ -239,6 +206,9 @@
   \input{prelims.tex}
   \input{proof.tex}
   
+  \ifnum\lncs=0
   \bibliographystyle{alpha}
+\fi
+
   \bibliography{negFE}
 \end{document}

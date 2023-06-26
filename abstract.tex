@@ -22,16 +22,14 @@ to build a single fuzzy extractor that works for all distributions
 (Fuller, Reyzin, and Smith, IEEE Transactions on Information Theory
 2020).
 
-A weaker information-theoretic goal is to build a fuzzy extractor for
-each particular probability distribution.  This is the approach taken
+A weaker information-theoretic goal is building a fuzzy extractor for
+each probability distribution.  This is the approach taken
 by Woodage et al. (Crypto 2017).  Prior approaches use the full
 description of the probability mass function and are inefficient.  We
 show this is inherent: \textbf{for a quarter of distributions with
   fuzzy min-entropy and $2^k$ points there is no secure fuzzy
   extractor that uses less $2^{\Theta(k)}$ bits of information about
-  the distribution.}  This result rules out the possibility of
-efficient, information-theoretic fuzzy extractors for many
-distributions with fuzzy min-entropy.
+  the distribution.}  
 
 We show an analogous result with stronger parameters for information-theoretic secure sketches. Secure sketches are frequently used to construct fuzzy extractors. 
 

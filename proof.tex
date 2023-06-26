@@ -2,7 +2,7 @@
 
 % Proof for NegFE
 
-\section{Efficient Information-Theoretic Fuzzy Extractors do not exist for most distributions with fuzzy min-entropy}
+\section{Fuzzy Extractors}
 \label{sec:fe}
 \input{family}
 We also summarize notation in Table~\ref{tab:notation}.
@@ -92,9 +92,9 @@ We state the stronger version of \cite[Lemma 5.2]{fuller2020fuzzy}.
 
 \begin{lemma}
     \label{lem:smallgeneralviable}
-For $n\in \mathbb{Z}^+$, suppose $\mathcal{M}$ is $\zeroone{n}$ with the Hamming Metric and $\kappa \geq 2$, $0 \leq t \leq n/2$, $\epsilon > 0, \ell\in\mathbb{Z}^+$. 
+For $n\in \mathbb{Z}^+$, suppose $\mathcal{M}$ is $\zo^n$ with the Hamming Metric and $\kappa \geq 2$, $0 \leq t \leq n/2$, $\epsilon > 0, \ell\in\mathbb{Z}^+$. 
     Suppose $(\mathsf{Gen, Rep})$ is a $(\mathcal{M,W},\kappa, t, \ell, \epsilon)$-fuzzy extractor with distributional advice for some distribution family $\mathcal{W}$ over $\mathcal{M}$. 
-    For any fixed $p$, for any value $\advice \in \zo^\ell$, there is a set $\mathsf{GoodKey}_p \subseteq \zeroone{\kappa}$ of size at least $2^{\kappa - 1}$ such that,
+    For any fixed $p$, for any value $\advice \in \zo^\ell$, there is a set $\mathsf{GoodKey}_p \subseteq \zo^\kappa$ of size at least $2^{\kappa - 1}$ such that,
     \[
       \mu:= \sum_{\mathsf{key} \in \goodkey_p} \left( \log{|\sbr{v \in \mathcal{M}|\prns{\mathsf{key}, p} \in \mathsf{supp}\prns{\mathsf{Gen}(v, \advice)}}|}\right) \leq n \cdot h_2\prns{\frac{1}{2} - \frac{t}{n}}.
     \]   
@@ -104,7 +104,7 @@ For $n\in \mathbb{Z}^+$, suppose $\mathcal{M}$ is $\zeroone{n}$ with the Hamming
 We now present our main technical lemma and its proof. 
 \begin{lemma}
 \label{lem:convert distinguisher}
-    Suppose $\mathcal{M}$ is $\zeroone{n}$ with the Hamming Metric, $\kappa \geq 2$, $0 \leq t \leq n/2$, $\epsilon > 0, \ell\in\mathbb{Z}^+$. 
+    Suppose $\mathcal{M}$ is $\zo^n$ with the Hamming Metric, $\kappa \geq 2$, $0 \leq t \leq n/2$, $\epsilon > 0, \ell\in\mathbb{Z}^+$. 
 For the family $\wnk$ there is no $(\mathsf{Gen, Rep})$ that is a $(\mathcal{M},\wnk,\kappa, t, \ell, \epsilon)$-fuzzy extractor with distributional advice for
 \[
 \epsilon<1/2-\left(\epsilon_1+\epsilon_2\right)\\
@@ -460,9 +460,15 @@ Let $ n, t,\tilde{m}\in\mathbb{Z}^+, \epsilon, \delta\in[0,1]$ be parameters whe
 Let $\wnk$ be a family indexed by set $\znkset$ and let $\znk$ denote the uniform distribution over $\znk$.  Suppose $(\sketch, \rec, \aux)$ is a $(\zo^n, \wnk, \tilde{m}, t, \epsilon_\sketch, \ell, \delta)$-secure sketch with distribution advice. 
    For every $v\in \zo^n$ and any value $a \in \zo^\ell$ there exists a set $\goodsketch_{v,a}$ where $\Pr[\sketch(v, a)\in \goodsketch_{v,a}] \ge 1/2$ and for any fixed $ss$,
     
+ \ifnum\lncs=0
     \[
    \mu:= \log{|\{v \in \zo^n | ss \in \goodsketch_{v,a}\}|} \le \frac{n - \log{|B_t|} +h_2(2\delta)}{1-2\delta} \le \frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta}.
     \]
+    \else
+    \begin{align*}
+   \mu&:= \log{|\{v \in \zo^n | ss \in \goodsketch_{v,a}\}|} \\&\le \frac{n - \log{|B_t|} +h_2(2\delta)}{1-2\delta} \le \frac{n(1-h_2(t/n)) +h_2(2\delta)}{1-2\delta}.    
+    \end{align*}
+    \fi
 \end{lemma}
 
 \noindent
@@ -572,10 +578,11 @@ And thus,
 \[
 \Hav(X'|Y', Z', X'\in\goodsketch_{Y', \aux(Z')}) \le  -\log{1-2\epsilon} +\Hav(X'|Y', X'\in W_Z).
 \]
+Define \[\tilde{m}:= -\log{1-2\epsilon_\sketch} +1 + 2\max\left\{-\frac{\alpha+-|\advice|}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.\]
 This implies that 
-\[
-\Haveps(\wnkz| \sketch(\wnkz, A), \znk) \le -\log{1-2\epsilon} +1 + 2\max\left\{-\frac{\alpha-|\advice|}{2^k}+1+\mu+2k-\log{\nu}, \log{\nu+1}\right\}.
-\]
+$
+\Haveps(\wnkz| \sketch(\wnkz, A), \znk) \le \tilde{m}.
+$
 This completes the Proof of Lemma~\ref{lem:convert distinguisher ss}.
 \end{proof}
 
