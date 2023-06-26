@@ -4,7 +4,7 @@
 
  \begin{lemma}
  \label{lem:close family}
-Fix $n\in \mathbb{Z}^+, t<n/2, k, \gamma  \in \mathbb{Z}^+$, then
+Fix $n, t, k, \gamma  \in \mathbb{Z}^+$ where $t<n/2$, then
 $\Delta(\wnkz, \pcodeuz) \le \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}2^n.$
 \end{lemma}
 
@@ -50,7 +50,7 @@ a^* =\frac{2^k|B_t|}{2^n - |B_t|}=2^{k-\beta}.
 \]
 Fix the value of $\zeta$ such that 
 \[1+\zeta = \frac{2^{-\gamma}(2^n - |B_t|)}{|B_t|} \ge 2^{\beta-\gamma}. \]
-then the probability $z\leftarrow \znk$ intersects with $A_{y^*}$ in at least $2^{k-\gamma}$ places is at most 
+then the probability $\znk$ intersects with $A_{y^*}$ in at least $2^{k-\gamma}$ places is at most 
 \begin{align*}
 \Pr[|\znk \cap A_{y^*}| \ge a^*(1+\zeta)] &\le \\
 \Pr[| \znk \cap A_{y^*} | \ge 2^{k-\gamma}] &\le \left(\left(e2^{\gamma-\beta}\right)^{2^{\beta-\gamma}}\right)^{2^{k-\beta}} \\&= \left(e2^{\gamma-\beta}\right)^{2^{k-\gamma}}
