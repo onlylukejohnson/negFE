@@ -17,7 +17,7 @@ We focus on non-interactive versions of these problems~\cite{dodis2008fuzzy} as 
 \item $\sketch(w) = ss$ should reveal as little information as possible about $w$; and
 \item $\sketch(w) =ss$ should allow one to reconstruct $w$ from a nearby $w'$. That is, it should be the case that for all nearby $w', \rec(w', ss) = w$.  In the above, ``nearby'' is $w'$ such that $\dis(w,w')\le t$ for  distance metric $\dis$ and distance $t$.
 \end{enumerate}
-These two properties are in tension because allowing recovery of $w$ requires information about $w$.  The most natural (inefficient) construction is for $ss$ to be a pairwise independent~\cite{carter1977universal} hash $h$ of $w$~\cite{skoric2009efficient,fuller2016fuzzy,woodage2017new,fuller2020fuzzy}. The hash $h$ should be long enough so that $\{w | h(w) = y \wedge w' s.t.\,\dis(w, w')\le t\} =1$ and short enough so $\{w| h(w) = y\}$ is large. Efficient constructions are also known based on error-correcting codes.  In fact, upper bounds on the unpredictability of $w | ss$ are related to the size of the best error-correcting codes~\cite{dodis2008fuzzy,fuller2020computational}. 
+These two properties are in tension because allowing recovery of $w$ requires information about $w$.  The most natural (inefficient) construction is for $ss$ to be a pairwise independent~\cite{carter1977universal} hash $h$ of $w$~\cite{skoric2009efficient,fuller2016fuzzy,woodage2017new,fuller2020fuzzy}. The hash $h$ should be long enough so that $\{w | h(w) = y \wedge w' s.t.\,\dis(w, w')\le t\} =1$ and short enough so $\{w| h(w) = y\}$ is large. Efficient constructions are also known based on error-correcting codes.  This is achieved by writing down the coset of $w$ with respect to an error-correcting code with distance $t$~\cite{dodis2008fuzzy}.  In fact, upper bounds on the unpredictability of $w | ss$ are related to the size of the best error-correcting codes~\cite{dodis2008fuzzy,fuller2020computational}. 
 Given a good information reconciliation, one can achieve privacy amplification using an average-case randomness extractor~\cite{nisan1993randomness} to convert $w$ into a uniform value.
 
   Fuzzy extractors perform both information reconciliation and privacy amplification.  They consist of a pair $(\gen, \rep$).  Intuitively, $\gen$ converts a value $w$ into a uniform value, denoted as $r$ and $\rep$ reproduces that value for any nearby $w'$.  Notationally, $(r, p)\leftarrow \gen(w)$ should be indistinguishable from $(u, p)$ where $u$ is a truly random value.  On the correctness side, it should be the case that for all $w'$ such that $\dis(w, w')\le t$ then $\rep(w', p) =r$.  
@@ -29,7 +29,7 @@ Since noisy sources come from the physical world, an important goal
   Throughout the Introduction, we use the notation of fuzzy extractors
   and note when there are material differences for secure sketches.
   Fuller, Reyzin, and Smith~\cite{fuller2016fuzzy,fuller2020fuzzy}
-  identified the notion of fuzzy min-entropy $\Hfuzz(W)$ which
+  identified the notion of fuzzy min-entropy, $\Hfuzz(W)$, which
   measures the adversary's success when given oracle access to
   $\rep(\cdot, p)$ but is unable to learn anything from the value $p$.
 Fuzzy min-entropy quantifies the weight of the heaviest ball
@@ -51,21 +51,20 @@ complicated.\footnote{Fuzzy extractors were first designed as an
 }  Fuller, Reyzin, and Smith~\cite{fuller2020fuzzy} showed that it is
 impossible to build a universal fuzzy extractor with
 information-theoretic security.  More precisely, they constructed a
-family of distributions $\mathcal{W}'$ and showed that any
+family of distributions $\mathcal{W}$ and showed that any
 fuzzy extractor $(\gen, \rep)$ must be insecure for an average member
-of $\mathcal{W}'$. Let $z$ be a string that indexes the family $\mathcal{W}'$. We use $Z$ to describe a uniformly chosen index for
-the family $\mathcal{W'}$.  We use the notation $z\leftarrow Z$ to indicate this choice. We use the notation $W_Z$ to indicate sampling $W$ uniformly from $\mathcal{W}$ with $Z$ being a random variable that describes the choice of $W\in\mathcal{W}$. For all $z$, the goal is to build a good fuzzy extractor for $W_z$.  The impossibility result shows a family $\mathcal{W}'$ where any $(\gen, \rep)$ is insecure for an average $z$ chosen according to $Z$.  The model tells the adversary the outcome $Z=z$ but not the
+of $\mathcal{W}$. Let $z$ be a string that indexes the family $\mathcal{W}$. We use $Z$ to describe a uniformly chosen index for
+the family $\mathcal{W}$.  We use the notation $z\leftarrow Z$ to indicate this choice. We use the notation $W_Z$ to indicate sampling $W$ uniformly from $\mathcal{W}$ with $Z$ being a random variable that describes the choice of $W\in\mathcal{W}$. For all $z$, the goal is to build a good fuzzy extractor for $W_z$.  The impossibility result shows a family $\mathcal{W}$ where any $(\gen, \rep)$ is insecure for an average $z$ chosen according to $Z$.  The model tells the adversary the outcome $Z=z$ but not the
 individual point $w\leftarrow W_z$ that is input to $\gen$.
 
 On the positive side, multiple works~\cite{hayashi2014secret,hayashi2016secret,fuller2016fuzzy,woodage2017new,tyagi2017universal,TVW18,LA18,fuller2019continuous,fuller2020fuzzy} presented a construction that works for each $W_z\in \Wallfuzz$.  This is called the \emph{distribution-sensitive} setting as $\gen$ also knows the entire probability mass function described by $z$, denoted as $\gen_{z}, \rec_{z}$.  All constructions in this line are computationally inefficient; for an input point $w$ they look up the probability that $\Pr[W_z=w]$ and the probability of points $w'$ where $\dis(w, w')\le t$.  
 %Thus, there is a large gap between the state of affairs with computational and information-theoretic security.  With computational security, universal fuzzy extractors are possible.  With information-theoretic security universal fuzzy extractors are impossible.  Furthermore, known distribution-sensitive fuzzy extractors require information about $W$ proportional to its description.  
-
 We show this inefficiency is unavoidable:
 \begin{displayquote}
 \textbf{Any distribution-sensitive information-theoretic fuzzy extractor requires an exponential amount of information about the distribution $W_z$.} 
 \end{displayquote} 
 Our results are for the Hamming metric over $\zo^n$. Below we present the two informal theorems for fuzzy extractors (see Theorem~\ref{thm:main theorem}) and secure sketches (see Theorem~\ref{thm:main theorem ss}) respectively.  For a value $p\in [0,1]$ let $h_2$ be the binary entropy of $p$. 
-Both secure sketches and fuzzy extractor are frequently parameterized by an error parameter $\delta$ which controls the maximum probability they get the wrong value.  We consider $\delta=0$ for the fuzzy extractor setting and $\delta>0$ for the secure sketch setting. 
+Both secure sketches and fuzzy extractor are frequently parameterized by an error parameter $\delta$ which controls the maximum probability they get the wrong value.  We consider $\delta=0$ for the fuzzy extractor setting and $\delta>0$ for the secure sketch setting. (Discussion in Section~\ref{ssec:discussion}.)
 
 \begin{theorem}[Informal Theorem~\ref{thm:main theorem}]
 Consider $\zo^n$ and $t< n/2$ be a distance parameter.  Let $\mathcal{W}_\gamma=\{W | \Hfuzz(W) = \gamma\}$.  Let $c>0$ be a constant and suppose that \[
@@ -101,7 +100,7 @@ The \emph{size} of the fuzzy extractor (resp. secure sketch) refers to the amoun
  The relevant parameter regimes of impossibility are shown in Figure~\ref{fig:param regime}.  The two most important parameters are the noise rate $t/n$ and the fuzzy entropy rate $\gamma/n$. The area under the curves represents parameters where the construction is impossible for the fraction of distributions in the informal theorems unless one has algorithms of $2^{\Theta(n)}$ size.
 In spirit, our result rules out constructions that do not have a full description of the probability mass function written in their description.  
 
-Our results use only first and second-moment bounds.    \textbf{Our theorems are crucial for the future of information-theoretic fuzzy extractors and secure sketches.  To prove security for an efficient construction one must either restrict to sources with high fuzzy min-entropy or use properties of a noisy source beyond fuzzy min-entropy.}  %Most deployed constructions of fuzzy extractors use an information-theoretic information-reconciliation component and are thus subject to our results. 
+Our results use only first and second-moment bounds.    \textbf{Our theorems are crucial for the future of information-theoretic fuzzy extractors and secure sketches.  To prove security for an efficient construction one must either restrict to sources with high fuzzy min-entropy or use properties of a noisy source beyond fuzzy min-entropy.}  We discuss this more in Section~\ref{ssec:discussion}.
 
 
 %\paragraph{Fuzzy extractors are computational objects} The other
@@ -125,7 +124,7 @@ Lastly, we use $w\leftarrow W_z$ to
 denote sampling a point from the distribution indexed by $z$.  We show the
 impossibility of two types of fuzzy extractors:
 \begin{description}
-\item[Def.~\ref{def:fe distributional}] (Universal) Fuzzy extractors with distributional advice.  This is a triplet of algorithms $(\advice, \gen, \rep)$ designed to work for all $W_z \in \mathcal{W}_\gamma$ for a fixed error tolerance $t$.  The fuzzy extractor is given information about $z$ through a function $\advice = \advice(z)$ which is input to both $\gen$ and $\rep$. The value of $\advice$ \emph{specializes} $(\gen, \rep)$ to the distribution described by $z$. 
+\item[Def.~\ref{def:fe distributional}] (Universal) Fuzzy extractors with distributional advice.  This is a triplet of algorithms $(\advice, \gen, \rep)$ designed to work for all $W_z \in \mathcal{W}$ for a fixed error tolerance $t$.  The fuzzy extractor is given information about $z$ through a function $\advice = \advice(z)$ which is input to both $\gen$ and $\rep$. The value of $\advice$ \emph{specializes} $(\gen, \rep)$ to the distribution described by $z$. 
 
 Define $w\leftarrow W_z$ and $(r, p) \leftarrow \gen(w, \advice)$, it should be true that 
 \[
@@ -143,12 +142,12 @@ We review Fuller, Reyzin, and Smith's~\cite{fuller2020fuzzy} impossibility resul
 Fuzzy extractor correctness says that for $(r, p)\leftarrow \gen(w)$ for all $w'$ close to $w$ the correct key is reproduced, i.e., $\rep(w', p)=r$.  As such, for each value of $p$, one can partition the input space $\zo^n$ by what value of $r$ the point  $v\in \zo^n$ produces.  Values $v$ that could have produced  $r$ will be at least distance $t$ from the boundary of this partition, we call the set of such $v$, $\viable_{r,p}$.  $\viable_{r,p}$ can be bounded geometrically using the isoperimetric inequality~\cite{harper1966optimal}.  This bound applies for any distribution over the inputs $w$.
 
 Consider the following simple distinguisher for a triple $r, p, z$.  One computes the key partition described above and the set $\viable_{r,p}$. If $\viable_{r,p} \cap W_z  = \emptyset$ output the key is random, otherwise output key is real. 
-The core of Fuller, Reyzin, and Smith's impossibility was to build a family $\mathcal{W}^{FRS}$ with three properties:
+The core of Fuller, Reyzin, and Smith's impossibility was to build a family $\mathcal{W}^{FRS}$ with two properties:
 \begin{enumerate}
 \item The distribution was $2$-universal~\cite{carter1977universal}, so the remainder of the distribution was unknown conditioned on the input $w$. 
 \item Distributions $W_z \in \mathcal{W}^{FRS}$ shared few points and had fuzzy min-entropy.
 \end{enumerate}
-These three properties meant that for any partition $p$ created after seeing $w$ for most distributions $W_z$ where $\Pr[W_z=w]>0$ have few parts with nonempty interiors. Thus, the above distinguisher works.
+These two properties meant that for any partition $p$ created after seeing $w$ for most distributions $W_z$ where $\Pr[W_z=w]>0$ have few parts with nonempty interiors. Thus, the above distinguisher works.
 
 The family is as follows: let $\mathbf{C}$ be a linear error-correcting code with distance $t$, let $\mathbf{H}$ be its syndrome, let $c$ be a coset.  Then each $z = (\mathbf{H}, c)$ and a distribution $W_{z=(\mathbf{H}, c)}$ is the uniform distribution over  the set of all points $\{w \mid \mathbf{H} w = c\}$.
 
@@ -172,10 +171,15 @@ The techniques for the secure sketch setting are similar, however, there are str
 Importantly, both results operate generically in the size of the maximum number of viable points for the relevant primitive.  Such bounds have been well established in the literature due to their connections with coding theory.  This means if one can provide a new bound on fuzzy extractor or secure sketch quality this can be directly used in our results. 
 
 
-\paragraph{Discussion}
-As noted above, our proofs  have strong implications for the future of fuzzy extractors, new designs or analyses are necessary.  Our results may give some theoretical backing to why designs of biometric cryptosystems with high security have been difficult to achieve (see discussion in~\cite{simhadri2019cryptographic}).
+\subsection{Discussion}\label{ssec:discussion}
+Lemma~\ref{lem:distributional advice suffices}  shows the impossibility of efficient constructions for a constant fraction of the family.  This means it may be possible to secure all low-entropy distributions of practical interest. However, new designs or analyses are required.  In particular, one must use statistical properties beyond fuzzy min-entropy. Demarest, Fuller, and Russell~\cite{demarest2021code} provide a summary of statistical properties in addition to fuzzy min-entropy used in low-entropy computationally secure constructions, such as small, random subsets of bits having high entropy.   Simhadri et al. provide a discussion on the current state of biometric cryptosystems and their limited security~\cite{simhadri2019cryptographic}. A natural question out of this research is whether one can use similar properties to provide information-theoretic security.  
 
-Our fuzzy extractor result requires that $|r| = \omega(\log n)$.  This is in contrast to Fuller, Reyzin, and Smith~\cite{fuller2020fuzzy} who showed an impossibility for a key length of $3$.\footnote{Our result for secure sketches requires them to retain at least $5$ bits of min-entropy about the input in comparison with \cite{fuller2020computational} which required the sketch to maintain $3$ bits of entropy.} This change comes because $\advice$ can supply a lot of information about a small number of points in $W_z$, allowing $\gen$ to ensure that some $\viable_{r,p}$ are nonempty. Furthermore, all bounds are weaker than those of Fuller, Reyzin, and Smith.  The core of the difference is that since $\mathcal{W}^{FRS}$ the adversary received entirely new information by the leftover hash lemma~\cite{haastad1993construction,barak2011leftover}. In our setting, we argue about the expected number of points in the support of $W_z$ that are included in the $\viable$ region. 
+We provide some intuition for why high entropy distributions are easier to secure.  First, from the construction perspective if the distribution has at  $\log{|B_t|}+\omega(\log \lambda)$ bits of entropy, one can write down enough bits to uniquely determine the original $w$ from a nearby $w'$ without removing all entropy of $w$ (assuming a perfect error correcting code). Second, from an impossibility perspective, impossibility results (both ours and prior results) require the construction to choose $\viable$ points in the construction and have some side information about the distribution reduce the size of this set.  The larger the entropy of each distribution the harder it is for this side information to reduce the entropy of this set.  For example, Fuller, Reyzin, and Smith~\cite{fuller2020fuzzy} distributions (in their family) were lines that overlapped at one point, providing a natural upper bound on their size.
+
+
+Our fuzzy extractor result requires that $|r| = \omega(\log n)$.  This is in contrast to Fuller, Reyzin, and Smith~\cite{fuller2020fuzzy} who showed an impossibility for a key length of $3$.\footnote{Our result for secure sketches requires them to retain at least $5$ bits of min-entropy about the input in comparison with \cite{fuller2020computational} which required the sketch to maintain $3$ bits of entropy.} This change comes because $\advice$ can supply a lot of information about a small number of points in $W_z$, allowing $\gen$ to ensure that some $\viable_{r,p}$ are nonempty. Furthermore, all bounds are weaker than those of Fuller, Reyzin, and Smith.  The core of the difference is that in $\mathcal{W}^{FRS}$ the adversary received entirely new information by the leftover hash lemma~\cite{haastad1993construction,barak2011leftover}. In our setting, we argue about the expected number of points in the support of $W_z$ that are included in the $\viable$ region. 
+
+Our result for fuzzy extractors considers perfect correctness. We do not think this is a fundamental limitation but we briefly explain the issue. As mentioned above, in the case of perfect correctness, one includes a point $w$ in $\viable_{r,p}$ if it is distance $t$ from any point that produces a different $r'$.  Once one allows imperfect correctness, there is no immediate test for whether a point $w$ should be considered viable. It seems possible that one could argue for a point to be viable when most points around $w$ produce the same key. We were not able to get a clean argument. If one finds a clean argument for viable points with imperfect correctness, it directly replaces Lemma~\ref{lem:smallgeneralviable}. The rest of our argument then applies. On the other hand, for a secure sketch, one can easily bound the size of the set of points \[ \left\{w \middle |  \frac{\{w' |\rec(w', p) = w \wedge \dis(w, w')\}}{\{w' | \dis(w, w')\}}\ge 1-\delta \right\},\] this set forms a Shannon error correcting code. This is the viable set in the secure sketch case. 
 
 Our secure sketch result also considers an object that retains smooth conditional min-entropy~\cite{renner2005simple}.  %Smooth conditional min-entropy means that one is statistically close to a distribution with min-entropy.  Setting the closeness parameter to $0$ gives traditional conditional min-entropy.  This is so we can conduct the argument using $U_{n,k}$ and ``smooth'' to the family where all distributions have fuzzy min-entropy. 
 Smooth conditional min-entropy is the necessary and sufficient condition for privacy amplification using a randomness extractor. 
