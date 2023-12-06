@@ -7,7 +7,7 @@ For distributions $X, Y$ over the same discrete domain $\chi$,
 \[
 \Delta(X, Y)\overset{def}= \frac{1}{2}\sum_{x \in \chi} \left| \Pr[X=x] - \Pr[Y=y]\right|.
 \]
-For a metric space $(\mathcal{M}, \dis)$ let $B_t(x) = \{y | \dis(x, y)\le t\}$. If the size of $B_t(x)$ is the same for all points $x$ we use $|B_t|$ to denote this quantity. This is the case for the Hamming metric.  All logarithms are base $2$. For a set $X$, let $U_X$ denote the uniform distribution over that set.  For a distribution $W$, let $\supp(W)$ denote the support of the distribution.  We define use $-\infty$ to denote $\log{0}$.
+For a metric space $(\mathcal{M}, \dis)$ let $B_t(x) = \{y | \dis(x, y)\le t\}$. If the size of $B_t(x)$ is the same for all points $x$ we use $|B_t|$ to denote this quantity. This is the case for the Hamming metric.  All logarithms are base $2$. For a set $X$, let $U_X$ denote the uniform distribution over that set.  For a distribution $W$, let $\supp(W)$ denote the support of the distribution.  
 
 \paragraph{Indexing and sampling from a family of distributions}
 This work considers the possibility of constructing fuzzy extractors from a finite family of distributions that we will call $\mathcal{W}$. 
@@ -16,7 +16,7 @@ We let $\mathcal{Z}$ be an index for the family $\mathcal{W}$. Each string $z\in
 
 
 \subsection{Notions of Entropy}
-    \textbf{Binary Entropy}, %denoted $\ent{X}$, for some discrete random variable $X$ is $\ent{X} \defined \expe_x\left[-\log{\Pr[X=x]}\right]$. 
+%denoted $\ent{X}$, for some discrete random variable $X$ is $\ent{X} \defined \expe_x\left[-\log{\Pr[X=x]}\right]$. 
     For a random variable $X$ whose outcomes are in $\{0,1\}$, let $\Pr[X=1] = p$. The \textbf{binary entropy} of $X$ is  $h_2(X) :=H(X)=-p\cdot\log{p} - (1-p)\cdot\log{1-p}.$ 
 For a discrete random variable $X$, 
     \textbf{min-entropy} is $\minent{X} \defined -\log{\max_{x_i} \Pr(X=x_i)}$.  
@@ -102,7 +102,7 @@ By Equation~\ref{eq:size of balls} one has:
 
     \subsection{Fuzzy Extractors and Secure Sketches}
 \begin{definition}[Secure Sketch~\cite{dodis2008fuzzy}]
-For metric space $(\mathcal{M}, \dis)$ and distribution $W_z$ with probability mass function, a $(\mathcal{M}, \tilde{m}, t, \epsilon, \ell, \delta)$-\emph{secure sketch} is a pair of algorithms $(\sketch_z, \rec_z)$ with the following properties 
+For metric space $(\mathcal{M}, \dis)$ and distribution $W_z$, a $(\mathcal{M}, \tilde{m}, t, \epsilon, \ell, \delta)$-\emph{secure sketch} is a pair of algorithms $(\sketch_z, \rec_z)$ with the following properties 
 \begin{enumerate} 
 \itemsep0em
 \item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')\le t$, then $\Pr_{ss \leftarrow \sketch(w)}[\rec_z(w', ss) = w]\ge 1-\delta.$
@@ -111,8 +111,9 @@ For metric space $(\mathcal{M}, \dis)$ and distribution $W_z$ with probability m
 \end{enumerate}
 \end{definition}
 
-\paragraph{The use of smooth min-entropy} In the above definition, the secure sketch retains smooth conditional min-entropy of $W_z$.  Many definitions consider $\epsilon=0$ or average min-entropy.  The $\epsilon$-smooth min-entropy can be used to bound the average min-entropy~\cite[Appendix B]{dodis2008fuzzy}. 
+\noindent\textbf{The use of smooth min-entropy} In the above definition, the secure sketch retains smooth conditional min-entropy of $W_z$.  Many definitions consider $\epsilon=0$ or average min-entropy.  The $\epsilon$-smooth min-entropy can be used to bound the average min-entropy~\cite[Appendix B]{dodis2008fuzzy}. 
 
+\vspace{.1in}
 \begin{definition}[Fuzzy Extractor~\cite{dodis2008fuzzy}]
 For metric space $(\mathcal{M}, \dis)$ and probability distribution $W_z$, a $(\mathcal{M}, \kappa, t, \epsilon, \ell)$-\emph{fuzzy extractor} is a pair of algorithms $(\gen_z, \rep_z)$ with the following properties 
 \begin{enumerate} 
@@ -137,7 +138,7 @@ For metric space $(\{0,1\}^n, \dis)$, a $(\{0,1\}^n, \mathcal{W}, \tilde{m}, t, 
 \item \textbf{Correctness} For all $w, w'$ such that $\dis(w, w')\le t$, let $\Pr_{ss \leftarrow \sketch(w)}[\rec(w', ss) = w]\ge 1-\delta.$
 \item \textbf{Security} Let $\aux$ be a function with output in $\zo^\ell$.  For all distributions $W_z \in \mathcal{W}$, define $\advice_z:= \aux(z)$ and let $SS \leftarrow \sketch(W_z, \advice_z)$. Then,
 $
-\expe_{z\leftarrow Z} [\Haveps(W_z| SS)] \ge \tilde{m}.
+\expe_{z\leftarrow Z} [\Haveps(W_z| SS, Z=z)] \ge \tilde{m}.
 $
 \end{enumerate}
 \end{definition}
@@ -175,13 +176,15 @@ Recall that $Z$ denotes the uniform random variable over the set $\mathcal{Z}$.
 $(\gen, \rep, \advice)$ is a $(\mathcal{M}, \mathcal{W}, \kappa, t, \epsilon, \ell)$ fuzzy extractor with distributional advice.
 \end{proof}
 
-\paragraph{Interpretation} 
+\noindent
+\textbf{Interpretation} 
 %We consider two natural settings where $\epsilon = \ngl(n)$ and when $\epsilon = \Theta(1)$.
 %
 %For the setting when $\epsilon = \ngl(n)$  if one sets $\zeta = \sqrt{\epsilon}$ this implies that for all subsets $\mathcal{W}' \subseteq \mathcal{W}$ where $\Pr[Z\in Z']\ge 1-\sqrt{\epsilon}.$ there is no $(\{0,1\}^n,\kappa, t, \sqrt{\epsilon}, \ell)$-fuzzy extractor for some element of $\mathcal{W}'$.  This shows that at least $\sqrt{\epsilon}$ fraction of elements in $\mathcal{W}$ do not have $(\{0,1\}^n,\kappa, t, \sqrt{\epsilon}, \ell)$-fuzzy extractors.
 In the setting when $\epsilon = \Theta(1)$ then setting $\zeta = \epsilon/2$ implies that for all subsets $\mathcal{W}' \subseteq \mathcal{W}$ where $\Pr[Z\in Z']\ge 1-\epsilon/2 = 1-\Theta(1)$ there is no $(\{0,1\}^n,\kappa, t, \epsilon/(2-\epsilon), \ell)$-fuzzy extractor for some element of $\mathcal{W}'$.  This shows that at least $\epsilon/2=\Theta(1)$ fraction of elements in $\mathcal{W}$ do not have $(\{0,1\}^n,\kappa, t, \epsilon/(2-\epsilon), \ell)$-fuzzy extractors. 
 
 
+\vspace{.1in}
 \begin{lemma}
 Let $\mathcal{W}$ be a distribution family indexed by $\mathcal{Z}$ and suppose that no $(\zo^n, \mathcal{W}, \tilde{m}, t, \epsilon, \delta, \ell)$-secure sketch with distributional advice exists.  For all families $\mathcal{W}'\subseteq \mathcal{W}$ indexed by $\mathcal{Z}'\subseteq \mathcal{Z}$ where $|\mathcal{Z}'|/|\mathcal{Z}|\ge 1-2^{-\zeta}$ 
 there is some $z'\in \mathcal{Z}'$ for which no  $(\zo^n, \tilde{m}+1, t, \epsilon, \delta, \ell)$-secure sketch $(\sketch_{z'}, \rec_{z'})$  exists if $\zeta\ge \tilde{m}+1$.
@@ -204,7 +207,7 @@ Then consider the following equation for computing the remaining smooth conditio
 \end{align*}
 \end{proof}
 
-\paragraph{Interpretation}
+\noindent\textbf{Interpretation}
 Setting $\zeta = \max\{\tilde{m},1\} $ shows that at least $2^{-\tilde{m}}$ of the distributions have no secure sketch.  Later in this work, we consider $\tilde{m} = \Theta(1)$ which suffices to that show that a constant fraction of distributions have no secure sketch.
 
 

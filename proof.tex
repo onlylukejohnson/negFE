@@ -63,7 +63,7 @@ Lemma~\ref{lem:distributional advice suffices} states that to show the hardness 
 \begin{enumerate}
 \item Lemma~\ref{lem:smallgeneralviable} which bounds the number of ``viable'' points for most public values $p$.  This lemma bounds the total number of points and holds even if $\gen, \rep$ have access to an arbitrary advice string. We switch to considering a fixed value of $\advice$.  At the end of the proof we average across the distribution of $\advice$.
 
-\item Claim~\ref{clm:entr of members} the majority of the support of $\znk | \aux = \advice$ is difficult to predict and thus unlikely to be included in the set of viable points. We call such points \textbf{Hard Points}.  There are some points that the adversary has a large amount of information on that we call \textbf{Free Points}.
+\item Claim~\ref{clm:entr of members} shows the majority of the support of $\znk | \aux = \advice$ is difficult to predict and thus unlikely to be included in the set of viable points. We call such points \textbf{Hard Points}.  There are some points that the adversary has a large amount of information on that we call \textbf{Free Points}.
 
 \item Corollary~\ref{corollary:info loss} puts together the above two steps to show that the adversary includes a small number of points from the particular distribution $W_z$ in the viable set. 
 
@@ -124,7 +124,7 @@ Before proceeding we introduce some additional notation.
  Let $(\gen, \rep, \aux)$ be a fuzzy extractor with distributional advice. Let $a$ be some string.  For a tuple $(v, p, r, a)$ define 
 \[
 \viable(v, p, r,a) = \begin{cases} 1& \Pr[\gen(v, a) = (r, p)]>0\\0&\text{otherwise}\end{cases}.\]
- Recal that $|\znkset| = 2^\alpha = {2^n\choose 2^k}$.  Let $A$ be a random variable denoting $\aux(\znk)$.  Thus,  
+ Recall that $|\znkset| = 2^\alpha = {2^n\choose 2^k}$.  Let $A$ be a random variable denoting $\aux(\znk)$.  Thus,  
 \begin{align*}
 \Hoo(\znk)&=\alpha,\\
 \Hav(\znk|A)&\ge \alpha - \ell.
@@ -240,7 +240,7 @@ By Markov's inequality
 %The statement of the lemma follows by setting $\alpha = 2^k/\nu$.
 \end{proof}
 \noindent
-We know continue with the proof of Claim~\ref{clm:entr of members}. By Claim~\ref{lem:markovpred} it is true that there exists a set $\easy_a\subseteq \zo^n$ of size at most  $\nu$ where  such that for all $w\not \in \easy_a$ is true that $\alpha_{a, w}< \alpha_a/2^k+(k-\log{\nu}).$
+We now continue with the proof of Claim~\ref{clm:entr of members}. By Claim~\ref{lem:markovpred} it is true that there exists a set $\easy_a\subseteq \zo^n$ of size at most  $\nu$ where  such that for all $w\not \in \easy_a$ is true that $\alpha_{a, w}< \alpha_a/2^k+(k-\log{\nu}).$
 Let $w^*$ denote the point that will be given to $\gen$ that is $(\mathsf{key}, p)\leftarrow \gen(w^*, a)$.  We define the set $\easy_{a,w^*} = \easy_a \cup \{w^*\}$.
 Then,
 \begin{align*}
@@ -295,7 +295,7 @@ gives a bound on the number of keys for which $\mathcal{D}$ could output $1$. By
 \expe_{a\leftarrow A}\left(\expe_{z\leftarrow \znk| A=a} \left|\left\{ 
 w\middle| \begin{aligned}w\in \supp(W_z)\\\exists \key\in\goodkey_p, \viable(w,p,\key,a)\end{aligned} \right\} \right| \right)\le 2^{-\frac{\alpha-\ell}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1.
 \]
-Thus the fraction of non-empty parts in $\mathsf{Goodkey}_p$ on average is at most 
+Thus, the fraction of non-empty parts in $\mathsf{Goodkey}_p$ on average is at most 
 \[
 2^{-\frac{\alpha-\ell}{2^k}+1+\mu+2k-\log{\nu}}+\nu+1.
 \]
@@ -360,7 +360,7 @@ Together, these settings imply that
 \le\left(\frac{1}{2}\right)^{n+\omega(\log{n})+1}2^{n+1}= 2^{-\omega(\log{n})} = \ngl(n).
 \end{align*}
 
-\paragraph{Discussion}
+\noindent\textbf{Discussion}
 By Proposition~\ref{prop:max fuzz ent} for any $W$ in $\zo^n$ it is true that \[
 \Hfuzz(W)\le n\left(1-h_2\left(\frac{t}{n}\right)\right)+ \frac{\log{n}}{2} +1/2.\]  Thus, the additional constraint that 
 \[
@@ -369,8 +369,8 @@ By Proposition~\ref{prop:max fuzz ent} for any $W$ in $\zo^n$ it is true that \[
 
 
 \subsubsection{Hard Points - $\epsilon_1$} 
-We now turn to our analysis of $\epsilon_1$.  Recall that $\log{\epsilon_1}:= -\left(\kappa+\frac{\alpha -\ell}{2^k} - \mu -2k+\log{\nu}\right).$
-Recall that 
+We now turn to our analysis of $\epsilon_1$.  Recall $\log{\epsilon_1}:= -\left(\kappa+\frac{\alpha -\ell}{2^k} - \mu -2k+\log{\nu}\right)$
+and that 
 \begin{align*}
 (n/k)^k &\le {n\choose k} < ((ne)/k)^k\\
 \mu&\le nh_2(1/2-t/n),\\
@@ -386,7 +386,7 @@ This implies that
 &>  (1+c_{\kappa})\kappa+\frac{(n-3k)2^k-\ell}{2^k} - nh_2(1/2-t/n) .
 \end{align*}
 \noindent
-We now focus on showing a parameter setting when $\psi:=\frac{(n-3k)2^k-\ell}{2^k} - nh_2(1/2-t/n)\ge 0$.
+We now focus on parameters when $\psi:=\frac{(n-3k)2^k-\ell}{2^k} - nh_2(1/2-t/n)\ge 0$.
 \begin{description}
 \item[Condition 4]
 Let $0< c_\ell<1$ be a parameter such that 
@@ -571,7 +571,7 @@ Let $A':= \aux(Z')$.  When $X'\in\goodsketch_{Y', \aux(Z')}$ in order for $\math
 \end{align*}
 One then has, 
 \begin{align*}
-&2^{-\Hav(X'|Y', Z',X'\in\goodsketch_{Y', \aux(Z')})} \\&\ge \Pr_{x, y, z\leftarrow (X', Y', Z')} [\mathcal{D}(x, y, z)= | X'\in\goodsketch_{Y', \aux(Z')}] 2^{-\Hav(X'|Y', Z', X'\in\goodsketch_{Y', \aux(Z')}, \mathcal{D}(X', Y', Z')=1) }\\&+ \Pr_{x, y, z\leftarrow (X', Y', Z') } [\mathcal{D}(x, y, z)=0| X'\in\goodsketch_{Y', \aux(Z')}] 2^{-\Hav(X'|Y', Z', X'\in\goodsketch_{Y', \aux(Z')}, \mathcal{D}(X', Y', Z')=0) }\\
+&2^{-\Hav(X'|Y', Z',X'\in\goodsketch_{Y', \aux(Z')})} \\&\ge \Pr_{x, y, z\leftarrow (X', Y', Z')} [\mathcal{D}(x, y, z)= | X'\in\goodsketch_{Y', \aux(Z')}] \\&*2^{-\Hav(X'|Y', Z', X'\in\goodsketch_{Y', \aux(Z')}, \mathcal{D}(X', Y', Z')=1) }\\&+ \Pr_{x, y, z\leftarrow (X', Y', Z') } [\mathcal{D}(x, y, z)=0| X'\in\goodsketch_{Y', \aux(Z')}] \\&*2^{-\Hav(X'|Y', Z', X'\in\goodsketch_{Y', \aux(Z')}, \mathcal{D}(X', Y', Z')=0) }\\
  &\ge  (1-2\epsilon)2^{-\Hav(X'|Y',Z', X'\in\goodsketch_{Y', \aux(Z')},  \mathcal{D}(X', Y', Z')=1) }
 \end{align*}
 And thus, 
